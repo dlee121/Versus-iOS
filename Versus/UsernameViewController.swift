@@ -9,9 +9,19 @@
 import UIKit
 
 class UsernameViewController: UIViewController {
-
+    
+    var birthday: Date!
+    @IBOutlet weak var debugLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MMM-yyyy"
+        // again convert your date to string
+        let myStringafd = formatter.string(from: birthday!)
+        
+        debugLabel.text = myStringafd
 
         // Do any additional setup after loading the view.
     }

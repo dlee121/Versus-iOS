@@ -62,10 +62,10 @@ class ViewController: UIViewController {
         if let username = usernameIn.text {
             if let pw = passwordIn.text{
                 if username.count == 0{
-                    showToast(message: "Please enter your username")
+                    showToast(message: "Please enter your username", length: 26)
                 }
                 else if pw.count == 0{
-                    showToast(message: "Please enter your password")
+                    showToast(message: "Please enter your password", length: 26)
                 }
                 else{
                     Auth.auth().signIn(withEmail: username+"@versusbcd.com", password: pw) { (result, error) in
@@ -75,17 +75,17 @@ class ViewController: UIViewController {
                             self.performSegue(withIdentifier: "logInToMain", sender: self)
                         }
                         else{
-                            self.showToast(message: "incorrect username or password")
+                            self.showToast(message: "incorrect username or password", length: 30)
                         }
                     }
                 }
             }
             else{
-                showToast(message: "Please enter your password")
+                showToast(message: "Please enter your password", length: 26)
             }
         }
         else {
-            showToast(message: "Please enter your username")
+            showToast(message: "Please enter your username", length: 26)
             
         }
         
@@ -96,7 +96,7 @@ class ViewController: UIViewController {
         //sign up user with Firebase
         
         //try? Auth.auth().signOut()
-        //print("signed out")
+        print("going to Birthday")
         
         performSegue(withIdentifier: "goToBirthday", sender: self)
     }
