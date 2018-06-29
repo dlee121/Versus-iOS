@@ -72,6 +72,7 @@ class ViewController: UIViewController {
                         // ...
                         if let email = result?.user.email {
                             print("signed in as " + email)
+                            self.performSegue(withIdentifier: "logInToMain", sender: self)
                         }
                         else{
                             self.showToast(message: "incorrect username or password")
@@ -97,7 +98,7 @@ class ViewController: UIViewController {
         //try? Auth.auth().signOut()
         //print("signed out")
         
-        performSegue(withIdentifier: "goToSignUp", sender: self)
+        performSegue(withIdentifier: "goToBirthday", sender: self)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

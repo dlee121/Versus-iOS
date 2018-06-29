@@ -70,52 +70,103 @@
                         <outlet property="passwordIn" destination="dyQ-Hr-5nQ" id="9tu-bu-jYe"/>
                         <outlet property="signUpButton" destination="LBD-hS-d1D" id="wpA-G9-8iq"/>
                         <outlet property="usernameIn" destination="Wo0-MF-Nss" id="J64-Mt-xgC"/>
-                        <segue destination="ELo-Nd-DS4" kind="show" identifier="goToSignUp" id="Pnc-vA-xVM"/>
+                        <segue destination="PlH-jL-SP2" kind="show" identifier="goToBirthday" id="CBT-JG-zYd"/>
+                        <segue destination="xww-b1-KkG" kind="show" identifier="logInToMain" id="cqf-v7-jIy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
         </scene>
-        <!--SignUp-->
-        <scene sceneID="wgC-Tv-fAC">
+        <!--BirthdayInput-->
+        <scene sceneID="uNn-o5-u2e">
             <objects>
-                <viewController title="SignUp" id="ELo-Nd-DS4" customClass="SignUpViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Vw1-RN-2X4">
+                <viewController title="BirthdayInput" id="PlH-jL-SP2" customClass="BirthdayViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Dw2-9K-Zuq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="pzN-5N-bUP"/>
+                    </view>
+                    <connections>
+                        <segue destination="ide-qk-ioU" kind="show" identifier="goToUsername" id="skM-au-As5"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="backToStartScreen" id="5jD-8Y-GNx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Eu0-z7-jpC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="609" y="-706"/>
+        </scene>
+        <!--UsernameInput-->
+        <scene sceneID="9ol-m1-qt6">
+            <objects>
+                <viewController title="UsernameInput" id="ide-qk-ioU" customClass="UsernameViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="raE-6k-tKk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="PC2-kA-hmX"/>
+                    </view>
+                    <connections>
+                        <segue destination="8I4-jw-PhO" kind="show" identifier="goToPassword" id="XW3-v2-QOA"/>
+                        <segue destination="PlH-jL-SP2" kind="show" identifier="backToBirthday" id="5A0-ex-P7l"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0nC-Zq-61z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1404" y="-707"/>
+        </scene>
+        <!--PasswordInput-->
+        <scene sceneID="Lpa-fv-S49">
+            <objects>
+                <viewController title="PasswordInput" id="8I4-jw-PhO" customClass="PasswordViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hYB-kF-R9E">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="QUg-7E-qOf"/>
+                    </view>
+                    <connections>
+                        <segue destination="xww-b1-KkG" kind="show" identifier="signUpToMain" id="56c-MF-6Qw"/>
+                        <segue destination="ide-qk-ioU" kind="show" identifier="backToUsername" id="1o0-2n-eSQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Htd-no-XdR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2140" y="-707"/>
+        </scene>
+        <!--MainContainer-->
+        <scene sceneID="c1G-AH-DsY">
+            <objects>
+                <viewController title="MainContainer" id="xww-b1-KkG" customClass="MCViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="N47-mz-ht1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SignUp page" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piY-56-3E1">
-                                <rect key="frame" x="57" y="234" width="260" height="57"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MainContainer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sSr-N8-1wr">
+                                <rect key="frame" x="68" y="310" width="239" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="47"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="38"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fuH-Oc-Ru8">
-                                <rect key="frame" x="16" y="20" width="24" height="24"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7N7-Oz-gna">
+                                <rect key="frame" x="144" y="499" width="94" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="chevron"/>
-                                <connections>
-                                    <action selector="backButtonTapped:" destination="ELo-Nd-DS4" eventType="touchUpInside" id="jhk-bl-xJ9"/>
-                                </connections>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <state key="normal" title="Log Out"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="jaO-ud-qhC"/>
+                        <viewLayoutGuide key="safeArea" id="xmh-qs-XUA"/>
                     </view>
-                    <connections>
-                        <outlet property="backButton" destination="fuH-Oc-Ru8" id="A6B-Yf-IUX"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="signUpBack" id="pz5-Ij-HQa"/>
-                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="H0Z-l5-o6R" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d8j-Xp-9Tz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1092" y="-192.05397301349328"/>
+            <point key="canvasLocation" x="884" y="34"/>
         </scene>
     </scenes>
     <resources>
-        <image name="chevron" width="42" height="42"/>
         <image name="logo_splash" width="133" height="106"/>
         <namedColor name="VS_Blue">
             <color red="0.36899998784065247" green="0.82700002193450928" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -124,4 +175,9 @@
             <color red="1" green="0.125" blue="0.125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="56c-MF-6Qw"/>
+        <segue reference="1o0-2n-eSQ"/>
+        <segue reference="5A0-ex-P7l"/>
+    </inferredMetricsTieBreakers>
 </document>

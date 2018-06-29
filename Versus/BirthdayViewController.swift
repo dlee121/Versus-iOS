@@ -1,17 +1,15 @@
 //
-//  SignUpViewController.swift
+//  BirthdayViewController.swift
 //  Versus
 //
-//  Created by Dongkeun Lee on 6/28/18.
+//  Created by Dongkeun Lee on 6/29/18.
 //  Copyright © 2018 Versus. All rights reserved.
 //
 
 import UIKit
 
-class SignUpViewController: UIViewController {
+class BirthdayViewController: UIViewController {
 
-    @IBOutlet weak var backButton: UIButton!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,14 +31,5 @@ class SignUpViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    
-    
-    @IBAction func backButtonTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "signUpBack", sender: self)
-        
-    }
-    
-    
 
 }

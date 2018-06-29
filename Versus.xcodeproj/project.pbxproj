@@ -15,7 +15,10 @@
 		701B9BAF20E3FB22003C9E7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BAD20E3FB22003C9E7E /* LaunchScreen.storyboard */; };
 		701B9BB720E3FEEB003C9E7E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */; };
 		702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702499A120E57F050024E871 /* UIViewController+Toast.swift */; };
-		702E270020E5D624008DEB1E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702E26FF20E5D624008DEB1E /* SignUpViewController.swift */; };
+		70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */; };
+		70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF520E6944B0067DF08 /* UsernameViewController.swift */; };
+		70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF720E694560067DF08 /* PasswordViewController.swift */; };
+		70E80BFA20E6976E0067DF08 /* MCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF920E6976E0067DF08 /* MCViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +33,10 @@
 		701B9BB020E3FB22003C9E7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		702499A120E57F050024E871 /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
-		702E26FF20E5D624008DEB1E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewController.swift; sourceTree = "<group>"; };
+		70E80BF520E6944B0067DF08 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
+		70E80BF720E694560067DF08 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
+		70E80BF920E6976E0067DF08 /* MCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCViewController.swift; sourceTree = "<group>"; };
 		B216951D7ECAD287D38ECF83 /* Pods-Versus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Versus.release.xcconfig"; path = "Pods/Target Support Files/Pods-Versus/Pods-Versus.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,7 +83,10 @@
 			children = (
 				701B9BA420E3FB20003C9E7E /* AppDelegate.swift */,
 				701B9BA620E3FB20003C9E7E /* ViewController.swift */,
-				702E26FF20E5D624008DEB1E /* SignUpViewController.swift */,
+				70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */,
+				70E80BF520E6944B0067DF08 /* UsernameViewController.swift */,
+				70E80BF720E694560067DF08 /* PasswordViewController.swift */,
+				70E80BF920E6976E0067DF08 /* MCViewController.swift */,
 				701B9BA820E3FB20003C9E7E /* Main.storyboard */,
 				701B9BAB20E3FB22003C9E7E /* Assets.xcassets */,
 				701B9BAD20E3FB22003C9E7E /* LaunchScreen.storyboard */,
@@ -222,9 +231,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */,
 				701B9BA720E3FB20003C9E7E /* ViewController.swift in Sources */,
 				702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */,
-				702E270020E5D624008DEB1E /* SignUpViewController.swift in Sources */,
+				70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */,
+				70E80BFA20E6976E0067DF08 /* MCViewController.swift in Sources */,
+				70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */,
 				701B9BA520E3FB20003C9E7E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
