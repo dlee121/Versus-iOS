@@ -12,6 +12,8 @@ class BirthdayViewController: UIViewController {
     @IBOutlet weak var bdayInput: UIDatePicker!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
+    var birthday : Date!
+    var username : String!
     
     // Age of 16.
     let MINIMUM_AGE: Date = Calendar.current.date(byAdding: .year, value: -16, to: Date())!
@@ -24,6 +26,9 @@ class BirthdayViewController: UIViewController {
         dateInput = bdayInput.date
         bdayInput.minimumDate = PICKER_CEILING
         bdayInput.maximumDate = MINIMUM_AGE
+        if birthday != nil{
+            bdayInput.setDate(birthday, animated: false)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,6 +54,9 @@ class BirthdayViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let usernameVC = segue.destination as? UsernameViewController else {return}
         usernameVC.birthday = bdayInput.date
+        if username != nil{
+            usernameVC.confirmedInput = username
+        }
     }
     
     func validateAge(birthDate: Date) -> Bool {
