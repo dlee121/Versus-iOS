@@ -1,4 +1,7 @@
 PODS:
+  - AWSAPIGateway (2.6.22):
+    - AWSCore (= 2.6.22)
+  - AWSCore (2.6.22)
   - Firebase/Auth (5.3.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.1)
@@ -30,11 +33,14 @@ PODS:
   - nanopb/encode (0.3.8)
 
 DEPENDENCIES:
+  - AWSAPIGateway (~> 2.6.22)
   - Firebase/Auth
   - Firebase/Core
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AWSAPIGateway
+    - AWSCore
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -45,6 +51,8 @@ SPEC REPOS:
     - nanopb
 
 SPEC CHECKSUMS:
+  AWSAPIGateway: 7dad85e97b4431a78639bc8d47c8aba2bc4f3dd0
+  AWSCore: faae134779f0f6e46a8d426c0ccc02e34466b785
   Firebase: 68afeeb05461db02d7c9e3215cda28068670f4aa
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
   FirebaseAuth: 463b8ce33bd5d05f706dcd4615499e3212b4132b
@@ -54,6 +62,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
 
-PODFILE CHECKSUM: 5b492f0f271d3e2a153f70900239fdf14bc38c73
+PODFILE CHECKSUM: 32643cfab383b2f265c8c20fb323ad7ea2714b6e
 
 COCOAPODS: 1.5.3

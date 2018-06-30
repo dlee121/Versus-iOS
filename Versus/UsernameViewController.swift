@@ -12,19 +12,35 @@ class UsernameViewController: UIViewController {
     
     var birthday: Date!
     @IBOutlet weak var debugLabel: UILabel!
+    let client = VSVersusAPIClient.default()
+    
+    @IBOutlet weak var usernameIn: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MMM-yyyy"
-        // again convert your date to string
-        let myStringafd = formatter.string(from: birthday!)
-        
-        debugLabel.text = myStringafd
 
         // Do any additional setup after loading the view.
     }
+    
+    @IBAction func textChangeListener(_ sender: UITextField) {
+        self.debugLabel.text = "Checking username..."
+        client.userHead(a: "uc", b: usernameIn.text?.lowercased()).continueWith(block:) {(task: AWSTask) -> Empty? in
+            if task.error != nil{
+                DispatchQueue.main.async {
+                    self.debugLabel.text = "Username available"
+                }
+            }
+            else{
+                DispatchQueue.main.async {
+                    self.debugLabel.text = self.usernameIn.text! + " is already taken!"
+                }
+            }
+            
+            return nil
+        }
+        
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

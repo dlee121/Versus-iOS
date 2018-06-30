@@ -152,6 +152,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textChangeListener:" destination="ide-qk-ioU" eventType="editingChanged" id="jhX-zD-gj2"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose a username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mgt-2I-Dh2">
                                 <rect key="frame" x="84" y="281" width="206" height="29"/>
@@ -161,7 +164,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NU8-X9-6SS">
-                                <rect key="frame" x="145" y="386" width="42" height="21"/>
+                                <rect key="frame" x="16" y="386" width="343" height="218"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -173,6 +176,7 @@
                     </view>
                     <connections>
                         <outlet property="debugLabel" destination="NU8-X9-6SS" id="6m0-wF-tIb"/>
+                        <outlet property="usernameIn" destination="y52-aM-L7f" id="luk-gT-mzu"/>
                         <segue destination="8I4-jw-PhO" kind="show" identifier="goToPassword" id="XW3-v2-QOA"/>
                         <segue destination="PlH-jL-SP2" kind="show" identifier="backToBirthday" id="5A0-ex-P7l"/>
                     </connections>
@@ -265,6 +269,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="cqf-v7-jIy"/>
         <segue reference="onp-lO-nwi"/>
-        <segue reference="CBT-JG-zYd"/>
+        <segue reference="5A0-ex-P7l"/>
     </inferredMetricsTieBreakers>
 </document>

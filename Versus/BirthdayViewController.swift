@@ -15,12 +15,15 @@ class BirthdayViewController: UIViewController {
     
     // Age of 16.
     let MINIMUM_AGE: Date = Calendar.current.date(byAdding: .year, value: -16, to: Date())!
+    let PICKER_CEILING: Date = Calendar.current.date(byAdding: .year, value: -100, to: Date())!;
     var dateInput: Date!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         dateInput = bdayInput.date
+        bdayInput.minimumDate = PICKER_CEILING
+        bdayInput.maximumDate = MINIMUM_AGE
     }
 
     override func didReceiveMemoryWarning() {

@@ -9,5 +9,6 @@ target 'Versus' do
 
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'AWSAPIGateway', '~> 2.6.22'
 
 end

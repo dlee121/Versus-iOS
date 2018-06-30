@@ -19,6 +19,63 @@
 		70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF520E6944B0067DF08 /* UsernameViewController.swift */; };
 		70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF720E694560067DF08 /* PasswordViewController.swift */; };
 		70E80BFA20E6976E0067DF08 /* MCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF920E6976E0067DF08 /* MCViewController.swift */; };
+		70E80CAB20E6DB570067DF08 /* VSLeaderboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7020E6DB4D0067DF08 /* VSLeaderboardModel.swift */; };
+		70E80CAC20E6DB570067DF08 /* VSPIVModel_docs_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7120E6DB4E0067DF08 /* VSPIVModel_docs_item.swift */; };
+		70E80CAD20E6DB570067DF08 /* VSCGCModel_responses_item_hits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7220E6DB4E0067DF08 /* VSCGCModel_responses_item_hits.swift */; };
+		70E80CAE20E6DB570067DF08 /* VSPostInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7320E6DB4E0067DF08 /* VSPostInfoModel.swift */; };
+		70E80CAF20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7420E6DB4E0067DF08 /* VSLeaderboardModel_hits_hits_item.swift */; };
+		70E80CB020E6DB570067DF08 /* VSPIVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7520E6DB4E0067DF08 /* VSPIVModel.swift */; };
+		70E80CB120E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7620E6DB4E0067DF08 /* VSPostsListCompactModel_hits_hits_item.swift */; };
+		70E80CB220E6DB570067DF08 /* VSCGCModel_responses_item__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7720E6DB4E0067DF08 /* VSCGCModel_responses_item__shards.swift */; };
+		70E80CB320E6DB570067DF08 /* VSPostsListModel_hits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7820E6DB4F0067DF08 /* VSPostsListModel_hits.swift */; };
+		70E80CB420E6DB570067DF08 /* VSPostModel__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7920E6DB4F0067DF08 /* VSPostModel__source.swift */; };
+		70E80CB520E6DB570067DF08 /* VSProfileInfoModel__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7A20E6DB4F0067DF08 /* VSProfileInfoModel__source.swift */; };
+		70E80CB620E6DB570067DF08 /* VSProfileInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7B20E6DB4F0067DF08 /* VSProfileInfoModel.swift */; };
+		70E80CB720E6DB570067DF08 /* VSUserGetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7C20E6DB4F0067DF08 /* VSUserGetModel.swift */; };
+		70E80CB820E6DB570067DF08 /* VSCommentsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7D20E6DB4F0067DF08 /* VSCommentsListModel.swift */; };
+		70E80CB920E6DB570067DF08 /* VSLeaderboardModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7E20E6DB4F0067DF08 /* VSLeaderboardModel__shards.swift */; };
+		70E80CBA20E6DB570067DF08 /* VSAIModel_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7F20E6DB500067DF08 /* VSAIModel_hits_hits_item.swift */; };
+		70E80CBB20E6DB570067DF08 /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8020E6DB500067DF08 /* Empty.swift */; };
+		70E80CBC20E6DB570067DF08 /* VSAIModel_hits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8120E6DB500067DF08 /* VSAIModel_hits.swift */; };
+		70E80CBD20E6DB570067DF08 /* VSCommentsListModel_hits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8220E6DB500067DF08 /* VSCommentsListModel_hits.swift */; };
+		70E80CBE20E6DB570067DF08 /* VSAIModel_hits_hits_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8320E6DB500067DF08 /* VSAIModel_hits_hits_item__source.swift */; };
+		70E80CBF20E6DB570067DF08 /* VSCGCModel_responses_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8420E6DB500067DF08 /* VSCGCModel_responses_item.swift */; };
+		70E80CC020E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8520E6DB510067DF08 /* VSCGCModel_responses_item_hits_hits_item__source.swift */; };
+		70E80CC120E6DB570067DF08 /* VSUserPutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8620E6DB510067DF08 /* VSUserPutModel.swift */; };
+		70E80CC220E6DB570067DF08 /* VSAIModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8720E6DB510067DF08 /* VSAIModel__shards.swift */; };
+		70E80CC320E6DB570067DF08 /* VSLeaderboardModel_hits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8820E6DB510067DF08 /* VSLeaderboardModel_hits.swift */; };
+		70E80CC420E6DB570067DF08 /* VSPIVModel_docs_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8920E6DB510067DF08 /* VSPIVModel_docs_item__source.swift */; };
+		70E80CC520E6DB570067DF08 /* VSPIVSingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8A20E6DB510067DF08 /* VSPIVSingle.swift */; };
+		70E80CC620E6DB570067DF08 /* VSPostInfoMultiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8B20E6DB520067DF08 /* VSPostInfoMultiModel.swift */; };
+		70E80CC720E6DB570067DF08 /* VSCommentEditModel_doc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8C20E6DB520067DF08 /* VSCommentEditModel_doc.swift */; };
+		70E80CC820E6DB570067DF08 /* VSPostEditModel_doc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8D20E6DB520067DF08 /* VSPostEditModel_doc.swift */; };
+		70E80CC920E6DB570067DF08 /* VSCommentEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8F20E6DB520067DF08 /* VSCommentEditModel.swift */; };
+		70E80CCA20E6DB570067DF08 /* VSPostsListModel_hits_hits_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9020E6DB520067DF08 /* VSPostsListModel_hits_hits_item__source.swift */; };
+		70E80CCB20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9120E6DB530067DF08 /* VSLeaderboardModel_hits_hits_item__source.swift */; };
+		70E80CCC20E6DB570067DF08 /* VSRecordPutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9220E6DB530067DF08 /* VSRecordPutModel.swift */; };
+		70E80CCD20E6DB570067DF08 /* VSVersusAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9320E6DB530067DF08 /* VSVersusAPIClient.swift */; };
+		70E80CCE20E6DB570067DF08 /* VSCommentPutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9420E6DB530067DF08 /* VSCommentPutModel.swift */; };
+		70E80CCF20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9520E6DB530067DF08 /* VSPostInfoMultiModel_docs_item.swift */; };
+		70E80CD020E6DB570067DF08 /* VSPostsListCompactModel_hits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9620E6DB530067DF08 /* VSPostsListCompactModel_hits.swift */; };
+		70E80CD120E6DB570067DF08 /* VSPostsListModel_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9720E6DB540067DF08 /* VSPostsListModel_hits_hits_item.swift */; };
+		70E80CD220E6DB570067DF08 /* VSPostsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9820E6DB540067DF08 /* VSPostsListModel.swift */; };
+		70E80CD320E6DB570067DF08 /* VSCommentModel__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9920E6DB540067DF08 /* VSCommentModel__source.swift */; };
+		70E80CD420E6DB570067DF08 /* VSEmailGetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9A20E6DB540067DF08 /* VSEmailGetModel.swift */; };
+		70E80CD520E6DB570067DF08 /* VSAIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9B20E6DB540067DF08 /* VSAIModel.swift */; };
+		70E80CD620E6DB570067DF08 /* VSPostsListModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9C20E6DB540067DF08 /* VSPostsListModel__shards.swift */; };
+		70E80CD720E6DB570067DF08 /* VSCGCModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9D20E6DB550067DF08 /* VSCGCModel.swift */; };
+		70E80CD820E6DB570067DF08 /* VSCommentsListModel_hits_hits_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9F20E6DB550067DF08 /* VSCommentsListModel_hits_hits_item__source.swift */; };
+		70E80CD920E6DB570067DF08 /* VSPostsListCompactModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA020E6DB550067DF08 /* VSPostsListCompactModel__shards.swift */; };
+		70E80CDA20E6DB570067DF08 /* VSCommentsListModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA120E6DB550067DF08 /* VSCommentsListModel__shards.swift */; };
+		70E80CDB20E6DB570067DF08 /* VSCommentsListModel_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA220E6DB550067DF08 /* VSCommentsListModel_hits_hits_item.swift */; };
+		70E80CDC20E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA320E6DB560067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift */; };
+		70E80CDD20E6DB570067DF08 /* VSPostEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA420E6DB560067DF08 /* VSPostEditModel.swift */; };
+		70E80CDE20E6DB570067DF08 /* VSPostPutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA520E6DB560067DF08 /* VSPostPutModel.swift */; };
+		70E80CDF20E6DB570067DF08 /* VSPostsListCompactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA620E6DB560067DF08 /* VSPostsListCompactModel.swift */; };
+		70E80CE020E6DB570067DF08 /* VSPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA720E6DB560067DF08 /* VSPostModel.swift */; };
+		70E80CE120E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA820E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item__source.swift */; };
+		70E80CE220E6DB570067DF08 /* VSCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA920E6DB570067DF08 /* VSCommentModel.swift */; };
+		70E80CE320E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CAA20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +94,65 @@
 		70E80BF520E6944B0067DF08 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
 		70E80BF720E694560067DF08 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
 		70E80BF920E6976E0067DF08 /* MCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCViewController.swift; sourceTree = "<group>"; };
+		70E80C7020E6DB4D0067DF08 /* VSLeaderboardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSLeaderboardModel.swift; sourceTree = "<group>"; };
+		70E80C7120E6DB4E0067DF08 /* VSPIVModel_docs_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPIVModel_docs_item.swift; sourceTree = "<group>"; };
+		70E80C7220E6DB4E0067DF08 /* VSCGCModel_responses_item_hits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCGCModel_responses_item_hits.swift; sourceTree = "<group>"; };
+		70E80C7320E6DB4E0067DF08 /* VSPostInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostInfoModel.swift; sourceTree = "<group>"; };
+		70E80C7420E6DB4E0067DF08 /* VSLeaderboardModel_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSLeaderboardModel_hits_hits_item.swift; sourceTree = "<group>"; };
+		70E80C7520E6DB4E0067DF08 /* VSPIVModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPIVModel.swift; sourceTree = "<group>"; };
+		70E80C7620E6DB4E0067DF08 /* VSPostsListCompactModel_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListCompactModel_hits_hits_item.swift; sourceTree = "<group>"; };
+		70E80C7720E6DB4E0067DF08 /* VSCGCModel_responses_item__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCGCModel_responses_item__shards.swift; sourceTree = "<group>"; };
+		70E80C7820E6DB4F0067DF08 /* VSPostsListModel_hits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListModel_hits.swift; sourceTree = "<group>"; };
+		70E80C7920E6DB4F0067DF08 /* VSPostModel__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostModel__source.swift; sourceTree = "<group>"; };
+		70E80C7A20E6DB4F0067DF08 /* VSProfileInfoModel__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSProfileInfoModel__source.swift; sourceTree = "<group>"; };
+		70E80C7B20E6DB4F0067DF08 /* VSProfileInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSProfileInfoModel.swift; sourceTree = "<group>"; };
+		70E80C7C20E6DB4F0067DF08 /* VSUserGetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSUserGetModel.swift; sourceTree = "<group>"; };
+		70E80C7D20E6DB4F0067DF08 /* VSCommentsListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel.swift; sourceTree = "<group>"; };
+		70E80C7E20E6DB4F0067DF08 /* VSLeaderboardModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSLeaderboardModel__shards.swift; sourceTree = "<group>"; };
+		70E80C7F20E6DB500067DF08 /* VSAIModel_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSAIModel_hits_hits_item.swift; sourceTree = "<group>"; };
+		70E80C8020E6DB500067DF08 /* Empty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Empty.swift; sourceTree = "<group>"; };
+		70E80C8120E6DB500067DF08 /* VSAIModel_hits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSAIModel_hits.swift; sourceTree = "<group>"; };
+		70E80C8220E6DB500067DF08 /* VSCommentsListModel_hits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits.swift; sourceTree = "<group>"; };
+		70E80C8320E6DB500067DF08 /* VSAIModel_hits_hits_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSAIModel_hits_hits_item__source.swift; sourceTree = "<group>"; };
+		70E80C8420E6DB500067DF08 /* VSCGCModel_responses_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCGCModel_responses_item.swift; sourceTree = "<group>"; };
+		70E80C8520E6DB510067DF08 /* VSCGCModel_responses_item_hits_hits_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCGCModel_responses_item_hits_hits_item__source.swift; sourceTree = "<group>"; };
+		70E80C8620E6DB510067DF08 /* VSUserPutModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSUserPutModel.swift; sourceTree = "<group>"; };
+		70E80C8720E6DB510067DF08 /* VSAIModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSAIModel__shards.swift; sourceTree = "<group>"; };
+		70E80C8820E6DB510067DF08 /* VSLeaderboardModel_hits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSLeaderboardModel_hits.swift; sourceTree = "<group>"; };
+		70E80C8920E6DB510067DF08 /* VSPIVModel_docs_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPIVModel_docs_item__source.swift; sourceTree = "<group>"; };
+		70E80C8A20E6DB510067DF08 /* VSPIVSingle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPIVSingle.swift; sourceTree = "<group>"; };
+		70E80C8B20E6DB520067DF08 /* VSPostInfoMultiModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostInfoMultiModel.swift; sourceTree = "<group>"; };
+		70E80C8C20E6DB520067DF08 /* VSCommentEditModel_doc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentEditModel_doc.swift; sourceTree = "<group>"; };
+		70E80C8D20E6DB520067DF08 /* VSPostEditModel_doc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostEditModel_doc.swift; sourceTree = "<group>"; };
+		70E80C8E20E6DB520067DF08 /* AWSApiGatewayBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSApiGatewayBridge.h; sourceTree = "<group>"; };
+		70E80C8F20E6DB520067DF08 /* VSCommentEditModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentEditModel.swift; sourceTree = "<group>"; };
+		70E80C9020E6DB520067DF08 /* VSPostsListModel_hits_hits_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListModel_hits_hits_item__source.swift; sourceTree = "<group>"; };
+		70E80C9120E6DB530067DF08 /* VSLeaderboardModel_hits_hits_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSLeaderboardModel_hits_hits_item__source.swift; sourceTree = "<group>"; };
+		70E80C9220E6DB530067DF08 /* VSRecordPutModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSRecordPutModel.swift; sourceTree = "<group>"; };
+		70E80C9320E6DB530067DF08 /* VSVersusAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSVersusAPIClient.swift; sourceTree = "<group>"; };
+		70E80C9420E6DB530067DF08 /* VSCommentPutModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentPutModel.swift; sourceTree = "<group>"; };
+		70E80C9520E6DB530067DF08 /* VSPostInfoMultiModel_docs_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostInfoMultiModel_docs_item.swift; sourceTree = "<group>"; };
+		70E80C9620E6DB530067DF08 /* VSPostsListCompactModel_hits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListCompactModel_hits.swift; sourceTree = "<group>"; };
+		70E80C9720E6DB540067DF08 /* VSPostsListModel_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListModel_hits_hits_item.swift; sourceTree = "<group>"; };
+		70E80C9820E6DB540067DF08 /* VSPostsListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListModel.swift; sourceTree = "<group>"; };
+		70E80C9920E6DB540067DF08 /* VSCommentModel__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentModel__source.swift; sourceTree = "<group>"; };
+		70E80C9A20E6DB540067DF08 /* VSEmailGetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSEmailGetModel.swift; sourceTree = "<group>"; };
+		70E80C9B20E6DB540067DF08 /* VSAIModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSAIModel.swift; sourceTree = "<group>"; };
+		70E80C9C20E6DB540067DF08 /* VSPostsListModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListModel__shards.swift; sourceTree = "<group>"; };
+		70E80C9D20E6DB550067DF08 /* VSCGCModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCGCModel.swift; sourceTree = "<group>"; };
+		70E80C9E20E6DB550067DF08 /* Bridging_Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bridging_Header.h; sourceTree = "<group>"; };
+		70E80C9F20E6DB550067DF08 /* VSCommentsListModel_hits_hits_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits_hits_item__source.swift; sourceTree = "<group>"; };
+		70E80CA020E6DB550067DF08 /* VSPostsListCompactModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListCompactModel__shards.swift; sourceTree = "<group>"; };
+		70E80CA120E6DB550067DF08 /* VSCommentsListModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel__shards.swift; sourceTree = "<group>"; };
+		70E80CA220E6DB550067DF08 /* VSCommentsListModel_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits_hits_item.swift; sourceTree = "<group>"; };
+		70E80CA320E6DB560067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCGCModel_responses_item_hits_hits_item.swift; sourceTree = "<group>"; };
+		70E80CA420E6DB560067DF08 /* VSPostEditModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostEditModel.swift; sourceTree = "<group>"; };
+		70E80CA520E6DB560067DF08 /* VSPostPutModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostPutModel.swift; sourceTree = "<group>"; };
+		70E80CA620E6DB560067DF08 /* VSPostsListCompactModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListCompactModel.swift; sourceTree = "<group>"; };
+		70E80CA720E6DB560067DF08 /* VSPostModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostModel.swift; sourceTree = "<group>"; };
+		70E80CA820E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListCompactModel_hits_hits_item__source.swift; sourceTree = "<group>"; };
+		70E80CA920E6DB570067DF08 /* VSCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentModel.swift; sourceTree = "<group>"; };
+		70E80CAA20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostInfoMultiModel_docs_item__source.swift; sourceTree = "<group>"; };
 		B216951D7ECAD287D38ECF83 /* Pods-Versus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Versus.release.xcconfig"; path = "Pods/Target Support Files/Pods-Versus/Pods-Versus.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +197,7 @@
 		701B9BA320E3FB20003C9E7E /* Versus */ = {
 			isa = PBXGroup;
 			children = (
+				70E80C6F20E6CD150067DF08 /* VSAPI */,
 				701B9BA420E3FB20003C9E7E /* AppDelegate.swift */,
 				701B9BA620E3FB20003C9E7E /* ViewController.swift */,
 				70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */,
@@ -103,6 +220,72 @@
 				702499A120E57F050024E871 /* UIViewController+Toast.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		70E80C6F20E6CD150067DF08 /* VSAPI */ = {
+			isa = PBXGroup;
+			children = (
+				70E80C8E20E6DB520067DF08 /* AWSApiGatewayBridge.h */,
+				70E80C9E20E6DB550067DF08 /* Bridging_Header.h */,
+				70E80C8020E6DB500067DF08 /* Empty.swift */,
+				70E80C8720E6DB510067DF08 /* VSAIModel__shards.swift */,
+				70E80C8320E6DB500067DF08 /* VSAIModel_hits_hits_item__source.swift */,
+				70E80C7F20E6DB500067DF08 /* VSAIModel_hits_hits_item.swift */,
+				70E80C8120E6DB500067DF08 /* VSAIModel_hits.swift */,
+				70E80C9B20E6DB540067DF08 /* VSAIModel.swift */,
+				70E80C7720E6DB4E0067DF08 /* VSCGCModel_responses_item__shards.swift */,
+				70E80C8520E6DB510067DF08 /* VSCGCModel_responses_item_hits_hits_item__source.swift */,
+				70E80CA320E6DB560067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift */,
+				70E80C7220E6DB4E0067DF08 /* VSCGCModel_responses_item_hits.swift */,
+				70E80C8420E6DB500067DF08 /* VSCGCModel_responses_item.swift */,
+				70E80C9D20E6DB550067DF08 /* VSCGCModel.swift */,
+				70E80C8C20E6DB520067DF08 /* VSCommentEditModel_doc.swift */,
+				70E80C8F20E6DB520067DF08 /* VSCommentEditModel.swift */,
+				70E80C9920E6DB540067DF08 /* VSCommentModel__source.swift */,
+				70E80CA920E6DB570067DF08 /* VSCommentModel.swift */,
+				70E80C9420E6DB530067DF08 /* VSCommentPutModel.swift */,
+				70E80CA120E6DB550067DF08 /* VSCommentsListModel__shards.swift */,
+				70E80C9F20E6DB550067DF08 /* VSCommentsListModel_hits_hits_item__source.swift */,
+				70E80CA220E6DB550067DF08 /* VSCommentsListModel_hits_hits_item.swift */,
+				70E80C8220E6DB500067DF08 /* VSCommentsListModel_hits.swift */,
+				70E80C7D20E6DB4F0067DF08 /* VSCommentsListModel.swift */,
+				70E80C9A20E6DB540067DF08 /* VSEmailGetModel.swift */,
+				70E80C7E20E6DB4F0067DF08 /* VSLeaderboardModel__shards.swift */,
+				70E80C9120E6DB530067DF08 /* VSLeaderboardModel_hits_hits_item__source.swift */,
+				70E80C7420E6DB4E0067DF08 /* VSLeaderboardModel_hits_hits_item.swift */,
+				70E80C8820E6DB510067DF08 /* VSLeaderboardModel_hits.swift */,
+				70E80C7020E6DB4D0067DF08 /* VSLeaderboardModel.swift */,
+				70E80C8920E6DB510067DF08 /* VSPIVModel_docs_item__source.swift */,
+				70E80C7120E6DB4E0067DF08 /* VSPIVModel_docs_item.swift */,
+				70E80C7520E6DB4E0067DF08 /* VSPIVModel.swift */,
+				70E80C8A20E6DB510067DF08 /* VSPIVSingle.swift */,
+				70E80C8D20E6DB520067DF08 /* VSPostEditModel_doc.swift */,
+				70E80CA420E6DB560067DF08 /* VSPostEditModel.swift */,
+				70E80C7320E6DB4E0067DF08 /* VSPostInfoModel.swift */,
+				70E80CAA20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift */,
+				70E80C9520E6DB530067DF08 /* VSPostInfoMultiModel_docs_item.swift */,
+				70E80C8B20E6DB520067DF08 /* VSPostInfoMultiModel.swift */,
+				70E80C7920E6DB4F0067DF08 /* VSPostModel__source.swift */,
+				70E80CA720E6DB560067DF08 /* VSPostModel.swift */,
+				70E80CA520E6DB560067DF08 /* VSPostPutModel.swift */,
+				70E80CA020E6DB550067DF08 /* VSPostsListCompactModel__shards.swift */,
+				70E80CA820E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item__source.swift */,
+				70E80C7620E6DB4E0067DF08 /* VSPostsListCompactModel_hits_hits_item.swift */,
+				70E80C9620E6DB530067DF08 /* VSPostsListCompactModel_hits.swift */,
+				70E80CA620E6DB560067DF08 /* VSPostsListCompactModel.swift */,
+				70E80C9C20E6DB540067DF08 /* VSPostsListModel__shards.swift */,
+				70E80C9020E6DB520067DF08 /* VSPostsListModel_hits_hits_item__source.swift */,
+				70E80C9720E6DB540067DF08 /* VSPostsListModel_hits_hits_item.swift */,
+				70E80C7820E6DB4F0067DF08 /* VSPostsListModel_hits.swift */,
+				70E80C9820E6DB540067DF08 /* VSPostsListModel.swift */,
+				70E80C7A20E6DB4F0067DF08 /* VSProfileInfoModel__source.swift */,
+				70E80C7B20E6DB4F0067DF08 /* VSProfileInfoModel.swift */,
+				70E80C9220E6DB530067DF08 /* VSRecordPutModel.swift */,
+				70E80C7C20E6DB4F0067DF08 /* VSUserGetModel.swift */,
+				70E80C8620E6DB510067DF08 /* VSUserPutModel.swift */,
+				70E80C9320E6DB530067DF08 /* VSVersusAPIClient.swift */,
+			);
+			path = VSAPI;
 			sourceTree = "<group>";
 		};
 		A1B93DBF3A1EF69D4FCD82C7 /* Pods */ = {
@@ -191,12 +374,16 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Versus/Pods-Versus-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSAPIGateway/AWSAPIGateway.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAPIGateway.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -231,13 +418,70 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70E80CD520E6DB570067DF08 /* VSAIModel.swift in Sources */,
+				70E80CB820E6DB570067DF08 /* VSCommentsListModel.swift in Sources */,
+				70E80CB220E6DB570067DF08 /* VSCGCModel_responses_item__shards.swift in Sources */,
+				70E80CE320E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift in Sources */,
+				70E80CE020E6DB570067DF08 /* VSPostModel.swift in Sources */,
+				70E80CAC20E6DB570067DF08 /* VSPIVModel_docs_item.swift in Sources */,
+				70E80CC220E6DB570067DF08 /* VSAIModel__shards.swift in Sources */,
+				70E80CCB20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item__source.swift in Sources */,
 				70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */,
+				70E80CD920E6DB570067DF08 /* VSPostsListCompactModel__shards.swift in Sources */,
+				70E80CD820E6DB570067DF08 /* VSCommentsListModel_hits_hits_item__source.swift in Sources */,
+				70E80CC620E6DB570067DF08 /* VSPostInfoMultiModel.swift in Sources */,
+				70E80CDF20E6DB570067DF08 /* VSPostsListCompactModel.swift in Sources */,
 				701B9BA720E3FB20003C9E7E /* ViewController.swift in Sources */,
+				70E80CBB20E6DB570067DF08 /* Empty.swift in Sources */,
+				70E80CBC20E6DB570067DF08 /* VSAIModel_hits.swift in Sources */,
+				70E80CC120E6DB570067DF08 /* VSUserPutModel.swift in Sources */,
+				70E80CC920E6DB570067DF08 /* VSCommentEditModel.swift in Sources */,
+				70E80CB020E6DB570067DF08 /* VSPIVModel.swift in Sources */,
+				70E80CAB20E6DB570067DF08 /* VSLeaderboardModel.swift in Sources */,
+				70E80CAD20E6DB570067DF08 /* VSCGCModel_responses_item_hits.swift in Sources */,
+				70E80CC520E6DB570067DF08 /* VSPIVSingle.swift in Sources */,
+				70E80CDB20E6DB570067DF08 /* VSCommentsListModel_hits_hits_item.swift in Sources */,
+				70E80CCF20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item.swift in Sources */,
+				70E80CBA20E6DB570067DF08 /* VSAIModel_hits_hits_item.swift in Sources */,
+				70E80CCE20E6DB570067DF08 /* VSCommentPutModel.swift in Sources */,
+				70E80CD320E6DB570067DF08 /* VSCommentModel__source.swift in Sources */,
+				70E80CD020E6DB570067DF08 /* VSPostsListCompactModel_hits.swift in Sources */,
+				70E80CBE20E6DB570067DF08 /* VSAIModel_hits_hits_item__source.swift in Sources */,
+				70E80CB920E6DB570067DF08 /* VSLeaderboardModel__shards.swift in Sources */,
+				70E80CD220E6DB570067DF08 /* VSPostsListModel.swift in Sources */,
 				702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */,
+				70E80CD720E6DB570067DF08 /* VSCGCModel.swift in Sources */,
+				70E80CCA20E6DB570067DF08 /* VSPostsListModel_hits_hits_item__source.swift in Sources */,
+				70E80CB720E6DB570067DF08 /* VSUserGetModel.swift in Sources */,
+				70E80CC720E6DB570067DF08 /* VSCommentEditModel_doc.swift in Sources */,
+				70E80CC020E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item__source.swift in Sources */,
 				70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */,
+				70E80CBF20E6DB570067DF08 /* VSCGCModel_responses_item.swift in Sources */,
+				70E80CD620E6DB570067DF08 /* VSPostsListModel__shards.swift in Sources */,
+				70E80CD120E6DB570067DF08 /* VSPostsListModel_hits_hits_item.swift in Sources */,
+				70E80CE120E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item__source.swift in Sources */,
 				70E80BFA20E6976E0067DF08 /* MCViewController.swift in Sources */,
+				70E80CC820E6DB570067DF08 /* VSPostEditModel_doc.swift in Sources */,
+				70E80CDA20E6DB570067DF08 /* VSCommentsListModel__shards.swift in Sources */,
+				70E80CB520E6DB570067DF08 /* VSProfileInfoModel__source.swift in Sources */,
+				70E80CB120E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item.swift in Sources */,
+				70E80CB620E6DB570067DF08 /* VSProfileInfoModel.swift in Sources */,
 				70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */,
+				70E80CDE20E6DB570067DF08 /* VSPostPutModel.swift in Sources */,
+				70E80CCD20E6DB570067DF08 /* VSVersusAPIClient.swift in Sources */,
+				70E80CDD20E6DB570067DF08 /* VSPostEditModel.swift in Sources */,
+				70E80CB320E6DB570067DF08 /* VSPostsListModel_hits.swift in Sources */,
+				70E80CC420E6DB570067DF08 /* VSPIVModel_docs_item__source.swift in Sources */,
+				70E80CAF20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item.swift in Sources */,
+				70E80CE220E6DB570067DF08 /* VSCommentModel.swift in Sources */,
+				70E80CB420E6DB570067DF08 /* VSPostModel__source.swift in Sources */,
+				70E80CD420E6DB570067DF08 /* VSEmailGetModel.swift in Sources */,
 				701B9BA520E3FB20003C9E7E /* AppDelegate.swift in Sources */,
+				70E80CBD20E6DB570067DF08 /* VSCommentsListModel_hits.swift in Sources */,
+				70E80CCC20E6DB570067DF08 /* VSRecordPutModel.swift in Sources */,
+				70E80CC320E6DB570067DF08 /* VSLeaderboardModel_hits.swift in Sources */,
+				70E80CAE20E6DB570067DF08 /* VSPostInfoModel.swift in Sources */,
+				70E80CDC20E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +635,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vs.bcd.Versus;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/dlee/Desktop/Versus/Versus/VSAPI/Bridging_Header.h;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -410,6 +655,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vs.bcd.Versus;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/dlee/Desktop/Versus/Versus/VSAPI/Bridging_Header.h;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
