@@ -13,6 +13,8 @@ class UsernameViewController: UIViewController {
     var birthday: Date!
     @IBOutlet weak var debugLabel: UILabel!
     let client = VSVersusAPIClient.default()
+    var usernameVersion = 0
+    var confirmedInput : String! //username input that is confirmed to be available. Use this for signup
     
     @IBOutlet weak var usernameIn: UITextField!
     
@@ -23,16 +25,24 @@ class UsernameViewController: UIViewController {
     }
     
     @IBAction func textChangeListener(_ sender: UITextField) {
+        usernameVersion += 1
+        let thisVersion = usernameVersion
+        let input = usernameIn.text
         self.debugLabel.text = "Checking username..."
         client.userHead(a: "uc", b: usernameIn.text?.lowercased()).continueWith(block:) {(task: AWSTask) -> Empty? in
             if task.error != nil{
                 DispatchQueue.main.async {
-                    self.debugLabel.text = "Username available"
+                    if(thisVersion == self.usernameVersion){
+                        self.debugLabel.text = "Username available"
+                        self.confirmedInput = input!
+                    }
                 }
             }
             else{
                 DispatchQueue.main.async {
-                    self.debugLabel.text = self.usernameIn.text! + " is already taken!"
+                    if(thisVersion == self.usernameVersion){
+                        self.debugLabel.text = self.usernameIn.text! + " is already taken!"
+                    }
                 }
             }
             
