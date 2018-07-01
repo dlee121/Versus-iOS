@@ -13,6 +13,8 @@ class PasswordViewController: UIViewController {
     var username : String!
     var birthday : Date!
     @IBOutlet weak var debugLabel: UILabel!
+    @IBOutlet weak var passwordIn: UITextField!
+    var confirmed : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +51,81 @@ class PasswordViewController: UIViewController {
             }
         }
     }
+    @IBAction func textChangeListener(_ sender: UITextField) {
+        if let input = passwordIn.text{
+            if input.count > 0{
+                if input.count >= 6{
+                    if input.prefix(1) == " "{
+                        debugLabel.text = "Password cannot start with blank space"
+                        debugLabel.textColor = UIColor(named: "noticeRed")
+                        confirmed = false
+                    }
+                    else if input.suffix(1) == " "{
+                        debugLabel.text = "Password cannot end with blank space"
+                        debugLabel.textColor = UIColor(named: "noticeRed")
+                        confirmed = false
+                    }
+                    else{
+                        passwordStrengthCheck(pw: input)
+                        confirmed = true
+                    }
+                }
+                else{
+                    debugLabel.text = "Must be at least 6 characters"
+                    debugLabel.textColor = UIColor(named: "noticeRed")
+                    confirmed = false
+                }
+            }
+            else{
+                debugLabel.text = ""
+                confirmed = false
+            }
+        }
+    }
+    
+    func passwordStrengthCheck(pw: String) {
+        var strength = 0
+        
+        if(pw.count >= 4){
+            strength += 1
+        }
+        if(pw.count >= 6){
+            strength += 1
+        }
+        if(pw.lowercased() != pw){
+            strength += 1
+        }
+        var digitCount = 0
+        for i in 0...pw.count-1 {
+            if "0"..."9" ~= String(pw[pw.index(pw.startIndex, offsetBy: i)]) {
+                digitCount += 1
+            }
+        }
+        if(1...pw.count ~= digitCount){
+            strength += 1
+        }
+        
+        switch (strength){
+            case 0:
+                debugLabel.textColor = UIColor(named: "noticeRed")
+                debugLabel.text = "Password strength: weak"
+            case 1:
+                debugLabel.textColor = UIColor(named: "noticeRed")
+                debugLabel.text = "Password strength: weak"
+            case 2:
+                debugLabel.text = "Password strength: medium"
+                debugLabel.textColor = UIColor(named: "noticeYellow")
+            case 3:
+                debugLabel.text = "Password strength: good"
+                debugLabel.textColor = UIColor(named: "noticeGreen")
+            case 4:
+                debugLabel.text = "Password strength: strong"
+                debugLabel.textColor = UIColor(named: "noticeGreen")
+            default:
+                debugLabel.text = "Password strength: medium"
+                debugLabel.textColor = UIColor(named: "noticeYellow")
+        }
+    }
     
 
     /*
@@ -60,5 +137,8 @@ class PasswordViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    
 
 }

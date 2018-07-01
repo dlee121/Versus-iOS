@@ -219,6 +219,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textChangeListener:" destination="8I4-jw-PhO" eventType="editingChanged" id="oxf-jE-Nge"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose a password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSf-pj-Re8">
                                 <rect key="frame" x="85" y="281" width="204" height="29"/>
@@ -240,6 +243,7 @@
                     </view>
                     <connections>
                         <outlet property="debugLabel" destination="xy5-sD-POH" id="nhK-aO-f5U"/>
+                        <outlet property="passwordIn" destination="id3-LS-NpR" id="ooV-Nh-CmB"/>
                         <segue destination="xww-b1-KkG" kind="show" identifier="signUpToMain" id="56c-MF-6Qw"/>
                         <segue destination="ide-qk-ioU" kind="show" identifier="backToUsername" id="1o0-2n-eSQ"/>
                     </connections>
