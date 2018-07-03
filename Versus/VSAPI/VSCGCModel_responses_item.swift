@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSCGCModel_responses_item : AWSModel {
     
     var took: NSNumber?

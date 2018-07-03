@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSCGCModel_responses_item_hits_hits_item__source : AWSModel {
     
     var a: String?

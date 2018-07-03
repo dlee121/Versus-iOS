@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSUserPutModel : AWSModel {
     
     var ai: String?

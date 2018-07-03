@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSPostsListModel_hits_hits_item : AWSModel {
     
     var index: String?

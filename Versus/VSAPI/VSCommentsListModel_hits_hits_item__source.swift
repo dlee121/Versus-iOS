@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSCommentsListModel_hits_hits_item__source : AWSModel {
     
     var a: String?

@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSPostEditModel_doc : AWSModel {
     
     var bi: NSNumber?

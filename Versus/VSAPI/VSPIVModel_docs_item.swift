@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSPIVModel_docs_item : AWSModel {
     
     var index: String?

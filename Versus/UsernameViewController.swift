@@ -28,6 +28,7 @@ class UsernameViewController: UIViewController {
         credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "us-east-1:88614505-c8df-4dce-abd8-79a0543852ff")
         credentialProvider.clearCredentials()
         configurationAuth = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
+        //unauth config is stored in individual client instances and not in default, which is reserved for auth config
         client = VSVersusAPIClient(configuration: configurationAuth)
         
         usernameVersion = 0
@@ -89,6 +90,12 @@ class UsernameViewController: UIViewController {
             
             return nil
         }
+        
+    }
+    
+    func characterChecker(input : String){
+        
+        
         
     }
     

@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSPostsListCompactModel : AWSModel {
     
     var took: NSNumber?

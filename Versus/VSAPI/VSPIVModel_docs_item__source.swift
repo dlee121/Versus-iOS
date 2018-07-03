@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSPIVModel_docs_item__source : AWSModel {
     
     var pi: NSNumber?

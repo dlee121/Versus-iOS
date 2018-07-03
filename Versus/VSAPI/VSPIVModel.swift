@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSPIVModel : AWSModel {
     
     var docs: [VSPIVModel_docs_item]?

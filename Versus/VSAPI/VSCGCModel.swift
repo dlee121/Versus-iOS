@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSCGCModel : AWSModel {
     
     var responses: [VSCGCModel_responses_item]?

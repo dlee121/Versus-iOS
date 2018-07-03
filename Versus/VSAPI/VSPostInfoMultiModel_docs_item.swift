@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSPostInfoMultiModel_docs_item : AWSModel {
     
     var index: String?

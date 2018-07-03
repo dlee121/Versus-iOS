@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSEmailGetModel : AWSModel {
     
     var em: String?

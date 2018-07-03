@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSPostEditModel : AWSModel {
     
     var doc: VSPostEditModel_doc?

@@ -74,24 +74,15 @@ class ViewController: UIViewController {
                             print("signed in as " + email)
                             
                             result?.user.getIDTokenForcingRefresh(true){ (idToken, error) in
-                                print(idToken!)
-                                
-                                //let oldCP = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "us-east-1:88614505-c8df-4dce-abd8-79a0543852ff")
-                                
-                                //oldCP.clearKeychain()
-                                
                                 
                                 let oidcProvider = OIDCProvider(input: idToken! as NSString)
                                 let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
                                 credentialsProvider.clearCredentials()
                                 let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
-                                
+                                //login session configuration is stored in the default
                                 AWSServiceManager.default().defaultServiceConfiguration = configuration
                                 
                                 self.performSegue(withIdentifier: "logInToMain", sender: self)
-                                
-                                
-                                
                                 
                             }
                             

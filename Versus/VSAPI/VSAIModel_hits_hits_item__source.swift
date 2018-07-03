@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSAIModel_hits_hits_item__source : AWSModel {
     
     var bd: String?

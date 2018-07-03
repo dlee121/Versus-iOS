@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSCommentEditModel_doc : AWSModel {
     
     var ct: String?

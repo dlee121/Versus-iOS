@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSPIVSingle : AWSModel {
     
     var pi: NSNumber?

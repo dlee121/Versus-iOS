@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSPostInfoMultiModel : AWSModel {
     
     var docs: [VSPostInfoMultiModel_docs_item]?

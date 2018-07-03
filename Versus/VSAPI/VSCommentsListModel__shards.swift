@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSCommentsListModel__shards : AWSModel {
     
     var total: NSNumber?

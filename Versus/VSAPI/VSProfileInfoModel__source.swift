@@ -17,7 +17,7 @@
 import Foundation
 import AWSCore
 
- 
+@objcMembers
 public class VSProfileInfoModel__source : AWSModel {
     
     var b: NSNumber?
