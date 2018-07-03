@@ -12,7 +12,10 @@ class UsernameViewController: UIViewController {
     
     var birthday: Date!
     @IBOutlet weak var debugLabel: UILabel!
-    let client = VSVersusAPIClient.default()
+    
+    var credentialProvider : AWSCognitoCredentialsProvider!
+    var configurationAuth : AWSServiceConfiguration!
+    var client : VSVersusAPIClient!
     var usernameVersion = 0
     var confirmedInput : String! //username input that is confirmed to be available. Use this for signup
     var confirmed : Bool = false
@@ -21,6 +24,12 @@ class UsernameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "us-east-1:88614505-c8df-4dce-abd8-79a0543852ff")
+        credentialProvider.clearCredentials()
+        configurationAuth = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
+        client = VSVersusAPIClient(configuration: configurationAuth)
+        
         usernameVersion = 0
         if confirmedInput != nil{
             usernameIn.text = confirmedInput

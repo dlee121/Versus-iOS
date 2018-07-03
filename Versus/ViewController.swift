@@ -72,7 +72,30 @@ class ViewController: UIViewController {
                         // ...
                         if let email = result?.user.email {
                             print("signed in as " + email)
-                            self.performSegue(withIdentifier: "logInToMain", sender: self)
+                            
+                            result?.user.getIDTokenForcingRefresh(true){ (idToken, error) in
+                                print(idToken!)
+                                
+                                //let oldCP = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "us-east-1:88614505-c8df-4dce-abd8-79a0543852ff")
+                                
+                                //oldCP.clearKeychain()
+                                
+                                
+                                let oidcProvider = OIDCProvider(input: idToken! as NSString)
+                                let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+                                credentialsProvider.clearCredentials()
+                                let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+                                
+                                AWSServiceManager.default().defaultServiceConfiguration = configuration
+                                
+                                self.performSegue(withIdentifier: "logInToMain", sender: self)
+                                
+                                
+                                
+                                
+                            }
+                            
+                            
                         }
                         else{
                             self.showToast(message: "incorrect username or password", length: 30)
@@ -96,7 +119,6 @@ class ViewController: UIViewController {
         //sign up user with Firebase
         
         //try? Auth.auth().signOut()
-        print("going to Birthday")
         
         performSegue(withIdentifier: "goToBirthday", sender: self)
     }

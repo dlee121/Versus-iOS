@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class PasswordViewController: UIViewController {
 
@@ -14,7 +15,7 @@ class PasswordViewController: UIViewController {
     var birthday : Date!
     @IBOutlet weak var debugLabel: UILabel!
     @IBOutlet weak var passwordIn: UITextField!
-    var confirmed : Bool = false
+    var confirmedPW : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +42,7 @@ class PasswordViewController: UIViewController {
         performSegue(withIdentifier: "backToUsername", sender: self)
     }
     
+    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             if identifier == "backToUsername"{
@@ -51,34 +53,33 @@ class PasswordViewController: UIViewController {
             }
         }
     }
+    */
+    
     @IBAction func textChangeListener(_ sender: UITextField) {
+        confirmedPW = nil
         if let input = passwordIn.text{
             if input.count > 0{
                 if input.count >= 6{
                     if input.prefix(1) == " "{
                         debugLabel.text = "Password cannot start with blank space"
                         debugLabel.textColor = UIColor(named: "noticeRed")
-                        confirmed = false
                     }
                     else if input.suffix(1) == " "{
                         debugLabel.text = "Password cannot end with blank space"
                         debugLabel.textColor = UIColor(named: "noticeRed")
-                        confirmed = false
                     }
                     else{
                         passwordStrengthCheck(pw: input)
-                        confirmed = true
+                        confirmedPW = input
                     }
                 }
                 else{
                     debugLabel.text = "Must be at least 6 characters"
                     debugLabel.textColor = UIColor(named: "noticeRed")
-                    confirmed = false
                 }
             }
             else{
                 debugLabel.text = ""
-                confirmed = false
             }
         }
     }
@@ -127,7 +128,42 @@ class PasswordViewController: UIViewController {
         }
     }
     
-
+    
+    @IBAction func nextTapped(_ sender: Any) {
+        //sign up the user using firebase
+        if birthday != nil && username != nil && confirmedPW != nil {
+            Auth.auth().createUser(withEmail: username+"@versusbcd.com", password: confirmedPW) { (authResult, error) in
+                // ...
+                if let user = authResult?.user {
+                    print("signed up as " + user.email!)
+                    user.getIDToken(){ (tokenResult, error) in
+                        if error != nil {
+                            // Handle error
+                            return;
+                        }
+                        //set AWS credentials with the retrieved token
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                    self.performSegue(withIdentifier: "signUpToMain", sender: self)
+                    
+                }
+                else{
+                    self.showToast(message: "Something went wrong, please try again.", length: 30)
+                }
+            }
+        }
+        else {
+            showToast(message: "Something went wrong, please try again.", length: 26)
+        }
+        
+    }
+    
     /*
     // MARK: - Navigation
 
