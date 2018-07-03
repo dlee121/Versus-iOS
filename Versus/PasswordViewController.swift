@@ -20,13 +20,13 @@ class PasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /*
         let formatter = DateFormatter()
-        //then again set the date format whhich type of output you need
-        formatter.dateFormat = "dd-MMM-yyyy"
-        // again convert your date to string
+        formatter.dateFormat = "M-d-yyyy"
         let myStringafd = formatter.string(from: birthday!)
+        */
         
-        debugLabel.text = username + myStringafd
+        debugLabel.text = ""
         
 
         // Do any additional setup after loading the view.
@@ -42,7 +42,7 @@ class PasswordViewController: UIViewController {
         performSegue(withIdentifier: "backToUsername", sender: self)
     }
     
-    /*
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             if identifier == "backToUsername"{
@@ -53,7 +53,7 @@ class PasswordViewController: UIViewController {
             }
         }
     }
-    */
+ 
     
     @IBAction func textChangeListener(_ sender: UITextField) {
         confirmedPW = nil

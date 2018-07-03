@@ -24,8 +24,8 @@ class BirthdayViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         dateInput = bdayInput.date
-        bdayInput.minimumDate = PICKER_CEILING
-        bdayInput.maximumDate = MINIMUM_AGE
+        //bdayInput.minimumDate = PICKER_CEILING
+        //bdayInput.maximumDate = MINIMUM_AGE
         if birthday != nil{
             bdayInput.setDate(birthday, animated: false)
         }

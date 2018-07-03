@@ -34,15 +34,71 @@ class UsernameViewController: UIViewController {
         usernameVersion = 0
         if confirmedInput != nil{
             usernameIn.text = confirmedInput
+            
+            let input = confirmedInput
+            
+            if characterChecker(input: input!) {
+                
+                usernameVersion += 1
+                let thisVersion = usernameVersion
+                
+                self.debugLabel.text = "Checking username..."
+                client.userHead(a: "uc", b: usernameIn.text?.lowercased()).continueWith(block:) {(task: AWSTask) -> Empty? in
+                    if task.error != nil{
+                        DispatchQueue.main.async {
+                            if(thisVersion == self.usernameVersion){
+                                self.confirmed = true
+                                self.debugLabel.textColor = UIColor.black
+                                self.debugLabel.text = "Username available"
+                                self.confirmedInput = input!
+                            }
+                        }
+                    }
+                    else{
+                        DispatchQueue.main.async {
+                            if(thisVersion == self.usernameVersion){
+                                self.confirmed = false
+                                self.debugLabel.textColor = UIColor(named: "noticeRed")
+                                self.debugLabel.text = self.usernameIn.text! + " is already taken!"
+                            }
+                        }
+                    }
+                    
+                    return nil
+                }
+            }
+            else{
+                if input!.isEmpty{
+                    confirmed = false
+                    debugLabel.text = ""
+                }
+                else{
+                    confirmed = false
+                    debugLabel.textColor = UIColor(named: "noticeRed")
+                    debugLabel.text = "Can only contain letters, numbers, and the following special characters: '-', '_', '~', and '%'"
+                }
+            }
+            
+            
+        }
+        // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func textChangeListener(_ sender: UITextField) {
+        let input = usernameIn.text
+        
+        if characterChecker(input: input!) {
+            
             usernameVersion += 1
             let thisVersion = usernameVersion
-            let input = confirmedInput
+            
             self.debugLabel.text = "Checking username..."
             client.userHead(a: "uc", b: usernameIn.text?.lowercased()).continueWith(block:) {(task: AWSTask) -> Empty? in
                 if task.error != nil{
                     DispatchQueue.main.async {
                         if(thisVersion == self.usernameVersion){
                             self.confirmed = true
+                            self.debugLabel.textColor = UIColor.black
                             self.debugLabel.text = "Username available"
                             self.confirmedInput = input!
                         }
@@ -52,6 +108,7 @@ class UsernameViewController: UIViewController {
                     DispatchQueue.main.async {
                         if(thisVersion == self.usernameVersion){
                             self.confirmed = false
+                            self.debugLabel.textColor = UIColor(named: "noticeRed")
                             self.debugLabel.text = self.usernameIn.text! + " is already taken!"
                         }
                     }
@@ -59,43 +116,23 @@ class UsernameViewController: UIViewController {
                 
                 return nil
             }
-            
         }
-        // Do any additional setup after loading the view.
-    }
-    
-    @IBAction func textChangeListener(_ sender: UITextField) {
-        usernameVersion += 1
-        let thisVersion = usernameVersion
-        let input = usernameIn.text
-        self.debugLabel.text = "Checking username..."
-        client.userHead(a: "uc", b: usernameIn.text?.lowercased()).continueWith(block:) {(task: AWSTask) -> Empty? in
-            if task.error != nil{
-                DispatchQueue.main.async {
-                    if(thisVersion == self.usernameVersion){
-                        self.confirmed = true
-                        self.debugLabel.text = "Username available"
-                        self.confirmedInput = input!
-                    }
-                }
+        else{
+            if input!.isEmpty{
+                confirmed = false
+                debugLabel.text = ""
             }
             else{
-                DispatchQueue.main.async {
-                    if(thisVersion == self.usernameVersion){
-                        self.confirmed = false
-                        self.debugLabel.text = self.usernameIn.text! + " is already taken!"
-                    }
-                }
+                confirmed = false
+                debugLabel.textColor = UIColor(named: "noticeRed")
+                debugLabel.text = "Can only contain letters, numbers, and the following special characters: '-', '_', '~', and '%'"
             }
-            
-            return nil
         }
         
     }
     
-    func characterChecker(input : String){
-        
-        
+    func characterChecker(input : String) -> Bool {
+        return !input.isEmpty && input.range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil
         
     }
     
