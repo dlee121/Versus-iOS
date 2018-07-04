@@ -25,10 +25,10 @@ public class VSUserPutModel : AWSModel {
     var bd: String?
     var cs: String?
     var em: String?
-    var fn: String?
+    //var fn: String?
     var g: NSNumber?
     var _in: NSNumber?
-    var ln: String?
+    //var ln: String?
     var ph: String?
     var pi: NSNumber?
     var s: NSNumber?
@@ -41,10 +41,10 @@ public class VSUserPutModel : AWSModel {
 		params["bd"] = "bd"
 		params["cs"] = "cs"
 		params["em"] = "em"
-		params["fn"] = "fn"
+		//params["fn"] = "fn"
 		params["g"] = "g"
 		params["_in"] = "in"
-		params["ln"] = "ln"
+		//params["ln"] = "ln"
 		params["ph"] = "ph"
 		params["pi"] = "pi"
 		params["s"] = "s"

@@ -70,10 +70,9 @@ class ViewController: UIViewController {
                 else{
                     Auth.auth().signIn(withEmail: username+"@versusbcd.com", password: pw) { (result, error) in
                         // ...
-                        if let email = result?.user.email {
-                            print("signed in as " + email)
+                        if let user = result?.user {
                             
-                            result?.user.getIDTokenForcingRefresh(true){ (idToken, error) in
+                            user.getIDTokenForcingRefresh(true){ (idToken, error) in
                                 
                                 let oidcProvider = OIDCProvider(input: idToken! as NSString)
                                 let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)

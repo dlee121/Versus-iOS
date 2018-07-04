@@ -136,30 +136,76 @@ class PasswordViewController: UIViewController {
                 // ...
                 if let user = authResult?.user {
                     print("signed up as " + user.email!)
-                    user.getIDToken(){ (tokenResult, error) in
-                        if error != nil {
-                            // Handle error
-                            return;
+                    user.getIDTokenForcingRefresh(true){ (idToken, error) in
+                        
+                        let oidcProvider = OIDCProvider(input: idToken! as NSString)
+                        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+                        credentialsProvider.clearCredentials()
+                        let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+                        //login session configuration is stored in the default
+                        AWSServiceManager.default().defaultServiceConfiguration = configuration
+                        
+                        
+                        
+                        
+                        //populate a UserPutModel and put it into ElasticSearch using api client
+                        let userPutModel = VSUserPutModel()
+                        userPutModel?.ai = "0" //AuthID for fb/google signup, hence the default value of "0" for native signup
+                        userPutModel?.b = 0 //initial bronze medal count
+                        
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "M-d-yyyy"
+                        userPutModel?.bd = formatter.string(from: self.birthday!) //birthday
+                        
+                        userPutModel?.cs = self.username //case-sensitive username for display purposes, since user is stored with id = username.lowercased()
+                        userPutModel?.em = "0" //default value for email
+                        userPutModel?.g = 0 //initial gold medal count
+                        userPutModel?._in = 0 //initial user influence
+                        userPutModel?.pi = 0 //initial value for profile image version
+                        userPutModel?.s = 0 //initial silver medal count
+                        
+                        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                        userPutModel?.t = formatter.string(from: Date()) //signup timestamp
+                        
+                        VSVersusAPIClient.default().userputPost(body: userPutModel!, c: self.username.lowercased(), a: "put", b: "user").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            if task.error != nil{
+                                DispatchQueue.main.async {
+                                    self.showToast(message: "Something went wrong. Please try again.", length: 39)
+                                }
+                            }
+                            else { //successfully created user
+                                //send new user notification (instructions for them to set up password-reset email, which is
+                                /*
+                                 String userNotificationPath = getUsernameHash(newUser.getUsername()) + "/" + newUser.getUsername() + "/n/em/";
+                                 FirebaseDatabase.getInstance().getReference().child(userNotificationPath).setValue(true);
+                                 */
+                                
+                                
+                                
+                                
+                                
+                                
+                                //create user session and segue to MainContainer
+                                
+                                
+                                DispatchQueue.main.async {
+                                    self.performSegue(withIdentifier: "signUpToMain", sender: self)
+                                }
+                            }
+                            
+                            return nil
                         }
-                        //set AWS credentials with the retrieved token
-                        
-                        
                         
                     }
                     
-                    
-                    
-                    
-                    self.performSegue(withIdentifier: "signUpToMain", sender: self)
-                    
                 }
                 else{
-                    self.showToast(message: "Something went wrong, please try again.", length: 30)
+                    self.showToast(message: "Something went wrong, please try again.", length: 39)
                 }
             }
         }
         else {
-            showToast(message: "Something went wrong, please try again.", length: 26)
+            showToast(message: "Something went wrong, please try again.", length: 39)
         }
         
     }
