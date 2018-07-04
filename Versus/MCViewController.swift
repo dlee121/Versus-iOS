@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MCViewController: UIViewController {
 
@@ -43,8 +44,17 @@ class MCViewController: UIViewController {
     }
     
     @IBAction func logOutTapped(_ sender: UIButton) {
-        
-        
+        //remove session data, log out firebase user, then segue back to start screen
+        UserDefaults.standard.removeObject(forKey: "KEY_BDAY")
+        UserDefaults.standard.removeObject(forKey: "KEY_EMAIL")
+        UserDefaults.standard.removeObject(forKey: "KEY_USERNAME")
+        UserDefaults.standard.removeObject(forKey: "KEY_PI")
+        UserDefaults.standard.removeObject(forKey: "KEY_IS_NATIVE")
+        try! Auth.auth().signOut()
+        performSegue(withIdentifier: "logOutToStart", sender: self)
+    }
+    
+    @IBAction func apiTestButtonTapped(_ sender: UIButton) {
         VSVersusAPIClient.default().postinfoGet(a: "pinf", b: "18f7c832824e4c259d018f60f54b45bb").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -58,8 +68,9 @@ class MCViewController: UIViewController {
             }
             return nil
         }
-    }
     
+    
+    }
     /*
     // MARK: - Navigation
 

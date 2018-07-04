@@ -71,7 +71,6 @@
                         <outlet property="signUpButton" destination="LBD-hS-d1D" id="wpA-G9-8iq"/>
                         <outlet property="usernameIn" destination="Wo0-MF-Nss" id="J64-Mt-xgC"/>
                         <segue destination="PlH-jL-SP2" kind="show" identifier="goToBirthday" id="CBT-JG-zYd"/>
-                        <segue destination="xww-b1-KkG" kind="show" identifier="logInToMain" id="cqf-v7-jIy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -292,12 +291,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EfI-59-ecE">
+                                <rect key="frame" x="16" y="584" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="api test"/>
+                                <connections>
+                                    <action selector="apiTestButtonTapped:" destination="xww-b1-KkG" eventType="touchUpInside" id="C72-Np-VyO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="xmh-qs-XUA"/>
                     </view>
                     <connections>
                         <outlet property="debugLabel" destination="mLP-3z-3Fl" id="0SR-Da-Det"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="logOutToStart" id="3gN-D4-VVL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d8j-Xp-9Tz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -316,8 +325,8 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="56c-MF-6Qw"/>
         <segue reference="1o0-2n-eSQ"/>
-        <segue reference="5A0-ex-P7l"/>
+        <segue reference="CBT-JG-zYd"/>
+        <segue reference="3gN-D4-VVL"/>
     </inferredMetricsTieBreakers>
 </document>

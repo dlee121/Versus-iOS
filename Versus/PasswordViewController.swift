@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
 
 class PasswordViewController: UIViewController {
 
@@ -16,6 +17,8 @@ class PasswordViewController: UIViewController {
     @IBOutlet weak var debugLabel: UILabel!
     @IBOutlet weak var passwordIn: UITextField!
     var confirmedPW : String!
+    var ref: DatabaseReference! //firebase realtime database reference
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +28,7 @@ class PasswordViewController: UIViewController {
         formatter.dateFormat = "M-d-yyyy"
         let myStringafd = formatter.string(from: birthday!)
         */
-        
+        ref = Database.database().reference()
         debugLabel.text = ""
         
 
@@ -145,9 +148,6 @@ class PasswordViewController: UIViewController {
                         //login session configuration is stored in the default
                         AWSServiceManager.default().defaultServiceConfiguration = configuration
                         
-                        
-                        
-                        
                         //populate a UserPutModel and put it into ElasticSearch using api client
                         let userPutModel = VSUserPutModel()
                         userPutModel?.ai = "0" //AuthID for fb/google signup, hence the default value of "0" for native signup
@@ -155,7 +155,8 @@ class PasswordViewController: UIViewController {
                         
                         let formatter = DateFormatter()
                         formatter.dateFormat = "M-d-yyyy"
-                        userPutModel?.bd = formatter.string(from: self.birthday!) //birthday
+                        let formattedBirthday = formatter.string(from: self.birthday!)
+                        userPutModel?.bd = formattedBirthday //birthday
                         
                         userPutModel?.cs = self.username //case-sensitive username for display purposes, since user is stored with id = username.lowercased()
                         userPutModel?.em = "0" //default value for email
@@ -174,18 +175,31 @@ class PasswordViewController: UIViewController {
                                 }
                             }
                             else { //successfully created user
-                                //send new user notification (instructions for them to set up password-reset email, which is
-                                /*
-                                 String userNotificationPath = getUsernameHash(newUser.getUsername()) + "/" + newUser.getUsername() + "/n/em/";
-                                 FirebaseDatabase.getInstance().getReference().child(userNotificationPath).setValue(true);
-                                 */
+                                //send new user notification about account recovery setup
+                                var usernameHash : Int32
+                                if(self.username.count < 5){
+                                    usernameHash = self.username.hashCode()
+                                }
+                                else{
+                                    var hashIn = ""
+                                    
+                                    hashIn.append(self.username[0])
+                                    hashIn.append(self.username[self.username.count-2])
+                                    hashIn.append(self.username[1])
+                                    hashIn.append(self.username[self.username.count-1])
+                                    
+                                    usernameHash = hashIn.hashCode()
+                                }
                                 
-                                
-                                
-                                
-                                
+                                let userNotificationPath = "\(usernameHash)/" + self.username + "/n/em/"
+                                self.ref.child(userNotificationPath).setValue(true)
                                 
                                 //create user session and segue to MainContainer
+                                UserDefaults.standard.set(formattedBirthday, forKey: "KEY_BDAY")
+                                UserDefaults.standard.set("0", forKey: "KEY_EMAIL")
+                                UserDefaults.standard.set(self.username, forKey: "KEY_USERNAME")
+                                UserDefaults.standard.set(0, forKey: "KEY_PI")
+                                UserDefaults.standard.set(true, forKey: "KEY_IS_NATIVE")
                                 
                                 
                                 DispatchQueue.main.async {
