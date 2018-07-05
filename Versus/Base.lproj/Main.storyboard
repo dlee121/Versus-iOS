@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8ga-hf-eFt">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,6 +11,31 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Initial-->
+        <scene sceneID="sFb-LO-JFH">
+            <objects>
+                <viewController title="Initial" id="8ga-hf-eFt" customClass="InitialViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="o9t-F8-CZy">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo_splash" translatesAutoresizingMaskIntoConstraints="NO" id="X5o-GW-jne">
+                                <rect key="frame" x="67" y="269" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="2bu-0J-qUa"/>
+                    </view>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="initialToStart" id="Lbc-3X-Z2H"/>
+                        <segue destination="xww-b1-KkG" kind="show" identifier="initialToMain" id="kMN-CP-0NP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rbY-G9-vVg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-962" y="-219"/>
+        </scene>
         <!--StartScreen-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -71,11 +96,12 @@
                         <outlet property="signUpButton" destination="LBD-hS-d1D" id="wpA-G9-8iq"/>
                         <outlet property="usernameIn" destination="Wo0-MF-Nss" id="J64-Mt-xgC"/>
                         <segue destination="PlH-jL-SP2" kind="show" identifier="goToBirthday" id="CBT-JG-zYd"/>
+                        <segue destination="xww-b1-KkG" kind="show" identifier="logInToMain" id="kmh-ur-Uym"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
+            <point key="canvasLocation" x="-90" y="-219"/>
         </scene>
         <!--BirthdayInput-->
         <scene sceneID="uNn-o5-u2e">
@@ -130,7 +156,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eu0-z7-jpC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="608.79999999999995" y="-706.59670164917543"/>
+            <point key="canvasLocation" x="764" y="-219"/>
         </scene>
         <!--UsernameInput-->
         <scene sceneID="9ol-m1-qt6">
@@ -194,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0nC-Zq-61z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1404" y="-707.49625187406298"/>
+            <point key="canvasLocation" x="1612" y="-219"/>
         </scene>
         <!--PasswordInput-->
         <scene sceneID="Lpa-fv-S49">
@@ -258,7 +284,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Htd-no-XdR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2140" y="-707.49625187406298"/>
+            <point key="canvasLocation" x="2425" y="-219"/>
         </scene>
         <!--MainContainer-->
         <scene sceneID="c1G-AH-DsY">
@@ -311,7 +337,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d8j-Xp-9Tz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="884" y="33.733133433283363"/>
+            <point key="canvasLocation" x="-90" y="701"/>
         </scene>
     </scenes>
     <resources>
@@ -325,8 +351,9 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1o0-2n-eSQ"/>
-        <segue reference="CBT-JG-zYd"/>
-        <segue reference="3gN-D4-VVL"/>
+        <segue reference="kMN-CP-0NP"/>
+        <segue reference="onp-lO-nwi"/>
+        <segue reference="5A0-ex-P7l"/>
+        <segue reference="Lbc-3X-Z2H"/>
     </inferredMetricsTieBreakers>
 </document>
