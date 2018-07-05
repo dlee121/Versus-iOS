@@ -13,6 +13,7 @@ class MCViewController: UIViewController {
 
     @IBOutlet weak var debugLabel: UILabel!
     
+    @IBOutlet weak var bdaylabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         /*
@@ -32,6 +33,8 @@ class MCViewController: UIViewController {
             return nil
         }
         */
+        
+        
         
         
  
@@ -55,6 +58,7 @@ class MCViewController: UIViewController {
     }
     
     @IBAction func apiTestButtonTapped(_ sender: UIButton) {
+        bdaylabel.text = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         VSVersusAPIClient.default().postinfoGet(a: "pinf", b: "18f7c832824e4c259d018f60f54b45bb").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {

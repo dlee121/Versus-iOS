@@ -326,18 +326,26 @@
                                     <action selector="apiTestButtonTapped:" destination="xww-b1-KkG" eventType="touchUpInside" id="C72-Np-VyO"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xGt-Fj-xqV">
+                                <rect key="frame" x="16" y="90" width="343" height="53"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="44"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="xmh-qs-XUA"/>
                     </view>
                     <connections>
+                        <outlet property="bdaylabel" destination="xGt-Fj-xqV" id="y5b-Lc-j0e"/>
                         <outlet property="debugLabel" destination="mLP-3z-3Fl" id="0SR-Da-Det"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="logOutToStart" id="3gN-D4-VVL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d8j-Xp-9Tz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-90" y="701"/>
+            <point key="canvasLocation" x="-90.400000000000006" y="700.29985007496259"/>
         </scene>
     </scenes>
     <resources>
@@ -354,6 +362,6 @@
         <segue reference="kMN-CP-0NP"/>
         <segue reference="onp-lO-nwi"/>
         <segue reference="5A0-ex-P7l"/>
-        <segue reference="Lbc-3X-Z2H"/>
+        <segue reference="3gN-D4-VVL"/>
     </inferredMetricsTieBreakers>
 </document>

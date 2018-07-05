@@ -81,7 +81,30 @@ class ViewController: UIViewController {
                                 //login session configuration is stored in the default
                                 AWSServiceManager.default().defaultServiceConfiguration = configuration
                                 
-                                self.performSegue(withIdentifier: "logInToMain", sender: self)
+                                VSVersusAPIClient.default().userGet(a: "getu", b: username.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                    if task.error != nil {
+                                        DispatchQueue.main.async {
+                                            print(task.error!)
+                                        }
+                                    }
+                                    else {
+                                        let userGetModel = task.result
+                                        //create user session and segue to MainContainer
+                                        UserDefaults.standard.set(userGetModel?.bd, forKey: "KEY_BDAY")
+                                        UserDefaults.standard.set(userGetModel?.em, forKey: "KEY_EMAIL")
+                                        UserDefaults.standard.set(userGetModel?.cs, forKey: "KEY_USERNAME")
+                                        UserDefaults.standard.set(userGetModel?.pi, forKey: "KEY_PI")
+                                        UserDefaults.standard.set(true, forKey: "KEY_IS_NATIVE")
+                                        
+                                        DispatchQueue.main.async {
+                                            self.performSegue(withIdentifier: "logInToMain", sender: self)
+                                        }
+                                    }
+                                    return nil
+                                }
+                                
+                                
+                                
                                 
                             }
                             
