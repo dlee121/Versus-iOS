@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Nuke
+import AWSS3
 
 class PostImageCollectionViewCell: UICollectionViewCell {
     
@@ -23,6 +25,10 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var vLabel: UILabel!
     @IBOutlet weak var sLabel: UILabel!
     
+    let DEFAULT = 0
+    let S3 = 1
+    
+    let getPreSignedURLRequest = AWSS3GetPreSignedURLRequest()
     
     func setCell(post : PostObject, vIsRed : Bool){
         authorLabel.text = post.author
@@ -35,6 +41,15 @@ class PostImageCollectionViewCell: UICollectionViewCell {
         questionLabel.text = post.question
         
         //set up redImage and blackImage
+        if post.redimg.intValue % 10 == S3 {
+            getPostImage(postID: post.post_id, lORr: 0, editVersion: post.redimg.intValue / 10)
+        }
+        
+        if post.blackimg.intValue % 10 == S3 {
+            getPostImage(postID: post.post_id, lORr: 1, editVersion: post.blackimg.intValue / 10)
+        }
+        
+        
         
         rednameLabel.text = post.redname
         blacknameLabel.text = post.blackname
@@ -185,6 +200,55 @@ class PostImageCollectionViewCell: UICollectionViewCell {
         }
         
         
+        
+    }
+    
+    func getPostImage(postID : String, lORr : Int, editVersion : Int){
+        let request = AWSS3GetPreSignedURLRequest()
+        request.expires = Date().addingTimeInterval(86400)
+        request.bucket = "versus.pictures"
+        request.httpMethod = .GET
+        
+        if lORr == 0 { //left
+            if editVersion == 0 {
+                request.key = postID + "-left.jpeg"
+            }
+            else{
+                request.key = postID + "-left\(editVersion).jpeg"
+            }
+            
+            AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+                if let error = task.error {
+                    print("Error: \(error)")
+                    return nil
+                }
+                
+                let presignedURL = task.result
+                Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.redImage)
+                
+                return nil
+            }
+        }
+        else { //right
+            if editVersion == 0 {
+                request.key = postID + "-right.jpeg"
+            }
+            else{
+                request.key = postID + "-right\(editVersion).jpeg"
+            }
+            
+            AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+                if let error = task.error {
+                    print("Error: \(error)")
+                    return nil
+                }
+                
+                let presignedURL = task.result
+                Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.blackImage)
+                
+                return nil
+            }
+        }
         
     }
     

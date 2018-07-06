@@ -8,8 +8,10 @@
 
 import UIKit
 import Firebase
+import Nuke
+import AWSS3
 
-class MCViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class MCViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDataSourcePrefetching {
     
     @IBOutlet weak var collectionView: UICollectionView!
     var fromIndex = 0
@@ -18,6 +20,9 @@ class MCViewController: UIViewController, UICollectionViewDataSource, UICollecti
     
     var posts = [PostObject]()
     var vIsRed = true
+    let preheater = Nuke.ImagePreheater()
+    
+    
     
     
     override func viewDidLoad() {
@@ -56,6 +61,8 @@ class MCViewController: UIViewController, UICollectionViewDataSource, UICollecti
                         }
                     }
                     
+                    self.fromIndex = results!.count - 1
+                    
                 }
             }
             return nil
@@ -88,6 +95,13 @@ class MCViewController: UIViewController, UICollectionViewDataSource, UICollecti
             return cell
         }
         
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        
+    }
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
         
     }
     
