@@ -11,7 +11,7 @@ import Firebase
 import Nuke
 import AWSS3
 
-class MCViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDataSourcePrefetching {
+class MCViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
     
     @IBOutlet weak var collectionView: UICollectionView!
     var fromIndex = 0
@@ -74,6 +74,19 @@ class MCViewController: UIViewController, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts.count
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let post = posts[indexPath.row]
+        if post.redimg.intValue % 10 == S3 || post.blackimg.intValue % 10 == S3 {
+            return CGSize(width: 343, height: 340)
+        }
+        else {
+            return CGSize(width: 343, height: 213)
+        }
+        
+    }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let currentPost = posts[indexPath.row]
