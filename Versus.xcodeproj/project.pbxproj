@@ -19,6 +19,9 @@
 		70B9A7E120ED64C200C06709 /* Character+UInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E020ED64C200C06709 /* Character+UInt32.swift */; };
 		70B9A7E320ED650A00C06709 /* String+HashCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E220ED650A00C06709 /* String+HashCode.swift */; };
 		70B9A7E520ED93B600C06709 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E420ED93B600C06709 /* InitialViewController.swift */; };
+		70B9A7E920EEDACB00C06709 /* PostObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E820EEDACB00C06709 /* PostObject.swift */; };
+		70B9A7ED20EEE33800C06709 /* PostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7EC20EEE33800C06709 /* PostImageCollectionViewCell.swift */; };
+		70B9A7EF20EF12E100C06709 /* PostTextCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7EE20EF12E100C06709 /* PostTextCollectionViewCell.swift */; };
 		70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */; };
 		70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF520E6944B0067DF08 /* UsernameViewController.swift */; };
 		70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF720E694560067DF08 /* PasswordViewController.swift */; };
@@ -98,6 +101,9 @@
 		70B9A7E020ED64C200C06709 /* Character+UInt32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+UInt32.swift"; sourceTree = "<group>"; };
 		70B9A7E220ED650A00C06709 /* String+HashCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HashCode.swift"; sourceTree = "<group>"; };
 		70B9A7E420ED93B600C06709 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		70B9A7E820EEDACB00C06709 /* PostObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostObject.swift; sourceTree = "<group>"; };
+		70B9A7EC20EEE33800C06709 /* PostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		70B9A7EE20EF12E100C06709 /* PostTextCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTextCollectionViewCell.swift; sourceTree = "<group>"; };
 		70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewController.swift; sourceTree = "<group>"; };
 		70E80BF520E6944B0067DF08 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
 		70E80BF720E694560067DF08 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +226,8 @@
 				701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */,
 				701B9BB020E3FB22003C9E7E /* Info.plist */,
 				702499A020E57EC70024E871 /* Extensions */,
+				70B9A7EC20EEE33800C06709 /* PostImageCollectionViewCell.swift */,
+				70B9A7EE20EF12E100C06709 /* PostTextCollectionViewCell.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -238,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */,
+				70B9A7E820EEDACB00C06709 /* PostObject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -460,6 +469,7 @@
 				70E80CBB20E6DB570067DF08 /* Empty.swift in Sources */,
 				70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */,
 				70E80CBC20E6DB570067DF08 /* VSAIModel_hits.swift in Sources */,
+				70B9A7ED20EEE33800C06709 /* PostImageCollectionViewCell.swift in Sources */,
 				70E80CC120E6DB570067DF08 /* VSUserPutModel.swift in Sources */,
 				70E80CC920E6DB570067DF08 /* VSCommentEditModel.swift in Sources */,
 				70E80CB020E6DB570067DF08 /* VSPIVModel.swift in Sources */,
@@ -469,9 +479,11 @@
 				70E80CDB20E6DB570067DF08 /* VSCommentsListModel_hits_hits_item.swift in Sources */,
 				70E80CCF20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item.swift in Sources */,
 				70E80CBA20E6DB570067DF08 /* VSAIModel_hits_hits_item.swift in Sources */,
+				70B9A7E920EEDACB00C06709 /* PostObject.swift in Sources */,
 				70E80CCE20E6DB570067DF08 /* VSCommentPutModel.swift in Sources */,
 				70E80CD320E6DB570067DF08 /* VSCommentModel__source.swift in Sources */,
 				70E80CD020E6DB570067DF08 /* VSPostsListCompactModel_hits.swift in Sources */,
+				70B9A7EF20EF12E100C06709 /* PostTextCollectionViewCell.swift in Sources */,
 				70E80CBE20E6DB570067DF08 /* VSAIModel_hits_hits_item__source.swift in Sources */,
 				70E80CB920E6DB570067DF08 /* VSLeaderboardModel__shards.swift in Sources */,
 				70E80CD220E6DB570067DF08 /* VSPostsListModel.swift in Sources */,

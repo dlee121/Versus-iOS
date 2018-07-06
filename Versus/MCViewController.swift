@@ -9,37 +9,88 @@
 import UIKit
 import Firebase
 
-class MCViewController: UIViewController {
-
-    @IBOutlet weak var debugLabel: UILabel!
+class MCViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    @IBOutlet weak var bdaylabel: UILabel!
+    @IBOutlet weak var collectionView: UICollectionView!
+    var fromIndex = 0
+    let DEFAULT = 0
+    let S3 = 1
+    
+    var posts = [PostObject]()
+    var vIsRed = true
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*
-        VSVersusAPIClient.default().userHead(a: "uc", b: "cageyogurt").continueWith(block:) {(task: AWSTask) -> Empty? in
-            if task.error != nil{
-                DispatchQueue.main.async {
-                    self.debugLabel.text = "Username available"
-                }
-            }
-            else{
-                DispatchQueue.main.async {
-                    self.debugLabel.text = "noerr"
-                    
-                }
-            }
-            
-            return nil
+        if posts.count == 0 {
+            trendingQuery(fromIndex: 0)
         }
-        */
-        
-        
-        
         
  
         // Do any additional setup after loading the view.
     }
+    
+    
+    func trendingQuery(fromIndex : Int){
+        VSVersusAPIClient.default().postslistGet(c: nil, d: nil, a: "tr", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            if task.error != nil {
+                DispatchQueue.main.async {
+                    print(task.error!)
+                }
+            }
+            else {
+                let results = task.result?.hits?.hits
+                for item in results! {
+                    self.posts.append(PostObject(itemSource: item.source!, id: item.id!))
+                }
+                if results!.count > 0 {
+                    if fromIndex == 0 {
+                        DispatchQueue.main.async {
+                           self.collectionView.reloadData()
+                        }
+                    }
+                    else {
+                        DispatchQueue.main.async {
+                            let newIndexPath = IndexPath(row: fromIndex, section: 0)
+                            self.collectionView.insertItems(at: [newIndexPath])
+                        }
+                    }
+                    
+                }
+            }
+            return nil
+        }
+        
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return posts.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let currentPost = posts[indexPath.row]
+        //if currentPost.redimg % NSNumber(10) == S3 || currentPost.blackimg % NSNumber(10) == S3
+        //check if post has images and choose appropriate cell type. For now, we'll just use PostImage cell type for everything
+        
+        if currentPost.redimg.intValue % 10 == S3 || currentPost.blackimg.intValue % 10 == S3 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_images", for: indexPath) as! PostImageCollectionViewCell
+            cell.setCell(post: currentPost, vIsRed: vIsRed)
+            vIsRed = !vIsRed
+            
+            return cell
+        }
+        else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_texts", for: indexPath) as! PostTextCollectionViewCell
+            cell.setCell(post: currentPost, vIsRed: vIsRed)
+            vIsRed = !vIsRed
+            
+            return cell
+        }
+        
+        
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -57,24 +108,6 @@ class MCViewController: UIViewController {
         performSegue(withIdentifier: "logOutToStart", sender: self)
     }
     
-    @IBAction func apiTestButtonTapped(_ sender: UIButton) {
-        bdaylabel.text = UserDefaults.standard.string(forKey: "KEY_USERNAME")
-        VSVersusAPIClient.default().postinfoGet(a: "pinf", b: "18f7c832824e4c259d018f60f54b45bb").continueWith(block:) {(task: AWSTask) -> AnyObject? in
-            if task.error != nil {
-                DispatchQueue.main.async {
-                    print(task.error!)
-                }
-            }
-            else {
-                DispatchQueue.main.async {
-                    self.debugLabel.text = task.result?.rn
-                }
-            }
-            return nil
-        }
-    
-    
-    }
     /*
     // MARK: - Navigation
 
