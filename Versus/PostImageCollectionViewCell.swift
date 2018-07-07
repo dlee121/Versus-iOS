@@ -64,6 +64,15 @@ class PostImageCollectionViewCell: UICollectionViewCell {
             sLabel.textColor = UIColor(named: "VS_Red")
         }
         
+        if post.profileImageVersion > 0 {
+            setProfileImage(username: post.author, profileImageVersion: post.profileImageVersion)
+            //make it circular
+            
+        }
+        else {
+            //set default profile image
+        }
+        
     }
     
     func getCategoryString(categoryInt : NSNumber) -> String {
@@ -248,6 +257,27 @@ class PostImageCollectionViewCell: UICollectionViewCell {
                 
                 return nil
             }
+        }
+        
+    }
+    
+    func setProfileImage(username : String, profileImageVersion : Int){
+        let request = AWSS3GetPreSignedURLRequest()
+        request.expires = Date().addingTimeInterval(86400)
+        request.bucket = "versus.profile-pictures"
+        request.httpMethod = .GET
+        request.key = username + "-\(profileImageVersion).jpeg"
+        
+        AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+            if let error = task.error {
+                print("Error: \(error)")
+                return nil
+            }
+            
+            let presignedURL = task.result
+            Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+            
+            return nil
         }
         
     }

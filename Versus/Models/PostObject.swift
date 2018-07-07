@@ -24,6 +24,8 @@ class PostObject {
     var pt : NSNumber
     var ps : NSNumber
     
+    var profileImageVersion : Int
+    
     init(itemSource : VSPostsListModel_hits_hits_item__source, id : String){
         question = itemSource.q!
         author = itemSource.a!
@@ -39,6 +41,11 @@ class PostObject {
         pt = itemSource.pt!
         ps = itemSource.ps!
         
+        profileImageVersion = 0
+    }
+    
+    func setProfileImageVersion(piv : Int){
+        profileImageVersion = piv
     }
     
 }

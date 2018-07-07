@@ -21,7 +21,7 @@ class MCViewController: UIViewController, UICollectionViewDataSource, UICollecti
     var posts = [PostObject]()
     var vIsRed = true
     let preheater = Nuke.ImagePreheater()
-    
+    var profileImageVersions = [String : Int]()
     
     
     
@@ -45,25 +45,60 @@ class MCViewController: UIViewController, UICollectionViewDataSource, UICollecti
             }
             else {
                 let results = task.result?.hits?.hits
+                var pivString = "{\"ids\":["
+                var index = 0
                 for item in results! {
                     self.posts.append(PostObject(itemSource: item.source!, id: item.id!))
-                }
-                if results!.count > 0 {
-                    if fromIndex == 0 {
-                        DispatchQueue.main.async {
-                           self.collectionView.reloadData()
+                    
+                    if item.source?.a != "deleted" {
+                        if index == 0 {
+                            pivString += "\"" + item.source!.a! + "\""
                         }
-                    }
-                    else {
-                        DispatchQueue.main.async {
-                            let newIndexPath = IndexPath(row: fromIndex, section: 0)
-                            self.collectionView.insertItems(at: [newIndexPath])
+                        else {
+                            pivString += ",\"" + item.source!.a! + "\""
                         }
                     }
                     
-                    self.fromIndex = results!.count - 1
-                    
+                    index += 1
                 }
+                pivString += "]}"
+                
+                print(pivString)
+                
+                VSVersusAPIClient.default().pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    if task.error != nil {
+                        DispatchQueue.main.async {
+                            print(task.error!)
+                        }
+                    }
+                    
+                    let results = task.result?.docs
+                    
+                    for item in results! {
+                        self.profileImageVersions[item.id!] = item.source?.pi?.intValue
+                    }
+                    
+                    if index > 0 {
+                        if fromIndex == 0 {
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
+                            }
+                        }
+                        else {
+                            DispatchQueue.main.async {
+                                let newIndexPath = IndexPath(row: fromIndex, section: 0)
+                                self.collectionView.insertItems(at: [newIndexPath])
+                            }
+                        }
+                        
+                        self.fromIndex = results!.count - 1
+                        
+                    }
+                    
+                    return nil
+                }
+                
+                
             }
             return nil
         }
@@ -90,8 +125,11 @@ class MCViewController: UIViewController, UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let currentPost = posts[indexPath.row]
-        //if currentPost.redimg % NSNumber(10) == S3 || currentPost.blackimg % NSNumber(10) == S3
-        //check if post has images and choose appropriate cell type. For now, we'll just use PostImage cell type for everything
+        
+        //set profile image version for the post if one exists
+        if let piv = profileImageVersions[currentPost.author.lowercased()] {
+            currentPost.setProfileImageVersion(piv: piv)
+        }
         
         if currentPost.redimg.intValue % 10 == S3 || currentPost.blackimg.intValue % 10 == S3 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_images", for: indexPath) as! PostImageCollectionViewCell
@@ -144,5 +182,6 @@ class MCViewController: UIViewController, UICollectionViewDataSource, UICollecti
         // Pass the selected object to the new view controller.
     }
     */
+    
 
 }
