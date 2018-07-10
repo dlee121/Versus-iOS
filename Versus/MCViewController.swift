@@ -46,7 +46,7 @@ class MCViewController: ButtonBarPagerTabStripViewController {
         self.settings.style.buttonBarRightContentInset = 0
         
         changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in guard changeCurrentIndex == true else { return }
-            oldCell?.label.textColor = UIColor(named: "VS_Red")
+            oldCell?.label.textColor = .white
             newCell?.label.textColor = UIColor(named: "VS_Red")
         }
         
