@@ -21,12 +21,14 @@ import AWSCore
 public class VSAIModel_hits_hits_item__source : AWSModel {
     
     var bd: String?
+    var cs: String?
     var em: String?
     var pi: NSNumber?
     
    	public override static func jsonKeyPathsByPropertyKey() -> [AnyHashable : Any]!{
 		var params:[AnyHashable : Any] = [:]
 		params["bd"] = "bd"
+        params["cs"] = "cs"
 		params["em"] = "em"
 		params["pi"] = "pi"
 		

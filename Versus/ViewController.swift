@@ -161,6 +161,10 @@ class ViewController: UIViewController {
         
     }
     
-
+    @IBAction func tabViewTestTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "showTabViewTest", sender: self)
+        
+    }
+    
 }
 

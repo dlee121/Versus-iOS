@@ -66,12 +66,13 @@ class PostImageCollectionViewCell: UICollectionViewCell {
         
         if post.profileImageVersion > 0 {
             setProfileImage(username: post.author, profileImageVersion: post.profileImageVersion)
-            //make it circular
             
         }
         else {
-            //set default profile image
+            profileImage.image = UIImage(named: "default_profile")
         }
+        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+        profileImage.clipsToBounds = true
         
     }
     

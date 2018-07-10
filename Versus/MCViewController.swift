@@ -1,165 +1,55 @@
 //
-//  MCViewController.swift
+//  TabViewController.swift
 //  Versus
 //
-//  Created by Dongkeun Lee on 6/29/18.
+//  Created by Dongkeun Lee on 7/8/18.
 //  Copyright © 2018 Versus. All rights reserved.
 //
 
 import UIKit
+import XLPagerTabStrip
 import Firebase
-import Nuke
-import AWSS3
 
-class MCViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
-    
-    @IBOutlet weak var collectionView: UICollectionView!
-    var fromIndex = 0
-    let DEFAULT = 0
-    let S3 = 1
-    
-    var posts = [PostObject]()
-    var vIsRed = true
-    let preheater = Nuke.ImagePreheater()
-    var profileImageVersions = [String : Int]()
-    
-    
+class MCViewController: ButtonBarPagerTabStripViewController {
     
     override func viewDidLoad() {
+        self.loadDesign()
         super.viewDidLoad()
-        if posts.count == 0 {
-            trendingQuery(fromIndex: 0)
-        }
         
- 
         // Do any additional setup after loading the view.
     }
     
-    
-    func trendingQuery(fromIndex : Int){
-        VSVersusAPIClient.default().postslistGet(c: nil, d: nil, a: "tr", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
-            if task.error != nil {
-                DispatchQueue.main.async {
-                    print(task.error!)
-                }
-            }
-            else {
-                let results = task.result?.hits?.hits
-                var pivString = "{\"ids\":["
-                var index = 0
-                for item in results! {
-                    self.posts.append(PostObject(itemSource: item.source!, id: item.id!))
-                    
-                    if item.source?.a != "deleted" {
-                        if index == 0 {
-                            pivString += "\"" + item.source!.a! + "\""
-                        }
-                        else {
-                            pivString += ",\"" + item.source!.a! + "\""
-                        }
-                    }
-                    
-                    index += 1
-                }
-                pivString += "]}"
-                
-                print(pivString)
-                
-                VSVersusAPIClient.default().pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                    if task.error != nil {
-                        DispatchQueue.main.async {
-                            print(task.error!)
-                        }
-                    }
-                    
-                    let results = task.result?.docs
-                    
-                    for item in results! {
-                        self.profileImageVersions[item.id!] = item.source?.pi?.intValue
-                    }
-                    
-                    if index > 0 {
-                        if fromIndex == 0 {
-                            DispatchQueue.main.async {
-                                self.collectionView.reloadData()
-                            }
-                        }
-                        else {
-                            DispatchQueue.main.async {
-                                let newIndexPath = IndexPath(row: fromIndex, section: 0)
-                                self.collectionView.insertItems(at: [newIndexPath])
-                            }
-                        }
-                        
-                        self.fromIndex = results!.count - 1
-                        
-                    }
-                    
-                    return nil
-                }
-                
-                
-            }
-            return nil
-        }
-        
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return posts.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let post = posts[indexPath.row]
-        if post.redimg.intValue % 10 == S3 || post.blackimg.intValue % 10 == S3 {
-            return CGSize(width: 343, height: 340)
-        }
-        else {
-            return CGSize(width: 343, height: 213)
-        }
-        
-    }
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let currentPost = posts[indexPath.row]
-        
-        //set profile image version for the post if one exists
-        if let piv = profileImageVersions[currentPost.author.lowercased()] {
-            currentPost.setProfileImageVersion(piv: piv)
-        }
-        
-        if currentPost.redimg.intValue % 10 == S3 || currentPost.blackimg.intValue % 10 == S3 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_images", for: indexPath) as! PostImageCollectionViewCell
-            cell.setCell(post: currentPost, vIsRed: vIsRed)
-            vIsRed = !vIsRed
-            
-            return cell
-        }
-        else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_texts", for: indexPath) as! PostTextCollectionViewCell
-            cell.setCell(post: currentPost, vIsRed: vIsRed)
-            vIsRed = !vIsRed
-            
-            return cell
-        }
-        
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        
-    }
-    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        
-    }
-    
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+        let child_1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Tab1")
+        let child_2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Tab2")
+        let child_3 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Tab3")
+        return [child_1, child_2, child_3]
+    }
+    
+    func loadDesign() {
+        print("point3")
+        //self.settings.style.buttonBarHeight = 325.0
+        self.settings.style.buttonBarBackgroundColor = UIColor(named: "VS_Red")
+        self.settings.style.buttonBarItemBackgroundColor = UIColor(named: "VS_Blue")
+        self.settings.style.selectedBarBackgroundColor = UIColor(named: "VS_Red")!
+        self.settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 13)
+        self.settings.style.selectedBarHeight = 4.0
+        self.settings.style.buttonBarMinimumLineSpacing = 0
+        self.settings.style.buttonBarItemTitleColor = UIColor(named: "VS_Red")
+        self.settings.style.buttonBarItemsShouldFillAvailableWidth = true
+        self.settings.style.buttonBarLeftContentInset = 0
+        self.settings.style.buttonBarRightContentInset = 0
+        
+        changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in guard changeCurrentIndex == true else { return }
+            oldCell?.label.textColor = UIColor(named: "VS_Red")
+            newCell?.label.textColor = UIColor(named: "VS_Red")
+        }
+        
     }
     
     @IBAction func logOutTapped(_ sender: UIButton) {
@@ -174,14 +64,13 @@ class MCViewController: UIViewController, UICollectionViewDataSource, UICollecti
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
-
 }

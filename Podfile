@@ -13,5 +13,6 @@ target 'Versus' do
   pod 'AWSAPIGateway'
   pod 'AWSS3'
   pod 'Nuke'
+  pod 'XLPagerTabStrip', '~> 8.0'
 
 end

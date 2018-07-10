@@ -16,6 +16,10 @@
 		701B9BB720E3FEEB003C9E7E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */; };
 		702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702499A120E57F050024E871 /* UIViewController+Toast.swift */; };
 		70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */; };
+		70B1704920F28D7C00459ACE /* Tab1CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */; };
+		70B1704B20F28D8600459ACE /* Tab2CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */; };
+		70B1704D20F28D8D00459ACE /* Tab3CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */; };
+		70B1705120F2F97800459ACE /* ButtonBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1705020F2F97800459ACE /* ButtonBarView.swift */; };
 		70B9A7E120ED64C200C06709 /* Character+UInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E020ED64C200C06709 /* Character+UInt32.swift */; };
 		70B9A7E320ED650A00C06709 /* String+HashCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E220ED650A00C06709 /* String+HashCode.swift */; };
 		70B9A7E520ED93B600C06709 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E420ED93B600C06709 /* InitialViewController.swift */; };
@@ -98,6 +102,10 @@
 		701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		702499A120E57F050024E871 /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
 		70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OIDCProvider.swift; sourceTree = "<group>"; };
+		70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab1CollectionViewController.swift; sourceTree = "<group>"; };
+		70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab2CollectionViewController.swift; sourceTree = "<group>"; };
+		70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab3CollectionViewController.swift; sourceTree = "<group>"; };
+		70B1705020F2F97800459ACE /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
 		70B9A7E020ED64C200C06709 /* Character+UInt32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+UInt32.swift"; sourceTree = "<group>"; };
 		70B9A7E220ED650A00C06709 /* String+HashCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HashCode.swift"; sourceTree = "<group>"; };
 		70B9A7E420ED93B600C06709 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +236,10 @@
 				702499A020E57EC70024E871 /* Extensions */,
 				70B9A7EC20EEE33800C06709 /* PostImageCollectionViewCell.swift */,
 				70B9A7EE20EF12E100C06709 /* PostTextCollectionViewCell.swift */,
+				70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */,
+				70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */,
+				70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */,
+				70B1705020F2F97800459ACE /* ButtonBarView.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -409,6 +421,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -420,6 +433,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nuke.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -508,12 +522,15 @@
 				70E80CB520E6DB570067DF08 /* VSProfileInfoModel__source.swift in Sources */,
 				70E80CB120E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item.swift in Sources */,
 				70E80CB620E6DB570067DF08 /* VSProfileInfoModel.swift in Sources */,
+				70B1705120F2F97800459ACE /* ButtonBarView.swift in Sources */,
 				70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */,
 				70E80CDE20E6DB570067DF08 /* VSPostPutModel.swift in Sources */,
 				70E80CCD20E6DB570067DF08 /* VSVersusAPIClient.swift in Sources */,
 				70E80CDD20E6DB570067DF08 /* VSPostEditModel.swift in Sources */,
+				70B1704920F28D7C00459ACE /* Tab1CollectionViewController.swift in Sources */,
 				70E80CB320E6DB570067DF08 /* VSPostsListModel_hits.swift in Sources */,
 				70E80CC420E6DB570067DF08 /* VSPIVModel_docs_item__source.swift in Sources */,
+				70B1704D20F28D8D00459ACE /* Tab3CollectionViewController.swift in Sources */,
 				70E80CAF20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item.swift in Sources */,
 				70E80CE220E6DB570067DF08 /* VSCommentModel.swift in Sources */,
 				70E80CB420E6DB570067DF08 /* VSPostModel__source.swift in Sources */,
@@ -524,6 +541,7 @@
 				70E80CC320E6DB570067DF08 /* VSLeaderboardModel_hits.swift in Sources */,
 				70E80CAE20E6DB570067DF08 /* VSPostInfoModel.swift in Sources */,
 				70E80CDC20E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift in Sources */,
+				70B1704B20F28D8600459ACE /* Tab2CollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

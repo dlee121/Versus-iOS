@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Nuke
+import AWSS3
 
 class PostTextCollectionViewCell: UICollectionViewCell {
     
@@ -43,6 +45,16 @@ class PostTextCollectionViewCell: UICollectionViewCell {
             vLabel.textColor = UIColor(named: "VS_Blue")
             sLabel.textColor = UIColor(named: "VS_Red")
         }
+        
+        if post.profileImageVersion > 0 {
+            setProfileImage(username: post.author, profileImageVersion: post.profileImageVersion)
+            
+        }
+        else {
+            profileImage.image = UIImage(named: "default_profile")
+        }
+        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+        profileImage.clipsToBounds = true
         
     }
     
@@ -178,9 +190,26 @@ class PostTextCollectionViewCell: UICollectionViewCell {
         default:
             return ""
         }
-        
-        
-        
     }
     
+    func setProfileImage(username : String, profileImageVersion : Int){
+        let request = AWSS3GetPreSignedURLRequest()
+        request.expires = Date().addingTimeInterval(86400)
+        request.bucket = "versus.profile-pictures"
+        request.httpMethod = .GET
+        request.key = username + "-\(profileImageVersion).jpeg"
+        
+        AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+            if let error = task.error {
+                print("Error: \(error)")
+                return nil
+            }
+            
+            let presignedURL = task.result
+            Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+            
+            return nil
+        }
+        
+    }
 }
