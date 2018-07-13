@@ -128,7 +128,6 @@ class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("cellForItemAt called for \(indexPath.row)")
         let currentPost = posts[indexPath.row]
         
         //set profile image version for the post if one exists
