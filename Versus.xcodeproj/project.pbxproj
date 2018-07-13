@@ -14,6 +14,9 @@
 		701B9BAC20E3FB22003C9E7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BAB20E3FB22003C9E7E /* Assets.xcassets */; };
 		701B9BAF20E3FB22003C9E7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BAD20E3FB22003C9E7E /* LaunchScreen.storyboard */; };
 		701B9BB720E3FEEB003C9E7E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */; };
+		701C8CC220F8C4F00072AECD /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CC120F8C4F00072AECD /* LeaderboardViewController.swift */; };
+		701C8CC420F8C51F0072AECD /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CC320F8C51F0072AECD /* NotificationsViewController.swift */; };
+		701C8CC620F8C5510072AECD /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CC520F8C5510072AECD /* MeViewController.swift */; };
 		702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702499A120E57F050024E871 /* UIViewController+Toast.swift */; };
 		70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */; };
 		70B1704920F28D7C00459ACE /* Tab1CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */; };
@@ -100,6 +103,9 @@
 		701B9BAE20E3FB22003C9E7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		701B9BB020E3FB22003C9E7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		701C8CC120F8C4F00072AECD /* LeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
+		701C8CC320F8C51F0072AECD /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		701C8CC520F8C5510072AECD /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
 		702499A120E57F050024E871 /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
 		70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OIDCProvider.swift; sourceTree = "<group>"; };
 		70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab1CollectionViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +234,9 @@
 				70E80BF520E6944B0067DF08 /* UsernameViewController.swift */,
 				70E80BF720E694560067DF08 /* PasswordViewController.swift */,
 				70E80BF920E6976E0067DF08 /* MCViewController.swift */,
+				701C8CC120F8C4F00072AECD /* LeaderboardViewController.swift */,
+				701C8CC320F8C51F0072AECD /* NotificationsViewController.swift */,
+				701C8CC520F8C5510072AECD /* MeViewController.swift */,
 				701B9BA820E3FB20003C9E7E /* Main.storyboard */,
 				701B9BAB20E3FB22003C9E7E /* Assets.xcassets */,
 				701B9BAD20E3FB22003C9E7E /* LaunchScreen.storyboard */,
@@ -467,6 +476,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				701C8CC620F8C5510072AECD /* MeViewController.swift in Sources */,
 				70E80CD520E6DB570067DF08 /* VSAIModel.swift in Sources */,
 				70E80CB820E6DB570067DF08 /* VSCommentsListModel.swift in Sources */,
 				70E80CB220E6DB570067DF08 /* VSCGCModel_responses_item__shards.swift in Sources */,
@@ -486,6 +496,7 @@
 				70B9A7E120ED64C200C06709 /* Character+UInt32.swift in Sources */,
 				70E80CBB20E6DB570067DF08 /* Empty.swift in Sources */,
 				70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */,
+				701C8CC420F8C51F0072AECD /* NotificationsViewController.swift in Sources */,
 				70E80CBC20E6DB570067DF08 /* VSAIModel_hits.swift in Sources */,
 				70B9A7ED20EEE33800C06709 /* PostImageCollectionViewCell.swift in Sources */,
 				70E80CC120E6DB570067DF08 /* VSUserPutModel.swift in Sources */,
@@ -501,6 +512,7 @@
 				70E80CCE20E6DB570067DF08 /* VSCommentPutModel.swift in Sources */,
 				70E80CD320E6DB570067DF08 /* VSCommentModel__source.swift in Sources */,
 				70E80CD020E6DB570067DF08 /* VSPostsListCompactModel_hits.swift in Sources */,
+				701C8CC220F8C4F00072AECD /* LeaderboardViewController.swift in Sources */,
 				70B9A7EF20EF12E100C06709 /* PostTextCollectionViewCell.swift in Sources */,
 				70E80CBE20E6DB570067DF08 /* VSAIModel_hits_hits_item__source.swift in Sources */,
 				70E80CB920E6DB570067DF08 /* VSLeaderboardModel__shards.swift in Sources */,
