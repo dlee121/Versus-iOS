@@ -31,7 +31,7 @@ class BronzeLeaderTableViewCell: UITableViewCell {
         profileImage.clipsToBounds = true
         
         username.text = item.username
-        influence.text = "\(item.influence)"
+        influence.text = "\(item.influence) influence"
         goldCount.text = "\(item.g)"
         silverCount.text = "\(item.s)"
         bronzeCount.text = "\(item.b)"

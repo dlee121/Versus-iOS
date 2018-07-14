@@ -32,8 +32,9 @@ class PlainLeaderTableViewCell: UITableViewCell {
         profileImage.clipsToBounds = true
         
         username.text = item.username
-        influence.text = "\(item.influence)"
+        influence.text = "\(item.influence) influence"
         goldCount.text = "\(item.g)"
+        //goldCount.addImage(imageName: "default_profile")
         silverCount.text = "\(item.s)"
         bronzeCount.text = "\(item.b)"
         
@@ -57,5 +58,30 @@ class PlainLeaderTableViewCell: UITableViewCell {
             
             return nil
         }
+    }
+}
+
+extension UILabel
+{
+    func addImage(imageName: String)
+    {
+        let attachment:NSTextAttachment = NSTextAttachment()
+        attachment.image = UIImage(named: imageName)
+        attachment.setImageHeight(height: 100)
+        
+        let attachmentString:NSAttributedString = NSAttributedString(attachment: attachment)
+        let myString:NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
+        myString.append(attachmentString)
+        
+        self.attributedText = myString
+    }
+}
+
+extension NSTextAttachment {
+    func setImageHeight(height: CGFloat) {
+        guard let image = image else { return }
+        let ratio = image.size.width / image.size.height
+        
+        bounds = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: ratio * height, height: height)
     }
 }
