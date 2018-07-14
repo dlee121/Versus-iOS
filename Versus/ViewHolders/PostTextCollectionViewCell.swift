@@ -210,6 +210,5 @@ class PostTextCollectionViewCell: UICollectionViewCell {
             
             return nil
         }
-        
     }
 }

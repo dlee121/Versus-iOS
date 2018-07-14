@@ -7,18 +7,55 @@
 //
 
 import UIKit
+import AWSS3
+import Nuke
 
 class BronzeLeaderTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var username: UILabel!
+    @IBOutlet weak var influence: UILabel!
+    @IBOutlet weak var goldCount: UILabel!
+    @IBOutlet weak var silverCount: UILabel!
+    @IBOutlet weak var bronzeCount: UILabel!
+    
+    
+    func setCell(item : LeaderboardEntry){
+        if item.pi > 0 {
+            setProfileImage(username: item.username, profileImageVersion: item.pi)
+        }
+        else{
+            profileImage.image = #imageLiteral(resourceName: "default_profile")
+        }
+        profileImage.layer.cornerRadius = profileImage.frame.size.height / 2
+        profileImage.clipsToBounds = true
+        
+        username.text = item.username
+        influence.text = "\(item.influence)"
+        goldCount.text = "\(item.g)"
+        silverCount.text = "\(item.s)"
+        bronzeCount.text = "\(item.b)"
+        
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func setProfileImage(username : String, profileImageVersion : Int){
+        let request = AWSS3GetPreSignedURLRequest()
+        request.expires = Date().addingTimeInterval(86400)
+        request.bucket = "versus.profile-pictures"
+        request.httpMethod = .GET
+        request.key = username + "-\(profileImageVersion).jpeg"
+        
+        AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+            if let error = task.error {
+                print("Error: \(error)")
+                return nil
+            }
+            
+            let presignedURL = task.result
+            Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+            
+            return nil
+        }
+        
     }
-
 }

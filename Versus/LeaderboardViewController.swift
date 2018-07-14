@@ -56,29 +56,26 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-            case 0:
-                return CGFloat(123.0)
-            case 1:
-                return CGFloat(107.0)
-            default:
-                return CGFloat(85.0)
-        }
+        return CGFloat(102.0)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "goldLeader", for: indexPath) as? GoldLeaderTableViewCell
+            cell!.setCell(item: leaders[indexPath.row])
             return cell!
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "silverLeader", for: indexPath) as? SilverLeaderTableViewCell
+            cell!.setCell(item: leaders[indexPath.row])
             return cell!
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "bronzeLeader", for: indexPath) as? BronzeLeaderTableViewCell
+            cell!.setCell(item: leaders[indexPath.row])
             return cell!
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "plainLeader", for: indexPath) as? PlainLeaderTableViewCell
+            cell!.setCell(item: leaders[indexPath.row])
             return cell!
         }
     }
