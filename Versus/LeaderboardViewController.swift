@@ -30,6 +30,7 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
             }
             else {
                 let results = task.result?.hits?.hits
+                self.leaders.removeAll()
                 
                 for item in results! {
                     self.leaders.append(LeaderboardEntry(itemSource: item.source!))
@@ -56,6 +57,9 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if(indexPath.row == 0){
+            return CGFloat(116.0)
+        }
         return CGFloat(102.0)
     }
 
@@ -75,7 +79,7 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
             return cell!
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "plainLeader", for: indexPath) as? PlainLeaderTableViewCell
-            cell!.setCell(item: leaders[indexPath.row])
+            cell!.setCell(item: leaders[indexPath.row], rankNumber: indexPath.row + 1)
             return cell!
         }
     }

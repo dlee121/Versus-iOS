@@ -19,9 +19,10 @@ class PlainLeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var silverCount: UILabel!
     @IBOutlet weak var bronzeCount: UILabel!
     
+    @IBOutlet weak var rank: UILabel!
     
     
-    func setCell(item : LeaderboardEntry){
+    func setCell(item : LeaderboardEntry, rankNumber : Int){
         if item.pi > 0 {
             setProfileImage(username: item.username, profileImageVersion: item.pi)
         }
@@ -39,6 +40,8 @@ class PlainLeaderTableViewCell: UITableViewCell {
         silverCount.addImage(imageName: "medalSilver")
         bronzeCount.text = "\(item.b)"
         bronzeCount.addImage(imageName: "medalBronze")
+        
+        rank.text = "\(rankNumber)"
         
     }
     
