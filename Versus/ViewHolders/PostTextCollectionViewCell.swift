@@ -53,8 +53,10 @@ class PostTextCollectionViewCell: UICollectionViewCell {
         else {
             profileImage.image = UIImage(named: "default_profile")
         }
-        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
-        profileImage.clipsToBounds = true
+        DispatchQueue.main.async {
+            self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
+            self.profileImage.clipsToBounds = true
+        }
         
     }
     

@@ -27,8 +27,10 @@ class GoldLeaderTableViewCell: UITableViewCell {
         else{
             profileImage.image = #imageLiteral(resourceName: "default_profile")
         }
-        profileImage.layer.cornerRadius = profileImage.frame.size.height / 2
-        profileImage.clipsToBounds = true
+        DispatchQueue.main.async {
+            self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
+            self.profileImage.clipsToBounds = true
+        }
         
         username.text = item.username
         influence.text = "\(item.influence) influence"
