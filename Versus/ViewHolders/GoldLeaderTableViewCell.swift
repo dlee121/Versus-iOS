@@ -33,8 +33,11 @@ class GoldLeaderTableViewCell: UITableViewCell {
         username.text = item.username
         influence.text = "\(item.influence) influence"
         goldCount.text = "\(item.g)"
+        goldCount.addImage(imageName: "medalGold")
         silverCount.text = "\(item.s)"
+        silverCount.addImage(imageName: "medalSilver")
         bronzeCount.text = "\(item.b)"
+        bronzeCount.addImage(imageName: "medalBronze")
         
     }
     
