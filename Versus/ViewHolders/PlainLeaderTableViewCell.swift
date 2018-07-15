@@ -34,9 +34,11 @@ class PlainLeaderTableViewCell: UITableViewCell {
         username.text = item.username
         influence.text = "\(item.influence) influence"
         goldCount.text = "\(item.g)"
-        //goldCount.addImage(imageName: "default_profile")
+        goldCount.addImage(imageName: "medalGold")
         silverCount.text = "\(item.s)"
+        silverCount.addImage(imageName: "medalSilver")
         bronzeCount.text = "\(item.b)"
+        bronzeCount.addImage(imageName: "medalBronze")
         
     }
     
@@ -67,7 +69,7 @@ extension UILabel
     {
         let attachment:NSTextAttachment = NSTextAttachment()
         attachment.image = UIImage(named: imageName)
-        attachment.setImageHeight(height: 100)
+        attachment.setImageHeight(height: 24)
         
         let attachmentString:NSAttributedString = NSAttributedString(attachment: attachment)
         let myString:NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
@@ -82,6 +84,6 @@ extension NSTextAttachment {
         guard let image = image else { return }
         let ratio = image.size.width / image.size.height
         
-        bounds = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: ratio * height, height: height)
+        bounds = CGRect(x: bounds.origin.x, y: bounds.origin.y-4, width: ratio * height, height: height)
     }
 }
