@@ -24,6 +24,8 @@
 		701C8CD120F978E20072AECD /* PlainLeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CD020F978E20072AECD /* PlainLeaderTableViewCell.swift */; };
 		701C8CD320FAF4B90072AECD /* UILabel+addImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CD220FAF4B90072AECD /* UILabel+addImage.swift */; };
 		702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702499A120E57F050024E871 /* UIViewController+Toast.swift */; };
+		7056672920FD62A400CB87AD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672820FD62A400CB87AD /* SearchViewController.swift */; };
+		7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */; };
 		70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */; };
 		70B1704920F28D7C00459ACE /* Tab1CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */; };
 		70B1704B20F28D8600459ACE /* Tab2CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */; };
@@ -119,6 +121,8 @@
 		701C8CD020F978E20072AECD /* PlainLeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainLeaderTableViewCell.swift; sourceTree = "<group>"; };
 		701C8CD220FAF4B90072AECD /* UILabel+addImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+addImage.swift"; sourceTree = "<group>"; };
 		702499A120E57F050024E871 /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
+		7056672820FD62A400CB87AD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostTableViewCell.swift; sourceTree = "<group>"; };
 		70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OIDCProvider.swift; sourceTree = "<group>"; };
 		70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab1CollectionViewController.swift; sourceTree = "<group>"; };
 		70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab2CollectionViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 				70E80BF520E6944B0067DF08 /* UsernameViewController.swift */,
 				70E80BF720E694560067DF08 /* PasswordViewController.swift */,
 				70E80BF920E6976E0067DF08 /* MCViewController.swift */,
+				7056672820FD62A400CB87AD /* SearchViewController.swift */,
 				701C8CC120F8C4F00072AECD /* LeaderboardViewController.swift */,
 				701C8CC320F8C51F0072AECD /* NotificationsViewController.swift */,
 				701C8CC520F8C5510072AECD /* MeViewController.swift */,
@@ -273,6 +278,7 @@
 				701C8CCC20F978B30072AECD /* SilverLeaderTableViewCell.swift */,
 				701C8CCE20F978C80072AECD /* BronzeLeaderTableViewCell.swift */,
 				701C8CD020F978E20072AECD /* PlainLeaderTableViewCell.swift */,
+				7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -519,9 +525,11 @@
 				70E80CD820E6DB570067DF08 /* VSCommentsListModel_hits_hits_item__source.swift in Sources */,
 				70E80CC620E6DB570067DF08 /* VSPostInfoMultiModel.swift in Sources */,
 				70E80CDF20E6DB570067DF08 /* VSPostsListCompactModel.swift in Sources */,
+				7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */,
 				701B9BA720E3FB20003C9E7E /* ViewController.swift in Sources */,
 				70B9A7E120ED64C200C06709 /* Character+UInt32.swift in Sources */,
 				70E80CBB20E6DB570067DF08 /* Empty.swift in Sources */,
+				7056672920FD62A400CB87AD /* SearchViewController.swift in Sources */,
 				70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */,
 				701C8CD120F978E20072AECD /* PlainLeaderTableViewCell.swift in Sources */,
 				701C8CC420F8C51F0072AECD /* NotificationsViewController.swift in Sources */,

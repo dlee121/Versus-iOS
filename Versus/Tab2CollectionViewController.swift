@@ -34,7 +34,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
         screenWidth = self.view.frame.size.width
         textsVSCHeight = screenWidth / 1.6
         if posts.count == 0 {
-            trendingQuery(fromIndex: 0)
+            newsfeedQuery(fromIndex: 0)
         }
         
         
@@ -42,7 +42,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     }
     
     
-    func trendingQuery(fromIndex : Int){
+    func newsfeedQuery(fromIndex : Int){
         self.apiClient.postslistGet(c: nil, d: nil, a: "tr", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -78,27 +78,27 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
                         }
                     }
                     
-                    let results = task.result?.docs
-                    
-                    for item in results! {
-                        self.profileImageVersions[item.id!] = item.source?.pi?.intValue
-                    }
-                    
-                    if index > 0 {
-                        if fromIndex == 0 {
-                            DispatchQueue.main.async {
-                                self.collectionView.reloadData()
-                            }
-                        }
-                        else {
-                            DispatchQueue.main.async {
-                                let newIndexPath = IndexPath(row: fromIndex, section: 0)
-                                self.collectionView.insertItems(at: [newIndexPath])
-                            }
+                    if let results = task.result?.docs {
+                        for item in results {
+                            self.profileImageVersions[item.id!] = item.source?.pi?.intValue
                         }
                         
-                        self.fromIndex = results!.count - 1
-                        
+                        if index > 0 {
+                            if self.fromIndex == 0 {
+                                DispatchQueue.main.async {
+                                    self.collectionView.reloadData()
+                                }
+                            }
+                            else {
+                                DispatchQueue.main.async {
+                                    let newIndexPath = IndexPath(row: fromIndex, section: 0)
+                                    self.collectionView.insertItems(at: [newIndexPath])
+                                }
+                            }
+                            
+                            self.fromIndex = results.count - 1
+                            
+                        }
                     }
                     
                     return nil

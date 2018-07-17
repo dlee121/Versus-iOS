@@ -67,8 +67,6 @@ class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource
                 }
                 pivString += "]}"
                 
-                print(pivString)
-                
                 self.apiClient.pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                     if task.error != nil {
                         DispatchQueue.main.async {
@@ -76,27 +74,27 @@ class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource
                         }
                     }
                     
-                    let results = task.result?.docs
-                    
-                    for item in results! {
-                        self.profileImageVersions[item.id!] = item.source?.pi?.intValue
-                    }
-                    
-                    if index > 0 {
-                        if fromIndex == 0 {
-                            DispatchQueue.main.async {
-                                self.collectionView.reloadData()
-                            }
-                        }
-                        else {
-                            DispatchQueue.main.async {
-                                let newIndexPath = IndexPath(row: fromIndex, section: 0)
-                                self.collectionView.insertItems(at: [newIndexPath])
-                            }
+                    if let results = task.result?.docs {
+                        for item in results {
+                            self.profileImageVersions[item.id!] = item.source?.pi?.intValue
                         }
                         
-                        self.fromIndex = results!.count - 1
-                        
+                        if index > 0 {
+                            if self.fromIndex == 0 {
+                                DispatchQueue.main.async {
+                                    self.collectionView.reloadData()
+                                }
+                            }
+                            else {
+                                DispatchQueue.main.async {
+                                    let newIndexPath = IndexPath(row: fromIndex, section: 0)
+                                    self.collectionView.insertItems(at: [newIndexPath])
+                                }
+                            }
+                            
+                            self.fromIndex = results.count - 1
+                            
+                        }
                     }
                     
                     return nil

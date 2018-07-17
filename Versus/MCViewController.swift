@@ -10,13 +10,49 @@ import UIKit
 import XLPagerTabStrip
 import Firebase
 
-class MCViewController: ButtonBarPagerTabStripViewController {
+class MCViewController: ButtonBarPagerTabStripViewController, UISearchControllerDelegate {
+    
+    var searchController : UISearchController!
+    var searchViewController : SearchViewController!
+    
     
     override func viewDidLoad() {
         self.loadDesign()
         super.viewDidLoad()
-        
+        searchViewController = storyboard!.instantiateViewController(withIdentifier: "searchViewController") as? SearchViewController
         // Do any additional setup after loading the view.
+        self.searchController = UISearchController(searchResultsController:  searchViewController)
+        
+        self.searchController.searchResultsUpdater = searchViewController
+        self.searchController.delegate = self
+        self.searchController.searchBar.delegate = searchViewController
+        
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        self.searchController.dimsBackgroundDuringPresentation = true
+        
+        searchController = UISearchController(searchResultsController: searchViewController)
+        searchController.delegate = self
+        searchController.searchResultsUpdater = searchViewController
+        searchController.dimsBackgroundDuringPresentation = true
+        definesPresentationContext = true
+        
+        searchController.loadViewIfNeeded()
+        
+        //Configura a barra do Controlador de busca
+        searchController.searchBar.delegate = searchViewController!
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Search by keyword(s) or question"
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.barTintColor = navigationController?.navigationBar.barTintColor
+        searchController.searchBar.tintColor = self.view.tintColor
+        
+        self.navigationItem.titleView = searchController.searchBar
+        
+        self.definesPresentationContext = true
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        print("called here 1")
     }
     
     override func didReceiveMemoryWarning() {
