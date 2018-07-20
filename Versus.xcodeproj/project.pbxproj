@@ -26,6 +26,8 @@
 		702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702499A120E57F050024E871 /* UIViewController+Toast.swift */; };
 		7056672920FD62A400CB87AD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672820FD62A400CB87AD /* SearchViewController.swift */; };
 		7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */; };
+		7056672F2101564D00CB87AD /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */; };
+		7056673121016A5500CB87AD /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056673021016A5500CB87AD /* CategoryViewController.swift */; };
 		70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */; };
 		70B1704920F28D7C00459ACE /* Tab1CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */; };
 		70B1704B20F28D8600459ACE /* Tab2CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */; };
@@ -123,6 +125,8 @@
 		702499A120E57F050024E871 /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
 		7056672820FD62A400CB87AD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostTableViewCell.swift; sourceTree = "<group>"; };
+		7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewCell.swift; sourceTree = "<group>"; };
+		7056673021016A5500CB87AD /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OIDCProvider.swift; sourceTree = "<group>"; };
 		70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab1CollectionViewController.swift; sourceTree = "<group>"; };
 		70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab2CollectionViewController.swift; sourceTree = "<group>"; };
@@ -255,16 +259,17 @@
 				701C8CC120F8C4F00072AECD /* LeaderboardViewController.swift */,
 				701C8CC320F8C51F0072AECD /* NotificationsViewController.swift */,
 				701C8CC520F8C5510072AECD /* MeViewController.swift */,
+				70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */,
+				70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */,
+				70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */,
 				701B9BA820E3FB20003C9E7E /* Main.storyboard */,
 				701B9BAB20E3FB22003C9E7E /* Assets.xcassets */,
 				701B9BAD20E3FB22003C9E7E /* LaunchScreen.storyboard */,
 				701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */,
 				701B9BB020E3FB22003C9E7E /* Info.plist */,
 				702499A020E57EC70024E871 /* Extensions */,
-				70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */,
-				70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */,
-				70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */,
 				70B1705020F2F97800459ACE /* ButtonBarView.swift */,
+				7056673021016A5500CB87AD /* CategoryViewController.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -279,6 +284,7 @@
 				701C8CCE20F978C80072AECD /* BronzeLeaderTableViewCell.swift */,
 				701C8CD020F978E20072AECD /* PlainLeaderTableViewCell.swift */,
 				7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */,
+				7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -516,6 +522,7 @@
 				70E80CE020E6DB570067DF08 /* VSPostModel.swift in Sources */,
 				70E80CAC20E6DB570067DF08 /* VSPIVModel_docs_item.swift in Sources */,
 				70E80CC220E6DB570067DF08 /* VSAIModel__shards.swift in Sources */,
+				7056672F2101564D00CB87AD /* CategoriesTableViewCell.swift in Sources */,
 				70B9A7E520ED93B600C06709 /* InitialViewController.swift in Sources */,
 				701C8CC820F96FCF0072AECD /* LeaderboardEntry.swift in Sources */,
 				70E80CCB20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item__source.swift in Sources */,
@@ -527,6 +534,7 @@
 				70E80CDF20E6DB570067DF08 /* VSPostsListCompactModel.swift in Sources */,
 				7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */,
 				701B9BA720E3FB20003C9E7E /* ViewController.swift in Sources */,
+				7056673121016A5500CB87AD /* CategoryViewController.swift in Sources */,
 				70B9A7E120ED64C200C06709 /* Character+UInt32.swift in Sources */,
 				70E80CBB20E6DB570067DF08 /* Empty.swift in Sources */,
 				7056672920FD62A400CB87AD /* SearchViewController.swift in Sources */,

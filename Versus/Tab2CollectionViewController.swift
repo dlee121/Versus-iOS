@@ -34,7 +34,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
         screenWidth = self.view.frame.size.width
         textsVSCHeight = screenWidth / 1.6
         if posts.count == 0 {
-            newsfeedQuery(fromIndex: 0)
+            trendingQuery(fromIndex: 0)
         }
         
         
@@ -42,7 +42,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     }
     
     
-    func newsfeedQuery(fromIndex : Int){
+    func trendingQuery(fromIndex : Int){
         self.apiClient.postslistGet(c: nil, d: nil, a: "tr", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -297,6 +297,6 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
 
 extension Tab2CollectionViewController : IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "Newsfeed")
+        return IndicatorInfo(title: "Trending")
     }
 }
