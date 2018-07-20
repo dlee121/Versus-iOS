@@ -35,6 +35,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         "Weapons"
     ]
     var apiClient = VSVersusAPIClient.default()
+    var selectedCategory : Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,9 +160,14 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(categories[indexPath.row])
+        selectedCategory = indexPath.row
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "openCategoryPage", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let categoryVC = segue.destination as? CategoryViewController else {return}
+        categoryVC.categoryQuery(fromIndex: 0, category: selectedCategory)
     }
     
     /*
