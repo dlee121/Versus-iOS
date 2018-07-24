@@ -17,6 +17,7 @@
 import AWSCore
 import AWSAPIGateway
 
+//@objcMembers
 public class VSVersusAPIClient: AWSAPIGatewayClient {
 
 	static let AWSInfoClientKey = "VSVersusAPIClient"
@@ -143,8 +144,7 @@ public class VSVersusAPIClient: AWSAPIGatewayClient {
 	    self.configuration = configuration.copy() as! AWSServiceConfiguration
 	    var URLString: String = "https://fbl7cib36f.execute-api.us-east-1.amazonaws.com/Launch"
 	    if URLString.hasSuffix("/") {
-            URLString = String(URLString[..<URLString.index(before: URLString.endIndex)])
-	        //URLString = URLString.substring(to: URLString.index(before: URLString.endIndex))
+	        URLString = URLString.substring(to: URLString.index(before: URLString.endIndex))
 	    }
 	    self.configuration.endpoint = AWSEndpoint(region: configuration.regionType, service: .APIGateway, url: URL(string: URLString))
 	    let signer: AWSSignatureV4Signer = AWSSignatureV4Signer(credentialsProvider: configuration.credentialsProvider, endpoint: self.configuration.endpoint)
@@ -560,6 +560,56 @@ public class VSVersusAPIClient: AWSAPIGatewayClient {
 	    let pathParameters:[String:Any] = [:]
 	    
 	    return self.invokeHTTPRequest("POST", urlString: "/postput", pathParameters: pathParameters, queryParameters: queryParameters, headerParameters: headerParameters, body: body, responseClass: Empty.self) as! AWSTask<Empty>
+	}
+
+	
+    /*
+     
+     
+     @param a 
+     @param b 
+     
+     return type: VSPostQModel
+     */
+    public func postqGet(a: String?, b: String?) -> AWSTask<VSPostQModel> {
+	    let headerParameters = [
+                   "Content-Type": "application/json",
+                   "Accept": "application/json",
+                   
+	            ]
+	    
+	    var queryParameters:[String:Any] = [:]
+	    queryParameters["a"] = a
+	    queryParameters["b"] = b
+	    
+	    let pathParameters:[String:Any] = [:]
+	    
+	    return self.invokeHTTPRequest("GET", urlString: "/postq", pathParameters: pathParameters, queryParameters: queryParameters, headerParameters: headerParameters, body: nil, responseClass: VSPostQModel.self) as! AWSTask<VSPostQModel>
+	}
+
+	
+    /*
+     
+     
+     @param a 
+     @param b 
+     
+     return type: VSPostQMultiModel
+     */
+    public func postqmultiGet(a: String?, b: String?) -> AWSTask<VSPostQMultiModel> {
+	    let headerParameters = [
+                   "Content-Type": "application/json",
+                   "Accept": "application/json",
+                   
+	            ]
+	    
+	    var queryParameters:[String:Any] = [:]
+	    queryParameters["a"] = a
+	    queryParameters["b"] = b
+	    
+	    let pathParameters:[String:Any] = [:]
+	    
+	    return self.invokeHTTPRequest("GET", urlString: "/postqmulti", pathParameters: pathParameters, queryParameters: queryParameters, headerParameters: headerParameters, body: nil, responseClass: VSPostQMultiModel.self) as! AWSTask<VSPostQMultiModel>
 	}
 
 	

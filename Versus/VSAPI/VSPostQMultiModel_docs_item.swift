@@ -18,20 +18,27 @@ import Foundation
 import AWSCore
 
 @objcMembers
-public class VSAIModel_hits_hits_item__source : AWSModel {
+public class VSPostQMultiModel_docs_item : AWSModel {
     
-    var bd: String?
-    var cs: String?
-    var em: String?
-    var pi: NSNumber?
+    var index: String?
+    var type: String?
+    var id: String?
+    var version: NSNumber?
+    var found: NSNumber?
+    var source: VSPostQMultiModel_docs_item__source?
     
    	public override static func jsonKeyPathsByPropertyKey() -> [AnyHashable : Any]!{
 		var params:[AnyHashable : Any] = [:]
-		params["bd"] = "bd"
-		params["cs"] = "cs"
-		params["em"] = "em"
-		params["pi"] = "pi"
+		params["index"] = "_index"
+		params["type"] = "_type"
+		params["id"] = "_id"
+		params["version"] = "_version"
+		params["found"] = "found"
+		params["source"] = "_source"
 		
         return params
+	}
+	class func sourceJSONTransformer() -> ValueTransformer{
+	    return ValueTransformer.awsmtl_JSONDictionaryTransformer(withModelClass: VSPostQMultiModel_docs_item__source.self);
 	}
 }

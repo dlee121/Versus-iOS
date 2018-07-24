@@ -18,19 +18,19 @@ import Foundation
 import AWSCore
 
 @objcMembers
-public class VSAIModel_hits_hits_item__source : AWSModel {
+public class VSPostQMultiModel_docs_item__source : AWSModel {
     
-    var bd: String?
-    var cs: String?
-    var em: String?
-    var pi: NSNumber?
+    var a: String?
+    var bc: NSNumber?
+    var q: String?
+    var rc: NSNumber?
     
    	public override static func jsonKeyPathsByPropertyKey() -> [AnyHashable : Any]!{
 		var params:[AnyHashable : Any] = [:]
-		params["bd"] = "bd"
-		params["cs"] = "cs"
-		params["em"] = "em"
-		params["pi"] = "pi"
+		params["a"] = "a"
+		params["bc"] = "bc"
+		params["q"] = "q"
+		params["rc"] = "rc"
 		
         return params
 	}
