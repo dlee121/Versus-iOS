@@ -93,7 +93,7 @@ class ViewController: UIViewController {
                                         UserDefaults.standard.set(userGetModel?.bd, forKey: "KEY_BDAY")
                                         UserDefaults.standard.set(userGetModel?.em, forKey: "KEY_EMAIL")
                                         UserDefaults.standard.set(userGetModel?.cs, forKey: "KEY_USERNAME")
-                                        UserDefaults.standard.set(userGetModel?.pi, forKey: "KEY_PI")
+                                        UserDefaults.standard.set(userGetModel?.pi?.intValue, forKey: "KEY_PI")
                                         UserDefaults.standard.set(true, forKey: "KEY_IS_NATIVE")
                                         
                                         DispatchQueue.main.async {

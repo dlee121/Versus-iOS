@@ -9,9 +9,21 @@
 import UIKit
 import XLPagerTabStrip
 import Firebase
+import AWSS3
+import Nuke
 
 class MeViewController: ButtonBarPagerTabStripViewController {
-
+    @IBOutlet weak var followers: UILabel!
+    @IBOutlet weak var followings: UILabel!
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var profileUsername: UILabel!
+    @IBOutlet weak var influence: UILabel!
+    @IBOutlet weak var goldMedals: UILabel!
+    @IBOutlet weak var silverMedals: UILabel!
+    @IBOutlet weak var bronzeMedals: UILabel!
+    
+    var currentUsername : String!
+    
     override func viewDidLoad() {
         self.loadDesign()
         super.viewDidLoad()
@@ -20,6 +32,44 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         // Do any additional setup after loading the view.
     }
 
+    override func viewWillAppear(_ animated: Bool){
+        super.viewWillAppear(animated)
+        currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
+        let pi = UserDefaults.standard.integer(forKey: "KEY_PI")
+        profileUsername.text = currentUsername
+        if(pi > 0){
+            setProfileImage(username: currentUsername, profileImageVersion: pi)
+        }
+        else{
+            profileImage.image = #imageLiteral(resourceName: "default_profile")
+        }
+        
+        
+        
+        VSVersusAPIClient.default().profileinfoGet(a: "im", b: currentUsername.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            if task.error != nil {
+                DispatchQueue.main.async {
+                    print(task.error!)
+                }
+            }
+            else {
+                DispatchQueue.main.async {
+                    let result = task.result!.source
+                    self.influence.text = "\(result!._in!) influence"
+                    self.goldMedals.text = "\(result!.g!)"
+                    self.goldMedals.addImage(imageName: "medalGold")
+                    self.silverMedals.text = "\(result!.s!)"
+                    self.silverMedals.addImage(imageName: "medalSilver")
+                    self.bronzeMedals.text = "\(result!.b!)"
+                    self.bronzeMedals.addImage(imageName: "medalBronze")
+                }
+            }
+            return nil
+        }
+        
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -28,8 +78,11 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let child_1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CommentsHistory")
         let child_2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostsHistory")
+        (child_1 as! CommentsHistoryViewController).setUpCommentsHistory(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!)
         return [child_1, child_2]
     }
+    
+    
     
     func loadDesign() {
         //self.settings.style.buttonBarHeight = 325.0
@@ -51,6 +104,10 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         
     }
     
+    
+    
+    
+    
     /*
     // MARK: - Navigation
 
@@ -60,5 +117,26 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func setProfileImage(username : String, profileImageVersion : Int){
+        let request = AWSS3GetPreSignedURLRequest()
+        request.expires = Date().addingTimeInterval(86400)
+        request.bucket = "versus.profile-pictures"
+        request.httpMethod = .GET
+        request.key = username + "-\(profileImageVersion).jpeg"
+        
+        AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+            if let error = task.error {
+                print("Error: \(error)")
+                return nil
+            }
+            
+            let presignedURL = task.result
+            Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+            
+            return nil
+        }
+        
+    }
 
 }

@@ -118,7 +118,7 @@ class PostTextCollectionViewCell: UICollectionViewCell {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        var inputDate = formatter.date(from: time)
+        let inputDate = formatter.date(from: time)
         var timediff = Int(Date().timeIntervalSince(inputDate!))
         
         //time format constants: 0 = seconds, 1 = minutes, 2 = hours, 3 = days , 4 = weeks, 5 = months, 6 = years
