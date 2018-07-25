@@ -12,7 +12,8 @@ import Nuke
 
 class GoldLeaderTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var profileImage: UIImageView!
+    
+    @IBOutlet weak var profileImage: UIButton!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var influence: UILabel!
     @IBOutlet weak var goldCount: UILabel!
@@ -25,7 +26,7 @@ class GoldLeaderTableViewCell: UITableViewCell {
             setProfileImage(username: item.username, profileImageVersion: item.pi)
         }
         else{
-            profileImage.image = #imageLiteral(resourceName: "default_profile")
+            profileImage.setImage(#imageLiteral(resourceName: "default_profile"), for: .normal)
         }
         DispatchQueue.main.async {
             self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
@@ -57,13 +58,14 @@ class GoldLeaderTableViewCell: UITableViewCell {
             }
             
             let presignedURL = task.result
-            Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+            ImagePipeline.shared.loadImage(with: presignedURL!.absoluteURL!) { response, _ in
+                self.profileImage.setImage(response?.image, for: .normal)
+            }
             
             return nil
         }
         
     }
-    
-    
 
 }
+
