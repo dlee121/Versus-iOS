@@ -57,11 +57,11 @@ class MeViewController: ButtonBarPagerTabStripViewController {
                     let result = task.result!.source
                     self.influence.text = "\(result!._in!) influence"
                     self.goldMedals.text = "\(result!.g!)"
-                    self.goldMedals.addImage(imageName: "medalGold")
+                    self.goldMedals.addImage(imageName: "medalGold", imageHeight: 24)
                     self.silverMedals.text = "\(result!.s!)"
-                    self.silverMedals.addImage(imageName: "medalSilver")
+                    self.silverMedals.addImage(imageName: "medalSilver", imageHeight: 24)
                     self.bronzeMedals.text = "\(result!.b!)"
-                    self.bronzeMedals.addImage(imageName: "medalBronze")
+                    self.bronzeMedals.addImage(imageName: "medalBronze", imageHeight: 24)
                 }
             }
             return nil

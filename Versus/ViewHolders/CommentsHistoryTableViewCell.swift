@@ -27,8 +27,10 @@ class CommentsHistoryTableViewCell: UITableViewCell {
         }
         
         content.text = comment.content
-        hearts.text = "\(comment.upvotes)"
-        brokenhearts.text = "\(comment.downvotes)"
+        hearts.text = "\(comment.upvotes) "
+        hearts.addImage(imageName: "heart_red", imageHeight: 18)
+        brokenhearts.text = "\(comment.downvotes) "
+        brokenhearts.addImage(imageName: "brokenheart_blue", imageHeight: 18)
         time.text = getTimeString(time: comment.time)
     }
     

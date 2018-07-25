@@ -37,11 +37,11 @@ class PlainLeaderTableViewCell: UITableViewCell {
         username.text = item.username
         influence.text = "\(item.influence) influence"
         goldCount.text = "\(item.g)"
-        goldCount.addImage(imageName: "medalGold")
+        goldCount.addImage(imageName: "medalGold", imageHeight: 24)
         silverCount.text = "\(item.s)"
-        silverCount.addImage(imageName: "medalSilver")
+        silverCount.addImage(imageName: "medalSilver", imageHeight: 24)
         bronzeCount.text = "\(item.b)"
-        bronzeCount.addImage(imageName: "medalBronze")
+        bronzeCount.addImage(imageName: "medalBronze", imageHeight: 24)
         
         rank.text = "\(rankNumber)"
         

@@ -10,11 +10,11 @@ import Foundation
 
 extension UILabel
 {
-    func addImage(imageName: String)
+    func addImage(imageName: String, imageHeight: CGFloat)
     {
         let attachment:NSTextAttachment = NSTextAttachment()
         attachment.image = UIImage(named: imageName)
-        attachment.setImageHeight(height: 24)
+        attachment.setImageHeight(height: imageHeight)
         
         let attachmentString:NSAttributedString = NSAttributedString(attachment: attachment)
         let myString:NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
