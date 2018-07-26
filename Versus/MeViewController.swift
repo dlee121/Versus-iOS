@@ -43,6 +43,8 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         else{
             profileImage.image = #imageLiteral(resourceName: "default_profile")
         }
+        profileImage.layer.cornerRadius = profileImage.frame.size.height / 2
+        profileImage.clipsToBounds = true
         
         
         

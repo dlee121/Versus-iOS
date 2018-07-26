@@ -13,6 +13,7 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var tableView: UITableView!
     var leaders = [LeaderboardEntry]()
     var apiClient = VSVersusAPIClient.default()
+    var tappedUsername = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,6 +83,18 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
             cell!.setCell(item: leaders[indexPath.row], rankNumber: indexPath.row + 1)
             return cell!
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tappedUsername = leaders[indexPath.row].username
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "leaderboardToProfile", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let profileVC = segue.destination as? ProfileViewController else {return}
+        profileVC.currentUsername = tappedUsername
+        //categoryVC.categoryQuery(fromIndex: 0, category: selectedCategory)
     }
     
     /*

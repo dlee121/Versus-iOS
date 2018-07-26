@@ -924,6 +924,7 @@
                     <tabBarItem key="tabBarItem" title="Leaderboard" id="GMS-nB-x2O"/>
                     <connections>
                         <outlet property="tableView" destination="4iA-82-RIj" id="FUD-eW-gSQ"/>
+                        <segue destination="00O-u0-BLe" kind="show" identifier="leaderboardToProfile" id="ef7-iW-1DU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JgQ-eX-eYj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1192,8 +1193,16 @@
                         <viewLayoutGuide key="safeArea" id="9i0-Zz-PzA"/>
                     </view>
                     <connections>
+                        <outlet property="bronzeMedals" destination="jsg-0i-vgF" id="KlZ-93-iJq"/>
                         <outlet property="buttonBarView" destination="brt-UB-3UK" id="dl7-nx-9lJ"/>
                         <outlet property="containerView" destination="0gn-XP-YbQ" id="Wny-nG-hSc"/>
+                        <outlet property="followers" destination="8dU-YZ-P0K" id="LJz-S9-WhG"/>
+                        <outlet property="followings" destination="Ffo-gT-hoM" id="7xx-Bj-Jua"/>
+                        <outlet property="goldMedals" destination="BCK-ms-8hn" id="wUd-G9-LC7"/>
+                        <outlet property="influence" destination="eac-YB-J5e" id="bU8-kr-hev"/>
+                        <outlet property="profileImage" destination="Tv7-pf-Myz" id="Snw-VW-pPp"/>
+                        <outlet property="profileUsername" destination="dg9-yW-kok" id="2aO-80-cIv"/>
+                        <outlet property="silverMedals" destination="XIh-jv-xH6" id="eC2-Is-crd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3g-PO-JPe" userLabel="First Responder" sceneMemberID="firstResponder"/>
