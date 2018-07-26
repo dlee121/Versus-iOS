@@ -84,7 +84,9 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let child_1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CommentsHistory")
         let child_2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostsHistory")
+        let view = child_2.view
         (child_1 as! CommentsHistoryViewController).setUpCommentsHistory(username: currentUsername)
+        (child_2 as! PostsHistoryViewController).setUpPostsHistory(username: currentUsername)
         return [child_1, child_2]
     }
     

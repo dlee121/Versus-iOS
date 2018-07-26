@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		57F94210650FC22EB9B99E81 /* Pods_Versus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F3231BC3413EBAF3A9B9312 /* Pods_Versus.framework */; };
+		70036ED0210A79C1000BE8E9 /* PostsHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70036ECF210A79C1000BE8E9 /* PostsHistoryTableViewCell.swift */; };
 		700DB5CB21081CF5008E546A /* PostInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700DB5CA21081CF5008E546A /* PostInfo.swift */; };
 		701B9BA520E3FB20003C9E7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B9BA420E3FB20003C9E7E /* AppDelegate.swift */; };
 		701B9BA720E3FB20003C9E7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B9BA620E3FB20003C9E7E /* ViewController.swift */; };
@@ -116,6 +117,7 @@
 /* Begin PBXFileReference section */
 		048C4BA7173C812C742C4401 /* Pods-Versus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Versus.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Versus/Pods-Versus.debug.xcconfig"; sourceTree = "<group>"; };
 		1F3231BC3413EBAF3A9B9312 /* Pods_Versus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Versus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		70036ECF210A79C1000BE8E9 /* PostsHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		700DB5CA21081CF5008E546A /* PostInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfo.swift; sourceTree = "<group>"; };
 		701B9BA120E3FB20003C9E7E /* Versus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Versus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		701B9BA420E3FB20003C9E7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */,
 				7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */,
 				706F89EE21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift */,
+				70036ECF210A79C1000BE8E9 /* PostsHistoryTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -591,6 +594,7 @@
 				70E80CBA20E6DB570067DF08 /* VSAIModel_hits_hits_item.swift in Sources */,
 				70B9A7E920EEDACB00C06709 /* PostObject.swift in Sources */,
 				70E80CCE20E6DB570067DF08 /* VSCommentPutModel.swift in Sources */,
+				70036ED0210A79C1000BE8E9 /* PostsHistoryTableViewCell.swift in Sources */,
 				70E80CD320E6DB570067DF08 /* VSCommentModel__source.swift in Sources */,
 				706F89E72106E38800A78EFB /* VSPostQMultiModel.swift in Sources */,
 				70E80CD020E6DB570067DF08 /* VSPostsListCompactModel_hits.swift in Sources */,

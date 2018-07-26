@@ -44,6 +44,7 @@ class PostObject {
         profileImageVersion = 0
     }
     
+    
     //for initializing from compact source for Search and Posts history
     init(compactSource : VSPostsListCompactModel_hits_hits_item__source, id : String){
         

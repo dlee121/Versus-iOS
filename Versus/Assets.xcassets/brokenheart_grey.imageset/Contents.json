@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "bhg.png",
+      "filename" : "BHG24.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "bhg2.png",
+      "filename" : "BHG36.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "bhg3.png",
+      "filename" : "BHG64.png",
       "scale" : "3x"
     }
   ],
