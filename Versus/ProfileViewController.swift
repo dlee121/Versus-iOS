@@ -28,8 +28,13 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         self.loadDesign()
         super.viewDidLoad()
         navigationItem.title = currentUsername
+        DispatchQueue.main.async {
+            self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
+            self.profileImage.clipsToBounds = true
+        }
+        
         //navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "Chalkduster", size: 5)!], for: .normal)
-        navigationItem.backBarButtonItem?.title = "Leader..."
+        
         
         
         // Do any additional setup after loading the view.
@@ -62,8 +67,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                     else{
                         self.profileImage.image = #imageLiteral(resourceName: "default_profile")
                     }
-                    self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
-                    self.profileImage.clipsToBounds = true
+                    
                 }
             }
             return nil
@@ -135,6 +139,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
             
             let presignedURL = task.result
             Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+            print("\(self.profileImage.frame.width) is width")
             
             return nil
         }

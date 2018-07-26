@@ -97,6 +97,7 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
         profileVC.currentUsername = tappedUsername
         let backItem = UIBarButtonItem()
         backItem.title = "Leader..."
+        //backItem.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12.0)], for: .normal)
         navigationItem.backBarButtonItem = backItem
         //categoryVC.categoryQuery(fromIndex: 0, category: selectedCategory)
     }

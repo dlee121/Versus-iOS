@@ -973,12 +973,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="155" id="rzw-Uc-7E9"/>
+                                </constraints>
                             </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_profile" translatesAutoresizingMaskIntoConstraints="NO" id="FhX-oz-DSV">
                                 <rect key="frame" x="16" y="48" width="122" height="122"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="FhX-oz-DSV" secondAttribute="height" multiplier="1:1" id="LRX-x9-mF5"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="295" id="xHh-x1-Avs"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tzz-YW-lJ8">
@@ -1104,11 +1106,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="155" id="V96-5k-2Ze"/>
+                                </constraints>
                             </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_profile" translatesAutoresizingMaskIntoConstraints="NO" id="Tv7-pf-Myz">
                                 <rect key="frame" x="16" y="72" width="122" height="122"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="295" id="PES-Dc-KR4"/>
                                     <constraint firstAttribute="width" secondItem="Tv7-pf-Myz" secondAttribute="height" multiplier="1:1" id="dZe-Bm-xf8"/>
                                 </constraints>
                             </imageView>

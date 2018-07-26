@@ -27,6 +27,10 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     override func viewDidLoad() {
         self.loadDesign()
         super.viewDidLoad()
+        DispatchQueue.main.async {
+            self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
+            self.profileImage.clipsToBounds = true
+        }
         
 
         // Do any additional setup after loading the view.
@@ -43,8 +47,6 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         else{
             profileImage.image = #imageLiteral(resourceName: "default_profile")
         }
-        profileImage.layer.cornerRadius = profileImage.frame.size.height / 2
-        profileImage.clipsToBounds = true
         
         
         
