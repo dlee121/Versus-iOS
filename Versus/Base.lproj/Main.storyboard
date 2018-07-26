@@ -646,17 +646,20 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HOG-fw-VvC" userLabel="Profile">
                                                     <rect key="frame" x="20" y="11" width="80" height="80"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s7i-dA-r0Z">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9E-nO-Tfk">
                                                             <rect key="frame" x="4" y="4" width="72" height="72"/>
-                                                        </imageView>
+                                                            <state key="normal">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
+                                                        <constraint firstItem="c9E-nO-Tfk" firstAttribute="top" secondItem="HOG-fw-VvC" secondAttribute="top" constant="4" id="9eC-Lg-ZEz"/>
                                                         <constraint firstAttribute="width" secondItem="HOG-fw-VvC" secondAttribute="height" multiplier="1:1" id="FY1-O3-oAo"/>
-                                                        <constraint firstItem="s7i-dA-r0Z" firstAttribute="leading" secondItem="HOG-fw-VvC" secondAttribute="leading" constant="4" id="YdV-Gy-O2Q"/>
-                                                        <constraint firstAttribute="bottom" secondItem="s7i-dA-r0Z" secondAttribute="bottom" constant="4" id="dYh-FZ-TEw"/>
-                                                        <constraint firstItem="s7i-dA-r0Z" firstAttribute="top" secondItem="HOG-fw-VvC" secondAttribute="top" constant="4" id="eTP-4m-KZj"/>
-                                                        <constraint firstAttribute="trailing" secondItem="s7i-dA-r0Z" secondAttribute="trailing" constant="4" id="nQs-az-OfY"/>
+                                                        <constraint firstAttribute="bottom" secondItem="c9E-nO-Tfk" secondAttribute="bottom" constant="4" id="FZE-MN-Rke"/>
+                                                        <constraint firstItem="c9E-nO-Tfk" firstAttribute="leading" secondItem="HOG-fw-VvC" secondAttribute="leading" constant="4" id="IPd-ee-73H"/>
+                                                        <constraint firstAttribute="trailing" secondItem="c9E-nO-Tfk" secondAttribute="trailing" constant="4" id="cF5-2P-MEw"/>
                                                     </constraints>
                                                 </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crownSilver" translatesAutoresizingMaskIntoConstraints="NO" id="k6J-0r-s9k">
@@ -681,7 +684,7 @@
                                             <outlet property="bronzeCount" destination="naS-2u-QLY" id="PrW-KT-jPe"/>
                                             <outlet property="goldCount" destination="WRD-Rv-kPG" id="SSf-h1-rtf"/>
                                             <outlet property="influence" destination="A1R-R3-YXY" id="Sia-N3-5sO"/>
-                                            <outlet property="profileImage" destination="s7i-dA-r0Z" id="tNI-t4-0Nn"/>
+                                            <outlet property="profileImage" destination="c9E-nO-Tfk" id="WW7-K8-l1E"/>
                                             <outlet property="silverCount" destination="FSj-Ix-Duh" id="tBZ-Fc-CcY"/>
                                             <outlet property="username" destination="Fsw-bm-bLp" id="Kr4-42-a9M"/>
                                         </connections>
