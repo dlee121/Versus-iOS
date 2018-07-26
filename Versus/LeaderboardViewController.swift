@@ -17,6 +17,7 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Leaderboard"
 
         // Do any additional setup after loading the view.
     }
@@ -94,6 +95,9 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let profileVC = segue.destination as? ProfileViewController else {return}
         profileVC.currentUsername = tappedUsername
+        let backItem = UIBarButtonItem()
+        backItem.title = "Leader..."
+        navigationItem.backBarButtonItem = backItem
         //categoryVC.categoryQuery(fromIndex: 0, category: selectedCategory)
     }
     

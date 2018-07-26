@@ -14,7 +14,6 @@ import Nuke
 
 class ProfileViewController: ButtonBarPagerTabStripViewController {
     
-    @IBOutlet weak var profileUsername: UILabel!
     @IBOutlet weak var followings: UILabel!
     @IBOutlet weak var followers: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
@@ -28,6 +27,9 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     override func viewDidLoad() {
         self.loadDesign()
         super.viewDidLoad()
+        navigationItem.title = currentUsername
+        //navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "Chalkduster", size: 5)!], for: .normal)
+        navigationItem.backBarButtonItem?.title = "Leader..."
         
         
         // Do any additional setup after loading the view.
@@ -35,8 +37,6 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
-        
-        profileUsername.text = currentUsername
         
         VSVersusAPIClient.default().profileinfoGet(a: "pim", b: currentUsername.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
