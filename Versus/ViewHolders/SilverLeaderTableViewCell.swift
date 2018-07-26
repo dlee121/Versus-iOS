@@ -13,7 +13,8 @@ import Nuke
 class SilverLeaderTableViewCell: UITableViewCell {
 
     
-    @IBOutlet weak var profileImage: UIButton!
+    
+    @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var influence: UILabel!
     @IBOutlet weak var goldCount: UILabel!
@@ -25,7 +26,7 @@ class SilverLeaderTableViewCell: UITableViewCell {
             setProfileImage(username: item.username, profileImageVersion: item.pi)
         }
         else{
-            profileImage.setImage(#imageLiteral(resourceName: "default_profile"), for: .normal)
+            profileImage.image = #imageLiteral(resourceName: "default_profile")
         }
         DispatchQueue.main.async {
             self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
@@ -57,9 +58,7 @@ class SilverLeaderTableViewCell: UITableViewCell {
             }
             
             let presignedURL = task.result
-            ImagePipeline.shared.loadImage(with: presignedURL!.absoluteURL!) { response, _ in
-                self.profileImage.setImage(response?.image, for: .normal)
-            }
+            Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
             
             return nil
         }
