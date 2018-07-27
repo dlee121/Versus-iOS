@@ -64,11 +64,9 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                         }
                         payload.append("]}")
                         self.fromIndex = self.comments.count
-                        print("payload : " + payload)
                         self.apiClient.postinfomultiGet(a: "mpinf", b: payload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             
                             if let pinfResults = task.result?.docs {
-                                print("pinf count: \(pinfResults.count)")
                                 for pinfItem in pinfResults {
                                     self.postInfoMap[pinfItem.id!] = PostInfo(itemSource: pinfItem.source!)
                                 }

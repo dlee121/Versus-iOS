@@ -20,8 +20,17 @@ class FGHTableViewCell: UITableViewCell {
     
     func setCell(username : String, profileImageVersion : Int){
         usernameView.text = username
+        
+        self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
+        self.profileImage.clipsToBounds = true
+        
         if profileImageVersion > 0 {
+            print("got piv")
             setProfileImage(username: username, profileImageVersion: profileImageVersion)
+        }
+        else {
+            print("got 0")
+            profileImage.image = #imageLiteral(resourceName: "default_profile")
         }
     }
     

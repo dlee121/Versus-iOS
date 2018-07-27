@@ -1098,6 +1098,9 @@
                                         <state key="normal">
                                             <color key="titleColor" white="0.17000000000000001" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="followersTapped:" destination="00O-u0-BLe" eventType="touchUpInside" id="yuK-cn-IPB"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="U9I-tF-68P">
                                         <rect key="frame" x="82.5" y="0.0" width="72.5" height="30"/>
@@ -1105,6 +1108,9 @@
                                         <state key="normal">
                                             <color key="titleColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="followingsTapped:" destination="00O-u0-BLe" eventType="touchUpInside" id="ncY-Xf-VWN"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -1198,6 +1204,7 @@
                         <outlet property="influence" destination="eac-YB-J5e" id="bU8-kr-hev"/>
                         <outlet property="profileImage" destination="Tv7-pf-Myz" id="Snw-VW-pPp"/>
                         <outlet property="silverMedals" destination="XIh-jv-xH6" id="eC2-Is-crd"/>
+                        <segue destination="FiI-G2-tcw" kind="show" identifier="profileToFGH" id="XJc-pI-oXd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3g-PO-JPe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1212,7 +1219,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6ru-b7-wm6">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="86" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6ru-b7-wm6">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

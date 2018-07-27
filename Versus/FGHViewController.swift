@@ -30,7 +30,7 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
     func setUpFPage(followers : [String]){
         var index = 0
         var payload = "{\"ids\":["
-        usernames.removeAll()
+        usernames = followers
         profileImageVersions.removeAll()
         
         if(followers.count > 0){
@@ -45,7 +45,6 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
             }
             payload.append("]}")
             
-            
             self.apiClient.pivGet(a: "pis", b: payload.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                 if task.error != nil {
                     DispatchQueue.main.async {
@@ -55,12 +54,12 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
                 
                 if let results = task.result?.docs {
                     for item in results {
-                        self.profileImageVersions[item.id!] = item.source?.pi?.intValue
+                        self.profileImageVersions[item.id!] = item.source!.pi!.intValue
                     }
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
                 }
                 
                 return nil
@@ -79,7 +78,7 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
     func setUpGPage(followings : [String]){
         var index = 0
         var payload = "{\"ids\":["
-        usernames.removeAll()
+        usernames = followings
         profileImageVersions.removeAll()
         
         if(followings.count > 0){
@@ -106,10 +105,10 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
                     for item in results {
                         self.profileImageVersions[item.id!] = item.source?.pi?.intValue
                     }
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
                 }
                 
                 return nil
@@ -150,8 +149,8 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "fghItem", for: indexPath) as? FGHTableViewCell
         let username = usernames[indexPath.row]
-        if profileImageVersions[username] != nil {
-            cell!.setCell(username: username, profileImageVersion: profileImageVersions[username]!)
+        if let piv = profileImageVersions[username.lowercased()] {
+            cell!.setCell(username: username, profileImageVersion: piv)
         }
         else{
             cell!.setCell(username: username, profileImageVersion: 0)

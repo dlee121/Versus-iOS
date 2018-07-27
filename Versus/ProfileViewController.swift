@@ -29,6 +29,10 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     var hList = [String]()
     var ref: DatabaseReference!
     
+    var fORg = 0 //0 = f, 1 = g, for segue to FGH page from followers/followings tap
+    let f = 0
+    let g = 1
+    
     override func viewDidLoad() {
         self.loadDesign()
         super.viewDidLoad()
@@ -193,8 +197,6 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     
     
     
-    
-    
     /*
      // MARK: - Navigation
      
@@ -227,5 +229,33 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         }
         
     }
+    
+    @IBAction func followersTapped(_ sender: UIButton) {
+        fORg = f
+        performSegue(withIdentifier: "profileToFGH", sender: self)
+    }
+    
+    @IBAction func followingsTapped(_ sender: UIButton) {
+        fORg = g
+        performSegue(withIdentifier: "profileToFGH", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let fghVC = segue.destination as? FGHViewController else {return}
+        let view = fghVC.view
+        if fORg == f {
+            //combine f and h list then sort them alphabetically
+            var combinedList = fList + hList
+            fghVC.setUpFPage(followers: combinedList)
+        }
+        else {
+            //combine g and h list then sort them alphabetically
+            var combinedList = gList + hList
+            fghVC.setUpFPage(followers: combinedList)
+        }
+        
+    }
+    
+    
     
 }
