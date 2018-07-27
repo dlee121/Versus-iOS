@@ -50,7 +50,9 @@ class SearchPostTableViewCell: UITableViewCell {
             }
             
             let presignedURL = task.result
-            Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+            DispatchQueue.main.async {
+                Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+            }
             
             return nil
         }

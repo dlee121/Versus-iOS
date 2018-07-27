@@ -8,9 +8,9 @@
 
 import UIKit
 import XLPagerTabStrip
-import Firebase
 import AWSS3
 import Nuke
+import FirebaseDatabase
 
 class MeViewController: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var followers: UILabel!
@@ -23,10 +23,15 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var bronzeMedals: UILabel!
     
     var currentUsername : String!
+    var fList = [String]()
+    var gList = [String]()
+    var hList = [String]()
+    var ref: DatabaseReference!
     
     override func viewDidLoad() {
         self.loadDesign()
         super.viewDidLoad()
+        ref = Database.database().reference()
         DispatchQueue.main.async {
             self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
             self.profileImage.clipsToBounds = true
@@ -48,7 +53,7 @@ class MeViewController: ButtonBarPagerTabStripViewController {
             profileImage.image = #imageLiteral(resourceName: "default_profile")
         }
         
-        
+        setupFGH()
         
         VSVersusAPIClient.default().profileinfoGet(a: "im", b: currentUsername.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
@@ -70,6 +75,74 @@ class MeViewController: ButtonBarPagerTabStripViewController {
             }
             return nil
         }
+        
+    }
+    
+    func setupFGH(){
+        fList.removeAll()
+        gList.removeAll()
+        hList.removeAll()
+        
+        var usernameHash : Int32
+        if(currentUsername.count < 5){
+            usernameHash = currentUsername.hashCode()
+        }
+        else{
+            var hashIn = ""
+            
+            hashIn.append(currentUsername[0])
+            hashIn.append(currentUsername[currentUsername.count-2])
+            hashIn.append(currentUsername[1])
+            hashIn.append(currentUsername[currentUsername.count-1])
+            
+            usernameHash = hashIn.hashCode()
+        }
+        
+        let userPath = "\(usernameHash)/" + currentUsername
+        let fPath = userPath + "/f"
+        let gPath = userPath + "/g"
+        let hPath = userPath + "/h"
+        
+        ref.child(hPath).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let enumerator = snapshot.children
+            while let item = enumerator.nextObject() as? DataSnapshot {
+                self.hList.append(item.key)
+            }
+            
+            
+            self.ref.child(fPath).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let enumerator = snapshot.children
+                while let item = enumerator.nextObject() as? DataSnapshot {
+                    self.fList.append(item.key)
+                }
+                DispatchQueue.main.async {
+                    self.followers.text = "\(self.fList.count + self.hList.count)\nFollowers"
+                }
+                
+            }) { (error) in
+                print(error.localizedDescription)
+            }
+            
+            self.ref.child(gPath).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let enumerator = snapshot.children
+                while let item = enumerator.nextObject() as? DataSnapshot {
+                    self.gList.append(item.key)
+                }
+                DispatchQueue.main.async {
+                    self.followings.text = "\(self.gList.count + self.hList.count)\nFollowing"
+                }
+                
+            }) { (error) in
+                print(error.localizedDescription)
+            }
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+        
         
     }
     
@@ -138,7 +211,10 @@ class MeViewController: ButtonBarPagerTabStripViewController {
             }
             
             let presignedURL = task.result
-            Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+            
+            DispatchQueue.main.async {
+                Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+            }
             
             return nil
         }
