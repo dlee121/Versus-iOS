@@ -13,8 +13,9 @@ import Nuke
 import FirebaseDatabase
 
 class MeViewController: ButtonBarPagerTabStripViewController {
-    @IBOutlet weak var followers: UILabel!
-    @IBOutlet weak var followings: UILabel!
+    
+    @IBOutlet weak var followers: UIButton!
+    @IBOutlet weak var followings: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileUsername: UILabel!
     @IBOutlet weak var influence: UILabel!
@@ -35,7 +36,10 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         DispatchQueue.main.async {
             self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
             self.profileImage.clipsToBounds = true
+            self.followings.titleLabel?.textAlignment = NSTextAlignment.center
+            self.followers.titleLabel?.textAlignment = NSTextAlignment.center
         }
+        
         
 
         // Do any additional setup after loading the view.
@@ -118,7 +122,7 @@ class MeViewController: ButtonBarPagerTabStripViewController {
                     self.fList.append(item.key)
                 }
                 DispatchQueue.main.async {
-                    self.followers.text = "\(self.fList.count + self.hList.count)\nFollowers"
+                    self.followers.setTitle("\(self.fList.count + self.hList.count)\nFollowers", for: .normal)
                 }
                 
             }) { (error) in
@@ -132,7 +136,7 @@ class MeViewController: ButtonBarPagerTabStripViewController {
                     self.gList.append(item.key)
                 }
                 DispatchQueue.main.async {
-                    self.followings.text = "\(self.gList.count + self.hList.count)\nFollowing"
+                    self.followings.setTitle("\(self.gList.count + self.hList.count)\nFollowing", for: .normal)
                 }
                 
             }) { (error) in

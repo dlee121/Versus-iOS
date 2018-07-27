@@ -237,7 +237,7 @@ class PostImageCollectionViewCell: UICollectionViewCell {
                 
                 let presignedURL = task.result
                 DispatchQueue.main.async {
-                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.redImage)
                 }
                 
                 return nil
@@ -259,7 +259,7 @@ class PostImageCollectionViewCell: UICollectionViewCell {
                 
                 let presignedURL = task.result
                 DispatchQueue.main.async {
-                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.blackImage)
                 }
                 
                 return nil

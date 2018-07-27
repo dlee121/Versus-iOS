@@ -14,8 +14,9 @@ import Nuke
 
 class ProfileViewController: ButtonBarPagerTabStripViewController {
     
-    @IBOutlet weak var followings: UILabel!
-    @IBOutlet weak var followers: UILabel!
+    
+    @IBOutlet weak var followers: UIButton!
+    @IBOutlet weak var followings: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var influence: UILabel!
     @IBOutlet weak var goldMedals: UILabel!
@@ -36,13 +37,11 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         DispatchQueue.main.async {
             self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
             self.profileImage.clipsToBounds = true
+            self.followings.titleLabel?.textAlignment = NSTextAlignment.center
+            self.followers.titleLabel?.textAlignment = NSTextAlignment.center
         }
         
         navigationItem.title = currentUsername
-        DispatchQueue.main.async {
-            self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
-            self.profileImage.clipsToBounds = true
-        }
         
         //navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "Chalkduster", size: 5)!], for: .normal)
         
@@ -128,7 +127,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                     self.fList.append(item.key)
                 }
                 DispatchQueue.main.async {
-                    self.followers.text = "\(self.fList.count + self.hList.count)\nFollowers"
+                    self.followers.setTitle("\(self.fList.count + self.hList.count)\nFollowers", for: .normal)
                 }
                 
             }) { (error) in
@@ -142,7 +141,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                     self.gList.append(item.key)
                 }
                 DispatchQueue.main.async {
-                    self.followings.text = "\(self.gList.count + self.hList.count)\nFollowing"
+                    self.followings.setTitle("\(self.gList.count + self.hList.count)\nFollowing", for: .normal)
                 }
                 
             }) { (error) in
