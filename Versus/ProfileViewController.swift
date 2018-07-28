@@ -256,6 +256,18 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     
     func combineLists(list1 : [String], list2 : [String]) -> [String] {
         
+        if list1.count == 0 {
+            if list2.count == 0 {
+                return []
+            }
+            else {
+                return list2
+            }
+        }
+        else if list2.count == 0 {
+            return list1
+        }
+        
         var combinedList = list1 + list2
         var index : Int
         var value : String
