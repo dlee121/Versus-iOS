@@ -54,7 +54,6 @@ class FGHTableViewCell: UITableViewCell {
             
             return nil
         }
-        
     }
 
 }
