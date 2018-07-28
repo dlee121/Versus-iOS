@@ -17,7 +17,6 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var followers: UIButton!
     @IBOutlet weak var followings: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var profileUsername: UILabel!
     @IBOutlet weak var influence: UILabel!
     @IBOutlet weak var goldMedals: UILabel!
     @IBOutlet weak var silverMedals: UILabel!
@@ -28,6 +27,10 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     var gList = [String]()
     var hList = [String]()
     var ref: DatabaseReference!
+    
+    var fORg = 0 //0 = f, 1 = g, for segue to FGH page from followers/followings tap
+    let f = 0
+    let g = 1
     
     override func viewDidLoad() {
         self.loadDesign()
@@ -49,7 +52,8 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         super.viewWillAppear(animated)
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         let pi = UserDefaults.standard.integer(forKey: "KEY_PI")
-        profileUsername.text = currentUsername
+        //profileUsername.text = currentUsername
+        navigationItem.title = currentUsername
         if(pi > 0){
             setProfileImage(username: currentUsername, profileImageVersion: pi)
         }
@@ -226,6 +230,63 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     }
     
     
+    @IBAction func followersTapped(_ sender: UIButton) {
+        fORg = f
+        performSegue(withIdentifier: "meToFGH", sender: self)
+    }
+    
+    @IBAction func followingsTapped(_ sender: UIButton) {
+        fORg = g
+        performSegue(withIdentifier: "meToFGH", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let fghVC = segue.destination as? FGHViewController else {return}
+        let view = fghVC.view
+        if fORg == f {
+            //combine f and h list then sort them alphabetically
+            fghVC.setUpFPage(followers: combineLists(list1: hList, list2: fList))
+        }
+        else {
+            //combine g and h list then sort them alphabetically
+            fghVC.setUpFPage(followers: combineLists(list1: hList, list2: gList))
+        }
+        
+    }
+    
+    func combineLists(list1 : [String], list2 : [String]) -> [String] {
+        
+        if list1.count == 0 {
+            if list2.count == 0 {
+                return []
+            }
+            else {
+                return list2
+            }
+        }
+        else if list2.count == 0 {
+            return list1
+        }
+        
+        var combinedList = list1 + list2
+        var index : Int
+        var value : String
+        
+        for i in 1...combinedList.count-1 {
+            value = combinedList[i]
+            index = i
+            while index > 0 && combinedList[index-1].lowercased() > value.lowercased() {
+                index -= 1
+            }
+            
+            combinedList.remove(at: i)
+            combinedList.insert(value, at: index)
+            
+        }
+        
+        return combinedList
+        
+    }
     
 
 }
