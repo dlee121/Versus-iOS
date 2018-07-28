@@ -22,6 +22,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var goldMedals: UILabel!
     @IBOutlet weak var silverMedals: UILabel!
     @IBOutlet weak var bronzeMedals: UILabel!
+    @IBOutlet weak var followButton: UIButton!
     
     var currentUsername : String!
     var fList = [String]()
@@ -90,6 +91,15 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         }
         
     }
+    
+    func setUpFollowButton(){
+        //check if we have a f/g/h relationship with this user
+        
+        
+        
+    }
+    
+    
     
     func setupFGH(){
         fList.removeAll()
@@ -287,6 +297,13 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         return combinedList
         
     }
+    
+    @IBAction func followButtonTapped(_ sender: UIButton) {
+        
+        
+        
+    }
+    
     
     
     
