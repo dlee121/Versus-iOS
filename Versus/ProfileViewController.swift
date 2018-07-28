@@ -245,15 +245,58 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         let view = fghVC.view
         if fORg == f {
             //combine f and h list then sort them alphabetically
-            fghVC.setUpFPage(followers: combineLists(list1: fList, list2: hList))
+            fghVC.setUpFPage(followers: combineLists(list1: hList, list2: fList))
         }
         else {
             //combine g and h list then sort them alphabetically
-            fghVC.setUpFPage(followers: combineLists(list1: gList, list2: hList))
+            fghVC.setUpFPage(followers: combineLists(list1: hList, list2: gList))
         }
         
     }
     
+    func combineLists(list1 : [String], list2 : [String]) -> [String] {
+        
+        var combinedList = list1 + list2
+        var index : Int
+        var value : String
+        
+        for i in 1...combinedList.count-1 {
+            value = combinedList[i]
+            index = i
+            while index > 0 && combinedList[index-1].lowercased() > value.lowercased() {
+                index -= 1
+            }
+            
+            combinedList.remove(at: i)
+            combinedList.insert(value, at: index)
+            
+        }
+        
+        return combinedList
+        
+    }
+    
+    
+    
+    /*
+     private void sortUsersList(){
+         String value;
+         int index;
+     
+         for(int i = 1; i < usersList.size(); i++){
+             value = usersList.get(i);
+             index = i;
+             while(index > 0 && usersList.get(index-1).compareToIgnoreCase(value) > 0) {
+                index--;
+             }
+     
+             usersList.remove(i);
+             usersList.add(index, value);
+         }
+     }
+     
+     
+     
     func combineLists(list1 : [String], list2 : [String]) -> [String] {
         
         if list1.count == 0 {
@@ -276,7 +319,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
             
             while j < list2.count {
                 let value2 = list2[j]
-                if(value2 < value1){
+                if(value2.lowercased() < value1.lowercased()){
                     combinedList.append(value2)
                 }
                 else {
@@ -302,6 +345,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         return combinedList
         
     }
+     */
     
     
     
