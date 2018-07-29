@@ -30,6 +30,8 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     var hList = [String]()
     var ref: DatabaseReference!
     
+    var followingThisUser = "0" //0 if no connection with this user, f if this user (of this profile) is a follower, g if following this user, and h if both f and g
+    
     var fORg = 0 //0 = f, 1 = g, for segue to FGH page from followers/followings tap
     let f = 0
     let g = 1
@@ -94,11 +96,23 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     
     func setUpFollowButton(){
         //check if we have a f/g/h relationship with this user
-        
-        
-        
+        DispatchQueue.main.async {
+            switch self.followingThisUser {
+            case "f":
+                self.followButton.setTitle("Follow", for: .normal)
+                //show f handshake icon
+            case "g":
+                self.followButton.setTitle("Unfollow", for: .normal)
+                //show g handshake icon
+            case "h":
+                self.followButton.setTitle("Unfollow", for: .normal)
+                //show h handshake icon
+            default:
+                self.followButton.setTitle("Follow", for: .normal)
+                //clear handshake icon
+            }
+        }
     }
-    
     
     
     func setupFGH(){
@@ -126,20 +140,30 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         let gPath = userPath + "/g"
         let hPath = userPath + "/h"
         
+        var loggedInUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
+        
         ref.child(hPath).observeSingleEvent(of: .value, with: { (snapshot) in
+            self.followingThisUser = "0"
             
             let enumerator = snapshot.children
             while let item = enumerator.nextObject() as? DataSnapshot {
+                if loggedInUsername == item.key {
+                    self.followingThisUser = "h"
+                    print("set to h")
+                }
                 self.hList.append(item.key)
             }
-            
             
             self.ref.child(fPath).observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 let enumerator = snapshot.children
                 while let item = enumerator.nextObject() as? DataSnapshot {
+                    if loggedInUsername == item.key {
+                        self.followingThisUser = "g" //this is g, because being in their fList means the logged-in user is following this profile's user
+                    }
                     self.fList.append(item.key)
                 }
+                self.setUpFollowButton()
                 DispatchQueue.main.async {
                     self.followers.setTitle("\(self.fList.count + self.hList.count)\nFollowers", for: .normal)
                 }
@@ -152,8 +176,12 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                 
                 let enumerator = snapshot.children
                 while let item = enumerator.nextObject() as? DataSnapshot {
+                    if loggedInUsername == item.key {
+                        self.followingThisUser = "f" //this is f, because being in their gList means this profile's user is following the logged-in user
+                    }
                     self.gList.append(item.key)
                 }
+                self.setUpFollowButton()
                 DispatchQueue.main.async {
                     self.followings.setTitle("\(self.gList.count + self.hList.count)\nFollowing", for: .normal)
                 }
