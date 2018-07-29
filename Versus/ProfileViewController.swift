@@ -23,6 +23,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var silverMedals: UILabel!
     @IBOutlet weak var bronzeMedals: UILabel!
     @IBOutlet weak var followButton: UIButton!
+    @IBOutlet weak var fghIcon: UIImageView!
     
     var currentUsername : String!
     var fList = [String]()
@@ -59,7 +60,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
-        
+        self.fghIcon.image = nil
         setupFGH()
         
         VSVersusAPIClient.default().profileinfoGet(a: "pim", b: currentUsername.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -100,16 +101,16 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
             switch self.followingThisUser {
             case "f":
                 self.followButton.setTitle("Follow", for: .normal)
-                //show f handshake icon
+                self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_f")
             case "g":
                 self.followButton.setTitle("Unfollow", for: .normal)
-                //show g handshake icon
+                self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_g")
             case "h":
                 self.followButton.setTitle("Unfollow", for: .normal)
-                //show h handshake icon
+                self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_h")
             default:
                 self.followButton.setTitle("Follow", for: .normal)
-                //clear handshake icon
+                self.fghIcon.image = nil
             }
         }
     }
