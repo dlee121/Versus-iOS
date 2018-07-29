@@ -1334,6 +1334,7 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="6ru-b7-wm6" id="Dmy-L9-bVW"/>
+                        <segue destination="00O-u0-BLe" kind="show" identifier="fghToProfile" id="KDj-0G-JKZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hkt-FP-1CY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2416,7 +2417,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kmh-ur-Uym"/>
-        <segue reference="XJc-pI-oXd"/>
+        <segue reference="YuF-tM-5cL"/>
+        <segue reference="KDj-0G-JKZ"/>
         <segue reference="onp-lO-nwi"/>
         <segue reference="CBT-JG-zYd"/>
         <segue reference="3gN-D4-VVL"/>

@@ -33,6 +33,7 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     let g = 1
     
     override func viewDidLoad() {
+        print("viewDidLoad called")
         self.loadDesign()
         super.viewDidLoad()
         ref = Database.database().reference()
@@ -49,6 +50,7 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     }
 
     override func viewWillAppear(_ animated: Bool){
+        print("viewWillAppear called")
         super.viewWillAppear(animated)
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         let pi = UserDefaults.standard.integer(forKey: "KEY_PI")

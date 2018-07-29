@@ -60,6 +60,12 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
+        if self.currentUsername == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+            followButton.isHidden = true
+        }
+        else {
+            followButton.isHidden = false
+        }
         self.fghIcon.image = nil
         setupFGH()
         
@@ -282,6 +288,8 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let fghVC = segue.destination as? FGHViewController else {return}
         let view = fghVC.view
+        fghVC.fORg = fORg
+        
         if fORg == f {
             //combine f and h list then sort them alphabetically
             fghVC.setUpFPage(followers: combineLists(list1: hList, list2: fList))
@@ -328,6 +336,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     }
     
     @IBAction func followButtonTapped(_ sender: UIButton) {
+        print("tapped ay")
         
         
         

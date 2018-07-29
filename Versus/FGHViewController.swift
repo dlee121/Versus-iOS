@@ -14,12 +14,26 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
     var profileImageVersions = [String : Int]()
     var apiClient = VSVersusAPIClient.default()
     var fromIndex : Int!
+    var tappedUsername : String!
+    var fORg : Int!
+    let f = 0
+    let g = 1
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if fORg == f {
+            navigationItem.title = "Followers"
+        }
+        else {
+            navigationItem.title = "Following"
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -145,6 +159,20 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
      return CGFloat(102.0)
      }
      */
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tappedUsername = usernames[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "fghToProfile", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let profileVC = segue.destination as? ProfileViewController else {return}
+        profileVC.currentUsername = tappedUsername
+        //let backItem = UIBarButtonItem()
+        //backItem.title = "Leader..."
+        //navigationItem.backBarButtonItem = backItem
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "fghItem", for: indexPath) as? FGHTableViewCell
