@@ -30,7 +30,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     var hList = [String]()
     var ref: DatabaseReference!
     
-    var followingThisUser = "0" //0 if no connection with this user, f if this user (of this profile) is a follower, g if following this user, and h if both f and g
+    var followingThisUser = "0" //0 by default, f if this is my follower, g if I'm following them, and h if both
     
     var fORg = 0 //0 = f, 1 = g, for segue to FGH page from followers/followings tap
     let f = 0
