@@ -356,6 +356,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         let gPath = userPath + "/g"
         let hPath = userPath + "/h"
         let contactsPath = userPath + "/contacts"
+        var notificationPath = userPath + "/n/f"
         
         if let loggedInUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
             var myUsernameHash : Int32
@@ -417,6 +418,9 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                     self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_h")
                     self.followButton.setTitle("Followed", for: .normal)
                 }
+                
+                //send follow notification to the profile user
+                ref.child(notificationPath+"/\(loggedInUsername)").setValue(Int(NSDate().timeIntervalSince1970)) //set value as timestamp as seconds from epoch
                 
             case "g":
                 //remove their username from your g list
@@ -515,6 +519,9 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                     self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_g")
                     self.followButton.setTitle("Followed", for: .normal)
                 }
+                
+                //send follow notification to the profile user
+                ref.child(notificationPath+"/\(loggedInUsername)").setValue(Int(NSDate().timeIntervalSince1970)) //set value as timestamp as seconds from epoch
             }
         }
         
