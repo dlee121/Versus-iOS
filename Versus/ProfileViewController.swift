@@ -389,8 +389,31 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                 ref.child(hPath+"/\(loggedInUsername)").setValue(true)
                 //add their username to your h list
                 ref.child(myHPath+"/\(currentUsername!)").setValue(true)
+                
+                //update local lists
+                if let gIndex = binarySearch(inputArr: gList, searchItem: loggedInUsername) {
+                    gList.remove(at: gIndex)
+                }
+                
+                if hList.count > 0 {
+                    for i in 0...hList.count-1 {
+                        if(hList[i] >= loggedInUsername){
+                            hList.insert(loggedInUsername, at: i)
+                            break
+                        }
+                        else if i == hList.count-1 {
+                            hList.insert(loggedInUsername, at: hList.count-1)
+                            break
+                        }
+                    }
+                }
+                else {
+                    hList.append(loggedInUsername)
+                }
+                
                 followingThisUser = "h"
                 DispatchQueue.main.async {
+                    self.followers.setTitle("\(self.fList.count + self.hList.count)\nFollowers", for: .normal)
                     self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_h")
                     self.followButton.setTitle("Unfollow", for: .normal)
                 }
@@ -404,8 +427,16 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                 ref.child(myContactsPath+"/\(currentUsername!)").removeValue()
                 //remove your username from their contacts
                 ref.child(contactsPath+"/\(loggedInUsername)").removeValue()
+                
+                //update local lists
+                if let fIndex = binarySearch(inputArr: fList, searchItem: loggedInUsername) {
+                    fList.remove(at: fIndex)
+                }
+                
                 followingThisUser = "0"
+                
                 DispatchQueue.main.async {
+                    self.followers.setTitle("\(self.fList.count + self.hList.count)\nFollowers", for: .normal)
                     self.fghIcon.image = nil
                     self.followButton.setTitle("Follow", for: .normal)
                 }
@@ -419,8 +450,32 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                 ref.child(myFPath+"/\(currentUsername!)").setValue(true)
                 //add your username to their g list
                 ref.child(gPath+"/\(loggedInUsername)").setValue(true)
+                
+                //update local lists
+                if let hIndex = binarySearch(inputArr: hList, searchItem: loggedInUsername) {
+                    hList.remove(at: hIndex)
+                }
+                
+                if gList.count > 0 {
+                    for i in 0...gList.count-1 {
+                        if(gList[i] >= loggedInUsername){
+                            gList.insert(loggedInUsername, at: i)
+                            break
+                        }
+                        else if i == gList.count-1 {
+                            gList.insert(loggedInUsername, at: gList.count-1)
+                            break
+                        }
+                    }
+                }
+                else {
+                    gList.append(loggedInUsername)
+                }
+                
+                
                 followingThisUser = "f"
                 DispatchQueue.main.async {
+                    self.followers.setTitle("\(self.fList.count + self.hList.count)\nFollowers", for: .normal)
                     self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_f")
                     self.followButton.setTitle("Follow", for: .normal)
                 }
@@ -434,14 +489,55 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                 ref.child(contactsPath+"/\(loggedInUsername)").setValue(true)
                 //add their username to your contacts
                 ref.child(myContactsPath+"/\(currentUsername!)").setValue(true)
+                
+                //update local lists
+                if fList.count > 0 {
+                    for i in 0...fList.count-1 {
+                        if(fList[i] >= loggedInUsername){
+                            fList.insert(loggedInUsername, at: i)
+                            break
+                        }
+                        else if i == fList.count-1 {
+                            fList.insert(loggedInUsername, at: fList.count-1)
+                            break
+                        }
+                    }
+                }
+                else {
+                    fList.append(loggedInUsername)
+                }
+                
+                
+                
                 followingThisUser = "g"
                 DispatchQueue.main.async {
+                    self.followers.setTitle("\(self.fList.count + self.hList.count)\nFollowers", for: .normal)
                     self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_g")
                     self.followButton.setTitle("Unfollow", for: .normal)
                 }
             }
         }
         
+    }
+    
+    func binarySearch<T:Comparable>(inputArr:Array<T>, searchItem: T) -> Int? {
+        var lowerIndex = 0;
+        var upperIndex = inputArr.count - 1
+        
+        while (true) {
+            let currentIndex = (lowerIndex + upperIndex)/2
+            if(inputArr[currentIndex] == searchItem) {
+                return currentIndex
+            } else if (lowerIndex > upperIndex) {
+                return nil
+            } else {
+                if (inputArr[currentIndex] > searchItem) {
+                    upperIndex = currentIndex - 1
+                } else {
+                    lowerIndex = currentIndex + 1
+                }
+            }
+        }
     }
     
     
