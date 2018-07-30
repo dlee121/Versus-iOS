@@ -109,10 +109,10 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                 self.followButton.setTitle("Follow", for: .normal)
                 self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_f")
             case "g":
-                self.followButton.setTitle("Unfollow", for: .normal)
+                self.followButton.setTitle("Followed", for: .normal)
                 self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_g")
             case "h":
-                self.followButton.setTitle("Unfollow", for: .normal)
+                self.followButton.setTitle("Followed", for: .normal)
                 self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_h")
             default:
                 self.followButton.setTitle("Follow", for: .normal)
@@ -415,7 +415,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                 DispatchQueue.main.async {
                     self.followers.setTitle("\(self.fList.count + self.hList.count)\nFollowers", for: .normal)
                     self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_h")
-                    self.followButton.setTitle("Unfollow", for: .normal)
+                    self.followButton.setTitle("Followed", for: .normal)
                 }
                 
             case "g":
@@ -513,7 +513,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                 DispatchQueue.main.async {
                     self.followers.setTitle("\(self.fList.count + self.hList.count)\nFollowers", for: .normal)
                     self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_g")
-                    self.followButton.setTitle("Unfollow", for: .normal)
+                    self.followButton.setTitle("Followed", for: .normal)
                 }
             }
         }
