@@ -336,9 +336,111 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     }
     
     @IBAction func followButtonTapped(_ sender: UIButton) {
-        print("tapped ay")
+        var usernameHash : Int32
+        if(currentUsername.count < 5){
+            usernameHash = currentUsername.hashCode()
+        }
+        else{
+            var hashIn = ""
+            
+            hashIn.append(currentUsername[0])
+            hashIn.append(currentUsername[currentUsername.count-2])
+            hashIn.append(currentUsername[1])
+            hashIn.append(currentUsername[currentUsername.count-1])
+            
+            usernameHash = hashIn.hashCode()
+        }
         
+        let userPath = "\(usernameHash)/" + currentUsername
+        let fPath = userPath + "/f"
+        let gPath = userPath + "/g"
+        let hPath = userPath + "/h"
+        let contactsPath = userPath + "/contacts"
         
+        if let loggedInUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+            var myUsernameHash : Int32
+            if(loggedInUsername.count < 5){
+                myUsernameHash = loggedInUsername.hashCode()
+            }
+            else{
+                var hashIn = ""
+                
+                hashIn.append(loggedInUsername[0])
+                hashIn.append(loggedInUsername[loggedInUsername.count-2])
+                hashIn.append(loggedInUsername[1])
+                hashIn.append(loggedInUsername[loggedInUsername.count-1])
+                
+                myUsernameHash = hashIn.hashCode()
+            }
+            
+            let myUserPath = "\(myUsernameHash)/" + loggedInUsername
+            let myFPath = myUserPath + "/f"
+            let myGPath = myUserPath + "/g"
+            let myHPath = myUserPath + "/h"
+            let myContactsPath = myUserPath + "/contacts"
+            
+            switch followingThisUser {
+            case "f":
+                //remove their username from your f list
+                ref.child(myFPath+"/\(currentUsername!)").removeValue()
+                //remove your username from their g list
+                ref.child(gPath+"/\(loggedInUsername)").removeValue()
+                //add your username to their h list
+                ref.child(hPath+"/\(loggedInUsername)").setValue(true)
+                //add their username to your h list
+                ref.child(myHPath+"/\(currentUsername!)").setValue(true)
+                followingThisUser = "h"
+                DispatchQueue.main.async {
+                    self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_h")
+                    self.followButton.setTitle("Unfollow", for: .normal)
+                }
+                
+            case "g":
+                //remove their username from your g list
+                ref.child(myGPath+"/\(currentUsername!)").removeValue()
+                //remove your username from their f list
+                ref.child(fPath+"/\(loggedInUsername)").removeValue()
+                //remove their username from your contacts
+                ref.child(myContactsPath+"/\(currentUsername!)").removeValue()
+                //remove your username from their contacts
+                ref.child(contactsPath+"/\(loggedInUsername)").removeValue()
+                followingThisUser = "0"
+                DispatchQueue.main.async {
+                    self.fghIcon.image = nil
+                    self.followButton.setTitle("Follow", for: .normal)
+                }
+                
+            case "h":
+                //remove your username from their h list
+                ref.child(hPath+"/\(loggedInUsername)").removeValue()
+                //remove their username from your h list
+                ref.child(myHPath+"/\(currentUsername!)").removeValue()
+                //add their username to your f list
+                ref.child(myFPath+"/\(currentUsername!)").setValue(true)
+                //add your username to their g list
+                ref.child(gPath+"/\(loggedInUsername)").setValue(true)
+                followingThisUser = "f"
+                DispatchQueue.main.async {
+                    self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_f")
+                    self.followButton.setTitle("Follow", for: .normal)
+                }
+                
+            default:
+                //add their username to your g list
+                ref.child(myGPath+"/\(currentUsername!)").setValue(true)
+                //add your username to their f list
+                ref.child(fPath+"/\(loggedInUsername)").setValue(true)
+                //add your username to their contacts
+                ref.child(contactsPath+"/\(loggedInUsername)").setValue(true)
+                //add their username to your contacts
+                ref.child(myContactsPath+"/\(currentUsername!)").setValue(true)
+                followingThisUser = "g"
+                DispatchQueue.main.async {
+                    self.fghIcon.image = #imageLiteral(resourceName: "profile_icon_g")
+                    self.followButton.setTitle("Unfollow", for: .normal)
+                }
+            }
+        }
         
     }
     
