@@ -11,37 +11,124 @@ import Firebase
 import Nuke
 import AWSS3
 import XLPagerTabStrip
+import FirebaseDatabase
 
 class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    var fromIndex = 0
+    var fromIndex : Int!
     let DEFAULT = 0
     let S3 = 1
     let apiClient = VSVersusAPIClient.default()
-    var posts = [PostObject]()
+    var comments = [VSComment]()
     var vIsRed = true
     let preheater = Nuke.ImagePreheater()
     var profileImageVersions = [String : Int]()
     var screenWidth : CGFloat!
     var textsVSCHeight : CGFloat!
-    
+    var gList = [String]()
+    var ref : DatabaseReference!
+    var currentUsername : String!
+    let retrievalSize = 16
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = Database.database().reference()
         screenWidth = self.view.frame.size.width
         textsVSCHeight = screenWidth / 1.6
-        if posts.count == 0 {
-            newsfeedQuery(fromIndex: 0)
+        if comments.count == 0 {
+            myCircleInitialSetup()
         }
         
         
         // Do any additional setup after loading the view.
     }
     
+    func myCircleInitialSetup(){
+        fromIndex = 0
+        var usernameHash : Int32
+        currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
+        if currentUsername != nil  {
+            
+            if gList.isEmpty {
+                
+                if(currentUsername.count < 5){
+                    usernameHash = currentUsername.hashCode()
+                }
+                else{
+                    var hashIn = ""
+                    
+                    hashIn.append(currentUsername[0])
+                    hashIn.append(currentUsername[currentUsername.count-2])
+                    hashIn.append(currentUsername[1])
+                    hashIn.append(currentUsername[currentUsername.count-1])
+                    
+                    usernameHash = hashIn.hashCode()
+                }
+                
+                let gPath = "\(usernameHash)/" + currentUsername + "/g"
+                
+                self.ref.child(gPath).observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    let enumerator = snapshot.children
+                    while let item = enumerator.nextObject() as? DataSnapshot {
+                        self.gList.append(item.key)
+                    }
+                    
+                    self.myCircleQuery()
+                    
+                }) { (error) in
+                    print(error.localizedDescription)
+                }
+                
+                
+            }
+            else {
+                myCircleQuery()
+            }
+        }
+    }
     
-    func newsfeedQuery(fromIndex : Int){
-        self.apiClient.postslistGet(c: nil, d: nil, a: "tr", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+    func myCircleQuery(){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let payloadTime = formatter.string(from: Calendar.current.date(byAdding: .weekOfYear, value: -3, to: Date())!)
+        
+        //pick up to 25 random usernames from the gList, append that list of 25 with current username, then use that as the payload for the query
+        var payload : String
+        if !gList.isEmpty{
+            var payloadArray : [String]
+            if gList.count > 25 {
+                payloadArray = gList.choose(25)
+            }
+            else {
+                payloadArray = gList
+            }
+            
+            var names = ""
+            names.append("\"\(payloadArray[0])\"")
+            if payloadArray.count > 1 {
+                for i in 1...payloadArray.count-1 {
+                    names.append(",\"\(payloadArray[i])\"")
+                }
+            }
+            names.append(",\"\(currentUsername!)\"")
+            
+            payload = "{\"from\":\(fromIndex!),\"size\":\(retrievalSize),\"query\":{\"function_score\":{\"query\":{\"bool\":{\"should\":[{\"range\":{\"t\":{\"gt\":\"\(payloadTime)\"}}}]}},\"functions\":[{\"script_score\":{\"script\":\"doc[\'ci\'].value\"}},{\"filter\":{\"terms\":{\"a.keyword\":[\(names)]}},\"script_score\":{\"script\":\"10000\"}}],\"score_mode\":\"sum\"}}}"
+        }
+        else {
+            payload = "{\"from\":\(fromIndex!),\"size\":\(retrievalSize),\"query\":{\"function_score\":{\"query\":{\"bool\":{\"should\":[{\"range\":{\"t\":{\"gt\":\"\(payloadTime)\"}}}]}},\"functions\":[{\"script_score\":{\"script\":\"doc[\'ci\'].value\"}},{\"filter\":{\"terms\":{\"a.keyword\":[\"\(currentUsername!)\"]}},\"script_score\":{\"script\":\"10000\"}}],\"score_mode\":\"sum\"}}}"
+
+        }
+        
+        executeQuery(payload: payload)
+        
+    }
+    
+    func executeQuery(payload : String){
+        print("payload: "+payload)
+        
+        self.apiClient.commentslistGet(c: payload, d: nil, a: "nwv2", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -52,7 +139,7 @@ class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource
                 var pivString = "{\"ids\":["
                 var index = 0
                 for item in results! {
-                    self.posts.append(PostObject(itemSource: item.source!, id: item.id!))
+                    self.comments.append(VSComment(itemSource: item.source!, id: item.id!))
                     
                     if item.source?.a != "deleted" {
                         if index == 0 {
@@ -87,7 +174,7 @@ class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource
                             }
                             else {
                                 DispatchQueue.main.async {
-                                    let newIndexPath = IndexPath(row: fromIndex, section: 0)
+                                    let newIndexPath = IndexPath(row: self.fromIndex, section: 0)
                                     self.collectionView.insertItems(at: [newIndexPath])
                                 }
                             }
@@ -104,49 +191,35 @@ class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource
             }
             return nil
         }
-        
+ 
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return posts.count
+        return comments.count
     }
     
+    /*
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let post = posts[indexPath.row]
+        let comment = comments[indexPath.row]
         if post.redimg.intValue % 10 == S3 || post.blackimg.intValue % 10 == S3 {
             return CGSize(width: screenWidth, height: screenWidth)
         }
         else {
             return CGSize(width: screenWidth, height: textsVSCHeight)
         }
-        
     }
+    */
     
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let currentPost = posts[indexPath.row]
+        let currentComment = comments[indexPath.row]
         
-        //set profile image version for the post if one exists
-        if let piv = profileImageVersions[currentPost.author.lowercased()] {
-            currentPost.setProfileImageVersion(piv: piv)
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_mycircle", for: indexPath) as! MyCircleCollectionViewCell
+        cell.setCell(comment: currentComment)
         
-        if currentPost.redimg.intValue % 10 == S3 || currentPost.blackimg.intValue % 10 == S3 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_images", for: indexPath) as! PostImageCollectionViewCell
-            cell.setCell(post: currentPost, vIsRed: vIsRed)
-            vIsRed = !vIsRed
-            
-            return cell
-        }
-        else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_texts", for: indexPath) as! PostTextCollectionViewCell
-            cell.setCell(post: currentPost, vIsRed: vIsRed)
-            vIsRed = !vIsRed
-            
-            return cell
-        }
+        return cell
         
         
     }
@@ -178,84 +251,14 @@ class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource
      }
      */
     
-    func prefetchPostImage(indexPaths: [IndexPath]){
-        var imageRequests = [ImageRequest]()
-        print("heyhey let's see if it's async")
-        var index = 0
-        for indexPath in indexPaths {
-            let post = posts[indexPath.row]
-            let redimg = post.redimg.intValue
-            let blackimg = post.blackimg.intValue
-            if redimg % 10 == S3 {
-                let request = AWSS3GetPreSignedURLRequest()
-                request.expires = Date().addingTimeInterval(86400)
-                request.bucket = "versus.pictures"
-                request.httpMethod = .GET
-                
-                if redimg / 10 == 0 {
-                    request.key = post.post_id + "-left.jpeg"
-                }
-                else{
-                    request.key = post.post_id + "-left\(redimg/10).jpeg"
-                }
-                
-                AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
-                    if let error = task.error {
-                        print("Error: \(error)")
-                        return nil
-                    }
-                    
-                    var prefetchRequest = ImageRequest(url: task.result!.absoluteURL!)
-                    prefetchRequest.priority = .low
-                    
-                    imageRequests.append(prefetchRequest)
-                    print("heyhey appended \(index)")
-                    
-                    return nil
-                }
-            }
-            
-            if blackimg % 10 == S3 {
-                let request = AWSS3GetPreSignedURLRequest()
-                request.expires = Date().addingTimeInterval(86400)
-                request.bucket = "versus.pictures"
-                request.httpMethod = .GET
-                
-                if blackimg / 10 == 0 {
-                    request.key = post.post_id + "-left.jpeg"
-                }
-                else{
-                    request.key = post.post_id + "-left\(blackimg/10).jpeg"
-                }
-                
-                AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
-                    if let error = task.error {
-                        print("Error: \(error)")
-                        return nil
-                    }
-                    
-                    var prefetchRequest = ImageRequest(url: task.result!.absoluteURL!)
-                    prefetchRequest.priority = .low
-                    
-                    imageRequests.append(prefetchRequest)
-                    print("heyhey appended \(index)")
-                    
-                    return nil
-                }
-            }
-            index += 1
-        }
-        
-        print("heyhey executed prefetch")
-        preheater.startPreheating(with: imageRequests)
-    }
+    
     
     func prefetchProfileImage(indexPaths: [IndexPath]){
         print("hiho let's see if it's async")
         var imageRequests = [ImageRequest]()
         var index = 0
         for indexPath in indexPaths {
-            let username = posts[indexPath.row].author
+            let username = comments[indexPath.row].author
             if let piv = profileImageVersions[username] {
                 let request = AWSS3GetPreSignedURLRequest()
                 request.expires = Date().addingTimeInterval(86400)
@@ -292,6 +295,6 @@ class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource
 
 extension Tab1CollectionViewController : IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "Newsfeed")
+        return IndicatorInfo(title: "My Circle")
     }
 }

@@ -49,6 +49,8 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         self.navigationItem.titleView = searchController.searchBar
         
         self.definesPresentationContext = true
+        
+        
     }
     
     func updateSearchResults(for searchController: UISearchController) {
