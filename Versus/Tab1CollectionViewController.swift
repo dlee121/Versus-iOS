@@ -13,9 +13,9 @@ import AWSS3
 import XLPagerTabStrip
 import FirebaseDatabase
 
-class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tableView: UITableView!
     var fromIndex : Int!
     let DEFAULT = 0
     let S3 = 1
@@ -169,13 +169,13 @@ class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource
                         if index > 0 {
                             if self.fromIndex == 0 {
                                 DispatchQueue.main.async {
-                                    self.collectionView.reloadData()
+                                    self.tableView.reloadData()
                                 }
                             }
                             else {
                                 DispatchQueue.main.async {
                                     let newIndexPath = IndexPath(row: self.fromIndex, section: 0)
-                                    self.collectionView.insertItems(at: [newIndexPath])
+                                    self.tableView.insertRows(at: [newIndexPath], with: .automatic)
                                 }
                             }
                             
@@ -195,7 +195,7 @@ class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
     }
     
@@ -213,15 +213,13 @@ class Tab1CollectionViewController: UIViewController, UICollectionViewDataSource
     
     
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentComment = comments[indexPath.row]
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_mycircle", for: indexPath) as! MyCircleCollectionViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_mycircle", for: indexPath) as! MyCircleTableViewCell
         cell.setCell(comment: currentComment)
         
         return cell
-        
-        
     }
     
     

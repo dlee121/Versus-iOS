@@ -55,6 +55,7 @@
 		70B9A7EF20EF12E100C06709 /* PostTextCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7EE20EF12E100C06709 /* PostTextCollectionViewCell.swift */; };
 		70CB9E45210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E44210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift */; };
 		70CB9E47210FE4D800D86E37 /* Array+Shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */; };
+		70CB9E492110020500D86E37 /* MyCircleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */; };
 		70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */; };
 		70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF520E6944B0067DF08 /* UsernameViewController.swift */; };
 		70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF720E694560067DF08 /* PasswordViewController.swift */; };
@@ -170,6 +171,7 @@
 		70B9A7EE20EF12E100C06709 /* PostTextCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTextCollectionViewCell.swift; sourceTree = "<group>"; };
 		70CB9E44210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleCollectionViewCell.swift; sourceTree = "<group>"; };
 		70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Shuffle.swift"; sourceTree = "<group>"; };
+		70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleTableViewCell.swift; sourceTree = "<group>"; };
 		70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewController.swift; sourceTree = "<group>"; };
 		70E80BF520E6944B0067DF08 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
 		70E80BF720E694560067DF08 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 				70036ECF210A79C1000BE8E9 /* PostsHistoryTableViewCell.swift */,
 				70036ED3210ABBCF000BE8E9 /* FGHTableViewCell.swift */,
 				70CB9E44210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift */,
+				70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				70E80CAC20E6DB570067DF08 /* VSPIVModel_docs_item.swift in Sources */,
 				70E80CC220E6DB570067DF08 /* VSAIModel__shards.swift in Sources */,
 				7056672F2101564D00CB87AD /* CategoriesTableViewCell.swift in Sources */,
+				70CB9E492110020500D86E37 /* MyCircleTableViewCell.swift in Sources */,
 				70B9A7E520ED93B600C06709 /* InitialViewController.swift in Sources */,
 				701C8CC820F96FCF0072AECD /* LeaderboardEntry.swift in Sources */,
 				70E80CCB20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item__source.swift in Sources */,
