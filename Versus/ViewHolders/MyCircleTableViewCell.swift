@@ -21,7 +21,14 @@ class MyCircleTableViewCell: UITableViewCell {
     @IBOutlet weak var brokenhearts: UILabel!
     @IBOutlet weak var replyButton: UIButton!
 
-    func setCell(comment : VSComment){
+    func setCell(comment : VSComment, postInfo : VSPostQMultiModel_docs_item__source){
+        if postInfo != nil {
+            postAuthor.text = postInfo.a
+            postVotes.text = "\(postInfo.rc!.intValue + postInfo.bc!.intValue) votes"
+            question.text = postInfo.q
+        }
+        
+        
         commentAuthor.text = comment.author
         time.text = getTimeString(time: comment.time)
         content.text = comment.content
@@ -33,6 +40,18 @@ class MyCircleTableViewCell: UITableViewCell {
         
     }
     
+    func setCell(comment : VSComment){
+        
+        commentAuthor.text = comment.author
+        time.text = getTimeString(time: comment.time)
+        content.text = comment.content
+        hearts.text = "\(comment.upvotes) "
+        hearts.addImage(imageName: "heart_red", imageHeight: 18)
+        brokenhearts.text = "\(comment.downvotes) "
+        brokenhearts.addImage(imageName: "brokenheart_blue", imageHeight: 18)
+        
+        
+    }
     
     func getTimeString(time : String) -> String {
         var timeFormat = 0

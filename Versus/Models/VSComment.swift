@@ -18,7 +18,7 @@ class VSComment {
     let DOWNVOTE = 2
     
     var isNew, isHighlighted : Bool?
-    var question, postAuthor : String?
+    var postAuthor, question : String?
     var rc, bc : Int?
     var redName, blueName : String?
     
@@ -34,6 +34,15 @@ class VSComment {
         upvotes = itemSource.u!.intValue
         downvotes = itemSource.d!.intValue
         comment_influence = itemSource.ci!.intValue
+        
+    }
+    
+    func setAQRCBC(source : VSPostQMultiModel_docs_item__source){
+        postAuthor = source.a
+        question = source.q
+        rc = source.rc?.intValue
+        bc = source.bc?.intValue
+        
         
     }
     

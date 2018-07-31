@@ -21,6 +21,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     let S3 = 1
     let apiClient = VSVersusAPIClient.default()
     var comments = [VSComment]()
+    var postInfos = [String : VSPostQMultiModel_docs_item__source]()
     var vIsRed = true
     let preheater = Nuke.ImagePreheater()
     var profileImageVersions = [String : Int]()
@@ -136,25 +137,25 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             }
             else {
                 let results = task.result?.hits?.hits
-                var pivString = "{\"ids\":["
+                var postInfoPayload = "{\"ids\":["
                 var index = 0
                 for item in results! {
                     self.comments.append(VSComment(itemSource: item.source!, id: item.id!))
                     
-                    if item.source?.a != "deleted" {
+                    if self.postInfos[item.source!.pt!] == nil {
                         if index == 0 {
-                            pivString += "\"" + item.source!.a! + "\""
+                            postInfoPayload.append("\""+item.source!.pt!+"\"")
                         }
                         else {
-                            pivString += ",\"" + item.source!.a! + "\""
+                            postInfoPayload.append(",\""+item.source!.pt!+"\"")
                         }
                     }
                     
                     index += 1
                 }
-                pivString += "]}"
+                postInfoPayload += "]}"
                 
-                self.apiClient.pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                self.apiClient.postqmultiGet(a: "mpinfq", b: postInfoPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                     if task.error != nil {
                         DispatchQueue.main.async {
                             print(task.error!)
@@ -163,25 +164,22 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                     
                     if let results = task.result?.docs {
                         for item in results {
-                            self.profileImageVersions[item.id!] = item.source?.pi?.intValue
+                            self.postInfos[item.id!] = item.source
                         }
                         
-                        if index > 0 {
-                            if self.fromIndex == 0 {
-                                DispatchQueue.main.async {
-                                    self.tableView.reloadData()
-                                }
+                        if self.fromIndex == 0 {
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
                             }
-                            else {
-                                DispatchQueue.main.async {
-                                    let newIndexPath = IndexPath(row: self.fromIndex, section: 0)
-                                    self.tableView.insertRows(at: [newIndexPath], with: .automatic)
-                                }
-                            }
-                            
-                            self.fromIndex = results.count - 1
-                            
                         }
+                        else {
+                            DispatchQueue.main.async {
+                                let newIndexPath = IndexPath(row: self.fromIndex, section: 0)
+                                self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+                            }
+                        }
+                        
+                        self.fromIndex = results.count - 1
                     }
                     
                     return nil
@@ -215,9 +213,14 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentComment = comments[indexPath.row]
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_mycircle", for: indexPath) as! MyCircleTableViewCell
-        cell.setCell(comment: currentComment)
+        
+        if let postInfo = postInfos[currentComment.post_id] {
+            cell.setCell(comment: currentComment, postInfo: postInfo)
+        }
+        else {
+            cell.setCell(comment: currentComment)
+        }
         
         return cell
     }
