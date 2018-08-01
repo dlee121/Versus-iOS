@@ -62,9 +62,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                             else {
                                 pivString += ",\"" + item.source!.a! + "\""
                             }
+                            index += 1
                         }
                         
-                        index += 1
+                        
                     }
                     pivString += "]}"
                     

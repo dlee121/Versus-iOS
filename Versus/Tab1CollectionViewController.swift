@@ -198,15 +198,17 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                 var pivIndex = 0
                                 var pivCount = 0
                                 for username in postAuthors {
-                                    if pivIndex == 0 {
-                                        pivPayload.append("\""+username+"\"")
-                                        pivCount += 1
+                                    if username != "deleted" {
+                                        if pivIndex == 0 {
+                                            pivPayload.append("\""+username+"\"")
+                                            pivCount += 1
+                                        }
+                                        else {
+                                            pivPayload.append(",\""+username+"\"")
+                                            pivCount += 1
+                                        }
+                                        pivIndex += 1
                                     }
-                                    else {
-                                        pivPayload.append(",\""+username+"\"")
-                                        pivCount += 1
-                                    }
-                                    pivIndex += 1
                                 }
                                 
                                 pivPayload.append("]}")

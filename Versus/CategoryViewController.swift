@@ -60,9 +60,9 @@ class CategoryViewController: UIViewController, UICollectionViewDataSource, UICo
                         else {
                             pivString += ",\"" + item.source!.a! + "\""
                         }
+                        index += 1
                     }
                     
-                    index += 1
                 }
                 pivString += "]}"
                 

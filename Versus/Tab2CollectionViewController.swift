@@ -63,9 +63,8 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
                         else {
                             pivString += ",\"" + item.source!.a! + "\""
                         }
+                        index += 1
                     }
-                    
-                    index += 1
                 }
                 pivString += "]}"
                 
@@ -127,7 +126,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("cellForItemAt called for \(indexPath.row)")
+        
         let currentPost = posts[indexPath.row]
         
         //set profile image version for the post if one exists
