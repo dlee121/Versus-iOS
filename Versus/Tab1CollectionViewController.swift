@@ -16,6 +16,7 @@ import FirebaseDatabase
 class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     var fromIndex : Int!
     let DEFAULT = 0
     let S3 = 1
@@ -32,7 +33,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     var currentUsername : String!
     let retrievalSize = 16
     var nowLoading = false
-    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    var loadThreshold = 8
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,7 +139,6 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func executeQuery(payload : String){
-        print("payload: "+payload)
         
         self.apiClient.commentslistGet(c: payload, d: nil, a: "nwv2", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
@@ -148,57 +148,36 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             }
             else {
                 let results = task.result?.hits?.hits
-                var postInfoPayload = "{\"ids\":["
-                var index = 0
-                for item in results! {
-                    self.comments.append(VSComment(itemSource: item.source!, id: item.id!))
-                    
-                    if self.postInfos[item.source!.pt!] == nil {
-                        if index == 0 {
-                            postInfoPayload.append("\""+item.source!.pt!+"\"")
-                        }
-                        else {
-                            postInfoPayload.append(",\""+item.source!.pt!+"\"")
-                        }
-                    }
-                    
-                    index += 1
-                }
-                postInfoPayload.append("]}")
+                let loadedItemsCount = results?.count
                 
-                self.apiClient.postqmultiGet(a: "mpinfq", b: postInfoPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                    if task.error != nil {
-                        DispatchQueue.main.async {
-                            print(task.error!)
-                        }
+                if loadedItemsCount == 0 { //meaning no more items to load
+                    self.nowLoading = true //this stops further loads
+                    DispatchQueue.main.async {
+                        self.indicator.stopAnimating()
                     }
-                    
-                    if let results = task.result?.docs {
+                }
+                else {
+                    var postInfoPayload = "{\"ids\":["
+                    var index = 0
+                    for item in results! {
+                        self.comments.append(VSComment(itemSource: item.source!, id: item.id!))
                         
-                        var postAuthors : Set<String> = []
-                        
-                        for item in results {
-                            self.postInfos[item.id!] = item.source
-                            if self.profileImageVersions[item.source!.a!] == nil {
-                                postAuthors.insert(item.source!.a!)
-                            }
-                        }
-                        
-                        var pivPayload = "{\"ids\":["
-                        var pivIndex = 0
-                        for username in postAuthors {
-                            if pivIndex == 0 {
-                                pivPayload.append("\""+username+"\"")
+                        if self.postInfos[item.source!.pt!] == nil {
+                            if index == 0 {
+                                postInfoPayload.append("\""+item.source!.pt!+"\"")
                             }
                             else {
-                                pivPayload.append(",\""+username+"\"")
+                                postInfoPayload.append(",\""+item.source!.pt!+"\"")
                             }
-                            pivIndex += 1
+                            index += 1
                         }
                         
-                        pivPayload.append("]}")
                         
-                        self.apiClient.pivGet(a: "pis", b: pivPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    }
+                    postInfoPayload.append("]}")
+                    
+                    if index > 0 {
+                        self.apiClient.postqmultiGet(a: "mpinfq", b: postInfoPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
                                 DispatchQueue.main.async {
                                     print(task.error!)
@@ -206,48 +185,116 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                             }
                             
                             if let results = task.result?.docs {
+                                var postAuthors : Set<String> = []
+                                
                                 for item in results {
-                                    self.profileImageVersions[item.id!] = item.source?.pi?.intValue
+                                    self.postInfos[item.id!] = item.source
+                                    if self.profileImageVersions[item.source!.a!] == nil {
+                                        postAuthors.insert(item.source!.a!)
+                                    }
                                 }
                                 
-                                if self.fromIndex == 0 {
-                                    DispatchQueue.main.async {
-                                        self.tableView.reloadData()
-                                        self.indicator.stopAnimating()
+                                var pivPayload = "{\"ids\":["
+                                var pivIndex = 0
+                                var pivCount = 0
+                                for username in postAuthors {
+                                    if pivIndex == 0 {
+                                        pivPayload.append("\""+username+"\"")
+                                        pivCount += 1
+                                    }
+                                    else {
+                                        pivPayload.append(",\""+username+"\"")
+                                        pivCount += 1
+                                    }
+                                    pivIndex += 1
+                                }
+                                
+                                pivPayload.append("]}")
+                                
+                                if pivCount > 0 {
+                                    self.apiClient.pivGet(a: "pis", b: pivPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                        if task.error != nil {
+                                            DispatchQueue.main.async {
+                                                print(task.error!)
+                                            }
+                                        }
+                                        
+                                        if let results = task.result?.docs {
+                                            for item in results {
+                                                self.profileImageVersions[item.id!] = item.source?.pi?.intValue
+                                            }
+                                            if self.fromIndex == 0 {
+                                                DispatchQueue.main.async {
+                                                    self.tableView.reloadData()
+                                                    self.indicator.stopAnimating()
+                                                }
+                                            }
+                                            else {
+                                                DispatchQueue.main.async {
+                                                    var indexPaths = [IndexPath]()
+                                                    for i in 0...loadedItemsCount!-1 {
+                                                        indexPaths.append(IndexPath(row: self.fromIndex+i, section: 0))
+                                                    }
+                                                    
+                                                    self.tableView.insertRows(at: indexPaths, with: .fade)
+                                                    
+                                                    self.indicator.stopAnimating()
+                                                }
+                                            }
+                                            self.nowLoading = false
+                                        }
+                                        
+                                        return nil
                                     }
                                 }
                                 else {
-                                    DispatchQueue.main.async {
-                                        let newIndexPath = IndexPath(row: self.fromIndex, section: 0)
-                                        self.tableView.insertRows(at: [newIndexPath], with: .automatic)
-                                        self.indicator.stopAnimating()
+                                    if self.fromIndex == 0 {
+                                        DispatchQueue.main.async {
+                                            self.tableView.reloadData()
+                                            self.indicator.stopAnimating()
+                                        }
                                     }
+                                    else {
+                                        DispatchQueue.main.async {
+                                            var indexPaths = [IndexPath]()
+                                            for i in 0...loadedItemsCount!-1 {
+                                                indexPaths.append(IndexPath(row: self.fromIndex+i, section: 0))
+                                            }
+                                            
+                                            self.tableView.insertRows(at: indexPaths, with: .fade)
+                                            
+                                            self.indicator.stopAnimating()
+                                        }
+                                    }
+                                    self.nowLoading = false
                                 }
                             }
-                            
                             return nil
                         }
-                        /*
+                    }
+                    else {
                         if self.fromIndex == 0 {
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
+                                self.indicator.stopAnimating()
                             }
                         }
                         else {
                             DispatchQueue.main.async {
-                                let newIndexPath = IndexPath(row: self.fromIndex, section: 0)
-                                self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+                                var indexPaths = [IndexPath]()
+                                for i in 0...loadedItemsCount!-1 {
+                                    indexPaths.append(IndexPath(row: self.fromIndex+i, section: 0))
+                                }
+                                
+                                self.tableView.insertRows(at: indexPaths, with: .fade)
+                                
+                                self.indicator.stopAnimating()
                             }
                         }
-                        
-                        self.fromIndex = results.count - 1
-                        */
+                        self.nowLoading = false
                     }
                     
-                    return nil
                 }
-                
-                
             }
             return nil
         }
@@ -260,10 +307,11 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let lastElement = comments.count - 1
+        let lastElement = comments.count - 1 - loadThreshold
         if !nowLoading && indexPath.row == lastElement {
             nowLoading = true
-            //loadMoreData()
+            fromIndex = comments.count
+            myCircleQuery()
         }
     }
     
@@ -277,7 +325,6 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             cell.setCell(comment: currentComment, postInfo: postInfo)
             
             if let piv = profileImageVersions[postInfo.a!.lowercased()] {
-                print("pivKey: " + postInfo.a!.lowercased() + ", pivValue: \(piv)")
                 cell.setProfileImage(username: postInfo.a!, profileImageVersion: piv)
             }
             else {
