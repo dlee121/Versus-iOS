@@ -31,9 +31,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     var ref : DatabaseReference!
     var currentUsername : String!
     let retrievalSize = 16
+    var nowLoading = false
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.tableFooterView = UIView()
         ref = Database.database().reference()
         screenWidth = self.view.frame.size.width
         textsVSCHeight = screenWidth / 1.6
@@ -46,6 +49,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func myCircleInitialSetup(){
+        indicator.startAnimating()
         fromIndex = 0
         var usernameHash : Int32
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
@@ -91,6 +95,13 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func myCircleQuery(){
+        DispatchQueue.main.async {
+            if !self.indicator.isAnimating {
+                self.indicator.startAnimating()
+            }
+        }
+        
+        
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let payloadTime = formatter.string(from: Calendar.current.date(byAdding: .weekOfYear, value: -3, to: Date())!)
@@ -202,16 +213,16 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                 if self.fromIndex == 0 {
                                     DispatchQueue.main.async {
                                         self.tableView.reloadData()
+                                        self.indicator.stopAnimating()
                                     }
                                 }
                                 else {
                                     DispatchQueue.main.async {
                                         let newIndexPath = IndexPath(row: self.fromIndex, section: 0)
                                         self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+                                        self.indicator.stopAnimating()
                                     }
                                 }
-                                
-                                self.fromIndex = results.count - 1
                             }
                             
                             return nil
@@ -248,17 +259,13 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         return comments.count
     }
     
-    /*
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let comment = comments[indexPath.row]
-        if post.redimg.intValue % 10 == S3 || post.blackimg.intValue % 10 == S3 {
-            return CGSize(width: screenWidth, height: screenWidth)
-        }
-        else {
-            return CGSize(width: screenWidth, height: textsVSCHeight)
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastElement = comments.count - 1
+        if !nowLoading && indexPath.row == lastElement {
+            nowLoading = true
+            //loadMoreData()
         }
     }
-    */
     
     
     

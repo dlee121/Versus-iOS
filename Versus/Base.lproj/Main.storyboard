@@ -1725,11 +1725,19 @@
                                     <outlet property="delegate" destination="Dao-pg-BkK" id="WWQ-43-Rm7"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="IXt-yY-7MU">
+                                <rect key="frame" x="177" y="20" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="IXt-yY-7MU" firstAttribute="top" secondItem="UPs-Ex-SXk" secondAttribute="top" id="9tP-M4-fCx"/>
+                            <constraint firstItem="IXt-yY-7MU" firstAttribute="centerX" secondItem="nkp-UQ-4Pe" secondAttribute="centerX" id="UM1-5T-mKK"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="UPs-Ex-SXk"/>
                     </view>
                     <connections>
+                        <outlet property="indicator" destination="IXt-yY-7MU" id="30h-8Y-QAx"/>
                         <outlet property="tableView" destination="3T5-a4-itd" id="J68-aB-qdk"/>
                     </connections>
                 </viewController>
