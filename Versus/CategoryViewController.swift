@@ -80,22 +80,19 @@ class CategoryViewController: UIViewController, UICollectionViewDataSource, UICo
                             self.profileImageVersions[item.id!] = item.source?.pi?.intValue
                         }
                         
-                        if index > 0 {
-                            if self.fromIndex == 0 {
-                                DispatchQueue.main.async {
-                                    self.collectionView.reloadData()
-                                }
+                        if self.fromIndex == 0 {
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
                             }
-                            else {
-                                DispatchQueue.main.async {
-                                    let newIndexPath = IndexPath(row: fromIndex, section: 0)
-                                    self.collectionView.insertItems(at: [newIndexPath])
-                                }
-                            }
-                            
-                            self.fromIndex = results.count - 1
-                            
                         }
+                        else {
+                            DispatchQueue.main.async {
+                                let newIndexPath = IndexPath(row: fromIndex, section: 0)
+                                self.collectionView.insertItems(at: [newIndexPath])
+                            }
+                        }
+                        
+                        self.fromIndex = results.count - 1
                     }
                     
                     return nil

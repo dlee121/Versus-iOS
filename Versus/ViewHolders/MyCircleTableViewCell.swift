@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Nuke
+import AWSS3
 
 class MyCircleTableViewCell: UITableViewCell {
     
@@ -131,6 +133,39 @@ class MyCircleTableViewCell: UITableViewCell {
             
         default:
             return ""
+        }
+    }
+
+    func setProfileImage(username : String, profileImageVersion : Int){
+        if profileImageVersion == 0 {
+            DispatchQueue.main.async {
+                self.postProfile.image = #imageLiteral(resourceName: "default_profile")
+                self.postProfile.layer.cornerRadius = self.postProfile.frame.size.height / 2
+                self.postProfile.clipsToBounds = true
+            }
+        }
+        else {
+            let request = AWSS3GetPreSignedURLRequest()
+            request.expires = Date().addingTimeInterval(86400)
+            request.bucket = "versus.profile-pictures"
+            request.httpMethod = .GET
+            request.key = username + "-\(profileImageVersion).jpeg"
+            
+            AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+                if let error = task.error {
+                    print("Error: \(error)")
+                    return nil
+                }
+                
+                let presignedURL = task.result
+                DispatchQueue.main.async {
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.postProfile)
+                    self.postProfile.layer.cornerRadius = self.postProfile.frame.size.height / 2
+                    self.postProfile.clipsToBounds = true
+                }
+                
+                return nil
+            }
         }
     }
 

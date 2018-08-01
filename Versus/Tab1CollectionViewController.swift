@@ -153,7 +153,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                     
                     index += 1
                 }
-                postInfoPayload += "]}"
+                postInfoPayload.append("]}")
                 
                 self.apiClient.postqmultiGet(a: "mpinfq", b: postInfoPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                     if task.error != nil {
@@ -163,10 +163,60 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                     }
                     
                     if let results = task.result?.docs {
+                        
+                        var postAuthors : Set<String> = []
+                        
                         for item in results {
                             self.postInfos[item.id!] = item.source
+                            if self.profileImageVersions[item.source!.a!] == nil {
+                                postAuthors.insert(item.source!.a!)
+                            }
                         }
                         
+                        var pivPayload = "{\"ids\":["
+                        var pivIndex = 0
+                        for username in postAuthors {
+                            if pivIndex == 0 {
+                                pivPayload.append("\""+username+"\"")
+                            }
+                            else {
+                                pivPayload.append(",\""+username+"\"")
+                            }
+                            pivIndex += 1
+                        }
+                        
+                        pivPayload.append("]}")
+                        
+                        self.apiClient.pivGet(a: "pis", b: pivPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            if task.error != nil {
+                                DispatchQueue.main.async {
+                                    print(task.error!)
+                                }
+                            }
+                            
+                            if let results = task.result?.docs {
+                                for item in results {
+                                    self.profileImageVersions[item.id!] = item.source?.pi?.intValue
+                                }
+                                
+                                if self.fromIndex == 0 {
+                                    DispatchQueue.main.async {
+                                        self.tableView.reloadData()
+                                    }
+                                }
+                                else {
+                                    DispatchQueue.main.async {
+                                        let newIndexPath = IndexPath(row: self.fromIndex, section: 0)
+                                        self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+                                    }
+                                }
+                                
+                                self.fromIndex = results.count - 1
+                            }
+                            
+                            return nil
+                        }
+                        /*
                         if self.fromIndex == 0 {
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
@@ -180,6 +230,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                         }
                         
                         self.fromIndex = results.count - 1
+                        */
                     }
                     
                     return nil
@@ -217,6 +268,14 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         
         if let postInfo = postInfos[currentComment.post_id] {
             cell.setCell(comment: currentComment, postInfo: postInfo)
+            
+            if let piv = profileImageVersions[postInfo.a!.lowercased()] {
+                print("pivKey: " + postInfo.a!.lowercased() + ", pivValue: \(piv)")
+                cell.setProfileImage(username: postInfo.a!, profileImageVersion: piv)
+            }
+            else {
+                cell.setProfileImage(username: postInfo.a!, profileImageVersion: 0)
+            }
         }
         else {
             cell.setCell(comment: currentComment)
