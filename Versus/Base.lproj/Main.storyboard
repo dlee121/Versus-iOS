@@ -1446,11 +1446,19 @@
                                     <outlet property="delegate" destination="tLK-EE-B6c" id="AkB-em-8QO"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hWQ-D9-TsQ">
+                                <rect key="frame" x="177" y="20" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hWQ-D9-TsQ" firstAttribute="centerX" secondItem="vpz-BT-JPb" secondAttribute="centerX" id="aaH-Hw-lEW"/>
+                            <constraint firstItem="hWQ-D9-TsQ" firstAttribute="top" secondItem="Apm-QK-jce" secondAttribute="top" id="u49-vF-AMA"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Apm-QK-jce"/>
                     </view>
                     <connections>
+                        <outlet property="indicator" destination="hWQ-D9-TsQ" id="nzo-3X-z2C"/>
                         <outlet property="tableView" destination="NtX-q9-oJN" id="XMR-Lv-paf"/>
                     </connections>
                 </viewController>

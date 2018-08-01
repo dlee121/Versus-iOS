@@ -11,11 +11,18 @@ import XLPagerTabStrip
 
 class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
     var comments = [VSComment]()
     var postInfoMap = [String : PostInfo]()
     var apiClient = VSVersusAPIClient.default()
     var fromIndex : Int!
-    @IBOutlet weak var tableView: UITableView!
+    var nowLoading = false
+    var loadThreshold = 2
+    var currentUsername : String!
+    var retrievalSize = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +37,16 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     
     func setUpCommentsHistory(username : String) {
         fromIndex = 0
+        currentUsername = username
         comments.removeAll()
         commentsHistoryQuery(username: username)
     }
     
     func commentsHistoryQuery(username : String){
+        DispatchQueue.main.async {
+            self.indicator.startAnimating()
+        }
+        
         apiClient.commentslistGet(c: username, d: nil, a: "pc", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -63,7 +75,7 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                             index += 1
                         }
                         payload.append("]}")
-                        self.fromIndex = self.comments.count
+                        
                         self.apiClient.postinfomultiGet(a: "mpinf", b: payload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             
                             if let pinfResults = task.result?.docs {
@@ -71,13 +83,33 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                                     self.postInfoMap[pinfItem.id!] = PostInfo(itemSource: pinfItem.source!)
                                 }
                             }
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
+                            
+                            if results.count % self.retrievalSize == 0 {
+                                self.nowLoading = false
                             }
+                            
+                            if self.comments.count < self.retrievalSize {
+                                DispatchQueue.main.async {
+                                    self.tableView.reloadData()
+                                    self.indicator.stopAnimating()
+                                }
+                            }
+                            else {
+                                var indexPaths = [IndexPath]()
+                                for i in 0...results.count-1 {
+                                    indexPaths.append(IndexPath(row: self.fromIndex + i, section: 0))
+                                }
+                                DispatchQueue.main.async {
+                                    self.tableView.insertRows(at: indexPaths, with: .fade)
+                                    self.indicator.stopAnimating()
+                                }
+                            }
+                            
                             return nil
                         }
                     }
                     else if results.count == 1 {
+                        self.nowLoading = true
                         let source = results[0].source!
                         self.comments.append(VSComment(itemSource: source, id: results[0].id!))
                         self.fromIndex = self.comments.count
@@ -86,11 +118,30 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                             if let pinfResult = task.result {
                                 self.postInfoMap[results[0].id!] = PostInfo(itemSource: pinfResult)
                             }
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
+                            if self.comments.count < self.retrievalSize {
+                                DispatchQueue.main.async {
+                                    self.tableView.reloadData()
+                                    self.indicator.stopAnimating()
+                                }
+                            }
+                            else {
+                                var indexPaths = [IndexPath]()
+                                for i in 0...results.count-1 {
+                                    indexPaths.append(IndexPath(row: self.fromIndex + i, section: 0))
+                                }
+                                DispatchQueue.main.async {
+                                    self.tableView.insertRows(at: indexPaths, with: .fade)
+                                    self.indicator.stopAnimating()
+                                }
                             }
                             
                             return nil
+                        }
+                    }
+                    else {
+                        DispatchQueue.main.async {
+                            self.nowLoading = true
+                            self.indicator.stopAnimating()
                         }
                     }
                 }
@@ -114,6 +165,15 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastElement = comments.count - 1 - loadThreshold
+        if !nowLoading && indexPath.row == lastElement {
+            nowLoading = true
+            fromIndex = comments.count
+            commentsHistoryQuery(username: currentUsername!)
+        }
     }
     
     /*
