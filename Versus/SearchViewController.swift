@@ -48,6 +48,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func searchExecute(input : String, index : Int){
+        print("execute search")
         DispatchQueue.main.async {
             self.indicator.startAnimating()
         }
@@ -108,7 +109,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                                         self.indicator.stopAnimating()
                                     }
                                 }
-                                self.nowLoading = false
+                                if queryResults!.count < self.retrievalSize {
+                                    self.nowLoading = true
+                                }
+                                else {
+                                    self.nowLoading = false
+                                }
                             }
                             
                             return nil
