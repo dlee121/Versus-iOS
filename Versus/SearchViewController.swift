@@ -11,13 +11,19 @@ import UIKit
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     
     var fromIndex = 0
     let DEFAULT = 0
     let S3 = 1
     let apiClient = VSVersusAPIClient.default()
-    var results = [PostObject]()
+    var posts = [PostObject]()
     var profileImageVersions = [String : Int]()
+    var nowLoading = false
+    var retrievalSize = 16
+    var loadThreshold = 6
+    var currentInput : String!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,17 +37,20 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func searchThis(input : String){
-        results.removeAll()
+        posts.removeAll()
         fromIndex = 0
         tableView.reloadData()
         if !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            currentInput = input
             searchExecute(input: input, index: fromIndex)
         }
         
     }
     
     func searchExecute(input : String, index : Int){
-        print("search executed")
+        DispatchQueue.main.async {
+            self.indicator.startAnimating()
+        }
         self.apiClient.postslistcompactGet(c: input, a: "sp", b: "\(index)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -49,12 +58,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 }
             }
             else {
-                let results = task.result?.hits?.hits
-                if !results!.isEmpty{
+                let queryResults = task.result?.hits?.hits
+                if !queryResults!.isEmpty{
                     var pivString = "{\"ids\":["
                     var index = 0
-                    for item in results! {
-                        self.results.append(PostObject(compactSource: item.source!, id: item.id!))
+                    for item in queryResults! {
+                        self.posts.append(PostObject(compactSource: item.source!, id: item.id!))
                         if item.source?.a != "deleted" {
                             if index == 0 {
                                 pivString += "\"" + item.source!.a! + "\""
@@ -69,46 +78,55 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                     }
                     pivString += "]}"
                     
-                    //print(pivString)
-                    
-                    self.apiClient.pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                        if task.error != nil {
-                            DispatchQueue.main.async {
-                                print(task.error!)
-                            }
-                        }
-                        
-                        if let results = task.result?.docs {
-                            for item in results {
-                                self.profileImageVersions[item.id!] = item.source?.pi?.intValue
+                    if index > 0 {
+                        self.apiClient.pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            if task.error != nil {
+                                DispatchQueue.main.async {
+                                    print(task.error!)
+                                }
                             }
                             
-                            if index > 0 {
+                            if let results = task.result?.docs {
+                                for item in results {
+                                    self.profileImageVersions[item.id!] = item.source?.pi?.intValue
+                                }
+                                
                                 if self.fromIndex == 0 {
                                     DispatchQueue.main.async {
-                                        print("all the way here")
                                         self.tableView.reloadData()
-                                        print("then here")
+                                        self.indicator.stopAnimating()
                                     }
                                 }
                                 else {
                                     DispatchQueue.main.async {
-                                        let newIndexPath = IndexPath(row: self.fromIndex, section: 0)
-                                        self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+                                        var indexPaths = [IndexPath]()
+                                        for i in 0...queryResults!.count-1{
+                                            indexPaths.append(IndexPath(row: self.fromIndex+i, section: 0))
+                                        }
+                                        
+                                        self.tableView.insertRows(at: indexPaths, with: .fade)
+                                        self.indicator.stopAnimating()
                                     }
                                 }
-                                
-                                self.fromIndex = results.count - 1
-                                
+                                self.nowLoading = false
                             }
+                            
+                            return nil
                         }
-                        
-                        
-                        
-                        return nil
+                    }
+                    else {
+                        self.nowLoading = true
+                        DispatchQueue.main.async {
+                            self.indicator.stopAnimating()
+                        }
                     }
                 }
-                
+                else {
+                    self.nowLoading = true
+                    DispatchQueue.main.async {
+                        self.indicator.stopAnimating()
+                    }
+                }
             }
             return nil
         }
@@ -116,11 +134,20 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return results.count
+        return posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastElement = posts.count - 1 - loadThreshold
+        if !nowLoading && indexPath.row == lastElement {
+            nowLoading = true
+            fromIndex = posts.count
+            searchExecute(input: currentInput, index: fromIndex)
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let currentPost = results[indexPath.row]
+        let currentPost = posts[indexPath.row]
         
         //set profile image version for the post if one exists
         if let piv = profileImageVersions[currentPost.author.lowercased()] {
@@ -129,7 +156,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchPostCell", for: indexPath) as! SearchPostTableViewCell
-        cell.setCell(post: results[indexPath.row])
+        cell.setCell(post: posts[indexPath.row])
         return cell
     }
     

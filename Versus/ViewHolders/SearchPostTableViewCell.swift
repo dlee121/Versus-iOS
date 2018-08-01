@@ -33,6 +33,11 @@ class SearchPostTableViewCell: UITableViewCell {
         if post.profileImageVersion > 0 {
             setProfileImage(username: post.author, profileImageVersion: post.profileImageVersion)
         }
+        else {
+            profileImage.image = #imageLiteral(resourceName: "default_profile")
+        }
+        profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
+        profileImage.clipsToBounds = true
     }
     
     
