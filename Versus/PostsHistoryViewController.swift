@@ -11,14 +11,20 @@ import XLPagerTabStrip
 
 class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
     var posts = [PostObject]()
     var apiClient = VSVersusAPIClient.default()
     var fromIndex : Int!
-    @IBOutlet weak var tableView: UITableView!
+    var nowLoading = false
+    var loadThreshold = 2
+    var retrievalSize = 20
+    var currentUsername : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.tableFooterView = UIView()
         // Do any additional setup after loading the view.
     }
     
@@ -30,10 +36,17 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     func setUpPostsHistory(username : String) {
         fromIndex = 0
         posts.removeAll()
+        currentUsername = username
         postsHistoryQuery(username: username)
     }
     
     func postsHistoryQuery(username : String){
+        print("post history query called for \(fromIndex)")
+        
+        DispatchQueue.main.async {
+            self.indicator.startAnimating()
+        }
+        
         apiClient.postslistcompactGet(c: username, a: "pp", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -46,9 +59,43 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
                     for item in results {
                         self.posts.append(PostObject(compactSource: item.source!, id: item.id!))
                     }
-                    self.fromIndex = self.posts.count
+                    if results.count > 0 {
+                        if self.fromIndex == 0 {
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                                self.indicator.stopAnimating()
+                            }
+                        }
+                        else {
+                            var indexPaths = [IndexPath]()
+                            for i in 0...results.count-1 {
+                                indexPaths.append(IndexPath(row: self.fromIndex + i, section: 0))
+                            }
+                            DispatchQueue.main.async {
+                                self.tableView.insertRows(at: indexPaths, with: .fade)
+                                self.indicator.stopAnimating()
+                            }
+                        }
+                        if results.count < self.retrievalSize {
+                            self.nowLoading = true
+                        }
+                        else {
+                            self.nowLoading = false
+                        }
+                        
+                    }
+                    else {
+                        DispatchQueue.main.async {
+                            self.nowLoading = true
+                            self.indicator.stopAnimating()
+                        }
+                    }
+                    
+                }
+                else {
                     DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                        self.nowLoading = true
+                        self.indicator.stopAnimating()
                     }
                 }
             }
@@ -71,6 +118,15 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastElement = posts.count - 1 - loadThreshold
+        if !nowLoading && indexPath.row == lastElement {
+            nowLoading = true
+            fromIndex = posts.count
+            postsHistoryQuery(username: currentUsername!)
+        }
     }
     
     /*

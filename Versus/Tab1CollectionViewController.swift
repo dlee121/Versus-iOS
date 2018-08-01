@@ -96,12 +96,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func myCircleQuery(){
+        
         DispatchQueue.main.async {
             if !self.indicator.isAnimating {
                 self.indicator.startAnimating()
             }
         }
-        
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -157,6 +157,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                     }
                 }
                 else {
+                    
                     var postInfoPayload = "{\"ids\":["
                     var index = 0
                     for item in results! {
@@ -243,7 +244,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                                     self.indicator.stopAnimating()
                                                 }
                                             }
-                                            self.nowLoading = false
+                                            if loadedItemsCount! < self.retrievalSize {
+                                                self.nowLoading = true
+                                            }
+                                            else {
+                                                self.nowLoading = false
+                                            }
                                         }
                                         
                                         return nil
@@ -268,7 +274,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                             self.indicator.stopAnimating()
                                         }
                                     }
-                                    self.nowLoading = false
+                                    if loadedItemsCount! < self.retrievalSize {
+                                        self.nowLoading = true
+                                    }
+                                    else {
+                                        self.nowLoading = false
+                                    }
                                 }
                             }
                             return nil
@@ -293,7 +304,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                 self.indicator.stopAnimating()
                             }
                         }
-                        self.nowLoading = false
+                        if loadedItemsCount! < self.retrievalSize {
+                            self.nowLoading = true
+                        }
+                        else {
+                            self.nowLoading = false
+                        }
                     }
                     
                 }

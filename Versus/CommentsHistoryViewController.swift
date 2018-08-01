@@ -43,6 +43,7 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func commentsHistoryQuery(username : String){
+        
         DispatchQueue.main.async {
             self.indicator.startAnimating()
         }
@@ -54,13 +55,13 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                 }
             }
             else {
-                if let results = task.result!.hits!.hits {
+                if let queryResults = task.result!.hits!.hits {
                     
-                    if results.count > 1 {
+                    if queryResults.count > 1 {
                         var payload = "{\"ids\":["
                         var index = 0
                         
-                        for item in results {
+                        for item in queryResults {
                             self.comments.append(VSComment(itemSource: item.source!, id: item.id!))
                             if index == 0 {
                                 if self.postInfoMap[item.source!.pt!] == nil {
@@ -84,9 +85,7 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                                 }
                             }
                             
-                            if results.count % self.retrievalSize == 0 {
-                                self.nowLoading = false
-                            }
+                            
                             
                             if self.comments.count < self.retrievalSize {
                                 DispatchQueue.main.async {
@@ -96,27 +95,34 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                             }
                             else {
                                 var indexPaths = [IndexPath]()
-                                for i in 0...results.count-1 {
+                                for i in 0...queryResults.count-1 {
                                     indexPaths.append(IndexPath(row: self.fromIndex + i, section: 0))
                                 }
                                 DispatchQueue.main.async {
                                     self.tableView.insertRows(at: indexPaths, with: .fade)
                                     self.indicator.stopAnimating()
                                 }
+                            }
+                            
+                            if queryResults.count < self.retrievalSize {
+                                self.nowLoading = true
+                            }
+                            else {
+                                self.nowLoading = false
                             }
                             
                             return nil
                         }
                     }
-                    else if results.count == 1 {
+                    else if queryResults.count == 1 {
                         self.nowLoading = true
-                        let source = results[0].source!
-                        self.comments.append(VSComment(itemSource: source, id: results[0].id!))
+                        let source = queryResults[0].source!
+                        self.comments.append(VSComment(itemSource: source, id: queryResults[0].id!))
                         self.fromIndex = self.comments.count
                         
                         self.apiClient.postinfoGet(a: "pinf", b: source.pt).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if let pinfResult = task.result {
-                                self.postInfoMap[results[0].id!] = PostInfo(itemSource: pinfResult)
+                                self.postInfoMap[queryResults[0].id!] = PostInfo(itemSource: pinfResult)
                             }
                             if self.comments.count < self.retrievalSize {
                                 DispatchQueue.main.async {
@@ -126,13 +132,20 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                             }
                             else {
                                 var indexPaths = [IndexPath]()
-                                for i in 0...results.count-1 {
+                                for i in 0...queryResults.count-1 {
                                     indexPaths.append(IndexPath(row: self.fromIndex + i, section: 0))
                                 }
                                 DispatchQueue.main.async {
                                     self.tableView.insertRows(at: indexPaths, with: .fade)
                                     self.indicator.stopAnimating()
                                 }
+                            }
+                            
+                            if queryResults.count < self.retrievalSize {
+                                self.nowLoading = true
+                            }
+                            else {
+                                self.nowLoading = false
                             }
                             
                             return nil
