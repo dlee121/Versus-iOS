@@ -47,6 +47,9 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
             self.categoryFilterButton.imageEdgeInsets = UIEdgeInsetsMake(0.0,labelWidth,0.0,-labelWidth)
         }
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(Tab2CollectionViewController.resetCategorySelection))
+        categorySelectionLabel.addGestureRecognizer(tap)
+        
         if posts.count == 0 {
             trendingQuery(fromIndex: 0)
         }
@@ -329,6 +332,13 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
             
         }
         
+    }
+    
+    @objc
+    func resetCategorySelection(sender:UITapGestureRecognizer) {
+        categorySelection = nil
+        categorySelectionLabel.text = ""
+        refresh()
     }
     
     

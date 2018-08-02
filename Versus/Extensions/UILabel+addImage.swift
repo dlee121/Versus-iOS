@@ -24,7 +24,7 @@ extension UILabel
         self.attributedText = myString
     }
     
-    func addImageThenString(imageName: String, imageHeight: CGFloat, suffix : String) {
+    func setSelectedCategoryLabel(imageName: String, imageHeight: CGFloat, suffix : String) {
         if self.text!.isEmpty {
             self.text = ""
         }

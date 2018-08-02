@@ -171,7 +171,7 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
             let tab2VC = originVC as? Tab2CollectionViewController
             tab2VC?.categorySelection = "\(indexPath.row)"
             tab2VC?.categorySelectionLabel.text = ""
-            tab2VC?.categorySelectionLabel.addImageThenString(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 30, suffix: getCategoryName(categoryInt: indexPath.row))
+            tab2VC?.categorySelectionLabel.setSelectedCategoryLabel(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 30, suffix: getCategoryName(categoryInt: indexPath.row))
             //tab2VC?.categorySelectionLabel.addImage(imageName: "close", imageHeight: 14)
             tab2VC?.refresh()
             
