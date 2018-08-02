@@ -1993,7 +1993,10 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65P-XA-kg8">
-                                <rect key="frame" x="16" y="32" width="343" height="0.0"/>
+                                <rect key="frame" x="16" y="32" width="56" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="uUS-3A-tK4"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -2003,7 +2006,6 @@
                         <constraints>
                             <constraint firstItem="c4b-PR-Q5I" firstAttribute="leading" secondItem="jYD-d3-uLE" secondAttribute="leading" constant="8" id="0KN-0a-VcK"/>
                             <constraint firstItem="E2p-4J-Ch3" firstAttribute="trailing" secondItem="uHV-xm-xDG" secondAttribute="trailing" id="DKA-pj-fVH"/>
-                            <constraint firstItem="uHV-xm-xDG" firstAttribute="trailing" secondItem="65P-XA-kg8" secondAttribute="trailing" constant="16" id="KNG-Vh-Zf9"/>
                             <constraint firstItem="E2p-4J-Ch3" firstAttribute="top" secondItem="65P-XA-kg8" secondAttribute="bottom" id="MvW-BB-q7K"/>
                             <constraint firstItem="E2p-4J-Ch3" firstAttribute="bottom" secondItem="uHV-xm-xDG" secondAttribute="bottom" id="Z5C-j4-biH"/>
                             <constraint firstItem="c4b-PR-Q5I" firstAttribute="top" secondItem="jYD-d3-uLE" secondAttribute="top" id="dLk-DN-SXB"/>
