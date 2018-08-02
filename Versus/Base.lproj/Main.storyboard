@@ -2007,23 +2007,23 @@
                     <connections>
                         <outlet property="categoryFilterButton" destination="c4b-PR-Q5I" id="fOe-oZ-8dw"/>
                         <outlet property="collectionView" destination="E2p-4J-Ch3" id="Azb-Pa-1Gm"/>
+                        <segue destination="Daz-4Z-Xec" kind="presentation" identifier="presentTrendingFilter" id="iVN-9A-tOw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ifZ-5w-G5a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3250.4000000000001" y="698.5007496251875"/>
         </scene>
-        <!--Tab3-->
+        <!--CategoryFilter-->
         <scene sceneID="Czq-5B-M3r">
             <objects>
-                <viewController storyboardIdentifier="Tab3" title="Tab3" id="Daz-4Z-Xec" customClass="Tab3CollectionViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="CategoryFilter" id="Daz-4Z-Xec" customClass="CategoryFilterViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kdW-8u-EPy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="akN-Ef-xTx">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="akN-Ef-xTx">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="categoryCell" rowHeight="75" id="lqP-d5-V9J" customClass="CategoriesTableViewCell" customModule="Versus" customModuleProvider="target">
@@ -2057,22 +2057,49 @@
                                     <outlet property="delegate" destination="Daz-4Z-Xec" id="0ZW-PD-boG"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yp4-Ew-emV">
+                                <rect key="frame" x="0.0" y="20" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="NAa-FF-EUX"/>
+                                    <constraint firstAttribute="height" constant="44" id="bKV-GY-tqc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <state key="normal" title="X">
+                                    <color key="titleColor" white="0.2641872829861111" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeButtonTapped:" destination="Daz-4Z-Xec" eventType="touchUpInside" id="jv9-Bo-w6r"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Categories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1A-yz-aah">
+                                <rect key="frame" x="146" y="32" width="83.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Yp4-Ew-emV" firstAttribute="top" secondItem="kdW-8u-EPy" secondAttribute="top" constant="20" id="0i9-5o-Br8"/>
+                            <constraint firstItem="akN-Ef-xTx" firstAttribute="top" secondItem="Yp4-Ew-emV" secondAttribute="bottom" id="ABu-S4-x1t"/>
+                            <constraint firstItem="akN-Ef-xTx" firstAttribute="leading" secondItem="Flb-Mz-NVc" secondAttribute="leading" id="DZg-Gb-acf"/>
+                            <constraint firstItem="akN-Ef-xTx" firstAttribute="bottom" secondItem="Flb-Mz-NVc" secondAttribute="bottom" id="FO4-YK-7U0"/>
+                            <constraint firstItem="akN-Ef-xTx" firstAttribute="trailing" secondItem="Flb-Mz-NVc" secondAttribute="trailing" id="Wwu-LR-zVy"/>
+                            <constraint firstItem="g1A-yz-aah" firstAttribute="centerY" secondItem="Yp4-Ew-emV" secondAttribute="centerY" id="d3c-Yr-Uzn"/>
+                            <constraint firstItem="g1A-yz-aah" firstAttribute="centerX" secondItem="kdW-8u-EPy" secondAttribute="centerX" id="of7-hR-2kB"/>
+                            <constraint firstItem="Yp4-Ew-emV" firstAttribute="leading" secondItem="Flb-Mz-NVc" secondAttribute="leading" id="wyx-TY-z7f"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Flb-Mz-NVc"/>
                     </view>
-                    <connections>
-                        <segue destination="lS1-9Y-SPq" kind="show" identifier="openCategoryPage" id="7cS-Nv-9J5"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sKM-Kz-iHf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3960.8000000000002" y="698.5007496251875"/>
         </scene>
-        <!--Category View Controller-->
+        <!--Tab3-->
         <scene sceneID="0r8-Eb-Hnl">
             <objects>
-                <viewController id="lS1-9Y-SPq" customClass="CategoryViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Tab3" title="Tab3" id="lS1-9Y-SPq" customClass="Tab3CollectionViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nt9-bB-Pfk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

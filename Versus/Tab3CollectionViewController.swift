@@ -1,173 +1,170 @@
 //
-//  LeaderboardViewController.swift
+//  MCViewController.swift
 //  Versus
 //
-//  Created by Dongkeun Lee on 7/13/18.
+//  Created by Dongkeun Lee on 6/29/18.
 //  Copyright © 2018 Versus. All rights reserved.
 //
 
 import UIKit
+import Firebase
+import Nuke
+import AWSS3
 import XLPagerTabStrip
 
-class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    var categories = [
-        "Automobiles",
-        "Cartoon/Anime/Fiction",
-        "Celebrity/Gossip",
-        "Culture",
-        "Education",
-        "Electronics",
-        "Fashion",
-        "Finance",
-        "Food/Restaurant",
-        "Game/Entertainment",
-        "Morality/Ethics/Law",
-        "Movies/TV",
-        "Music/Artists",
-        "Politics",
-        "Random",
-        "Religion",
-        "Science",
-        "Social Issues",
-        "Sports",
-        "Technology",
-        "Weapons"
-    ]
-    var apiClient = VSVersusAPIClient.default()
-    var selectedCategory : Int!
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    var fromIndex = 0
+    let DEFAULT = 0
+    let S3 = 1
+    let apiClient = VSVersusAPIClient.default()
+    var posts = [PostObject]()
+    var vIsRed = true
+    let preheater = Nuke.ImagePreheater()
+    var profileImageVersions = [String : Int]()
+    
+    var screenWidth : CGFloat!
+    var textsVSCHeight : CGFloat!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        screenWidth = self.view.frame.size.width
+        textsVSCHeight = screenWidth / 1.6
         
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool){
-        super.viewWillAppear(animated)
+    
+    func categoryQuery(fromIndex : Int, category : Int){
+        self.apiClient.postslistGet(c: "\(category)", d: "t", a: "ct", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            if task.error != nil {
+                DispatchQueue.main.async {
+                    print(task.error!)
+                }
+            }
+            else {
+                let results = task.result?.hits?.hits
+                var pivString = "{\"ids\":["
+                var index = 0
+                for item in results! {
+                    self.posts.append(PostObject(itemSource: item.source!, id: item.id!))
+                    
+                    if item.source?.a != "deleted" {
+                        if index == 0 {
+                            pivString += "\"" + item.source!.a! + "\""
+                        }
+                        else {
+                            pivString += ",\"" + item.source!.a! + "\""
+                        }
+                        index += 1
+                    }
+                    
+                }
+                pivString += "]}"
+                
+                print(pivString)
+                
+                self.apiClient.pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    if task.error != nil {
+                        DispatchQueue.main.async {
+                            print(task.error!)
+                        }
+                    }
+                    
+                    if let results = task.result?.docs {
+                        for item in results {
+                            self.profileImageVersions[item.id!] = item.source?.pi?.intValue
+                        }
+                        
+                        if self.fromIndex == 0 {
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
+                            }
+                        }
+                        else {
+                            DispatchQueue.main.async {
+                                let newIndexPath = IndexPath(row: fromIndex, section: 0)
+                                self.collectionView.insertItems(at: [newIndexPath])
+                            }
+                        }
+                        
+                        self.fromIndex = results.count - 1
+                    }
+                    
+                    return nil
+                }
+                
+                
+            }
+            return nil
+        }
         
     }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return posts.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let post = posts[indexPath.row]
+        if post.redimg.intValue % 10 == S3 || post.blackimg.intValue % 10 == S3 {
+            return CGSize(width: screenWidth, height: screenWidth)
+        }
+        else {
+            return CGSize(width: screenWidth, height: textsVSCHeight)
+        }
+        
+    }
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("cellForItemAt called for \(indexPath.row)")
+        let currentPost = posts[indexPath.row]
+        
+        //set profile image version for the post if one exists
+        if let piv = profileImageVersions[currentPost.author.lowercased()] {
+            currentPost.setProfileImageVersion(piv: piv)
+        }
+        
+        if currentPost.redimg.intValue % 10 == S3 || currentPost.blackimg.intValue % 10 == S3 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_images", for: indexPath) as! PostImageCollectionViewCell
+            cell.setCell(post: currentPost, vIsRed: vIsRed)
+            vIsRed = !vIsRed
+            
+            return cell
+        }
+        else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_texts", for: indexPath) as! PostTextCollectionViewCell
+            cell.setCell(post: currentPost, vIsRed: vIsRed)
+            vIsRed = !vIsRed
+            
+            return cell
+        }
+        
+        
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
-    }
-    
-    /*
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if(indexPath.row == 0){
-            return CGFloat(116.0)
-        }
-        return CGFloat(102.0)
-    }
-    */
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-            case 0:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Automobiles", image: #imageLiteral(resourceName: "Automobiles"))
-                return cell!
-            case 1:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Cartoon/Anime/Fiction", image: #imageLiteral(resourceName: "Cartoons_Anime_Fiction"))
-                return cell!
-            case 2:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Celebrity/Gossip", image: #imageLiteral(resourceName: "Celebrity_Gossip"))
-                return cell!
-            case 3:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Culture", image: #imageLiteral(resourceName: "Culture"))
-                return cell!
-            case 4:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Education", image: #imageLiteral(resourceName: "Education"))
-                return cell!
-            case 5:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Electronics", image: #imageLiteral(resourceName: "Electronics"))
-                return cell!
-            case 6:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Fashion", image: #imageLiteral(resourceName: "Fashion"))
-                return cell!
-            case 7:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Finance", image: #imageLiteral(resourceName: "Finance"))
-                return cell!
-            case 8:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Food/Restaurant", image: #imageLiteral(resourceName: "Food_Restaurant"))
-                return cell!
-            case 9:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Game/Entertainment", image: #imageLiteral(resourceName: "Games_Entertainment"))
-                return cell!
-            case 10:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Morality/Ethics/Law", image: #imageLiteral(resourceName: "Morality_Ethics_Law"))
-                return cell!
-            case 11:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Movies/TV", image: #imageLiteral(resourceName: "Movies_TV"))
-                return cell!
-            case 12:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Music/Artists", image: #imageLiteral(resourceName: "Music_Artists"))
-                return cell!
-            case 13:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Politics", image: #imageLiteral(resourceName: "Politics"))
-                return cell!
-            case 14:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Random", image: #imageLiteral(resourceName: "Random"))
-                return cell!
-            case 15:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Religion", image: #imageLiteral(resourceName: "Religion"))
-                return cell!
-            case 16:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Science", image: #imageLiteral(resourceName: "Science"))
-                return cell!
-            case 17:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Social Issues", image: #imageLiteral(resourceName: "Social issues"))
-                return cell!
-            case 18:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Sports", image: #imageLiteral(resourceName: "Sports"))
-                return cell!
-            case 19:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Technology", image: #imageLiteral(resourceName: "Technology"))
-                return cell!
-            case 20:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Weapons", image: #imageLiteral(resourceName: "Weapons Icon"))
-                return cell!
-            default:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-                cell!.setCell(name: "Random", image: #imageLiteral(resourceName: "Random"))
-                return cell!
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedCategory = indexPath.row
-        tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "openCategoryPage", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let categoryVC = segue.destination as? CategoryViewController else {return}
-        categoryVC.categoryQuery(fromIndex: 0, category: selectedCategory)
+    @IBAction func logOutTapped(_ sender: UIButton) {
+        //remove session data, log out firebase user, then segue back to start screen
+        UserDefaults.standard.removeObject(forKey: "KEY_BDAY")
+        UserDefaults.standard.removeObject(forKey: "KEY_EMAIL")
+        UserDefaults.standard.removeObject(forKey: "KEY_USERNAME")
+        UserDefaults.standard.removeObject(forKey: "KEY_PI")
+        UserDefaults.standard.removeObject(forKey: "KEY_IS_NATIVE")
+        try! Auth.auth().signOut()
+        performSegue(withIdentifier: "logOutToStart", sender: self)
     }
     
     /*
@@ -180,10 +177,120 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
      }
      */
     
+    func prefetchPostImage(indexPaths: [IndexPath]){
+        var imageRequests = [ImageRequest]()
+        print("heyhey let's see if it's async")
+        var index = 0
+        for indexPath in indexPaths {
+            let post = posts[indexPath.row]
+            let redimg = post.redimg.intValue
+            let blackimg = post.blackimg.intValue
+            if redimg % 10 == S3 {
+                let request = AWSS3GetPreSignedURLRequest()
+                request.expires = Date().addingTimeInterval(86400)
+                request.bucket = "versus.pictures"
+                request.httpMethod = .GET
+                
+                if redimg / 10 == 0 {
+                    request.key = post.post_id + "-left.jpeg"
+                }
+                else{
+                    request.key = post.post_id + "-left\(redimg/10).jpeg"
+                }
+                
+                AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+                    if let error = task.error {
+                        print("Error: \(error)")
+                        return nil
+                    }
+                    
+                    var prefetchRequest = ImageRequest(url: task.result!.absoluteURL!)
+                    prefetchRequest.priority = .low
+                    
+                    imageRequests.append(prefetchRequest)
+                    print("heyhey appended \(index)")
+                    
+                    return nil
+                }
+            }
+            
+            if blackimg % 10 == S3 {
+                let request = AWSS3GetPreSignedURLRequest()
+                request.expires = Date().addingTimeInterval(86400)
+                request.bucket = "versus.pictures"
+                request.httpMethod = .GET
+                
+                if blackimg / 10 == 0 {
+                    request.key = post.post_id + "-left.jpeg"
+                }
+                else{
+                    request.key = post.post_id + "-left\(blackimg/10).jpeg"
+                }
+                
+                AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+                    if let error = task.error {
+                        print("Error: \(error)")
+                        return nil
+                    }
+                    
+                    var prefetchRequest = ImageRequest(url: task.result!.absoluteURL!)
+                    prefetchRequest.priority = .low
+                    
+                    imageRequests.append(prefetchRequest)
+                    print("heyhey appended \(index)")
+                    
+                    return nil
+                }
+            }
+            index += 1
+        }
+        
+        print("heyhey executed prefetch")
+        preheater.startPreheating(with: imageRequests)
+    }
+    
+    func prefetchProfileImage(indexPaths: [IndexPath]){
+        print("hiho let's see if it's async")
+        var imageRequests = [ImageRequest]()
+        var index = 0
+        for indexPath in indexPaths {
+            let username = posts[indexPath.row].author
+            if let piv = profileImageVersions[username] {
+                let request = AWSS3GetPreSignedURLRequest()
+                request.expires = Date().addingTimeInterval(86400)
+                request.bucket = "versus.profile-pictures"
+                request.httpMethod = .GET
+                request.key = username + "-\(piv).jpeg"
+                
+                AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+                    if let error = task.error {
+                        print("Error: \(error)")
+                        return nil
+                    }
+                    
+                    
+                    var prefetchRequest = ImageRequest(url: task.result!.absoluteURL!)
+                    prefetchRequest.priority = .low
+                    
+                    imageRequests.append(prefetchRequest)
+                    print("hiho appended \(index)")
+                    index += 1
+                    
+                    return nil
+                }
+                
+            }
+        }
+        
+        preheater.startPreheating(with: imageRequests)
+        print("hiho executed prefetch")
+        
+    }
+    
 }
 
 extension Tab3CollectionViewController : IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "Categories")
+        return IndicatorInfo(title: "New")
     }
 }

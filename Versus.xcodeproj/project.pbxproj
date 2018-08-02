@@ -31,7 +31,6 @@
 		7056672920FD62A400CB87AD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672820FD62A400CB87AD /* SearchViewController.swift */; };
 		7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */; };
 		7056672F2101564D00CB87AD /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */; };
-		7056673121016A5500CB87AD /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056673021016A5500CB87AD /* CategoryViewController.swift */; };
 		706F89E42106E38800A78EFB /* VSPostQMultiModel_docs_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89E02106E38700A78EFB /* VSPostQMultiModel_docs_item__source.swift */; };
 		706F89E52106E38800A78EFB /* VSPostQModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89E12106E38700A78EFB /* VSPostQModel.swift */; };
 		706F89E62106E38800A78EFB /* VSPostQMultiModel_docs_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89E22106E38800A78EFB /* VSPostQMultiModel_docs_item.swift */; };
@@ -56,6 +55,7 @@
 		70CB9E45210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E44210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift */; };
 		70CB9E47210FE4D800D86E37 /* Array+Shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */; };
 		70CB9E492110020500D86E37 /* MyCircleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */; };
+		70CB9E4B2112B33C00D86E37 /* CategoryFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E4A2112B33C00D86E37 /* CategoryFilterViewController.swift */; };
 		70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */; };
 		70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF520E6944B0067DF08 /* UsernameViewController.swift */; };
 		70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF720E694560067DF08 /* PasswordViewController.swift */; };
@@ -147,7 +147,6 @@
 		7056672820FD62A400CB87AD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostTableViewCell.swift; sourceTree = "<group>"; };
 		7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewCell.swift; sourceTree = "<group>"; };
-		7056673021016A5500CB87AD /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		706F89E02106E38700A78EFB /* VSPostQMultiModel_docs_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostQMultiModel_docs_item__source.swift; sourceTree = "<group>"; };
 		706F89E12106E38700A78EFB /* VSPostQModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostQModel.swift; sourceTree = "<group>"; };
 		706F89E22106E38800A78EFB /* VSPostQMultiModel_docs_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostQMultiModel_docs_item.swift; sourceTree = "<group>"; };
@@ -172,6 +171,7 @@
 		70CB9E44210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleCollectionViewCell.swift; sourceTree = "<group>"; };
 		70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Shuffle.swift"; sourceTree = "<group>"; };
 		70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleTableViewCell.swift; sourceTree = "<group>"; };
+		70CB9E4A2112B33C00D86E37 /* CategoryFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterViewController.swift; sourceTree = "<group>"; };
 		70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewController.swift; sourceTree = "<group>"; };
 		70E80BF520E6944B0067DF08 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
 		70E80BF720E694560067DF08 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
@@ -303,11 +303,11 @@
 				701B9BB020E3FB22003C9E7E /* Info.plist */,
 				702499A020E57EC70024E871 /* Extensions */,
 				70B1705020F2F97800459ACE /* ButtonBarView.swift */,
-				7056673021016A5500CB87AD /* CategoryViewController.swift */,
 				706F89E82107EAB300A78EFB /* ProfileViewController.swift */,
 				706F89EA2107EEF300A78EFB /* CommentsHistoryViewController.swift */,
 				706F89EC2107EF1A00A78EFB /* PostsHistoryViewController.swift */,
 				70036ED1210ABA96000BE8E9 /* FGHViewController.swift */,
+				70CB9E4A2112B33C00D86E37 /* CategoryFilterViewController.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -575,6 +575,7 @@
 				70E80CAC20E6DB570067DF08 /* VSPIVModel_docs_item.swift in Sources */,
 				70E80CC220E6DB570067DF08 /* VSAIModel__shards.swift in Sources */,
 				7056672F2101564D00CB87AD /* CategoriesTableViewCell.swift in Sources */,
+				70CB9E4B2112B33C00D86E37 /* CategoryFilterViewController.swift in Sources */,
 				70CB9E492110020500D86E37 /* MyCircleTableViewCell.swift in Sources */,
 				70B9A7E520ED93B600C06709 /* InitialViewController.swift in Sources */,
 				701C8CC820F96FCF0072AECD /* LeaderboardEntry.swift in Sources */,
@@ -588,7 +589,6 @@
 				70E80CDF20E6DB570067DF08 /* VSPostsListCompactModel.swift in Sources */,
 				7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */,
 				701B9BA720E3FB20003C9E7E /* ViewController.swift in Sources */,
-				7056673121016A5500CB87AD /* CategoryViewController.swift in Sources */,
 				70B9A7E120ED64C200C06709 /* Character+UInt32.swift in Sources */,
 				706F89E42106E38800A78EFB /* VSPostQMultiModel_docs_item__source.swift in Sources */,
 				70E80CBB20E6DB570067DF08 /* Empty.swift in Sources */,

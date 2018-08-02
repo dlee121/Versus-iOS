@@ -29,6 +29,9 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     var screenWidth : CGFloat!
     var textsVSCHeight : CGFloat!
     
+    var prepareCategoryFilter = false
+    var categorySelection : String? = nil
+    
     
     
     override func viewDidLoad() {
@@ -50,9 +53,16 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
         // Do any additional setup after loading the view.
     }
     
+    func refresh(){
+        fromIndex = 0
+        posts.removeAll()
+        collectionView.reloadData()
+        trendingQuery(fromIndex: 0)
+    }
     
     func trendingQuery(fromIndex : Int){
-        self.apiClient.postslistGet(c: nil, d: nil, a: "tr", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        
+        self.apiClient.postslistGet(c: categorySelection, d: nil, a: "tr", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -300,9 +310,23 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     
     @IBAction func categoryFilterButtonTapped(_ sender: UIButton) {
         
-        print("button tapped")
+        prepareCategoryFilter = true
+        performSegue(withIdentifier: "presentTrendingFilter", sender: self)
         
         
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if prepareCategoryFilter {
+            guard let categoriesVC = segue.destination as? CategoryFilterViewController else {return}
+            categoriesVC.tab2Or3 = 2
+            categoriesVC.originVC = self
+        }
+        else { //this is for segue to PostPage. Be sure to set prepareCategoryFilter = false to access this block
+            
+            
+        }
         
     }
     
