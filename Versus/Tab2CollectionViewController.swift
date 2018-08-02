@@ -15,6 +15,8 @@ import XLPagerTabStrip
 class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var categoryFilterButton: UIButton!
+    
     var fromIndex = 0
     let DEFAULT = 0
     let S3 = 1
@@ -33,10 +35,17 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
         super.viewDidLoad()
         screenWidth = self.view.frame.size.width
         textsVSCHeight = screenWidth / 1.6
+        
+        DispatchQueue.main.async {
+            let labelWidth = self.categoryFilterButton.titleLabel!.frame.size.width
+            let imageWidth = self.categoryFilterButton.imageView!.frame.size.width
+            self.categoryFilterButton.titleEdgeInsets = UIEdgeInsetsMake(0.0,-imageWidth,0.0,imageWidth)
+            self.categoryFilterButton.imageEdgeInsets = UIEdgeInsetsMake(0.0,labelWidth,0.0,-labelWidth)
+        }
+        
         if posts.count == 0 {
             trendingQuery(fromIndex: 0)
         }
-        
         
         // Do any additional setup after loading the view.
     }
@@ -288,6 +297,15 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
         print("hiho executed prefetch")
         
     }
+    
+    @IBAction func categoryFilterButtonTapped(_ sender: UIButton) {
+        
+        print("button tapped")
+        
+        
+        
+    }
+    
     
 }
 
