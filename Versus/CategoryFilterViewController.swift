@@ -171,7 +171,8 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
             let tab2VC = originVC as? Tab2CollectionViewController
             tab2VC?.categorySelection = "\(indexPath.row)"
             tab2VC?.categorySelectionLabel.text = ""
-            tab2VC?.categorySelectionLabel.addImageThenString(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 24, suffix: getCategoryName(categoryInt: indexPath.row))
+            tab2VC?.categorySelectionLabel.addImageThenString(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 30, suffix: getCategoryName(categoryInt: indexPath.row))
+            //tab2VC?.categorySelectionLabel.addImage(imageName: "close", imageHeight: 14)
             tab2VC?.refresh()
             
         case 3:
@@ -255,49 +256,49 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
     func getCategoryName(categoryInt : Int) -> String{
         switch categoryInt {
         case 0:
-            return "Automobiles"
+            return " Automobiles  "
         case 1:
-            return "Cartoon/Anime/Fiction"
+            return " Cartoon/Anime/Fiction  "
         case 2:
-            return "Celebrity/Gossip"
+            return " Celebrity/Gossip  "
         case 3:
-            return "Culture"
+            return " Culture  "
         case 4:
-            return "Education"
+            return " Education  "
         case 5:
-            return "Electronics"
+            return " Electronics  "
         case 6:
-            return "Fashion"
+            return " Fashion  "
         case 7:
-            return "Finance"
+            return " Finance  "
         case 8:
-            return "Food/Restaurant"
+            return " Food/Restaurant  "
         case 9:
-            return "Game/Entertainment"
+            return " Game/Entertainment  "
         case 10:
-            return "Morality/Ethics/Law"
+            return " Morality/Ethics/Law  "
         case 11:
-            return "Movies/TV"
+            return " Movies/TV  "
         case 12:
-            return "Music/Artists"
+            return " Music/Artists  "
         case 13:
-            return "Politics"
+            return " Politics  "
         case 14:
-            return "Random"
+            return " Random  "
         case 15:
-            return "Religion"
+            return " Religion  "
         case 16:
-            return "Science"
+            return " Science  "
         case 17:
-            return "Social Issues"
+            return " Social Issues  "
         case 18:
-            return "Sports"
+            return " Sports  "
         case 19:
-            return "Technology"
+            return " Technology  "
         case 20:
-            return "Weapons"
+            return " Weapons  "
         default:
-            return "Random"
+            return " Random  "
         }
         
         

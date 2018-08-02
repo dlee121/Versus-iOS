@@ -15,6 +15,7 @@ extension UILabel
         let attachment:NSTextAttachment = NSTextAttachment()
         attachment.image = UIImage(named: imageName)
         attachment.setImageHeight(height: imageHeight)
+        //attachment.bounds = CGRect(x: 0.0, y: self.font.descender, width: attachment.image!.size.width, height: attachment.image!.size.height)
         
         let attachmentString:NSAttributedString = NSAttributedString(attachment: attachment)
         let myString:NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
@@ -29,14 +30,22 @@ extension UILabel
         }
         let attachment:NSTextAttachment = NSTextAttachment()
         attachment.image = UIImage(named: imageName)
-        attachment.setImageHeight(height: imageHeight)
+        //attachment.setImageHeight(height: imageHeight)
+        attachment.bounds = CGRect(x: 0.0, y: self.font.descender*2, width: imageHeight, height: imageHeight)
         
         let attachmentString:NSAttributedString = NSAttributedString(attachment: attachment)
         let myString:NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
         myString.append(attachmentString)
         myString.append(NSAttributedString(string: suffix))
-        self.attributedText = myString
         
+        
+        let attachment2:NSTextAttachment = NSTextAttachment()
+        attachment2.image = UIImage(named: "close")
+        attachment2.bounds = CGRect(x: 0.0, y: self.font.descender/2, width: imageHeight/2, height: imageHeight/2)
+        let attachmentString2:NSAttributedString = NSAttributedString(attachment: attachment2)
+        myString.append(attachmentString2)
+        
+        self.attributedText = myString
     }
 }
 
