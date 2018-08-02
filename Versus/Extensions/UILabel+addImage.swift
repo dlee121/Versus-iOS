@@ -22,6 +22,22 @@ extension UILabel
         
         self.attributedText = myString
     }
+    
+    func addImageThenString(imageName: String, imageHeight: CGFloat, suffix : String) {
+        if self.text!.isEmpty {
+            self.text = ""
+        }
+        let attachment:NSTextAttachment = NSTextAttachment()
+        attachment.image = UIImage(named: imageName)
+        attachment.setImageHeight(height: imageHeight)
+        
+        let attachmentString:NSAttributedString = NSAttributedString(attachment: attachment)
+        let myString:NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
+        myString.append(attachmentString)
+        myString.append(NSAttributedString(string: suffix))
+        self.attributedText = myString
+        
+    }
 }
 
 extension NSTextAttachment {

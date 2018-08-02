@@ -16,6 +16,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var categoryFilterButton: UIButton!
+    @IBOutlet weak var categorySelectionLabel: UILabel!
     
     var fromIndex = 0
     let DEFAULT = 0

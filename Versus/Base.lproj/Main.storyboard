@@ -1992,20 +1992,30 @@
                                     <action selector="categoryFilterButtonTapped:" destination="akY-Zb-pNQ" eventType="touchUpInside" id="KYM-0B-rnJ"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65P-XA-kg8">
+                                <rect key="frame" x="16" y="32" width="343" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="c4b-PR-Q5I" firstAttribute="leading" secondItem="jYD-d3-uLE" secondAttribute="leading" constant="8" id="0KN-0a-VcK"/>
-                            <constraint firstItem="E2p-4J-Ch3" firstAttribute="top" secondItem="c4b-PR-Q5I" secondAttribute="bottom" id="Bfq-nT-iov"/>
                             <constraint firstItem="E2p-4J-Ch3" firstAttribute="trailing" secondItem="uHV-xm-xDG" secondAttribute="trailing" id="DKA-pj-fVH"/>
+                            <constraint firstItem="uHV-xm-xDG" firstAttribute="trailing" secondItem="65P-XA-kg8" secondAttribute="trailing" constant="16" id="KNG-Vh-Zf9"/>
+                            <constraint firstItem="E2p-4J-Ch3" firstAttribute="top" secondItem="65P-XA-kg8" secondAttribute="bottom" id="MvW-BB-q7K"/>
                             <constraint firstItem="E2p-4J-Ch3" firstAttribute="bottom" secondItem="uHV-xm-xDG" secondAttribute="bottom" id="Z5C-j4-biH"/>
                             <constraint firstItem="c4b-PR-Q5I" firstAttribute="top" secondItem="jYD-d3-uLE" secondAttribute="top" id="dLk-DN-SXB"/>
+                            <constraint firstItem="65P-XA-kg8" firstAttribute="leading" secondItem="uHV-xm-xDG" secondAttribute="leading" constant="16" id="e0i-Dw-RKU"/>
+                            <constraint firstItem="65P-XA-kg8" firstAttribute="top" secondItem="c4b-PR-Q5I" secondAttribute="bottom" id="eMw-R5-cKo"/>
                             <constraint firstItem="E2p-4J-Ch3" firstAttribute="leading" secondItem="uHV-xm-xDG" secondAttribute="leading" id="tfb-UQ-dh6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uHV-xm-xDG"/>
                     </view>
                     <connections>
                         <outlet property="categoryFilterButton" destination="c4b-PR-Q5I" id="fOe-oZ-8dw"/>
+                        <outlet property="categorySelectionLabel" destination="65P-XA-kg8" id="E8i-1X-DV3"/>
                         <outlet property="collectionView" destination="E2p-4J-Ch3" id="Azb-Pa-1Gm"/>
                         <segue destination="Daz-4Z-Xec" kind="presentation" identifier="presentTrendingFilter" id="iVN-9A-tOw"/>
                     </connections>
