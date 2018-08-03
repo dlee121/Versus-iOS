@@ -197,16 +197,13 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                 
                                 var pivPayload = "{\"ids\":["
                                 var pivIndex = 0
-                                var pivCount = 0
                                 for username in postAuthors {
                                     if username != "deleted" {
                                         if pivIndex == 0 {
                                             pivPayload.append("\""+username+"\"")
-                                            pivCount += 1
                                         }
                                         else {
                                             pivPayload.append(",\""+username+"\"")
-                                            pivCount += 1
                                         }
                                         pivIndex += 1
                                     }
@@ -214,7 +211,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                 
                                 pivPayload.append("]}")
                                 
-                                if pivCount > 0 {
+                                if pivIndex > 0 {
                                     self.apiClient.pivGet(a: "pis", b: pivPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                         if task.error != nil {
                                             DispatchQueue.main.async {

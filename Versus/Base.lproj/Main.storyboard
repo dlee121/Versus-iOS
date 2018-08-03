@@ -294,14 +294,14 @@
             <objects>
                 <viewController title="MainContainer" id="xww-b1-KkG" customClass="MCViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N47-mz-ht1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eud-v6-m3Q">
-                                <rect key="frame" x="0.0" y="110" width="375" height="557"/>
+                                <rect key="frame" x="0.0" y="110" width="375" height="508"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7N7-Oz-gna">
-                                <rect key="frame" x="250" y="525" width="94" height="59"/>
+                                <rect key="frame" x="250" y="486" width="94" height="55"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Log Out"/>
@@ -2001,6 +2001,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="sah-HD-YV8">
+                                <rect key="frame" x="177" y="40" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -2011,7 +2014,9 @@
                             <constraint firstItem="c4b-PR-Q5I" firstAttribute="top" secondItem="jYD-d3-uLE" secondAttribute="top" id="dLk-DN-SXB"/>
                             <constraint firstItem="65P-XA-kg8" firstAttribute="leading" secondItem="uHV-xm-xDG" secondAttribute="leading" constant="16" id="e0i-Dw-RKU"/>
                             <constraint firstItem="65P-XA-kg8" firstAttribute="top" secondItem="c4b-PR-Q5I" secondAttribute="bottom" id="eMw-R5-cKo"/>
+                            <constraint firstItem="sah-HD-YV8" firstAttribute="centerX" secondItem="jYD-d3-uLE" secondAttribute="centerX" id="lMl-1x-CEF"/>
                             <constraint firstItem="E2p-4J-Ch3" firstAttribute="leading" secondItem="uHV-xm-xDG" secondAttribute="leading" id="tfb-UQ-dh6"/>
+                            <constraint firstItem="sah-HD-YV8" firstAttribute="top" secondItem="65P-XA-kg8" secondAttribute="top" constant="8" id="uOG-Iy-QG2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uHV-xm-xDG"/>
                     </view>
@@ -2019,6 +2024,7 @@
                         <outlet property="categoryFilterButton" destination="c4b-PR-Q5I" id="fOe-oZ-8dw"/>
                         <outlet property="categorySelectionLabel" destination="65P-XA-kg8" id="E8i-1X-DV3"/>
                         <outlet property="collectionView" destination="E2p-4J-Ch3" id="Azb-Pa-1Gm"/>
+                        <outlet property="indicator" destination="sah-HD-YV8" id="DlL-Gq-Oek"/>
                         <segue destination="Daz-4Z-Xec" kind="presentation" identifier="presentTrendingFilter" id="iVN-9A-tOw"/>
                     </connections>
                 </viewController>
@@ -2433,7 +2439,6 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7Ds-I3-BLf"/>
         <segue reference="kmh-ur-Uym"/>
         <segue reference="XJc-pI-oXd"/>
         <segue reference="KDj-0G-JKZ"/>
