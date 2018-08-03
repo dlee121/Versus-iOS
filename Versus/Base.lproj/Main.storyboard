@@ -2002,7 +2002,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="sah-HD-YV8">
-                                <rect key="frame" x="177" y="40" width="20" height="20"/>
+                                <rect key="frame" x="177" y="28" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
@@ -2016,7 +2016,7 @@
                             <constraint firstItem="65P-XA-kg8" firstAttribute="top" secondItem="c4b-PR-Q5I" secondAttribute="bottom" id="eMw-R5-cKo"/>
                             <constraint firstItem="sah-HD-YV8" firstAttribute="centerX" secondItem="jYD-d3-uLE" secondAttribute="centerX" id="lMl-1x-CEF"/>
                             <constraint firstItem="E2p-4J-Ch3" firstAttribute="leading" secondItem="uHV-xm-xDG" secondAttribute="leading" id="tfb-UQ-dh6"/>
-                            <constraint firstItem="sah-HD-YV8" firstAttribute="top" secondItem="65P-XA-kg8" secondAttribute="top" constant="8" id="uOG-Iy-QG2"/>
+                            <constraint firstItem="sah-HD-YV8" firstAttribute="top" secondItem="uHV-xm-xDG" secondAttribute="top" constant="8" id="uOG-Iy-QG2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uHV-xm-xDG"/>
                     </view>
@@ -2082,7 +2082,7 @@
                                     <constraint firstAttribute="height" constant="44" id="bKV-GY-tqc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="X">
+                                <state key="normal" image="close">
                                     <color key="titleColor" white="0.2641872829861111" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -2122,9 +2122,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ruq-Np-VEh">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ruq-Np-VEh">
+                                <rect key="frame" x="0.0" y="32" width="375" height="635"/>
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pIu-hk-g9z">
                                     <size key="itemSize" width="343" height="340"/>
@@ -2331,17 +2330,54 @@
                                     <outlet property="delegate" destination="lS1-9Y-SPq" id="eQJ-zX-BCv"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iLK-eG-ZfW">
+                                <rect key="frame" x="8" y="0.0" width="176" height="32"/>
+                                <state key="normal" title="Filter by Category" image="arrow_dropdown_gray">
+                                    <color key="titleColor" white="0.29530164930000002" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="categoryFilterButtonTapped:" destination="lS1-9Y-SPq" eventType="touchUpInside" id="E4R-M9-zXD"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YZP-1S-AKS">
+                                <rect key="frame" x="16" y="32" width="56" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="GKM-av-S8y"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="fyn-hR-sWi">
+                                <rect key="frame" x="177" y="28" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Ruq-Np-VEh" firstAttribute="trailing" secondItem="UOa-te-9PA" secondAttribute="trailing" id="GUJ-KO-Dew"/>
+                            <constraint firstItem="YZP-1S-AKS" firstAttribute="top" secondItem="iLK-eG-ZfW" secondAttribute="bottom" id="MgR-qD-rHO"/>
+                            <constraint firstItem="Ruq-Np-VEh" firstAttribute="leading" secondItem="UOa-te-9PA" secondAttribute="leading" id="UK9-VA-lBX"/>
+                            <constraint firstItem="YZP-1S-AKS" firstAttribute="leading" secondItem="UOa-te-9PA" secondAttribute="leading" constant="16" id="b2m-RQ-6Jc"/>
+                            <constraint firstItem="fyn-hR-sWi" firstAttribute="centerX" secondItem="Nt9-bB-Pfk" secondAttribute="centerX" id="c3C-Ld-vkP"/>
+                            <constraint firstItem="Ruq-Np-VEh" firstAttribute="bottom" secondItem="UOa-te-9PA" secondAttribute="bottom" id="ce1-KI-2WA"/>
+                            <constraint firstItem="fyn-hR-sWi" firstAttribute="top" secondItem="UOa-te-9PA" secondAttribute="top" constant="8" id="hWK-Vt-9v6"/>
+                            <constraint firstItem="Ruq-Np-VEh" firstAttribute="top" secondItem="YZP-1S-AKS" secondAttribute="bottom" id="ojq-hz-UUH"/>
+                            <constraint firstItem="iLK-eG-ZfW" firstAttribute="top" secondItem="Nt9-bB-Pfk" secondAttribute="top" id="oo5-78-e63"/>
+                            <constraint firstItem="iLK-eG-ZfW" firstAttribute="leading" secondItem="UOa-te-9PA" secondAttribute="leading" constant="8" id="y2h-nb-fIX"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="UOa-te-9PA"/>
                     </view>
                     <connections>
+                        <outlet property="categoryFilterButton" destination="iLK-eG-ZfW" id="F2P-jz-37K"/>
+                        <outlet property="categorySelectionLabel" destination="YZP-1S-AKS" id="bAq-Bl-AF5"/>
                         <outlet property="collectionView" destination="Ruq-Np-VEh" id="Qje-HG-9RJ"/>
+                        <outlet property="indicator" destination="fyn-hR-sWi" id="R8H-mf-TcZ"/>
+                        <segue destination="Daz-4Z-Xec" kind="presentation" identifier="presentNewFilter" id="nft-7p-rrg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MDX-cF-LRm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4710" y="699"/>
+            <point key="canvasLocation" x="4709.6000000000004" y="698.5007496251875"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="zuc-hH-N7J">
@@ -2425,6 +2461,7 @@
     <resources>
         <image name="arrow_dropdown_gray" width="32" height="32"/>
         <image name="chevron" width="42" height="42"/>
+        <image name="close" width="12" height="12"/>
         <image name="crownBronze" width="32" height="16"/>
         <image name="crownGold" width="32" height="16"/>
         <image name="crownSilver" width="32" height="16"/>
@@ -2440,6 +2477,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kmh-ur-Uym"/>
+        <segue reference="nft-7p-rrg"/>
         <segue reference="XJc-pI-oXd"/>
         <segue reference="KDj-0G-JKZ"/>
         <segue reference="onp-lO-nwi"/>

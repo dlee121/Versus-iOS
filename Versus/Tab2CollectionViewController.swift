@@ -70,6 +70,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     }
     
     func trendingQuery(){
+        //print("trending query started")
         DispatchQueue.main.async {
             self.indicator.startAnimating()
         }

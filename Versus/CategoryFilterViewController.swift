@@ -172,18 +172,20 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
             tab2VC?.categorySelection = "\(indexPath.row)"
             tab2VC?.categorySelectionLabel.text = ""
             tab2VC?.categorySelectionLabel.setSelectedCategoryLabel(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 30, suffix: getCategoryName(categoryInt: indexPath.row))
-            //tab2VC?.categorySelectionLabel.addImage(imageName: "close", imageHeight: 14)
             tab2VC?.refresh()
             
         case 3:
-            //we'll copy everything over from Tab2 once we're done there and replace tab2 names with tab3 names
             let tab3VC = originVC as? Tab3CollectionViewController
-            //tab3VC?.categorySelection = "\(indexPath.row)"
-            //call function to refresh New page
+            tab3VC?.categorySelection = "\(indexPath.row)"
+            tab3VC?.categorySelectionLabel.text = ""
+            tab3VC?.categorySelectionLabel.setSelectedCategoryLabel(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 30, suffix: getCategoryName(categoryInt: indexPath.row))
+            tab3VC?.refresh()
             
         default:
             let tab2VC = originVC as? Tab2CollectionViewController
             tab2VC?.categorySelection = "\(indexPath.row)"
+            tab2VC?.categorySelectionLabel.text = ""
+            tab2VC?.categorySelectionLabel.setSelectedCategoryLabel(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 30, suffix: getCategoryName(categoryInt: indexPath.row))
             tab2VC?.refresh()
         }
         

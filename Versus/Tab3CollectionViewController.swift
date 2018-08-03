@@ -16,6 +16,11 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
     
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var categoryFilterButton: UIButton!
+    @IBOutlet weak var categorySelectionLabel: UILabel!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
+    
     var fromIndex = 0
     let DEFAULT = 0
     let S3 = 1
@@ -28,6 +33,12 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
     var screenWidth : CGFloat!
     var textsVSCHeight : CGFloat!
     
+    var prepareCategoryFilter = false
+    var categorySelection : String? = nil
+    var nowLoading = false
+    var loadThreshold = 8
+    var retrievalSize = 16
+    
     
     
     override func viewDidLoad() {
@@ -35,22 +46,48 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
         screenWidth = self.view.frame.size.width
         textsVSCHeight = screenWidth / 1.6
         
+        DispatchQueue.main.async {
+            let labelWidth = self.categoryFilterButton.titleLabel!.frame.size.width
+            let imageWidth = self.categoryFilterButton.imageView!.frame.size.width
+            self.categoryFilterButton.titleEdgeInsets = UIEdgeInsetsMake(0.0,-imageWidth,0.0,imageWidth)
+            self.categoryFilterButton.imageEdgeInsets = UIEdgeInsetsMake(0.0,labelWidth,0.0,-labelWidth)
+        }
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(Tab3CollectionViewController.resetCategorySelection))
+        categorySelectionLabel.addGestureRecognizer(tap)
+        
+        if posts.count == 0 {
+            newQuery()
+        }
+        
         // Do any additional setup after loading the view.
     }
     
+    func refresh(){
+        fromIndex = 0
+        posts.removeAll()
+        collectionView.reloadData()
+        newQuery()
+    }
     
-    func categoryQuery(fromIndex : Int, category : Int){
-        self.apiClient.postslistGet(c: "\(category)", d: "t", a: "ct", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+    
+    func newQuery(){
+        //print("new query started")
+        DispatchQueue.main.async {
+            self.indicator.startAnimating()
+        }
+        
+        self.apiClient.postslistGet(c: categorySelection, d: nil, a: "nw", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
                 }
             }
             else {
-                let results = task.result?.hits?.hits
+                let queryResults = task.result?.hits?.hits
                 var pivString = "{\"ids\":["
                 var index = 0
-                for item in results! {
+                for item in queryResults! {
                     self.posts.append(PostObject(itemSource: item.source!, id: item.id!))
                     
                     if item.source?.a != "deleted" {
@@ -62,40 +99,79 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
                         }
                         index += 1
                     }
-                    
                 }
                 pivString += "]}"
                 
                 print(pivString)
-                
-                self.apiClient.pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                    if task.error != nil {
+                if index > 0 {
+                    self.apiClient.pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        if task.error != nil {
+                            DispatchQueue.main.async {
+                                print(task.error!)
+                            }
+                        }
+                        
+                        if let results = task.result?.docs {
+                            for item in results {
+                                self.profileImageVersions[item.id!] = item.source?.pi?.intValue
+                            }
+                            
+                            if self.fromIndex == 0 {
+                                DispatchQueue.main.async {
+                                    self.collectionView.reloadData()
+                                    self.indicator.stopAnimating()
+                                }
+                            }
+                            else {
+                                DispatchQueue.main.async {
+                                    var indexPaths = [IndexPath]()
+                                    for i in 0...queryResults!.count-1 {
+                                        indexPaths.append(IndexPath(row: self.fromIndex+i, section: 0))
+                                    }
+                                    
+                                    self.collectionView.insertItems(at: indexPaths)
+                                    
+                                    self.indicator.stopAnimating()
+                                }
+                            }
+                            if queryResults!.count < self.retrievalSize {
+                                self.nowLoading = true
+                            }
+                            else {
+                                self.nowLoading = false
+                            }
+                            
+                        }
+                        
+                        return nil
+                    }
+                }
+                else {
+                    if self.fromIndex == 0 {
                         DispatchQueue.main.async {
-                            print(task.error!)
+                            self.collectionView.reloadData()
+                            self.indicator.stopAnimating()
                         }
                     }
-                    
-                    if let results = task.result?.docs {
-                        for item in results {
-                            self.profileImageVersions[item.id!] = item.source?.pi?.intValue
-                        }
-                        
-                        if self.fromIndex == 0 {
-                            DispatchQueue.main.async {
-                                self.collectionView.reloadData()
+                    else {
+                        DispatchQueue.main.async {
+                            var indexPaths = [IndexPath]()
+                            for i in 0...queryResults!.count-1 {
+                                indexPaths.append(IndexPath(row: self.fromIndex+i, section: 0))
                             }
+                            
+                            self.collectionView.insertItems(at: indexPaths)
+                            
+                            self.indicator.stopAnimating()
                         }
-                        else {
-                            DispatchQueue.main.async {
-                                let newIndexPath = IndexPath(row: fromIndex, section: 0)
-                                self.collectionView.insertItems(at: [newIndexPath])
-                            }
-                        }
-                        
-                        self.fromIndex = results.count - 1
+                    }
+                    if queryResults!.count < self.retrievalSize {
+                        self.nowLoading = true
+                    }
+                    else {
+                        self.nowLoading = false
                     }
                     
-                    return nil
                 }
                 
                 
@@ -124,7 +200,7 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("cellForItemAt called for \(indexPath.row)")
+        
         let currentPost = posts[indexPath.row]
         
         //set profile image version for the post if one exists
@@ -148,6 +224,15 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
         }
         
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let lastElement = posts.count - 1 - loadThreshold
+        if !nowLoading && indexPath.row == lastElement {
+            nowLoading = true
+            fromIndex = posts.count
+            newQuery()
+        }
     }
     
     
@@ -286,6 +371,32 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
         print("hiho executed prefetch")
         
     }
+    
+    @IBAction func categoryFilterButtonTapped(_ sender: UIButton) {
+        prepareCategoryFilter = true
+        performSegue(withIdentifier: "presentNewFilter", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if prepareCategoryFilter {
+            guard let categoriesVC = segue.destination as? CategoryFilterViewController else {return}
+            categoriesVC.tab2Or3 = 3
+            categoriesVC.originVC = self
+        }
+        else { //this is for segue to PostPage. Be sure to set prepareCategoryFilter = false to access this block
+            
+            //TODO: handle preparation for post item click here
+        }
+        
+    }
+    
+    @objc
+    func resetCategorySelection(sender:UITapGestureRecognizer) {
+        categorySelection = nil
+        categorySelectionLabel.text = ""
+        refresh()
+    }
+    
     
 }
 
