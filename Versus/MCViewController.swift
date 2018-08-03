@@ -20,6 +20,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         self.loadDesign()
         super.viewDidLoad()
         searchViewController = storyboard!.instantiateViewController(withIdentifier: "searchViewController") as? SearchViewController
+        searchViewController.mainContainer = self
         // Do any additional setup after loading the view.
         self.searchController = UISearchController(searchResultsController:  searchViewController)
         
@@ -99,6 +100,11 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         UserDefaults.standard.removeObject(forKey: "KEY_IS_NATIVE")
         try! Auth.auth().signOut()
         performSegue(withIdentifier: "logOutToStart", sender: self)
+    }
+    
+    func goToPostPageRoot(){
+        performSegue(withIdentifier: "mainToRoot", sender: self)
+        
     }
     
     /*

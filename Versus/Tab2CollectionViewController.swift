@@ -42,6 +42,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         screenWidth = self.view.frame.size.width
         textsVSCHeight = screenWidth / 1.6
         
@@ -231,6 +232,11 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
             fromIndex = posts.count
             trendingQuery()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let mainVC = parent as! MCViewController
+        mainVC.goToPostPageRoot()
     }
     
     

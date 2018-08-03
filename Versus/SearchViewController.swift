@@ -23,11 +23,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     var retrievalSize = 16
     var loadThreshold = 6
     var currentInput : String!
+    var mainContainer : MCViewController!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
 
@@ -166,11 +167,15 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        mainContainer.goToPostPageRoot()
+        //performSegue(withIdentifier: "searchToRoot", sender: self)
+    }
+    
+    
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
         searchThis(input: searchText)
-        
-        
     }
 
     /*
