@@ -106,6 +106,20 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if currentUsername == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+            let meVC = parent as! MeViewController
+            meVC.handleCommentsHistoryClick()
+        }
+        else {
+            let profileVC = parent as! ProfileViewController
+            profileVC.handleCommentsHistoryClick()
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     /*
      // MARK: - Navigation
      

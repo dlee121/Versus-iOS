@@ -33,9 +33,11 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     
     var followingThisUser = "0" //0 by default, f if this is my follower, g if I'm following them, and h if both
     
-    var fORg = 0 //0 = f, 1 = g, for segue to FGH page from followers/followings tap
+    var fgcp = 0 //0 = f, 1 = g, c = 2, p = 3
     let f = 0
     let g = 1
+    let c = 2
+    let p = 3
     
     override func viewDidLoad() {
         self.loadDesign()
@@ -276,27 +278,47 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     }
     
     @IBAction func followersTapped(_ sender: UIButton) {
-        fORg = f
+        fgcp = f
         performSegue(withIdentifier: "profileToFGH", sender: self)
     }
     
     @IBAction func followingsTapped(_ sender: UIButton) {
-        fORg = g
+        fgcp = g
         performSegue(withIdentifier: "profileToFGH", sender: self)
     }
     
+    func handleCommentsHistoryClick(){
+        fgcp = c
+        performSegue(withIdentifier: "profileToRoot", sender: self)
+    }
+    
+    func handlePostsHistoryClick(){
+        fgcp = p
+        performSegue(withIdentifier: "profileToRoot", sender: self)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let fghVC = segue.destination as? FGHViewController else {return}
-        let view = fghVC.view
-        fghVC.fORg = fORg
         
-        if fORg == f {
-            //combine f and h list then sort them alphabetically
+        
+        switch fgcp {
+        case f:
+            guard let fghVC = segue.destination as? FGHViewController else {return}
+            let view = fghVC.view //necessary for loading the view
+            fghVC.fORg = fgcp
             fghVC.setUpFPage(followers: combineLists(list1: hList, list2: fList))
-        }
-        else {
-            //combine g and h list then sort them alphabetically
+        case g:
+            guard let fghVC = segue.destination as? FGHViewController else {return}
+            let view = fghVC.view //necessary for loading the view
+            fghVC.fORg = fgcp
             fghVC.setUpFPage(followers: combineLists(list1: hList, list2: gList))
+        case c:
+            //set up comments history item click segue
+            return
+        case p:
+            //set up posts history item click segue
+            return
+        default:
+            return
         }
         
     }

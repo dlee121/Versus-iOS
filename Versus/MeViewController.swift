@@ -28,9 +28,11 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     var hList = [String]()
     var ref: DatabaseReference!
     
-    var fORg = 0 //0 = f, 1 = g, for segue to FGH page from followers/followings tap
+    var fgcp = 0 //0 = f, 1 = g, c = 2, p = 3
     let f = 0
     let g = 1
+    let c = 2
+    let p = 3
     
     override func viewDidLoad() {
         print("viewDidLoad called")
@@ -50,7 +52,6 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     }
 
     override func viewWillAppear(_ animated: Bool){
-        print("viewWillAppear called")
         super.viewWillAppear(animated)
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         let pi = UserDefaults.standard.integer(forKey: "KEY_PI")
@@ -233,25 +234,47 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     
     
     @IBAction func followersTapped(_ sender: UIButton) {
-        fORg = f
+        fgcp = f
         performSegue(withIdentifier: "meToFGH", sender: self)
     }
     
     @IBAction func followingsTapped(_ sender: UIButton) {
-        fORg = g
+        fgcp = g
         performSegue(withIdentifier: "meToFGH", sender: self)
     }
     
+    func handleCommentsHistoryClick(){
+        fgcp = c
+        performSegue(withIdentifier: "meToRoot", sender: self)
+    }
+    
+    func handlePostsHistoryClick(){
+        fgcp = p
+        performSegue(withIdentifier: "meToRoot", sender: self)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let fghVC = segue.destination as? FGHViewController else {return}
-        let view = fghVC.view
-        if fORg == f {
-            //combine f and h list then sort them alphabetically
+        
+        
+        switch fgcp {
+        case f:
+            guard let fghVC = segue.destination as? FGHViewController else {return}
+            let view = fghVC.view //necessary for loading the view
+            fghVC.fORg = fgcp
             fghVC.setUpFPage(followers: combineLists(list1: hList, list2: fList))
-        }
-        else {
-            //combine g and h list then sort them alphabetically
+        case g:
+            guard let fghVC = segue.destination as? FGHViewController else {return}
+            let view = fghVC.view //necessary for loading the view
+            fghVC.fORg = fgcp
             fghVC.setUpFPage(followers: combineLists(list1: hList, list2: gList))
+        case c:
+            //set up comments history item click segue
+            return
+        case p:
+            //set up posts history item click segue
+            return
+        default:
+            return
         }
         
     }

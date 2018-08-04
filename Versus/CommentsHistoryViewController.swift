@@ -189,14 +189,19 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
-    /*
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if(indexPath.row == 0){
-            return CGFloat(116.0)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if currentUsername == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+            let meVC = parent as! MeViewController
+            meVC.handleCommentsHistoryClick()
         }
-        return CGFloat(102.0)
+        else {
+            let profileVC = parent as! ProfileViewController
+            profileVC.handleCommentsHistoryClick()
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    */
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentsHistoryItem", for: indexPath) as? CommentsHistoryTableViewCell
