@@ -56,6 +56,10 @@
 		70CB9E47210FE4D800D86E37 /* Array+Shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */; };
 		70CB9E492110020500D86E37 /* MyCircleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */; };
 		70CB9E4B2112B33C00D86E37 /* CategoryFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E4A2112B33C00D86E37 /* CategoryFilterViewController.swift */; };
+		70CB9E4D21154DD300D86E37 /* RootPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E4C21154DD300D86E37 /* RootPageViewController.swift */; };
+		70CB9E4F211551BC00D86E37 /* PostCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E4E211551BC00D86E37 /* PostCardTableViewCell.swift */; };
+		70CB9E51211552D200D86E37 /* CommentCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E50211552D200D86E37 /* CommentCardTableViewCell.swift */; };
+		70CB9E532115671700D86E37 /* VSCNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E522115671700D86E37 /* VSCNode.swift */; };
 		70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */; };
 		70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF520E6944B0067DF08 /* UsernameViewController.swift */; };
 		70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF720E694560067DF08 /* PasswordViewController.swift */; };
@@ -172,6 +176,10 @@
 		70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Shuffle.swift"; sourceTree = "<group>"; };
 		70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleTableViewCell.swift; sourceTree = "<group>"; };
 		70CB9E4A2112B33C00D86E37 /* CategoryFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterViewController.swift; sourceTree = "<group>"; };
+		70CB9E4C21154DD300D86E37 /* RootPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPageViewController.swift; sourceTree = "<group>"; };
+		70CB9E4E211551BC00D86E37 /* PostCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCardTableViewCell.swift; sourceTree = "<group>"; };
+		70CB9E50211552D200D86E37 /* CommentCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCardTableViewCell.swift; sourceTree = "<group>"; };
+		70CB9E522115671700D86E37 /* VSCNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSCNode.swift; sourceTree = "<group>"; };
 		70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewController.swift; sourceTree = "<group>"; };
 		70E80BF520E6944B0067DF08 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
 		70E80BF720E694560067DF08 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
@@ -308,6 +316,7 @@
 				706F89EC2107EF1A00A78EFB /* PostsHistoryViewController.swift */,
 				70036ED1210ABA96000BE8E9 /* FGHViewController.swift */,
 				70CB9E4A2112B33C00D86E37 /* CategoryFilterViewController.swift */,
+				70CB9E4C21154DD300D86E37 /* RootPageViewController.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -328,6 +337,8 @@
 				70036ED3210ABBCF000BE8E9 /* FGHTableViewCell.swift */,
 				70CB9E44210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift */,
 				70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */,
+				70CB9E4E211551BC00D86E37 /* PostCardTableViewCell.swift */,
+				70CB9E50211552D200D86E37 /* CommentCardTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -353,6 +364,7 @@
 				70B9A7E820EEDACB00C06709 /* PostObject.swift */,
 				706F89F021080D8F00A78EFB /* VSComment.swift */,
 				700DB5CA21081CF5008E546A /* PostInfo.swift */,
+				70CB9E522115671700D86E37 /* VSCNode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -574,6 +586,7 @@
 				70E80CE020E6DB570067DF08 /* VSPostModel.swift in Sources */,
 				70E80CAC20E6DB570067DF08 /* VSPIVModel_docs_item.swift in Sources */,
 				70E80CC220E6DB570067DF08 /* VSAIModel__shards.swift in Sources */,
+				70CB9E532115671700D86E37 /* VSCNode.swift in Sources */,
 				7056672F2101564D00CB87AD /* CategoriesTableViewCell.swift in Sources */,
 				70CB9E4B2112B33C00D86E37 /* CategoryFilterViewController.swift in Sources */,
 				70CB9E492110020500D86E37 /* MyCircleTableViewCell.swift in Sources */,
@@ -618,16 +631,19 @@
 				701C8CC220F8C4F00072AECD /* LeaderboardViewController.swift in Sources */,
 				70B9A7EF20EF12E100C06709 /* PostTextCollectionViewCell.swift in Sources */,
 				70E80CBE20E6DB570067DF08 /* VSAIModel_hits_hits_item__source.swift in Sources */,
+				70CB9E51211552D200D86E37 /* CommentCardTableViewCell.swift in Sources */,
 				70E80CB920E6DB570067DF08 /* VSLeaderboardModel__shards.swift in Sources */,
 				70036ED4210ABBCF000BE8E9 /* FGHTableViewCell.swift in Sources */,
 				70E80CD220E6DB570067DF08 /* VSPostsListModel.swift in Sources */,
 				702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */,
 				70E80CD720E6DB570067DF08 /* VSCGCModel.swift in Sources */,
 				700DB5CB21081CF5008E546A /* PostInfo.swift in Sources */,
+				70CB9E4F211551BC00D86E37 /* PostCardTableViewCell.swift in Sources */,
 				70E80CCA20E6DB570067DF08 /* VSPostsListModel_hits_hits_item__source.swift in Sources */,
 				706F89E62106E38800A78EFB /* VSPostQMultiModel_docs_item.swift in Sources */,
 				706F89EF21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift in Sources */,
 				70CB9E47210FE4D800D86E37 /* Array+Shuffle.swift in Sources */,
+				70CB9E4D21154DD300D86E37 /* RootPageViewController.swift in Sources */,
 				70E80CB720E6DB570067DF08 /* VSUserGetModel.swift in Sources */,
 				70E80CC720E6DB570067DF08 /* VSCommentEditModel_doc.swift in Sources */,
 				706F89F32108197C00A78EFB /* ChildVCFunctionProtocol.swift in Sources */,

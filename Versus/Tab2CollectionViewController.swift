@@ -236,7 +236,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let mainVC = parent as! MCViewController
-        mainVC.goToPostPageRoot()
+        mainVC.goToPostPageRoot(post: posts[indexPath.row])
     }
     
     

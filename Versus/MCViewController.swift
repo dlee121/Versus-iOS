@@ -14,6 +14,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     
     var searchController : UISearchController!
     var searchViewController : SearchViewController!
+    var selectedPost : PostObject!
     
     
     override func viewDidLoad() {
@@ -107,14 +108,16 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func goToPostPageRoot(post : PostObject){
+        selectedPost = post
+        performSegue(withIdentifier: "mainToRoot", sender: self)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let rootVC = segue.destination as? RootPageViewController else {return}
+        let rootView = rootVC.view //load the view before segue
+        rootVC.setUpRootPage(post: selectedPost)
+    }
     
 }
