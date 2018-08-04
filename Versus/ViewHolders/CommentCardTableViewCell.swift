@@ -18,6 +18,7 @@ class CommentCardTableViewCell: UITableViewCell {
     @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var brokenheartButton: UIButton!
     
+    @IBOutlet weak var leftMargin: NSLayoutConstraint!
     
 
     func setCell(comment : VSComment){
@@ -26,6 +27,17 @@ class CommentCardTableViewCell: UITableViewCell {
         content.text = comment.content
         hearts.text = "\(comment.upvotes)"
         brokenhearts.text = "\(comment.downvotes)"
+        
+    }
+    
+    func setCell(comment : VSComment, indent : CGFloat){
+        author.text = comment.author
+        time.text = getTimeString(time: comment.time)
+        content.text = comment.content
+        hearts.text = "\(comment.upvotes)"
+        brokenhearts.text = "\(comment.downvotes)"
+        
+        leftMargin.constant = indent * 48
         
     }
 

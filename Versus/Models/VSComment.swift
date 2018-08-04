@@ -12,7 +12,8 @@ class VSComment {
     
     var parent_id, post_id, time, comment_id, author, content, root : String
     var topmedal, upvotes, downvotes, comment_influence : Int
-    var nestedLevel, uservote, currentMedal, child_count : Int?
+    var uservote, currentMedal, child_count : Int?
+    var nestedLevel : CGFloat?
     
     let NOVOTE = 0
     let UPVOTE = 1

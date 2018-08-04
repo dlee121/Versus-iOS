@@ -435,6 +435,7 @@
                                             <outlet property="content" destination="AXi-bI-VON" id="zFy-ro-L5Q"/>
                                             <outlet property="heartButton" destination="nun-Ao-p1T" id="TJ5-Zk-0cq"/>
                                             <outlet property="hearts" destination="6Vd-rf-611" id="hfR-4q-Ro2"/>
+                                            <outlet property="leftMargin" destination="E9q-40-kB9" id="nLN-HS-tFQ"/>
                                             <outlet property="time" destination="GMm-O3-fqC" id="5rY-X0-S3y"/>
                                         </connections>
                                     </tableViewCell>

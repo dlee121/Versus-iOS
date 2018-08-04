@@ -12,6 +12,7 @@ import UIKit
 class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    
     var currentPost : PostObject!
     var comments = [VSComment]()
     let apiClient = VSVersusAPIClient.default()
@@ -54,6 +55,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     var cqPayloadIndex = 0
                     for item in rootQueryResults {
                         let comment = VSComment(itemSource: item.source!, id: item.id!)
+                        comment.nestedLevel = 0
                         self.rootComments.append(comment)
                         
                         //set up node structure with current root comment
@@ -105,7 +107,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                         for cqCommentItem in cqResponseItem.hits!.hits! {
                                             
                                             let childComment = VSComment(itemSource: cqCommentItem.source!, id: cqCommentItem.id!)
-                                            
+                                            childComment.nestedLevel = 1
                                             self.childComments.append(childComment)
                                             
                                             //set up node structure with current child comment
@@ -158,7 +160,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                             
                                                             
                                                             let grandchildComment = VSComment(itemSource: gcqCommentItem.source!, id: gcqCommentItem.id!)
-                                                            
+                                                            grandchildComment.nestedLevel = 2
                                                             self.grandchildComments.append(grandchildComment)
                                                             
                                                             if prevNode == nil {
@@ -270,7 +272,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
             let comment = comments[indexPath.row]
-            cell!.setCell(comment: comment)
+            cell!.setCell(comment: comment, indent: comment.nestedLevel!)
             return cell!
             
         }
