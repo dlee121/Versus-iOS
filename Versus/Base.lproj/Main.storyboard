@@ -347,7 +347,6 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="XEl-r6-TMN" secondAttribute="bottom" constant="-11" id="waa-xt-1kx"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.96078431372549022" green="0.46317421962511335" blue="0.40161956350368877" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="bluename" destination="S1M-Nx-6fL" id="pMz-tN-C0E"/>
                                             <outlet property="question" destination="F6b-q4-EKr" id="Uz9-rO-M2K"/>
@@ -406,6 +405,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="UQd-Mi-JZv" firstAttribute="top" secondItem="Zsi-vD-uC0" secondAttribute="topMargin" id="2ip-C3-lyV"/>
+                                                <constraint firstItem="nun-Ao-p1T" firstAttribute="leading" secondItem="UQd-Mi-JZv" secondAttribute="leading" id="58X-RI-xVH"/>
                                                 <constraint firstItem="GMm-O3-fqC" firstAttribute="top" secondItem="Zsi-vD-uC0" secondAttribute="topMargin" id="Bqn-Fx-9Gw"/>
                                                 <constraint firstItem="6Vd-rf-611" firstAttribute="leading" secondItem="nun-Ao-p1T" secondAttribute="trailing" id="CpD-FO-I5f"/>
                                                 <constraint firstItem="UQd-Mi-JZv" firstAttribute="leading" secondItem="Zsi-vD-uC0" secondAttribute="leadingMargin" id="E9q-40-kB9"/>
@@ -417,7 +417,7 @@
                                                 <constraint firstItem="8Mi-NA-HWN" firstAttribute="leading" secondItem="6Vd-rf-611" secondAttribute="trailing" constant="8" id="VOx-fp-g93"/>
                                                 <constraint firstItem="6Vd-rf-611" firstAttribute="bottom" secondItem="nun-Ao-p1T" secondAttribute="bottom" id="W0P-YV-GgR"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="nun-Ao-p1T" secondAttribute="bottom" constant="8" id="Y0E-4N-ZCq"/>
-                                                <constraint firstItem="AXi-bI-VON" firstAttribute="leading" secondItem="Zsi-vD-uC0" secondAttribute="leadingMargin" id="awL-k1-WIs"/>
+                                                <constraint firstItem="AXi-bI-VON" firstAttribute="leading" secondItem="UQd-Mi-JZv" secondAttribute="leading" id="ZEB-Su-Zpd"/>
                                                 <constraint firstItem="xZQ-ib-APf" firstAttribute="top" secondItem="0sC-5A-CsB" secondAttribute="top" id="grB-Sf-bwV"/>
                                                 <constraint firstItem="0sC-5A-CsB" firstAttribute="top" secondItem="8Mi-NA-HWN" secondAttribute="top" id="hNF-43-2tn"/>
                                                 <constraint firstItem="8Mi-NA-HWN" firstAttribute="bottom" secondItem="6Vd-rf-611" secondAttribute="bottom" id="i0H-cJ-B1D"/>
@@ -425,11 +425,9 @@
                                                 <constraint firstItem="0sC-5A-CsB" firstAttribute="bottom" secondItem="8Mi-NA-HWN" secondAttribute="bottom" id="inj-F2-qZK"/>
                                                 <constraint firstItem="nun-Ao-p1T" firstAttribute="top" secondItem="AXi-bI-VON" secondAttribute="bottom" constant="8" id="jNa-ci-zfY"/>
                                                 <constraint firstItem="6Vd-rf-611" firstAttribute="top" secondItem="nun-Ao-p1T" secondAttribute="top" id="n10-Td-pfj"/>
-                                                <constraint firstItem="nun-Ao-p1T" firstAttribute="leading" secondItem="Zsi-vD-uC0" secondAttribute="leadingMargin" id="qyp-Bb-hDk"/>
                                                 <constraint firstAttribute="trailing" secondItem="xZQ-ib-APf" secondAttribute="trailing" constant="8" id="yCa-x0-cVh"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.53690952575824125" green="0.96078431372549022" blue="0.41327256636344045" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="author" destination="UQd-Mi-JZv" id="E2J-jv-NY2"/>
                                             <outlet property="brokenheartButton" destination="8Mi-NA-HWN" id="WJ7-7i-0cx"/>

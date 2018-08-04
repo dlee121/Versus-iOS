@@ -50,9 +50,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 if let rootQueryResults = task.result?.hits?.hits {
                     var rootIndex = 0
                     var prevNode : VSCNode?
+                    var cqPayload = ""
+                    var cqPayloadIndex = 0
                     for item in rootQueryResults {
                         let comment = VSComment(itemSource: item.source!, id: item.id!)
                         self.rootComments.append(comment)
+                        
+                        //set up node structure with current root comment
                         if rootIndex == 0 {
                             prevNode = VSCNode(comment: comment)
                             self.nodeMap[comment.comment_id] = prevNode
@@ -65,20 +69,19 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         }
                         
                         rootIndex += 1
-                    }
-                    if !self.rootComments.isEmpty {
-                        var cqPayload = ""
-                        var cqPayloadIndex = 0
-                        for root in self.rootComments { //building payload for child comments query
-                            if cqPayloadIndex == 0 {
-                                cqPayload.append(contentsOf: root.comment_id)
-                            }
-                            else {
-                                cqPayload.append(contentsOf: ","+root.comment_id)
-                            }
-                            
-                            cqPayloadIndex += 1
+                        
+                        //build payload for child comment query
+                        if cqPayloadIndex == 0 {
+                            cqPayload.append(comment.comment_id)
                         }
+                        else {
+                            cqPayload.append(","+comment.comment_id)
+                        }
+                        
+                        cqPayloadIndex += 1
+                    }
+                    
+                    if cqPayloadIndex > 0 {
                         
                         //child comments query
                         self.apiClient.cgcGet(a: "cgc", b: cqPayload).continueWith(block:) {(cqTask: AWSTask) -> AnyObject? in
@@ -90,6 +93,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             else {
                                 if let cqResponses = cqTask.result?.responses {
                                     var rIndex = 0
+                                    var gcqPayload = ""
+                                    var gcqPayloadIndex = 0
+                                    
                                     for cqResponseItem in cqResponses {
                                         let cqHitsObject = cqResponseItem.hits
                                         let currentRoot = self.rootComments[rIndex]
@@ -102,6 +108,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                             
                                             self.childComments.append(childComment)
                                             
+                                            //set up node structure with current child comment
                                             if prevNode == nil {
                                                 prevNode = VSCNode(comment: childComment)
                                                 rootNode?.firstChild = prevNode
@@ -114,23 +121,22 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                 currNode.headSibling = prevNode
                                                 self.nodeMap[childComment.comment_id] = currNode
                                             }
+                                            
+                                            //build payload for grandchild query
+                                            if gcqPayloadIndex == 0 {
+                                                gcqPayload.append(childComment.comment_id)
+                                            }
+                                            else {
+                                                gcqPayload.append(","+childComment.comment_id)
+                                            }
+                                            
+                                            gcqPayloadIndex += 1
+                                            
                                         }
                                         rIndex += 1
                                     }
                                     
-                                    if !self.childComments.isEmpty {
-                                        var gcqPayload = ""
-                                        var gcqPayloadIndex = 0
-                                        for child in self.childComments { //building payload for grandchild comments query
-                                            if gcqPayloadIndex == 0 {
-                                                gcqPayload.append(contentsOf: child.comment_id)
-                                            }
-                                            else {
-                                                gcqPayload.append(contentsOf: ","+child.comment_id)
-                                            }
-                                            
-                                            gcqPayloadIndex += 1
-                                        }
+                                    if gcqPayloadIndex > 0 {
                                         
                                         //grandchild comments query
                                         self.apiClient.cgcGet(a: "cgc", b: gcqPayload).continueWith(block:) {(gcqTask: AWSTask) -> AnyObject? in
@@ -174,6 +180,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                     
                                                 }
                                                 
+                                                //sets the comments list for tableView using the nodeMap
                                                 self.setComments()
                                             }
                                             return nil
@@ -182,16 +189,19 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                         
                                         
                                     }
-                                    
-                                    
-                                    
+                                    else { //no child comments
+                                        self.setComments()
+                                    }
                                     
                                 }
                             }
                             return nil
                         }
-                        
-                        
+                    }
+                    else { //no root comments
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
                         
                     }
                     
