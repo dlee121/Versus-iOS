@@ -106,19 +106,83 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                 prevNode = VSCNode(comment: childComment)
                                                 rootNode?.firstChild = prevNode
                                                 prevNode?.parent = rootNode
+                                                self.nodeMap[childComment.comment_id] = prevNode
                                             }
                                             else {
                                                 let currNode = VSCNode(comment: childComment)
                                                 prevNode?.tailSibling = currNode
                                                 currNode.headSibling = prevNode
+                                                self.nodeMap[childComment.comment_id] = currNode
                                             }
                                         }
                                         rIndex += 1
                                     }
                                     
+                                    if !self.childComments.isEmpty {
+                                        var gcqPayload = ""
+                                        var gcqPayloadIndex = 0
+                                        for child in self.childComments { //building payload for grandchild comments query
+                                            if gcqPayloadIndex == 0 {
+                                                gcqPayload.append(contentsOf: child.comment_id)
+                                            }
+                                            else {
+                                                gcqPayload.append(contentsOf: ","+child.comment_id)
+                                            }
+                                            
+                                            gcqPayloadIndex += 1
+                                        }
+                                        
+                                        //grandchild comments query
+                                        self.apiClient.cgcGet(a: "cgc", b: gcqPayload).continueWith(block:) {(gcqTask: AWSTask) -> AnyObject? in
+                                            if gcqTask.error != nil {
+                                                DispatchQueue.main.async {
+                                                    print(gcqTask.error!)
+                                                }
+                                            }
+                                            else {
+                                                if let gcqResponses = gcqTask.result?.responses {
+                                                    var cIndex = 0
+                                                    for gcqResponseItem in gcqResponses {
+                                                        let gcqHitsObject = gcqResponseItem.hits
+                                                        let currentParent = self.childComments[cIndex]
+                                                        currentParent.child_count = gcqHitsObject?.total!.intValue //set child count for parent child comment
+                                                        let parentNode = self.nodeMap[currentParent.comment_id]
+                                                        var prevNode : VSCNode?
+                                                        for gcqCommentItem in gcqResponseItem.hits!.hits! {
+                                                            
+                                                            
+                                                            let grandchildComment = VSComment(itemSource: gcqCommentItem.source!, id: gcqCommentItem.id!)
+                                                            
+                                                            self.grandchildComments.append(grandchildComment)
+                                                            
+                                                            if prevNode == nil {
+                                                                prevNode = VSCNode(comment: grandchildComment)
+                                                                parentNode?.firstChild = prevNode
+                                                                prevNode?.parent = parentNode
+                                                                self.nodeMap[grandchildComment.comment_id] = prevNode
+                                                            }
+                                                            else {
+                                                                let currNode = VSCNode(comment: grandchildComment)
+                                                                prevNode?.tailSibling = currNode
+                                                                currNode.headSibling = prevNode
+                                                                self.nodeMap[grandchildComment.comment_id] = currNode
+                                                            }
+                                                        }
+                                                        cIndex += 1
+                                                    }
+                                                    
+                                                    
+                                                }
+                                                
+                                                self.setComments()
+                                            }
+                                            return nil
+                                        }
+                                        
+                                        
+                                        
+                                    }
                                     
-                                    //testing root and children before moving on to gc
-                                    self.setComments()
                                     
                                     
                                     
