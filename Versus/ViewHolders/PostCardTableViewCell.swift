@@ -27,6 +27,11 @@ class PostCardTableViewCell: UITableViewCell {
     @IBOutlet weak var bluePercent: UILabel!
     @IBOutlet weak var redPercent: UILabel!
     @IBOutlet weak var graphBar: UIView!
+    @IBOutlet weak var redCheck: UIImageView!
+    @IBOutlet weak var blueCheck: UIImageView!
+    @IBOutlet weak var leftOverlay: UIView!
+    @IBOutlet weak var rightOverlay: UIView!
+    
     
     
     let DEFAULT = 0
@@ -64,23 +69,39 @@ class PostCardTableViewCell: UITableViewCell {
             bluePercent.isHidden = true
             redPercent.isHidden = true
             graphBar.isHidden = true
+            redCheck.isHidden = true
+            blueCheck.isHidden = true
+            leftOverlay.alpha = 0
+            rightOverlay.alpha = 0
         case "RED":
             sortContainerTopConstraint.constant = 32.5
             bluePercent.isHidden = false
             redPercent.isHidden = false
             graphBar.isHidden = false
             calculateGraph()
+            redCheck.isHidden = false
+            blueCheck.isHidden = true
+            leftOverlay.alpha = 0.3
+            rightOverlay.alpha = 0
         case "BLK":
             sortContainerTopConstraint.constant = 32.5
             bluePercent.isHidden = false
             redPercent.isHidden = false
             graphBar.isHidden = false
             calculateGraph()
+            redCheck.isHidden = true
+            blueCheck.isHidden = false
+            leftOverlay.alpha = 0
+            rightOverlay.alpha = 0.3
         default:
             sortContainerTopConstraint.constant = 8
             bluePercent.isHidden = true
             redPercent.isHidden = true
             graphBar.isHidden = true
+            redCheck.isHidden = true
+            blueCheck.isHidden = true
+            leftOverlay.alpha = 0
+            rightOverlay.alpha = 0
         }
         
     }
@@ -97,10 +118,7 @@ class PostCardTableViewCell: UITableViewCell {
         bluePercent.text = "\(bluePercentage)%"
         
         let redLength = CGFloat(currentPost.redcount.floatValue / Float(totalVotes)) * UIScreen.main.bounds.width
-        print("redLength: \(redLength)")
         redWidth.constant = redLength
-        
-        
     }
     
     func getTimeString(time : String) -> String {
