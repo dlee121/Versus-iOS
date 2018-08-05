@@ -35,7 +35,9 @@ class PostCardTableViewCell: UITableViewCell {
     
     var currentPost : PostObject!
     
-    func setCell(post : PostObject, votedSide : String?){
+    func setCell(post : PostObject, votedSide : String){
+        print("setting up post card")
+        
         currentPost = post
         question.text = post.question
         redname.text = post.redname
@@ -55,8 +57,6 @@ class PostCardTableViewCell: UITableViewCell {
         if post.blackimg.intValue % 10 == S3 {
             getPostImage(postID: post.post_id, lORr: 1, editVersion: post.blackimg.intValue / 10)
         }
-        
-        //if user voted/votes change graphboxHeight.constant = 32
         
         switch votedSide {
         case "none":
@@ -81,8 +81,6 @@ class PostCardTableViewCell: UITableViewCell {
             bluePercent.isHidden = true
             redPercent.isHidden = true
             graphBar.isHidden = true
-            
-            
         }
         
     }

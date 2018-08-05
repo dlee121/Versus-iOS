@@ -15,6 +15,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     var searchController : UISearchController!
     var searchViewController : SearchViewController!
     var selectedPost : PostObject!
+    let apiClient = VSVersusAPIClient.default()
     
     
     override func viewDidLoad() {
@@ -117,7 +118,24 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let rootVC = segue.destination as? RootPageViewController else {return}
         let rootView = rootVC.view //load the view before segue
-        rootVC.setUpRootPage(post: selectedPost)
+        
+        let userActionId = UserDefaults.standard.string(forKey: "KEY_USERNAME")! + selectedPost.post_id
+        apiClient.recordGet(a: "rcg", b: userActionId).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            if task.error != nil {
+                rootVC.setUpRootPage(post: self.selectedPost, userAction: UserAction(idIn: userActionId))
+            }
+            else {
+                if let result = task.result {
+                    rootVC.setUpRootPage(post: self.selectedPost, userAction: UserAction(itemSource: result, idIn: userActionId))
+                }
+                else {
+                    rootVC.setUpRootPage(post: self.selectedPost, userAction: UserAction(idIn: userActionId))
+                }
+            }
+            return nil
+        }
+        
+        
     }
     
 }

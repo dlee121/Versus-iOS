@@ -20,7 +20,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var childComments = [VSComment]()
     var grandchildComments = [VSComment]()
     var nodeMap = [String : VSCNode]()
-    var currentUserAction : UserAction?
+    var currentUserAction : UserAction!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,35 +33,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    func setUpRootPage(post : PostObject){
+    func setUpRootPage(post : PostObject, userAction : UserAction){
         comments.removeAll()
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
         currentPost = post
         comments.append(VSComment()) //placeholder for post object
-        let userActionId = UserDefaults.standard.string(forKey: "KEY_USERNAME")! + currentPost.post_id
-        if currentUserAction?.id == userActionId {
-            commentsQuery()
-        }
-        else {
-            apiClient.recordGet(a: "rcg", b: userActionId).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                if task.error != nil {
-                    self.currentUserAction = UserAction(idIn: userActionId)
-                    self.commentsQuery()
-                }
-                else {
-                    if let result = task.result {
-                        self.currentUserAction = UserAction(itemSource: result, idIn: userActionId)
-                        self.commentsQuery()
-                    }
-                    else {
-                        self.currentUserAction = UserAction(idIn: userActionId)
-                        self.commentsQuery()
-                    }
-                }
-                return nil
-            }
-            
-        }
+        currentUserAction = userAction
+        commentsQuery()
         
     }
     
@@ -186,7 +166,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                         var prevNode : VSCNode?
                                                         for gcqCommentItem in gcqResponseItem.hits!.hits! {
                                                             
-                                                            
                                                             let grandchildComment = VSComment(itemSource: gcqCommentItem.source!, id: gcqCommentItem.id!)
                                                             grandchildComment.nestedLevel = 2
                                                             self.grandchildComments.append(grandchildComment)
@@ -206,23 +185,16 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                         }
                                                         cIndex += 1
                                                     }
-                                                    
-                                                    
                                                 }
-                                                
                                                 //sets the comments list for tableView using the nodeMap
                                                 self.setComments()
                                             }
                                             return nil
                                         }
-                                        
-                                        
-                                        
                                     }
                                     else { //no child comments
                                         self.setComments()
                                     }
-                                    
                                 }
                             }
                             return nil
@@ -232,21 +204,11 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
-                        
                     }
-                    
-                    
                 }
-                
-                
-                
             }
-            
             return nil
         }
-        
-        
-        
     }
     
     
@@ -296,7 +258,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 { //for RootPage, first item of the comments list is a placeholder for the post object
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCard", for: indexPath) as? PostCardTableViewCell
-            cell!.setCell(post: currentPost, votedSide: currentUserAction?.votedSide)
+            cell!.setCell(post: currentPost, votedSide: currentUserAction.votedSide)
             return cell!
         }
         else {
