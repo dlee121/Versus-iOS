@@ -96,7 +96,8 @@ class PostCardTableViewCell: UITableViewCell {
         redPercent.text = "\(redPercentage)%"
         bluePercent.text = "\(bluePercentage)%"
         
-        let redLength = CGFloat(currentPost.redcount.floatValue / Float(totalVotes)) * graphBar.frame.width
+        let redLength = CGFloat(currentPost.redcount.floatValue / Float(totalVotes)) * UIScreen.main.bounds.width
+        print("redLength: \(redLength)")
         redWidth.constant = redLength
         
         
