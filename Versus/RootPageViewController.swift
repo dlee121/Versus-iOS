@@ -9,7 +9,7 @@
 import UIKit
 
 
-class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MyCustomCellDelegator {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -21,6 +21,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var grandchildComments = [VSComment]()
     var nodeMap = [String : VSCNode]()
     var currentUserAction : UserAction!
+    var tappedUsername : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -259,6 +260,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         if indexPath.row == 0 { //for RootPage, first item of the comments list is a placeholder for the post object
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCard", for: indexPath) as? PostCardTableViewCell
             cell!.setCell(post: currentPost, votedSide: currentUserAction.votedSide)
+            cell!.delegate = self
             return cell!
         }
         else {
@@ -269,5 +271,22 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let profileVC = segue.destination as? ProfileViewController else {return}
+        profileVC.currentUsername = tappedUsername!
+        
+    }
+    
+    func callSegueFromCell(profileUsername: String) {
+        tappedUsername = profileUsername
+        //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
+        performSegue(withIdentifier: "rootToProfile", sender: self)
+    }
+    
 
+}
+
+protocol MyCustomCellDelegator {
+    func callSegueFromCell(profileUsername: String)
 }

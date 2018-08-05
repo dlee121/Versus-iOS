@@ -39,6 +39,7 @@ class PostCardTableViewCell: UITableViewCell {
     let getPreSignedURLRequest = AWSS3GetPreSignedURLRequest()
     
     var currentPost : PostObject!
+    var delegate:MyCustomCellDelegator!
     
     func setCell(post : PostObject, votedSide : String){
         print("setting up post card")
@@ -277,6 +278,11 @@ class PostCardTableViewCell: UITableViewCell {
         }
         
     }
-
+    
+    
+    @IBAction func profileTapped(_ sender: UIButton) {
+        delegate.callSegueFromCell(profileUsername: currentPost.author)
+    }
+    
 
 }
