@@ -490,6 +490,7 @@
                                             <outlet property="question" destination="F6b-q4-EKr" id="Uz9-rO-M2K"/>
                                             <outlet property="redImage" destination="zny-78-cTP" id="HEv-ZJ-xpe"/>
                                             <outlet property="redPercent" destination="e5V-YY-mjT" id="rUx-UC-gSq"/>
+                                            <outlet property="redWidth" destination="Q1Z-vc-RLG" id="XoP-3o-Gfg"/>
                                             <outlet property="redname" destination="XEl-r6-TMN" id="5Z8-82-umY"/>
                                             <outlet property="sortButton" destination="P1J-wp-x5x" id="HCn-fO-knj"/>
                                             <outlet property="sortContainerTopConstraint" destination="MCh-c1-KCe" id="e3L-pi-lV1"/>

@@ -23,7 +23,7 @@ class PostCardTableViewCell: UITableViewCell {
     @IBOutlet weak var sortButton: UILabel!
     
     @IBOutlet weak var sortContainerTopConstraint: NSLayoutConstraint!
-    
+    @IBOutlet weak var redWidth: NSLayoutConstraint!
     @IBOutlet weak var bluePercent: UILabel!
     @IBOutlet weak var redPercent: UILabel!
     @IBOutlet weak var graphBar: UIView!
@@ -31,10 +31,12 @@ class PostCardTableViewCell: UITableViewCell {
     
     let DEFAULT = 0
     let S3 = 1
-    
     let getPreSignedURLRequest = AWSS3GetPreSignedURLRequest()
     
+    var currentPost : PostObject!
+    
     func setCell(post : PostObject, votedSide : String?){
+        currentPost = post
         question.text = post.question
         redname.text = post.redname
         bluename.text = post.blackname
@@ -67,13 +69,13 @@ class PostCardTableViewCell: UITableViewCell {
             bluePercent.isHidden = false
             redPercent.isHidden = false
             graphBar.isHidden = false
-            
+            calculateGraph()
         case "BLK":
             sortContainerTopConstraint.constant = 32.5
             bluePercent.isHidden = false
             redPercent.isHidden = false
             graphBar.isHidden = false
-            
+            calculateGraph()
         default:
             sortContainerTopConstraint.constant = 8
             bluePercent.isHidden = true
@@ -82,6 +84,23 @@ class PostCardTableViewCell: UITableViewCell {
             
             
         }
+        
+    }
+    
+    func calculateGraph(){
+        let redcount = currentPost.redcount.intValue
+        let bluecount = currentPost.blackcount.intValue
+        let totalVotes =  redcount + bluecount
+        
+        let redPercentage = (redcount * 100) / totalVotes
+        let bluePercentage = (bluecount * 100) / totalVotes
+        
+        redPercent.text = "\(redPercentage)%"
+        bluePercent.text = "\(bluePercentage)%"
+        
+        let redLength = CGFloat(currentPost.redcount.floatValue / Float(totalVotes)) * graphBar.frame.width
+        redWidth.constant = redLength
+        
         
     }
     
