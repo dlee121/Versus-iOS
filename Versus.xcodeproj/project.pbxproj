@@ -60,6 +60,7 @@
 		70CB9E4F211551BC00D86E37 /* PostCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E4E211551BC00D86E37 /* PostCardTableViewCell.swift */; };
 		70CB9E51211552D200D86E37 /* CommentCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E50211552D200D86E37 /* CommentCardTableViewCell.swift */; };
 		70CB9E532115671700D86E37 /* VSCNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E522115671700D86E37 /* VSCNode.swift */; };
+		70CB9E552116976100D86E37 /* UserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E542116976100D86E37 /* UserAction.swift */; };
 		70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */; };
 		70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF520E6944B0067DF08 /* UsernameViewController.swift */; };
 		70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF720E694560067DF08 /* PasswordViewController.swift */; };
@@ -180,6 +181,7 @@
 		70CB9E4E211551BC00D86E37 /* PostCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCardTableViewCell.swift; sourceTree = "<group>"; };
 		70CB9E50211552D200D86E37 /* CommentCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCardTableViewCell.swift; sourceTree = "<group>"; };
 		70CB9E522115671700D86E37 /* VSCNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSCNode.swift; sourceTree = "<group>"; };
+		70CB9E542116976100D86E37 /* UserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAction.swift; sourceTree = "<group>"; };
 		70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewController.swift; sourceTree = "<group>"; };
 		70E80BF520E6944B0067DF08 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
 		70E80BF720E694560067DF08 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 				706F89F021080D8F00A78EFB /* VSComment.swift */,
 				700DB5CA21081CF5008E546A /* PostInfo.swift */,
 				70CB9E522115671700D86E37 /* VSCNode.swift */,
+				70CB9E542116976100D86E37 /* UserAction.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -683,6 +686,7 @@
 				70E80CCC20E6DB570067DF08 /* VSRecordPutModel.swift in Sources */,
 				70E80CC320E6DB570067DF08 /* VSLeaderboardModel_hits.swift in Sources */,
 				70E80CAE20E6DB570067DF08 /* VSPostInfoModel.swift in Sources */,
+				70CB9E552116976100D86E37 /* UserAction.swift in Sources */,
 				70E80CDC20E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift in Sources */,
 				70B1704B20F28D8600459ACE /* Tab2CollectionViewController.swift in Sources */,
 				701C8CCD20F978B30072AECD /* SilverLeaderTableViewCell.swift in Sources */,

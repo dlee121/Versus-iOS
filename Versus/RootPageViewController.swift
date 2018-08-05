@@ -20,7 +20,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var childComments = [VSComment]()
     var grandchildComments = [VSComment]()
     var nodeMap = [String : VSCNode]()
-    
+    var currentUserAction : UserAction?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +38,37 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.reloadData()
         currentPost = post
         comments.append(VSComment()) //placeholder for post object
+        let userActionId = UserDefaults.standard.string(forKey: "KEY_USERNAME")! + currentPost.post_id
+        if currentUserAction?.id == userActionId {
+            commentsQuery()
+        }
+        else {
+            apiClient.recordGet(a: "rcg", b: userActionId).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                if task.error != nil {
+                    self.currentUserAction = UserAction(idIn: userActionId)
+                    self.commentsQuery()
+                }
+                else {
+                    if let result = task.result {
+                        self.currentUserAction = UserAction(itemSource: result, idIn: userActionId)
+                        self.commentsQuery()
+                    }
+                    else {
+                        self.currentUserAction = UserAction(idIn: userActionId)
+                        self.commentsQuery()
+                    }
+                }
+                return nil
+            }
+            
+        }
+        
+    }
+    
+    func commentsQuery(){
         
         //get the root comments, children, and grandchildren
-        apiClient.commentslistGet(c: post.post_id, d: nil, a: "rci", b: "0").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        apiClient.commentslistGet(c: currentPost.post_id, d: nil, a: "rci", b: "0").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -221,6 +249,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    
+    
     func setComments(){
         for i in 0...rootComments.count-1{
             let currentRootNode = nodeMap[rootComments[i].comment_id]
@@ -266,7 +296,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 { //for RootPage, first item of the comments list is a placeholder for the post object
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCard", for: indexPath) as? PostCardTableViewCell
-            cell!.setCell(post: currentPost)
+            cell!.setCell(post: currentPost, votedSide: currentUserAction?.votedSide)
             return cell!
         }
         else {
