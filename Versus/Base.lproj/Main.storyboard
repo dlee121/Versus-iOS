@@ -606,10 +606,16 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nun-Ao-p1T">
                                                     <rect key="frame" x="16" y="67" width="16" height="22"/>
                                                     <state key="normal" image="heart_grey"/>
+                                                    <connections>
+                                                        <action selector="heartTapped:" destination="wRp-Wl-UwL" eventType="touchUpInside" id="iw9-tU-NQy"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Mi-NA-HWN">
                                                     <rect key="frame" x="53" y="66.5" width="18" height="22.5"/>
                                                     <state key="normal" image="brokenheart_grey"/>
+                                                    <connections>
+                                                        <action selector="brokenheartTapped:" destination="wRp-Wl-UwL" eventType="touchUpInside" id="qfN-YR-zy7"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sC-5A-CsB">
                                                     <rect key="frame" x="71" y="66.5" width="24" height="22.5"/>

@@ -20,18 +20,16 @@ class CommentCardTableViewCell: UITableViewCell {
     
     @IBOutlet weak var leftMargin: NSLayoutConstraint!
     
-    /*
-    func setCell(comment : VSComment){
-        author.text = comment.author
-        time.text = getTimeString(time: comment.time)
-        content.text = comment.content
-        hearts.text = "\(comment.upvotes)"
-        brokenhearts.text = "\(comment.downvotes)"
-        heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
-        brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
-    }
-    */
+    let none = 0
+    let upvoted = 1
+    let downvoted = 2
+    var commentVote : Int! //0 = none, 1 = hearted, 2 = brokenhearted
+    
+    var currentComment : VSComment!
+    var delegate:PostPageDelegator!
+    
     func setCell(comment : VSComment, indent : CGFloat){
+        currentComment = comment
         author.text = comment.author
         time.text = getTimeString(time: comment.time)
         content.text = comment.content
@@ -39,27 +37,12 @@ class CommentCardTableViewCell: UITableViewCell {
         brokenhearts.text = "\(comment.downvotes)"
         heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
         brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
-        
+        commentVote = none
         leftMargin.constant = indent * 48
     }
-    /*
-    func setCellWithSelection(comment : VSComment, hearted : Bool){
-        author.text = comment.author
-        time.text = getTimeString(time: comment.time)
-        content.text = comment.content
-        hearts.text = "\(comment.upvotes)"
-        brokenhearts.text = "\(comment.downvotes)"
-        if hearted {
-            heartButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
-            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
-        }
-        else {
-            heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
-            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_blue"), for: .normal)
-        }
-    }
-    */
+    
     func setCellWithSelection(comment : VSComment, indent : CGFloat, hearted : Bool){
+        currentComment = comment
         author.text = comment.author
         time.text = getTimeString(time: comment.time)
         content.text = comment.content
@@ -68,10 +51,12 @@ class CommentCardTableViewCell: UITableViewCell {
         if hearted {
             heartButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
             brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
+            commentVote = upvoted
         }
         else {
             heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
             brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_blue"), for: .normal)
+            commentVote = downvoted
         }
         
         leftMargin.constant = indent * 48
@@ -158,5 +143,42 @@ class CommentCardTableViewCell: UITableViewCell {
             return ""
         }
     }
+    
+    @IBAction func heartTapped(_ sender: UIButton) {
+        switch commentVote {
+        case upvoted:
+            heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
+            commentVote = none
+        case downvoted:
+            heartButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
+            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
+            commentVote = upvoted
+        default:
+            heartButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
+            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
+            commentVote = upvoted
+        }
+        delegate.commentHearted(commentID: currentComment.comment_id)
+        
+    }
+    
+    @IBAction func brokenheartTapped(_ sender: UIButton) {
+        switch commentVote {
+        case downvoted:
+            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
+            commentVote = none
+        case upvoted:
+            heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
+            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_blue"), for: .normal)
+            commentVote = downvoted
+        default:
+            heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
+            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_blue"), for: .normal)
+            commentVote = downvoted
+        }
+        delegate.commentBrokenhearted(commentID: currentComment.comment_id)
+    }
+    
+    
 
 }

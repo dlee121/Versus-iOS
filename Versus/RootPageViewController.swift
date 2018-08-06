@@ -9,7 +9,7 @@
 import UIKit
 
 
-class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MyCustomCellDelegator {
+class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -288,6 +288,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             else {
                 cell!.setCell(comment: comment, indent: comment.nestedLevel!)
             }
+            cell!.delegate = self
             
             return cell!
             
@@ -318,10 +319,46 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    func commentHearted(commentID: String) {
+        if let prevAction = currentUserAction.actionRecord[commentID] {
+            switch prevAction {
+            case "U":
+                currentUserAction.actionRecord[commentID] = "N"
+            case "D":
+                currentUserAction.actionRecord[commentID] = "U"
+            default:
+                currentUserAction.actionRecord[commentID] = "U"
+            }
+        }
+        else {
+            currentUserAction.actionRecord[commentID] = "U"
+        }
+        
+        
+    }
+    
+    func commentBrokenhearted(commentID: String) {
+        if let prevAction = currentUserAction.actionRecord[commentID] {
+            switch prevAction {
+            case "D":
+                currentUserAction.actionRecord[commentID] = "N"
+            case "U":
+                currentUserAction.actionRecord[commentID] = "D"
+            default:
+                currentUserAction.actionRecord[commentID] = "D"
+            }
+        }
+        else {
+            currentUserAction.actionRecord[commentID] = "D"
+        }
+    }
+    
 
 }
 
-protocol MyCustomCellDelegator {
+protocol PostPageDelegator {
     func callSegueFromCell(profileUsername: String)
     func resizePostCardOnVote(red : Bool)
+    func commentHearted(commentID : String)
+    func commentBrokenhearted(commentID : String)
 }
