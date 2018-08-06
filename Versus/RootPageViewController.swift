@@ -308,6 +308,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func resizePostCardOnVote(red : Bool){
+        if currentUserAction.votedSide == "none" {
+            //this is a new vote; send notification to author
+            
+        }
+        
+        
         if red {
             currentUserAction.votedSide = "RED"
         }
@@ -316,6 +322,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
         
+        showToast(message: "Vote Submitted", length: 14)
         
     }
     
@@ -331,9 +338,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
         else {
+            //a new vote; send notification to author and increase their influence accordingly
             currentUserAction.actionRecord[commentID] = "U"
         }
-        
         
     }
     
@@ -349,10 +356,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
         else {
+            //a new vote; send notification to author and increase their influence accordingly
             currentUserAction.actionRecord[commentID] = "D"
         }
     }
-    
 
 }
 
