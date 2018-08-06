@@ -284,5 +284,15 @@ class PostCardTableViewCell: UITableViewCell {
         delegate.callSegueFromCell(profileUsername: currentPost.author)
     }
     
-
+    @IBAction func leftTapped(_ sender: UIButton) {
+        delegate.resizePostCardOnVote(red: true)
+    }
+    
+    @IBAction func rightTapped(_ sender: UIButton) {
+        delegate.resizePostCardOnVote(red: false)
+    }
+    
+    
+    
+    
 }

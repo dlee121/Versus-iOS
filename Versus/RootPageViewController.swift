@@ -306,9 +306,22 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         performSegue(withIdentifier: "rootToProfile", sender: self)
     }
     
+    func resizePostCardOnVote(red : Bool){
+        if red {
+            currentUserAction.votedSide = "RED"
+        }
+        else {
+            currentUserAction.votedSide = "BLK"
+        }
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+        
+        
+    }
+    
 
 }
 
 protocol MyCustomCellDelegator {
     func callSegueFromCell(profileUsername: String)
+    func resizePostCardOnVote(red : Bool)
 }
