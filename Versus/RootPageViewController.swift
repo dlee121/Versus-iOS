@@ -25,14 +25,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.allowsSelection = false
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         //hidesBottomBarWhenPushed = true
         super.viewWillAppear(animated)
-        
         self.tabBarController?.tabBar.isHidden = true
     }
     
@@ -274,7 +273,22 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
             let comment = comments[indexPath.row]
-            cell!.setCell(comment: comment, indent: comment.nestedLevel!)
+            if let selection = currentUserAction.actionRecord[comment.comment_id] {
+                switch selection {
+                case "N":
+                    cell!.setCell(comment: comment, indent: comment.nestedLevel!)
+                case "U":
+                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: true)
+                case "D":
+                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: false)
+                default:
+                    cell!.setCell(comment: comment, indent: comment.nestedLevel!)
+                }
+            }
+            else {
+                cell!.setCell(comment: comment, indent: comment.nestedLevel!)
+            }
+            
             return cell!
             
         }

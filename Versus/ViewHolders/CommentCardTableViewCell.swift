@@ -20,25 +20,61 @@ class CommentCardTableViewCell: UITableViewCell {
     
     @IBOutlet weak var leftMargin: NSLayoutConstraint!
     
-
+    /*
     func setCell(comment : VSComment){
         author.text = comment.author
         time.text = getTimeString(time: comment.time)
         content.text = comment.content
         hearts.text = "\(comment.upvotes)"
         brokenhearts.text = "\(comment.downvotes)"
-        
+        heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
+        brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
     }
-    
+    */
     func setCell(comment : VSComment, indent : CGFloat){
         author.text = comment.author
         time.text = getTimeString(time: comment.time)
         content.text = comment.content
         hearts.text = "\(comment.upvotes)"
         brokenhearts.text = "\(comment.downvotes)"
+        heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
+        brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
         
         leftMargin.constant = indent * 48
+    }
+    /*
+    func setCellWithSelection(comment : VSComment, hearted : Bool){
+        author.text = comment.author
+        time.text = getTimeString(time: comment.time)
+        content.text = comment.content
+        hearts.text = "\(comment.upvotes)"
+        brokenhearts.text = "\(comment.downvotes)"
+        if hearted {
+            heartButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
+            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
+        }
+        else {
+            heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
+            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_blue"), for: .normal)
+        }
+    }
+    */
+    func setCellWithSelection(comment : VSComment, indent : CGFloat, hearted : Bool){
+        author.text = comment.author
+        time.text = getTimeString(time: comment.time)
+        content.text = comment.content
+        hearts.text = "\(comment.upvotes)"
+        brokenhearts.text = "\(comment.downvotes)"
+        if hearted {
+            heartButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
+            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
+        }
+        else {
+            heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
+            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_blue"), for: .normal)
+        }
         
+        leftMargin.constant = indent * 48
     }
 
     
