@@ -35,6 +35,14 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tabBarController?.tabBar.isHidden = true
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if currentUserAction.changed {
+            //update UserAction in ES
+            apiClient.recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
+        }
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -313,7 +321,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             
         }
         
-        
         if red {
             currentUserAction.votedSide = "RED"
         }
@@ -323,6 +330,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
         
         showToast(message: "Vote Submitted", length: 14)
+        currentUserAction.changed = true
         
     }
     
@@ -342,6 +350,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             currentUserAction.actionRecord[commentID] = "U"
         }
         
+        currentUserAction.changed = true
+        
     }
     
     func commentBrokenhearted(commentID: String) {
@@ -359,7 +369,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             //a new vote; send notification to author and increase their influence accordingly
             currentUserAction.actionRecord[commentID] = "D"
         }
+        
+        currentUserAction.changed = true
     }
+    
 
 }
 

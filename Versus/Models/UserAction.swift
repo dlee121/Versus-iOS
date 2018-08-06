@@ -12,6 +12,8 @@ class UserAction {
     var id : String //username+postID
     var votedSide : String //"none", "RED", "BLK"
     var actionRecord : [String : String] //Key = comment_id, Value = String value, N for novote, U for upvote, D for downvote.
+    var changed : Bool
+    
     
     init(itemSource : VSRecordPutModel, idIn : String){
         id = idIn
@@ -30,12 +32,40 @@ class UserAction {
         for uId in itemSource.u! {
             actionRecord[uId] = "U"
         }
+        changed = false
     }
     
     init(idIn : String){
         id = idIn
         votedSide = "none"
         actionRecord = [String : String]()
+        changed = false
+    }
+    
+    func getRecordPutModel() -> VSRecordPutModel {
+        var recordPutModel = VSRecordPutModel()!
+        
+        recordPutModel.n = [String]()
+        recordPutModel.d = [String]()
+        recordPutModel.u = [String]()
+        
+        for recordItem in actionRecord {
+            switch recordItem.value {
+            case "N":
+                recordPutModel.n!.append(recordItem.key)
+            case "D":
+                recordPutModel.d!.append(recordItem.key)
+            case "U":
+                recordPutModel.u!.append(recordItem.key)
+            default:
+                actionRecord.removeValue(forKey: recordItem.key)
+            }
+        }
+        
+        recordPutModel.v = votedSide
+        
+        return recordPutModel
+        
     }
     
     
