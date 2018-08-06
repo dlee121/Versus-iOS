@@ -60,8 +60,14 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
+        
         if self.currentUsername == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
             followButton.isHidden = true
         }

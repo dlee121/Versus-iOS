@@ -26,8 +26,14 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         if fORg == f {
             navigationItem.title = "Followers"
         }

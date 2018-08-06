@@ -28,6 +28,14 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //hidesBottomBarWhenPushed = true
+        super.viewWillAppear(animated)
+        
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
