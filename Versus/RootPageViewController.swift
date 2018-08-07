@@ -23,6 +23,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var currentUserAction : UserAction!
     var tappedUsername : String?
     
+    /*
+        updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
+            ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
+    */
+    var updateMap = [String : String]()
+    
+    /*
+        postVoteUpdate = r = red vote, b = black(blue) vote, rb = red to blue, br = blue to red
+ 
+    */
+    var postVoteUpdate : String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsSelection = false
@@ -39,7 +51,25 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewWillDisappear(animated)
         if currentUserAction.changed {
             //update UserAction in ES
+            currentUserAction.changed = false
             apiClient.recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
+            
+            switch postVoteUpdate {
+            case "r":
+                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "r")
+            case "b":
+                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "b")
+            case "rb":
+                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "rb")
+            case "br":
+                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "br")
+            default:
+                break
+            }
+            
+            for updateItem in updateMap {
+                apiClient.vGet(e: nil, c: updateItem.key, d: nil, a: "v", b: updateItem.value)
+            }
         }
     }
     
@@ -51,6 +81,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func setUpRootPage(post : PostObject, userAction : UserAction){
         comments.removeAll()
+        updateMap.removeAll()
+        postVoteUpdate = "none"
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -316,61 +348,120 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func resizePostCardOnVote(red : Bool){
-        if currentUserAction.votedSide == "none" {
-            //this is a new vote; send notification to author
-            
-        }
         
-        if red {
+        if red { //voted left side
+            switch currentUserAction.votedSide {
+            case "none":
+                //this is a new vote; send notification to author
+                
+                currentPost.redcount = NSNumber(value: currentPost.redcount.intValue + 1)
+                postVoteUpdate = "r"
+                showToast(message: "Vote Submitted", length: 14)
+            case "BLK":
+                currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue - 1)
+                currentPost.redcount = NSNumber(value: currentPost.redcount.intValue + 1)
+                postVoteUpdate = "br"
+                showToast(message: "Vote Submitted", length: 14)
+            default:
+                currentUserAction.votedSide = "RED"
+            }
+            
             currentUserAction.votedSide = "RED"
         }
-        else {
+        else { //voted right side, black/blue
+            switch currentUserAction.votedSide {
+            case "none":
+                //this is a new vote; send notification to author
+                
+                currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue + 1)
+                postVoteUpdate = "b"
+                showToast(message: "Vote Submitted", length: 14)
+            case "RED":
+                currentPost.redcount = NSNumber(value: currentPost.redcount.intValue - 1)
+                currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue + 1)
+                postVoteUpdate = "rb"
+                showToast(message: "Vote Submitted", length: 14)
+            default:
+                currentUserAction.votedSide = "BLK"
+            }
+            
             currentUserAction.votedSide = "BLK"
         }
+        
         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
         
-        showToast(message: "Vote Submitted", length: 14)
         currentUserAction.changed = true
         
     }
     
     func commentHearted(commentID: String) {
-        if let prevAction = currentUserAction.actionRecord[commentID] {
-            switch prevAction {
-            case "U":
-                currentUserAction.actionRecord[commentID] = "N"
-            case "D":
-                currentUserAction.actionRecord[commentID] = "U"
-            default:
-                currentUserAction.actionRecord[commentID] = "U"
-            }
-        }
-        else {
-            //a new vote; send notification to author and increase their influence accordingly
-            currentUserAction.actionRecord[commentID] = "U"
-        }
         
-        currentUserAction.changed = true
+        if let thisComment = nodeMap[commentID]?.nodeContent {
+            if let prevAction = currentUserAction.actionRecord[commentID] {
+                switch prevAction {
+                case "U":
+                    currentUserAction.actionRecord[commentID] = "N"
+                    updateMap[commentID] = "un"
+                    thisComment.upvotes -= 1
+                case "D":
+                    currentUserAction.actionRecord[commentID] = "U"
+                    updateMap[commentID] = "du"
+                    thisComment.downvotes -= 1
+                    thisComment.upvotes += 1
+                default:
+                    currentUserAction.actionRecord[commentID] = "U"
+                    updateMap[commentID] = "u"
+                    thisComment.upvotes += 1
+                }
+            }
+            else {
+                //a new vote; send notification to author and increase their influence accordingly
+                
+                currentUserAction.actionRecord[commentID] = "U"
+                updateMap[commentID] = "u"
+                thisComment.upvotes += 1
+            }
+            
+            currentUserAction.changed = true
+        }
         
     }
     
     func commentBrokenhearted(commentID: String) {
-        if let prevAction = currentUserAction.actionRecord[commentID] {
-            switch prevAction {
-            case "D":
-                currentUserAction.actionRecord[commentID] = "N"
-            case "U":
-                currentUserAction.actionRecord[commentID] = "D"
-            default:
-                currentUserAction.actionRecord[commentID] = "D"
+        if let thisComment = nodeMap[commentID]?.nodeContent {
+            if let prevAction = currentUserAction.actionRecord[commentID] {
+                switch prevAction {
+                case "D":
+                    currentUserAction.actionRecord[commentID] = "N"
+                    updateMap[commentID] = "dn"
+                    thisComment.downvotes -= 1
+                case "U":
+                    currentUserAction.actionRecord[commentID] = "D"
+                    updateMap[commentID] = "ud"
+                    thisComment.upvotes -= 1
+                    thisComment.downvotes += 1
+                default:
+                    currentUserAction.actionRecord[commentID] = "D"
+                    updateMap[commentID] = "d"
+                    thisComment.downvotes += 1
+                }
             }
+            else {
+                //a new vote; send notification to author and increase their influence accordingly
+                
+                currentUserAction.actionRecord[commentID] = "D"
+                if (thisComment.upvotes == 0 && thisComment.downvotes + 1 <= 10) || (thisComment.upvotes * 10 >= thisComment.downvotes + 1) {
+                    updateMap[commentID] = "dci"
+                    thisComment.downvotes += 1
+                }
+                else {
+                    updateMap[commentID] = "d"
+                    thisComment.downvotes += 1
+                }
+            }
+            
+            currentUserAction.changed = true
         }
-        else {
-            //a new vote; send notification to author and increase their influence accordingly
-            currentUserAction.actionRecord[commentID] = "D"
-        }
-        
-        currentUserAction.changed = true
     }
     
 
