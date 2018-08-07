@@ -148,17 +148,23 @@ class CommentCardTableViewCell: UITableViewCell {
         switch commentVote {
         case upvoted:
             heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
+            //currentComment.upvotes -= 1
             commentVote = none
         case downvoted:
             heartButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
             brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
+            //currentComment.upvotes += 1
+            //currentComment.downvotes -= 1
             commentVote = upvoted
         default:
             heartButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
             brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
+            //currentComment.upvotes += 1
             commentVote = upvoted
         }
         delegate.commentHearted(commentID: currentComment.comment_id)
+        hearts.text = "\(currentComment.upvotes)"
+        brokenhearts.text = "\(currentComment.downvotes)"
         
     }
     
@@ -166,17 +172,23 @@ class CommentCardTableViewCell: UITableViewCell {
         switch commentVote {
         case downvoted:
             brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
+            //currentComment.downvotes -= 1
             commentVote = none
         case upvoted:
             heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
             brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_blue"), for: .normal)
+            //currentComment.upvotes -= 1
+            //currentComment.downvotes += 1
             commentVote = downvoted
         default:
             heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
             brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_blue"), for: .normal)
+            //currentComment.downvotes += 1
             commentVote = downvoted
         }
         delegate.commentBrokenhearted(commentID: currentComment.comment_id)
+        hearts.text = "\(currentComment.upvotes)"
+        brokenhearts.text = "\(currentComment.downvotes)"
     }
     
     

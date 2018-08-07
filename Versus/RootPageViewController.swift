@@ -20,7 +20,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var childComments = [VSComment]()
     var grandchildComments = [VSComment]()
     var nodeMap = [String : VSCNode]()
-    var currentUserAction : UserAction!
+    var currentUserAction, userActionHistory : UserAction!
     var tappedUsername : String?
     
     /*
@@ -89,6 +89,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         currentPost = post
         comments.append(VSComment()) //placeholder for post object
         currentUserAction = userAction
+        userActionHistory = UserAction(userActionObject: userAction)
         commentsQuery()
         
     }
@@ -355,18 +356,25 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 //this is a new vote; send notification to author
                 
                 currentPost.redcount = NSNumber(value: currentPost.redcount.intValue + 1)
-                postVoteUpdate = "r"
                 showToast(message: "Vote Submitted", length: 14)
             case "BLK":
                 currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue - 1)
                 currentPost.redcount = NSNumber(value: currentPost.redcount.intValue + 1)
-                postVoteUpdate = "br"
                 showToast(message: "Vote Submitted", length: 14)
             default:
                 currentUserAction.votedSide = "RED"
             }
             
             currentUserAction.votedSide = "RED"
+            
+            switch userActionHistory.votedSide {
+            case "none":
+                postVoteUpdate = "r"
+            case "BLK":
+                postVoteUpdate = "br"
+            default:
+                break
+            }
         }
         else { //voted right side, black/blue
             switch currentUserAction.votedSide {
@@ -374,18 +382,25 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 //this is a new vote; send notification to author
                 
                 currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue + 1)
-                postVoteUpdate = "b"
                 showToast(message: "Vote Submitted", length: 14)
             case "RED":
                 currentPost.redcount = NSNumber(value: currentPost.redcount.intValue - 1)
                 currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue + 1)
-                postVoteUpdate = "rb"
                 showToast(message: "Vote Submitted", length: 14)
             default:
                 currentUserAction.votedSide = "BLK"
             }
             
             currentUserAction.votedSide = "BLK"
+            
+            switch userActionHistory.votedSide {
+            case "none":
+                postVoteUpdate = "b"
+            case "RED":
+                postVoteUpdate = "rb"
+            default:
+                break
+            }
         }
         
         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
@@ -401,16 +416,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 switch prevAction {
                 case "U":
                     currentUserAction.actionRecord[commentID] = "N"
-                    updateMap[commentID] = "un"
                     thisComment.upvotes -= 1
                 case "D":
                     currentUserAction.actionRecord[commentID] = "U"
-                    updateMap[commentID] = "du"
                     thisComment.downvotes -= 1
                     thisComment.upvotes += 1
                 default:
                     currentUserAction.actionRecord[commentID] = "U"
-                    updateMap[commentID] = "u"
                     thisComment.upvotes += 1
                 }
             }
@@ -418,11 +430,24 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 //a new vote; send notification to author and increase their influence accordingly
                 
                 currentUserAction.actionRecord[commentID] = "U"
-                updateMap[commentID] = "u"
                 thisComment.upvotes += 1
             }
             
             currentUserAction.changed = true
+            
+            if let historyAction = userActionHistory.actionRecord[commentID] {
+                switch historyAction {
+                case "U":
+                    updateMap[commentID] = "un"
+                case "D":
+                    updateMap[commentID] = "du"
+                default:
+                    updateMap[commentID] = "u"
+                }
+            }
+            else {
+                updateMap[commentID] = "u"
+            }
         }
         
     }
@@ -433,16 +458,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 switch prevAction {
                 case "D":
                     currentUserAction.actionRecord[commentID] = "N"
-                    updateMap[commentID] = "dn"
                     thisComment.downvotes -= 1
                 case "U":
                     currentUserAction.actionRecord[commentID] = "D"
-                    updateMap[commentID] = "ud"
                     thisComment.upvotes -= 1
                     thisComment.downvotes += 1
                 default:
                     currentUserAction.actionRecord[commentID] = "D"
-                    updateMap[commentID] = "d"
                     thisComment.downvotes += 1
                 }
             }
@@ -450,17 +472,29 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 //a new vote; send notification to author and increase their influence accordingly
                 
                 currentUserAction.actionRecord[commentID] = "D"
-                if (thisComment.upvotes == 0 && thisComment.downvotes + 1 <= 10) || (thisComment.upvotes * 10 >= thisComment.downvotes + 1) {
-                    updateMap[commentID] = "dci"
-                    thisComment.downvotes += 1
-                }
-                else {
-                    updateMap[commentID] = "d"
-                    thisComment.downvotes += 1
-                }
+                thisComment.downvotes += 1
             }
             
             currentUserAction.changed = true
+            
+            if let historyAction = userActionHistory.actionRecord[commentID] {
+                switch historyAction {
+                case "D":
+                    updateMap[commentID] = "dn"
+                case "U":
+                    updateMap[commentID] = "ud"
+                default:
+                    updateMap[commentID] = "d"
+                }
+            }
+            else {
+                if (thisComment.upvotes == 0 && thisComment.downvotes + 1 <= 10) || (thisComment.upvotes * 10 >= thisComment.downvotes + 1) {
+                    updateMap[commentID] = "dci"
+                }
+                else {
+                    updateMap[commentID] = "d"
+                }
+            }
         }
     }
     

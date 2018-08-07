@@ -35,6 +35,13 @@ class UserAction {
         changed = false
     }
     
+    init (userActionObject : UserAction){
+        id = userActionObject.id
+        votedSide = userActionObject.votedSide
+        actionRecord = userActionObject.actionRecord
+        changed = false
+    }
+    
     init(idIn : String){
         id = idIn
         votedSide = "none"
