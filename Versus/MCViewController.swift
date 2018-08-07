@@ -102,6 +102,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         UserDefaults.standard.removeObject(forKey: "KEY_IS_NATIVE")
         try! Auth.auth().signOut()
         performSegue(withIdentifier: "logOutToStart", sender: self)
+        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
     
     func goToPostPageRoot(){
