@@ -93,6 +93,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             for updateItem in updateMap {
+                if updateItem.value == "u" || updateItem.value == "dci" { //increment influence for "u" and "dci" updates
+                    if let authorUsername = nodeMap[updateItem.key]?.nodeContent.author {
+                        if authorUsername != "deleted" {
+                            apiClient.vGet(e: nil, c: authorUsername, d: nil, a: "ui", b: "1") //increment author influence if not deleted
+                        }
+                    }
+                }
                 apiClient.vGet(e: nil, c: updateItem.key, d: nil, a: "v", b: updateItem.value)
             }
         }
