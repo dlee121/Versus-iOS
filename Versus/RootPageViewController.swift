@@ -16,6 +16,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var textInputContainer: UIView!
     @IBOutlet weak var textInputContainerBottom: NSLayoutConstraint!
     
+    @IBOutlet weak var commentSendButton: UIButton!
     
     
     var currentPost : PostObject!
@@ -549,6 +550,25 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
     }
+    
+    @IBAction func textChangeListener(_ sender: Any) {
+        if let input = textInput.text{
+            if input.count > 0 {
+                
+                
+                commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
+            }
+            else {
+                commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+            }
+        }
+        else {
+            commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+        }
+        
+        
+    }
+    
     
 
 }

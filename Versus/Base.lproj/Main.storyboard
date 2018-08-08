@@ -670,21 +670,32 @@
                                 <rect key="frame" x="0.0" y="616" width="375" height="51"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Join the discussion!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="plD-8I-NIC">
-                                        <rect key="frame" x="8" y="8" width="324" height="35"/>
+                                        <rect key="frame" x="8" y="8" width="316" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="Q0G-aJ-zZL"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="textChangeListener:" destination="Jk1-If-Hre" eventType="editingChanged" id="Bgx-Tp-kdb"/>
+                                        </connections>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jB-Kr-pCC">
+                                        <rect key="frame" x="332" y="8" width="35" height="35"/>
+                                        <state key="normal" backgroundImage="ic_send_grey"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="plD-8I-NIC" secondAttribute="bottom" constant="8" id="0er-jq-OvJ"/>
+                                    <constraint firstItem="3jB-Kr-pCC" firstAttribute="leading" secondItem="plD-8I-NIC" secondAttribute="trailing" constant="8" id="44i-Qj-uCR"/>
+                                    <constraint firstItem="3jB-Kr-pCC" firstAttribute="top" secondItem="i5l-wt-BD9" secondAttribute="top" constant="8" id="IBm-r5-FF2"/>
+                                    <constraint firstAttribute="bottom" secondItem="3jB-Kr-pCC" secondAttribute="bottom" constant="8" id="XFi-i2-b2t"/>
+                                    <constraint firstAttribute="trailing" secondItem="3jB-Kr-pCC" secondAttribute="trailing" constant="8" id="jQc-eR-QdA"/>
                                     <constraint firstAttribute="height" constant="51" id="qgV-3e-EeN"/>
                                     <constraint firstItem="plD-8I-NIC" firstAttribute="leading" secondItem="i5l-wt-BD9" secondAttribute="leading" constant="8" id="tMY-Zs-JOg"/>
-                                    <constraint firstAttribute="trailing" secondItem="plD-8I-NIC" secondAttribute="trailing" constant="43" id="zg8-OB-ekn"/>
+                                    <constraint firstAttribute="trailing" secondItem="plD-8I-NIC" secondAttribute="trailing" constant="51" id="zg8-OB-ekn"/>
                                     <constraint firstItem="plD-8I-NIC" firstAttribute="top" secondItem="i5l-wt-BD9" secondAttribute="top" constant="8" id="zlO-h2-ncZ"/>
                                 </constraints>
                             </view>
@@ -702,6 +713,7 @@
                         <viewLayoutGuide key="safeArea" id="HpG-Yk-086"/>
                     </view>
                     <connections>
+                        <outlet property="commentSendButton" destination="3jB-Kr-pCC" id="rew-gf-jyF"/>
                         <outlet property="tableView" destination="uGt-gg-JwK" id="63d-QQ-kTx"/>
                         <outlet property="textInput" destination="plD-8I-NIC" id="mEa-uE-Krv"/>
                         <outlet property="textInputContainer" destination="i5l-wt-BD9" id="FuC-6q-yJC"/>
@@ -2961,6 +2973,7 @@
         <image name="crownSilver" width="32" height="16"/>
         <image name="default_profile" width="64" height="64"/>
         <image name="heart_grey" width="16" height="16"/>
+        <image name="ic_send_grey" width="24" height="24"/>
         <image name="logo_2_64" width="32" height="32"/>
         <image name="logo_splash" width="133" height="106"/>
         <image name="profile_icon_f" width="32" height="32"/>
