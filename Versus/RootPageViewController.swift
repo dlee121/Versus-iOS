@@ -12,6 +12,11 @@ import UIKit
 class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var textInput: UITextField!
+    @IBOutlet weak var textInputContainer: UIView!
+    @IBOutlet weak var textInputContainerBottom: NSLayoutConstraint!
+    
+    
     
     var currentPost : PostObject!
     var comments = [VSComment]()
@@ -22,6 +27,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var nodeMap = [String : VSCNode]()
     var currentUserAction, userActionHistory : UserAction!
     var tappedUsername : String?
+    var keyboardIsShowing = false
     
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -35,20 +41,38 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     */
     var postVoteUpdate : String!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsSelection = false
-        // Do any additional setup after loading the view.
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         //hidesBottomBarWhenPushed = true
         super.viewWillAppear(animated)
+        keyboardIsShowing = false
         self.tabBarController?.tabBar.isHidden = true
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
+
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        textInput.resignFirstResponder()
+        
+        NotificationCenter.default.removeObserver(self)
+        
         if currentUserAction.changed {
             //update UserAction in ES
             currentUserAction.changed = false
@@ -73,6 +97,34 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    @objc func keyboardWillShow(notification: NSNotification) {
+        keyboardIsShowing = true
+        let userInfo: NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue
+        let keyboardSize = keyboardInfo.cgRectValue.size
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        tableView.contentInset = contentInsets
+        tableView.scrollIndicatorInsets = contentInsets
+        
+        textInputContainerBottom.constant = -keyboardSize.height
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        keyboardIsShowing = false
+        tableView.contentInset = .zero
+        tableView.scrollIndicatorInsets = .zero
+        textInputContainerBottom.constant = 0
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if keyboardIsShowing {
+            textInputContainer.isHidden = true
+        }
+        
+    }
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        textInputContainer.isHidden = false
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
