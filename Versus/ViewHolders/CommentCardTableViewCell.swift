@@ -195,5 +195,7 @@ class CommentCardTableViewCell: UITableViewCell {
         delegate.callSegueFromCell(profileUsername: currentComment.author)
     }
     
+    
+    
 
 }

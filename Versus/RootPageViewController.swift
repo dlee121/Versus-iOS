@@ -29,6 +29,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var currentUserAction : UserAction!
     var tappedUsername : String?
     var keyboardIsShowing = false
+    var replyTargetID, grandchildReplyTargetID : String?
     
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -64,7 +65,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                name: NSNotification.Name.UIKeyboardWillHide,
                                                object: nil)
 
-        
         
     }
     
@@ -504,19 +504,51 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBAction func textChangeListener(_ sender: Any) {
         if let input = textInput.text{
             if input.count > 0 {
-                
-                
+                if replyTargetID != nil {
+                    if grandchildReplyTargetID != nil {
+                        // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
+                        
+                        
+                    }
+                    else { //a reply to a root comment or a child comment
+                        
+                        
+                        
+                    }
+                }
+                else {
+                    // a root comment to the post
+                    
+                    
+                    
+                    
+                }
+                commentSendButton.isEnabled = true
                 commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
             }
             else {
+                commentSendButton.isEnabled = false
                 commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
             }
         }
         else {
+            commentSendButton.isEnabled = false
             commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
         }
-        
-        
+    }
+    
+    
+    @IBAction func sendButtonTapped(_ sender: Any) {
+        if let text = textInput.text {
+            if text.count > 0 {
+                print("send tapped")
+                
+                
+            }
+            
+            
+            
+        }
     }
     
     
