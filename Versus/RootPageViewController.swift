@@ -26,7 +26,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var childComments = [VSComment]()
     var grandchildComments = [VSComment]()
     var nodeMap = [String : VSCNode]()
-    var currentUserAction, userActionHistory : UserAction!
+    var currentUserAction : UserAction!
     var tappedUsername : String?
     var keyboardIsShowing = false
     
@@ -72,37 +72,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewWillDisappear(animated)
         textInput.resignFirstResponder()
         
+        if currentUserAction.changed {
+            apiClient.recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
+        }
+        
         NotificationCenter.default.removeObserver(self)
         
-        if currentUserAction.changed {
-            //update UserAction in ES
-            currentUserAction.changed = false
-            apiClient.recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
-            
-            switch postVoteUpdate {
-            case "r":
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "r")
-            case "b":
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "b")
-            case "rb":
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "rb")
-            case "br":
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "br")
-            default:
-                break
-            }
-            
-            for updateItem in updateMap {
-                if updateItem.value == "u" || updateItem.value == "dci" { //increment influence for "u" and "dci" updates
-                    if let authorUsername = nodeMap[updateItem.key]?.nodeContent.author {
-                        if authorUsername != "deleted" {
-                            apiClient.vGet(e: nil, c: authorUsername, d: nil, a: "ui", b: "1") //increment author influence if not deleted
-                        }
-                    }
-                }
-                apiClient.vGet(e: nil, c: updateItem.key, d: nil, a: "v", b: updateItem.value)
-            }
-        }
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -149,7 +124,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         currentPost = post
         comments.append(VSComment()) //placeholder for post object
         currentUserAction = userAction
-        userActionHistory = UserAction(userActionObject: userAction)
         commentsQuery()
         
     }
@@ -415,52 +389,38 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             case "none":
                 //this is a new vote; send notification to author
                 
+                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "r")
                 currentPost.redcount = NSNumber(value: currentPost.redcount.intValue + 1)
                 showToast(message: "Vote Submitted", length: 14)
             case "BLK":
+                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "br")
                 currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue - 1)
                 currentPost.redcount = NSNumber(value: currentPost.redcount.intValue + 1)
                 showToast(message: "Vote Submitted", length: 14)
             default:
-                currentUserAction.votedSide = "RED"
+                break;
             }
             
             currentUserAction.votedSide = "RED"
-            
-            switch userActionHistory.votedSide {
-            case "none":
-                postVoteUpdate = "r"
-            case "BLK":
-                postVoteUpdate = "br"
-            default:
-                break
-            }
         }
         else { //voted right side, black/blue
             switch currentUserAction.votedSide {
             case "none":
                 //this is a new vote; send notification to author
                 
+                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "b")
                 currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue + 1)
                 showToast(message: "Vote Submitted", length: 14)
             case "RED":
+                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "rb")
                 currentPost.redcount = NSNumber(value: currentPost.redcount.intValue - 1)
                 currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue + 1)
                 showToast(message: "Vote Submitted", length: 14)
             default:
-                currentUserAction.votedSide = "BLK"
+                break;
             }
             
             currentUserAction.votedSide = "BLK"
-            
-            switch userActionHistory.votedSide {
-            case "none":
-                postVoteUpdate = "b"
-            case "RED":
-                postVoteUpdate = "rb"
-            default:
-                break
-            }
         }
         
         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
@@ -470,46 +430,34 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func commentHearted(commentID: String) {
-        
         if let thisComment = nodeMap[commentID]?.nodeContent {
             if let prevAction = currentUserAction.actionRecord[commentID] {
                 switch prevAction {
                 case "U":
+                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "un")
                     currentUserAction.actionRecord[commentID] = "N"
                     thisComment.upvotes -= 1
                 case "D":
+                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "du")
                     currentUserAction.actionRecord[commentID] = "U"
                     thisComment.downvotes -= 1
                     thisComment.upvotes += 1
                 default:
+                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "u")
                     currentUserAction.actionRecord[commentID] = "U"
                     thisComment.upvotes += 1
                 }
             }
             else {
                 //a new vote; send notification to author and increase their influence accordingly
-                
+                apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "u")
+                apiClient.vGet(e: nil, c: thisComment.author, d: nil, a: "ui", b: "1")
                 currentUserAction.actionRecord[commentID] = "U"
                 thisComment.upvotes += 1
             }
-            
-            currentUserAction.changed = true
-            
-            if let historyAction = userActionHistory.actionRecord[commentID] {
-                switch historyAction {
-                case "U":
-                    updateMap[commentID] = "un"
-                case "D":
-                    updateMap[commentID] = "du"
-                default:
-                    updateMap[commentID] = "u"
-                }
-            }
-            else {
-                updateMap[commentID] = "u"
-            }
         }
         
+        currentUserAction.changed = true
     }
     
     func commentBrokenhearted(commentID: String) {
@@ -517,13 +465,21 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             if let prevAction = currentUserAction.actionRecord[commentID] {
                 switch prevAction {
                 case "D":
+                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "dn")
                     currentUserAction.actionRecord[commentID] = "N"
                     thisComment.downvotes -= 1
                 case "U":
+                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "ud")
                     currentUserAction.actionRecord[commentID] = "D"
                     thisComment.upvotes -= 1
                     thisComment.downvotes += 1
                 default:
+                    if (thisComment.upvotes == 0 && thisComment.downvotes + 1 <= 10) || (thisComment.upvotes * 10 >= thisComment.downvotes + 1) {
+                        apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "dci")
+                    }
+                    else {
+                        apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "d")
+                    }
                     currentUserAction.actionRecord[commentID] = "D"
                     thisComment.downvotes += 1
                 }
@@ -531,31 +487,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             else {
                 //a new vote; send notification to author and increase their influence accordingly
                 
+                if (thisComment.upvotes == 0 && thisComment.downvotes + 1 <= 10) || (thisComment.upvotes * 10 >= thisComment.downvotes + 1) {
+                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "dci")
+                }
+                else {
+                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "d")
+                }
                 currentUserAction.actionRecord[commentID] = "D"
                 thisComment.downvotes += 1
             }
-            
-            currentUserAction.changed = true
-            
-            if let historyAction = userActionHistory.actionRecord[commentID] {
-                switch historyAction {
-                case "D":
-                    updateMap[commentID] = "dn"
-                case "U":
-                    updateMap[commentID] = "ud"
-                default:
-                    updateMap[commentID] = "d"
-                }
-            }
-            else {
-                if (thisComment.upvotes == 0 && thisComment.downvotes + 1 <= 10) || (thisComment.upvotes * 10 >= thisComment.downvotes + 1) {
-                    updateMap[commentID] = "dci"
-                }
-                else {
-                    updateMap[commentID] = "d"
-                }
-            }
         }
+        
+        currentUserAction.changed = true
     }
     
     @IBAction func textChangeListener(_ sender: Any) {

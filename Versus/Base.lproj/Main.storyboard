@@ -582,47 +582,53 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GMm-O3-fqC">
-                                                    <rect key="frame" x="102" y="11" width="38" height="19"/>
+                                                    <rect key="frame" x="102" y="11" width="38" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AXi-bI-VON">
-                                                    <rect key="frame" x="15" y="38" width="345" height="21"/>
+                                                    <rect key="frame" x="15" y="39.5" width="345" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="H" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Vd-rf-611">
-                                                    <rect key="frame" x="32" y="67" width="13" height="22"/>
+                                                    <rect key="frame" x="32" y="68.5" width="13" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xZQ-ib-APf">
-                                                    <rect key="frame" x="328" y="67" width="39" height="22"/>
+                                                    <rect key="frame" x="328" y="68.5" width="39" height="20.5"/>
                                                     <state key="normal" title="Reply"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nun-Ao-p1T">
-                                                    <rect key="frame" x="16" y="67" width="16" height="22"/>
+                                                    <rect key="frame" x="16" y="68.5" width="16" height="20.5"/>
                                                     <state key="normal" image="heart_grey"/>
                                                     <connections>
                                                         <action selector="heartTapped:" destination="wRp-Wl-UwL" eventType="touchUpInside" id="iw9-tU-NQy"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Mi-NA-HWN">
-                                                    <rect key="frame" x="53" y="66.5" width="18" height="22.5"/>
+                                                    <rect key="frame" x="53" y="68" width="18" height="21"/>
                                                     <state key="normal" image="brokenheart_grey"/>
                                                     <connections>
                                                         <action selector="brokenheartTapped:" destination="wRp-Wl-UwL" eventType="touchUpInside" id="qfN-YR-zy7"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sC-5A-CsB">
-                                                    <rect key="frame" x="71" y="66.5" width="24" height="22.5"/>
+                                                    <rect key="frame" x="71" y="68" width="24" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9GV-at-02i">
+                                                    <rect key="frame" x="15" y="11" width="79" height="20.5"/>
+                                                    <connections>
+                                                        <action selector="profileTapped:" destination="wRp-Wl-UwL" eventType="touchUpInside" id="W9K-Zi-W6A"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="UQd-Mi-JZv" firstAttribute="top" secondItem="Zsi-vD-uC0" secondAttribute="topMargin" id="2ip-C3-lyV"/>
@@ -630,9 +636,13 @@
                                                 <constraint firstItem="GMm-O3-fqC" firstAttribute="top" secondItem="Zsi-vD-uC0" secondAttribute="topMargin" id="Bqn-Fx-9Gw"/>
                                                 <constraint firstItem="6Vd-rf-611" firstAttribute="leading" secondItem="nun-Ao-p1T" secondAttribute="trailing" id="CpD-FO-I5f"/>
                                                 <constraint firstItem="UQd-Mi-JZv" firstAttribute="leading" secondItem="Zsi-vD-uC0" secondAttribute="leadingMargin" id="E9q-40-kB9"/>
+                                                <constraint firstItem="GMm-O3-fqC" firstAttribute="bottom" secondItem="UQd-Mi-JZv" secondAttribute="bottom" id="EOO-e8-15Y"/>
                                                 <constraint firstItem="8Mi-NA-HWN" firstAttribute="top" secondItem="6Vd-rf-611" secondAttribute="top" id="Flm-1X-eqM"/>
+                                                <constraint firstItem="9GV-at-02i" firstAttribute="leading" secondItem="Zsi-vD-uC0" secondAttribute="leadingMargin" id="GEF-Xi-8dO"/>
                                                 <constraint firstItem="xZQ-ib-APf" firstAttribute="bottom" secondItem="0sC-5A-CsB" secondAttribute="bottom" id="JFU-9y-h68"/>
                                                 <constraint firstItem="0sC-5A-CsB" firstAttribute="leading" secondItem="8Mi-NA-HWN" secondAttribute="trailing" id="JrM-P9-GIC"/>
+                                                <constraint firstItem="9GV-at-02i" firstAttribute="trailing" secondItem="UQd-Mi-JZv" secondAttribute="trailing" id="KrS-Qm-8iQ"/>
+                                                <constraint firstItem="9GV-at-02i" firstAttribute="top" secondItem="Zsi-vD-uC0" secondAttribute="topMargin" id="KzT-Nr-L2r"/>
                                                 <constraint firstItem="GMm-O3-fqC" firstAttribute="leading" secondItem="UQd-Mi-JZv" secondAttribute="trailing" constant="8" id="LBs-uc-rbt"/>
                                                 <constraint firstItem="AXi-bI-VON" firstAttribute="trailing" secondItem="Zsi-vD-uC0" secondAttribute="trailingMargin" id="Pva-cL-9aI"/>
                                                 <constraint firstItem="8Mi-NA-HWN" firstAttribute="leading" secondItem="6Vd-rf-611" secondAttribute="trailing" constant="8" id="VOx-fp-g93"/>
@@ -647,6 +657,7 @@
                                                 <constraint firstItem="nun-Ao-p1T" firstAttribute="top" secondItem="AXi-bI-VON" secondAttribute="bottom" constant="8" id="jNa-ci-zfY"/>
                                                 <constraint firstItem="6Vd-rf-611" firstAttribute="top" secondItem="nun-Ao-p1T" secondAttribute="top" id="n10-Td-pfj"/>
                                                 <constraint firstAttribute="trailing" secondItem="xZQ-ib-APf" secondAttribute="trailing" constant="8" id="yCa-x0-cVh"/>
+                                                <constraint firstItem="9GV-at-02i" firstAttribute="bottom" secondItem="UQd-Mi-JZv" secondAttribute="bottom" id="z9e-9t-KHQ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

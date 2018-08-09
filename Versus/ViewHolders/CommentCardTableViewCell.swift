@@ -191,6 +191,9 @@ class CommentCardTableViewCell: UITableViewCell {
         brokenhearts.text = "\(currentComment.downvotes)"
     }
     
+    @IBAction func profileTapped(_ sender: UIButton) {
+        delegate.callSegueFromCell(profileUsername: currentComment.author)
+    }
     
 
 }
