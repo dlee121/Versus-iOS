@@ -430,6 +430,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func commentHearted(commentID: String) {
+        print("votedCommentID: \(commentID)")
         if let thisComment = nodeMap[commentID]?.nodeContent {
             if let prevAction = currentUserAction.actionRecord[commentID] {
                 switch prevAction {
@@ -504,25 +505,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBAction func textChangeListener(_ sender: Any) {
         if let input = textInput.text{
             if input.count > 0 {
-                if replyTargetID != nil {
-                    if grandchildReplyTargetID != nil {
-                        // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
-                        
-                        
-                    }
-                    else { //a reply to a root comment or a child comment
-                        
-                        
-                        
-                    }
-                }
-                else {
-                    // a root comment to the post
-                    
-                    
-                    
-                    
-                }
                 commentSendButton.isEnabled = true
                 commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
             }
@@ -541,13 +523,58 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBAction func sendButtonTapped(_ sender: Any) {
         if let text = textInput.text {
             if text.count > 0 {
-                print("send tapped")
+                
+                textInput.text = ""
+                textInput.resignFirstResponder()
                 
                 
+                if replyTargetID != nil {
+                    if grandchildReplyTargetID != nil {
+                        // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
+                        
+                        
+                    }
+                    else { //a reply to a root comment or a child comment
+                        
+                        
+                        
+                    }
+                }
+                else {
+                    // a root comment to the post
+                    let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentPost.post_id, postID: currentPost.post_id, newContent: text, rootID: "0")
+                    newComment.nestedLevel = 0 //root comment in root page has nested level of 0
+                    
+                    let newCommentNode = VSCNode(comment: newComment)
+                    if comments.count > 1 { //at least one another root comment in the page
+                        let prevTopCommentNode = nodeMap[comments[1].comment_id]
+                        
+                        newCommentNode.tailSibling = prevTopCommentNode
+                        prevTopCommentNode?.headSibling = newCommentNode
+                    }
+                    
+                    nodeMap[newComment.comment_id] = newCommentNode
+                    
+                    print("newCommentID: \(newComment.comment_id)")
+                    apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        if task.error != nil {
+                            DispatchQueue.main.async {
+                                print(task.error!)
+                            }
+                        }
+                        else {
+                            
+                            DispatchQueue.main.async {
+                                self.comments.insert(newComment, at: 1)
+                                self.tableView.insertRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
+                            }
+                            
+                        }
+                        return nil
+                    }
+                    
+                }
             }
-            
-            
-            
         }
     }
     
