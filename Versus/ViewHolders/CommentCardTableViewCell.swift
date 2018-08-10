@@ -221,14 +221,17 @@ class CommentCardTableViewCell: UITableViewCell {
     
     @IBAction func seeMoreTapped(_ sender: Any) {
         if content.numberOfLines == 0 {
+            delegate.beginUpdates()
             content.numberOfLines = 2
             seeMoreButton.setTitle("See More", for: .normal)
+            delegate.endUpdates()
             
         }
         else {
+            delegate.beginUpdates()
             content.numberOfLines = 0
             seeMoreButton.setTitle("See Less", for: .normal)
-            
+            delegate.endUpdates()
             
         }
         

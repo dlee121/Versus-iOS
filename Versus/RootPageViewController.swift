@@ -578,6 +578,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    func beginUpdates() {
+        tableView.beginUpdates()
+    }
+    
+    func endUpdates() {
+        tableView.endUpdates()
+    }
     
 
 }
@@ -587,4 +594,6 @@ protocol PostPageDelegator {
     func resizePostCardOnVote(red : Bool)
     func commentHearted(commentID : String)
     func commentBrokenhearted(commentID : String)
+    func beginUpdates()
+    func endUpdates()
 }
