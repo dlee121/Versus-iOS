@@ -17,8 +17,14 @@ class CommentCardTableViewCell: UITableViewCell {
     @IBOutlet weak var brokenhearts: UILabel!
     @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var brokenheartButton: UIButton!
+    @IBOutlet weak var seeMoreButton: UIButton!
+    
     
     @IBOutlet weak var leftMargin: NSLayoutConstraint!
+    
+    @IBOutlet weak var replyButtonTrailing: NSLayoutConstraint! //0 or 16
+    @IBOutlet weak var seeMoreWidth: NSLayoutConstraint! //0 or 66
+    
     
     let none = 0
     let upvoted = 1
@@ -33,6 +39,14 @@ class CommentCardTableViewCell: UITableViewCell {
         author.text = comment.author
         time.text = getTimeString(time: comment.time)
         content.text = comment.content
+        
+        if content.isTruncated {
+            showSeeMore()
+        }
+        else {
+            hideSeeMore()
+        }
+        
         hearts.text = "\(comment.upvotes)"
         brokenhearts.text = "\(comment.downvotes)"
         heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
@@ -195,6 +209,33 @@ class CommentCardTableViewCell: UITableViewCell {
         delegate.callSegueFromCell(profileUsername: currentComment.author)
     }
     
+    func showSeeMore() {
+        replyButtonTrailing.constant = 16
+        seeMoreWidth.constant = 66
+    }
+    
+    func hideSeeMore(){
+        replyButtonTrailing.constant = 0
+        seeMoreWidth.constant = 0
+    }
+    
+    @IBAction func seeMoreTapped(_ sender: Any) {
+        if content.numberOfLines == 0 {
+            content.numberOfLines = 2
+            seeMoreButton.setTitle("See More", for: .normal)
+            
+        }
+        else {
+            content.numberOfLines = 0
+            seeMoreButton.setTitle("See Less", for: .normal)
+            
+            
+        }
+        
+        
+        
+        
+    }
     
     
 

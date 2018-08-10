@@ -26,7 +26,7 @@
 		701C8CCD20F978B30072AECD /* SilverLeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CCC20F978B30072AECD /* SilverLeaderTableViewCell.swift */; };
 		701C8CCF20F978C80072AECD /* BronzeLeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CCE20F978C80072AECD /* BronzeLeaderTableViewCell.swift */; };
 		701C8CD120F978E20072AECD /* PlainLeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CD020F978E20072AECD /* PlainLeaderTableViewCell.swift */; };
-		701C8CD320FAF4B90072AECD /* UILabel+addImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CD220FAF4B90072AECD /* UILabel+addImage.swift */; };
+		701C8CD320FAF4B90072AECD /* UILabel+addImage+isTruncated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CD220FAF4B90072AECD /* UILabel+addImage+isTruncated.swift */; };
 		702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702499A120E57F050024E871 /* UIViewController+Toast.swift */; };
 		7056672920FD62A400CB87AD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672820FD62A400CB87AD /* SearchViewController.swift */; };
 		7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */; };
@@ -40,7 +40,6 @@
 		706F89ED2107EF1A00A78EFB /* PostsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89EC2107EF1A00A78EFB /* PostsHistoryViewController.swift */; };
 		706F89EF21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89EE21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift */; };
 		706F89F121080D8F00A78EFB /* VSComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89F021080D8F00A78EFB /* VSComment.swift */; };
-		706F89F32108197C00A78EFB /* ChildVCFunctionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89F22108197C00A78EFB /* ChildVCFunctionProtocol.swift */; };
 		70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */; };
 		70B1704920F28D7C00459ACE /* Tab1CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */; };
 		70B1704B20F28D8600459ACE /* Tab2CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */; };
@@ -147,7 +146,7 @@
 		701C8CCC20F978B30072AECD /* SilverLeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilverLeaderTableViewCell.swift; sourceTree = "<group>"; };
 		701C8CCE20F978C80072AECD /* BronzeLeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BronzeLeaderTableViewCell.swift; sourceTree = "<group>"; };
 		701C8CD020F978E20072AECD /* PlainLeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainLeaderTableViewCell.swift; sourceTree = "<group>"; };
-		701C8CD220FAF4B90072AECD /* UILabel+addImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+addImage.swift"; sourceTree = "<group>"; };
+		701C8CD220FAF4B90072AECD /* UILabel+addImage+isTruncated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+addImage+isTruncated.swift"; sourceTree = "<group>"; };
 		702499A120E57F050024E871 /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
 		7056672820FD62A400CB87AD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostTableViewCell.swift; sourceTree = "<group>"; };
@@ -161,7 +160,6 @@
 		706F89EC2107EF1A00A78EFB /* PostsHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsHistoryViewController.swift; sourceTree = "<group>"; };
 		706F89EE21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		706F89F021080D8F00A78EFB /* VSComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSComment.swift; sourceTree = "<group>"; };
-		706F89F22108197C00A78EFB /* ChildVCFunctionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildVCFunctionProtocol.swift; sourceTree = "<group>"; };
 		70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OIDCProvider.swift; sourceTree = "<group>"; };
 		70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab1CollectionViewController.swift; sourceTree = "<group>"; };
 		70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab2CollectionViewController.swift; sourceTree = "<group>"; };
@@ -351,8 +349,7 @@
 				702499A120E57F050024E871 /* UIViewController+Toast.swift */,
 				70B9A7E020ED64C200C06709 /* Character+UInt32.swift */,
 				70B9A7E220ED650A00C06709 /* String+HashCode.swift */,
-				701C8CD220FAF4B90072AECD /* UILabel+addImage.swift */,
-				706F89F22108197C00A78EFB /* ChildVCFunctionProtocol.swift */,
+				701C8CD220FAF4B90072AECD /* UILabel+addImage+isTruncated.swift */,
 				70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */,
 			);
 			path = Extensions;
@@ -649,7 +646,6 @@
 				70CB9E4D21154DD300D86E37 /* RootPageViewController.swift in Sources */,
 				70E80CB720E6DB570067DF08 /* VSUserGetModel.swift in Sources */,
 				70E80CC720E6DB570067DF08 /* VSCommentEditModel_doc.swift in Sources */,
-				706F89F32108197C00A78EFB /* ChildVCFunctionProtocol.swift in Sources */,
 				70E80CC020E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item__source.swift in Sources */,
 				70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */,
 				70E80CBF20E6DB570067DF08 /* VSCGCModel_responses_item.swift in Sources */,
@@ -678,7 +674,7 @@
 				70E80CE220E6DB570067DF08 /* VSCommentModel.swift in Sources */,
 				70CB9E45210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift in Sources */,
 				70E80CB420E6DB570067DF08 /* VSPostModel__source.swift in Sources */,
-				701C8CD320FAF4B90072AECD /* UILabel+addImage.swift in Sources */,
+				701C8CD320FAF4B90072AECD /* UILabel+addImage+isTruncated.swift in Sources */,
 				70E80CD420E6DB570067DF08 /* VSEmailGetModel.swift in Sources */,
 				701B9BA520E3FB20003C9E7E /* AppDelegate.swift in Sources */,
 				706F89E52106E38800A78EFB /* VSPostQModel.swift in Sources */,
