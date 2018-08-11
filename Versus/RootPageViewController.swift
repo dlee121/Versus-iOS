@@ -577,6 +577,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                 self.tableView.insertRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
                             }
                             
+                            self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
+                            
                         }
                         return nil
                     }
