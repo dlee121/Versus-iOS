@@ -50,7 +50,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.allowsSelection = false
+        //tableView.allowsSelection = false
         ref = Database.database().reference()
         
     }
@@ -105,6 +105,11 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         replyTargetID = nil
         grandchildRealTargetID = nil
         replyTargetLabel.text = ""
+        if let indexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPath, animated: true)
+            tableView.cellForRow(at: indexPath)?.selectionStyle = UITableViewCellSelectionStyle.none
+        }
+        
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -730,7 +735,14 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         return "\(usernameHash)"
     }
     
-    func replyButtonTapped(replyTarget: VSComment) {
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if replyTargetID != nil {
+            return tableView.indexPathForSelectedRow
+        }
+        return indexPath
+    }
+    
+    func replyButtonTapped(replyTarget: VSComment, row: Int) {
         
         if replyTarget.nestedLevel != 2 {
             replyTargetID = replyTarget.comment_id
@@ -743,6 +755,14 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         textInput.becomeFirstResponder()
         replyTargetLabel.text = "Replying to: \(replyTarget.author)"
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            tableView.cellForRow(at: indexPath)?.selectionStyle = UITableViewCellSelectionStyle.none
+        }
+        
+        tableView.cellForRow(at: IndexPath(row: row, section: 0))?.selectionStyle = UITableViewCellSelectionStyle.gray
+        tableView.selectRow(at: IndexPath(row: row, section: 0), animated: true, scrollPosition: UITableViewScrollPosition.top)
+        //tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: UITableViewScrollPosition.top, animated: true)
         
     }
 
@@ -757,5 +777,5 @@ protocol PostPageDelegator {
     func beginUpdates()
     func endUpdates()
     func endUpdatesForSeeLess(row : Int)
-    func replyButtonTapped(replyTarget : VSComment)
+    func replyButtonTapped(replyTarget : VSComment, row : Int)
 }

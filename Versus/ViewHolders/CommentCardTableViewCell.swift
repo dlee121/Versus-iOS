@@ -260,7 +260,7 @@ class CommentCardTableViewCell: UITableViewCell {
     
     @IBAction func replyButtonTapped(_ sender: UIButton) {
         
-        delegate.replyButtonTapped(replyTarget: currentComment)
+        delegate.replyButtonTapped(replyTarget: currentComment, row: rowNumber)
         
         
     }
