@@ -43,7 +43,7 @@ class CommentCardTableViewCell: UITableViewCell {
         content.text = comment.content
         
         DispatchQueue.main.async {
-            if self.content.isTruncated {
+            if self.content.isTruncated || self.content.numberOfLines == 0{ //if content is truncated, or if numberOfLines == 0 which See More was tapped
                 self.showSeeMore()
             }
             else {
