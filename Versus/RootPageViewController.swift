@@ -607,13 +607,17 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.beginUpdates()
     }
     
-    func beginUpdatesForSeeLess(row: Int) {
-        expandedCells.remove(row)
+    func beginUpdates() {
         tableView.beginUpdates()
     }
     
     func endUpdates() {
         tableView.endUpdates()
+    }
+    
+    func endUpdatesForSeeLess(row: Int) {
+        tableView.endUpdates()
+        expandedCells.remove(row)
     }
     
     func sanitizeContentForURL(content : String) -> String{
@@ -673,6 +677,7 @@ protocol PostPageDelegator {
     func commentHearted(commentID : String)
     func commentBrokenhearted(commentID : String)
     func beginUpdatesForSeeMore(row : Int)
-    func beginUpdatesForSeeLess(row : Int)
+    func beginUpdates()
     func endUpdates()
+    func endUpdatesForSeeLess(row : Int)
 }
