@@ -709,6 +709,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <action selector="textChangeListener:" destination="Jk1-If-Hre" eventType="editingChanged" id="Bgx-Tp-kdb"/>
+                                            <outlet property="delegate" destination="Jk1-If-Hre" id="1yP-DY-gH2"/>
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jB-Kr-pCC">

@@ -10,7 +10,7 @@ import UIKit
 import FirebaseDatabase
 
 
-class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator {
+class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator, UITextFieldDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textInput: UITextField!
@@ -31,7 +31,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var currentUserAction : UserAction!
     var tappedUsername : String?
     var keyboardIsShowing = false
-    var replyTargetID, grandchildRealTargetID : String?
+    var replyTargetID, grandchildRealTargetID, grandchildReplyTargetAuthor: String?
     var replyTargetRowNumber : Int?
     var ref: DatabaseReference!
     var expandedCells = NSMutableSet()
@@ -103,8 +103,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.contentInset = .zero
         tableView.scrollIndicatorInsets = .zero
         textInputContainerBottom.constant = 0
+        textInput.text = ""
         replyTargetID = nil
         grandchildRealTargetID = nil
+        grandchildReplyTargetAuthor = nil
         replyTargetLabel.text = ""
         if let indexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPath, animated: true)
@@ -570,6 +572,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
                         
                         
+                        
+                        
                     }
                     else { //a reply to a root comment or a child comment
                         // a root comment to the post
@@ -621,11 +625,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                 }
                                 
                                 print("newCommentID: \(newComment.comment_id)")
-                                /*
-                                self.comments.removeAll()
-                                self.comments.append(VSComment()) //placeholder item for post card
-                                self.setComments()
-                                */
+                                
                                 DispatchQueue.main.async {
                                     self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
                                 }
@@ -761,11 +761,16 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         if replyTarget.nestedLevel != 2 {
             replyTargetID = replyTarget.comment_id
             grandchildRealTargetID = nil
+            grandchildReplyTargetAuthor = nil
             
+            textInput.text = ""
         }
         else {
+            grandchildReplyTargetAuthor = replyTarget.author
             grandchildRealTargetID = replyTarget.comment_id
             replyTargetID = replyTarget.parent_id
+            
+            textInput.text = "@"+grandchildReplyTargetAuthor! + " "
         }
         
         textInput.becomeFirstResponder()
@@ -779,6 +784,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.selectRow(at: IndexPath(row: row, section: 0), animated: true, scrollPosition: UITableViewScrollPosition.top)
         //tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: UITableViewScrollPosition.top, animated: true)
         
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if grandchildRealTargetID != nil {
+            return range.intersection(NSMakeRange(0, grandchildReplyTargetAuthor!.count+2)) == nil
+        }
+        return true
     }
 
 }
