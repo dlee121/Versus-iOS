@@ -258,5 +258,12 @@ class CommentCardTableViewCell: UITableViewCell {
     }
     
     
+    @IBAction func replyButtonTapped(_ sender: UIButton) {
+        
+        delegate.replyButtonTapped(replyTarget: currentComment)
+        
+        
+    }
+    
 
 }

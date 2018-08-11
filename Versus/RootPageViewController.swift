@@ -18,6 +18,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var textInputContainerBottom: NSLayoutConstraint!
     
     @IBOutlet weak var commentSendButton: UIButton!
+    @IBOutlet weak var replyTargetLabel: UILabel!
     
     
     var currentPost : PostObject!
@@ -30,7 +31,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var currentUserAction : UserAction!
     var tappedUsername : String?
     var keyboardIsShowing = false
-    var replyTargetID, grandchildReplyTargetID : String?
+    var replyTargetID, grandchildRealTargetID : String?
     var ref: DatabaseReference!
     var expandedCells = NSMutableSet()
     
@@ -101,16 +102,21 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.contentInset = .zero
         tableView.scrollIndicatorInsets = .zero
         textInputContainerBottom.constant = 0
+        replyTargetID = nil
+        grandchildRealTargetID = nil
+        replyTargetLabel.text = ""
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if keyboardIsShowing {
             textInputContainer.isHidden = true
+            replyTargetLabel.isHidden = true
         }
         
     }
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         textInputContainer.isHidden = false
+        replyTargetLabel.isHidden = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -551,13 +557,64 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 
                 if replyTargetID != nil {
-                    if grandchildReplyTargetID != nil {
+                    if grandchildRealTargetID != nil {
                         // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
                         
                         
                     }
                     else { //a reply to a root comment or a child comment
+                        // a root comment to the post
+                        var rootID : String!
+                        let replyTarget = nodeMap[replyTargetID!]!.nodeContent
+                        let targetNestedLevel = replyTarget.nestedLevel
+                        if targetNestedLevel == 0 { //reply to a root comment
+                            print("root reply tap")
+                            rootID = "0"
+                        }
+                        else { //reply to a child comment
+                            print("child reply tap")
+                            rootID = replyTarget.parent_id
+                        }
                         
+                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: replyTargetID!, postID: currentPost.post_id, newContent: text, rootID: rootID)
+                        
+                        newComment.nestedLevel = targetNestedLevel! + 1 //root comment in root page has nested level of 0
+                        
+                        
+                        
+                        apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            if task.error != nil {
+                                DispatchQueue.main.async {
+                                    print(task.error!)
+                                }
+                            }
+                            else {
+                                
+                                let newCommentNode = VSCNode(comment: newComment)
+                                
+                                let replyTargetNode = self.nodeMap[self.replyTargetID!]
+                                
+                                if let prevTopChildNode = replyTargetNode!.firstChild {
+                                    replyTargetNode!.firstChild = newCommentNode
+                                    newCommentNode.tailSibling = prevTopChildNode
+                                    prevTopChildNode.headSibling = newCommentNode
+                                }
+                                else {
+                                    replyTargetNode!.firstChild = newCommentNode
+                                }
+                                self.nodeMap[newComment.comment_id] = newCommentNode
+                                
+                                print("newCommentID: \(newComment.comment_id)")
+                                
+                                self.setComments()
+                                
+                                self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
+                                
+                            }
+                            return nil
+                        }
+                        
+                    
                         
                         
                     }
@@ -567,15 +624,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentPost.post_id, postID: currentPost.post_id, newContent: text, rootID: "0")
                     newComment.nestedLevel = 0 //root comment in root page has nested level of 0
                     
-                    let newCommentNode = VSCNode(comment: newComment)
-                    if comments.count > 1 { //at least one another root comment in the page
-                        let prevTopCommentNode = nodeMap[comments[1].comment_id]
-                        
-                        newCommentNode.tailSibling = prevTopCommentNode
-                        prevTopCommentNode?.headSibling = newCommentNode
-                    }
                     
-                    nodeMap[newComment.comment_id] = newCommentNode
                     
                     print("newCommentID: \(newComment.comment_id)")
                     apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -585,6 +634,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             }
                         }
                         else {
+                            
+                            let newCommentNode = VSCNode(comment: newComment)
+                            if self.comments.count > 1 { //at least one another root comment in the page
+                                let prevTopCommentNode = self.nodeMap[self.comments[1].comment_id]
+                                
+                                newCommentNode.tailSibling = prevTopCommentNode
+                                prevTopCommentNode?.headSibling = newCommentNode
+                            }
+                            
+                            self.nodeMap[newComment.comment_id] = newCommentNode
+                            
+                            
                             
                             DispatchQueue.main.async {
                                 self.comments.insert(newComment, at: 1)
@@ -668,6 +729,22 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         return "\(usernameHash)"
     }
+    
+    func replyButtonTapped(replyTarget: VSComment) {
+        
+        if replyTarget.nestedLevel != 2 {
+            replyTargetID = replyTarget.comment_id
+            grandchildRealTargetID = nil
+        }
+        else {
+            grandchildRealTargetID = replyTarget.comment_id
+            replyTargetID = replyTarget.parent_id
+        }
+        
+        textInput.becomeFirstResponder()
+        replyTargetLabel.text = "Replying to: \(replyTarget.author)"
+        
+    }
 
 }
 
@@ -680,4 +757,5 @@ protocol PostPageDelegator {
     func beginUpdates()
     func endUpdates()
     func endUpdatesForSeeLess(row : Int)
+    func replyButtonTapped(replyTarget : VSComment)
 }
