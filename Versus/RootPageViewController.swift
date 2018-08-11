@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 
 class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator {
@@ -30,6 +31,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var tappedUsername : String?
     var keyboardIsShowing = false
     var replyTargetID, grandchildReplyTargetID : String?
+    var ref: DatabaseReference!
     
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -47,6 +49,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsSelection = false
+        ref = Database.database().reference()
         
     }
     
@@ -388,6 +391,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             switch currentUserAction.votedSide {
             case "none":
                 //this is a new vote; send notification to author
+                sendPostVoteNotification()
                 
                 apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "r")
                 currentPost.redcount = NSNumber(value: currentPost.redcount.intValue + 1)
@@ -407,6 +411,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             switch currentUserAction.votedSide {
             case "none":
                 //this is a new vote; send notification to author
+                sendPostVoteNotification()
                 
                 apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "b")
                 currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue + 1)
@@ -451,6 +456,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             else {
                 //a new vote; send notification to author and increase their influence accordingly
+                sendCommentUpvoteNotification(upvotedComment: nodeMap[commentID]!.nodeContent)
+                
                 apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "u")
                 apiClient.vGet(e: nil, c: thisComment.author, d: nil, a: "ui", b: "1")
                 currentUserAction.actionRecord[commentID] = "U"
@@ -487,6 +494,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             else {
                 //a new vote; send notification to author and increase their influence accordingly
+                sendCommentUpvoteNotification(upvotedComment: nodeMap[commentID]!.nodeContent)
                 
                 if (thisComment.upvotes == 0 && thisComment.downvotes + 1 <= 10) || (thisComment.upvotes * 10 >= thisComment.downvotes + 1) {
                     apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "dci")
@@ -586,6 +594,54 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.endUpdates()
     }
     
+    func sanitizeContentForURL(content : String) -> String{
+        
+        var strIn = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        if strIn.count > 26 {
+            strIn = String(strIn[..<26]) //test this
+        }
+        
+        return strIn.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "[ /\\\\.\\\\$\\[\\]\\\\#]", with: "^", options: .regularExpression, range: nil).replacingOccurrences(of: ":", with: ";")
+    }
+    
+    func sendCommentUpvoteNotification(upvotedComment : VSComment){
+        
+        if upvotedComment.author != "deleted" && upvotedComment.author != UserDefaults.standard.string(forKey: "KEY_USERNAME")! {
+            let payloadContent = sanitizeContentForURL(content: upvotedComment.content)
+            let commentAuthorPath = getUsernameHash(username: upvotedComment.author) + "/" + upvotedComment.author + "/n/u/" + upvotedComment.comment_id + ":" + payloadContent
+            ref.child(commentAuthorPath).child(UserDefaults.standard.string(forKey: "KEY_USERNAME")!).setValue(Int(NSDate().timeIntervalSince1970))
+        }
+        
+    }
+    
+    func sendPostVoteNotification() {
+        
+        if currentPost.author != "deleted" && currentPost.author != UserDefaults.standard.string(forKey: "KEY_USERNAME")! {
+            let nKey = currentPost.post_id + ":" + sanitizeContentForURL(content: currentPost.redname)+":"+sanitizeContentForURL(content: currentPost.blackname)+":"+sanitizeContentForURL(content: currentPost.question)
+            let postAuthorPath = getUsernameHash(username: currentPost.author) + "/" + currentPost.author + "/n/v/" + nKey
+            ref.child(postAuthorPath).child(UserDefaults.standard.string(forKey: "KEY_USERNAME")!).setValue(Int(NSDate().timeIntervalSince1970))
+        }
+        
+    }
+    
+    func getUsernameHash(username : String) -> String {
+        var usernameHash : Int32
+        if(username.count < 5){
+            usernameHash = username.hashCode()
+        }
+        else{
+            var hashIn = ""
+            
+            hashIn.append(username[0])
+            hashIn.append(username[username.count-2])
+            hashIn.append(username[1])
+            hashIn.append(username[username.count-1])
+            
+            usernameHash = hashIn.hashCode()
+        }
+        
+        return "\(usernameHash)"
+    }
 
 }
 
