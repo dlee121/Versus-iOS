@@ -536,6 +536,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func textChangeListener(_ sender: Any) {
+        
         if let input = textInput.text{
             if input.count > 0 {
                 commentSendButton.isEnabled = true
@@ -554,23 +555,26 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     @IBAction func sendButtonTapped(_ sender: Any) {
+        let currentReplyTargetID = replyTargetID
+        let currentGrandchildRealTargetID = grandchildRealTargetID
+        
         if let text = textInput.text {
             if text.count > 0 {
                 
                 textInput.text = ""
                 textInput.resignFirstResponder()
                 
-                
-                if replyTargetID != nil {
-                    if grandchildRealTargetID != nil {
+                if currentReplyTargetID != nil {
+                    if currentGrandchildRealTargetID != nil {
                         // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
                         
                         
                     }
                     else { //a reply to a root comment or a child comment
                         // a root comment to the post
+                        
                         var rootID : String!
-                        let replyTarget = nodeMap[replyTargetID!]!.nodeContent
+                        let replyTarget = nodeMap[currentReplyTargetID!]!.nodeContent
                         let targetNestedLevel = replyTarget.nestedLevel
                         if targetNestedLevel == 0 { //reply to a root comment
                             print("root reply tap")
@@ -581,10 +585,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             rootID = replyTarget.parent_id
                         }
                         
-                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: replyTargetID!, postID: currentPost.post_id, newContent: text, rootID: rootID)
+                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: rootID)
                         
                         newComment.nestedLevel = targetNestedLevel! + 1 //root comment in root page has nested level of 0
-                        
                         
                         
                         apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -597,7 +600,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                 
                                 let newCommentNode = VSCNode(comment: newComment)
                                 
-                                let replyTargetNode = self.nodeMap[self.replyTargetID!]
+                                let replyTargetNode = self.nodeMap[currentReplyTargetID!]
                                 
                                 if let prevTopChildNode = replyTargetNode!.firstChild {
                                     replyTargetNode!.firstChild = newCommentNode
@@ -610,7 +613,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                 self.nodeMap[newComment.comment_id] = newCommentNode
                                 
                                 print("newCommentID: \(newComment.comment_id)")
-                                
+                                self.comments.removeAll()
+                                self.comments.append(VSComment()) //placeholder item for post card
                                 self.setComments()
                                 
                                 self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
@@ -619,9 +623,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             return nil
                         }
                         
-                    
-                        
-                        
                     }
                 }
                 else {
@@ -629,9 +630,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentPost.post_id, postID: currentPost.post_id, newContent: text, rootID: "0")
                     newComment.nestedLevel = 0 //root comment in root page has nested level of 0
                     
-                    
-                    
-                    print("newCommentID: \(newComment.comment_id)")
                     apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
                         if task.error != nil {
                             DispatchQueue.main.async {
@@ -650,9 +648,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             
                             self.nodeMap[newComment.comment_id] = newCommentNode
                             
-                            
+                            print("newCommentID: \(newComment.comment_id)")
                             
                             DispatchQueue.main.async {
+                                self.rootComments.insert(newComment, at: 0)
                                 self.comments.insert(newComment, at: 1)
                                 self.tableView.insertRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
                             }
@@ -747,6 +746,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         if replyTarget.nestedLevel != 2 {
             replyTargetID = replyTarget.comment_id
             grandchildRealTargetID = nil
+            
         }
         else {
             grandchildRealTargetID = replyTarget.comment_id
