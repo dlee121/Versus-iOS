@@ -32,6 +32,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var keyboardIsShowing = false
     var replyTargetID, grandchildReplyTargetID : String?
     var ref: DatabaseReference!
+    var expandedCells = NSMutableSet()
     
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -120,6 +121,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     func setUpRootPage(post : PostObject, userAction : UserAction){
         comments.removeAll()
         updateMap.removeAll()
+        expandedCells.removeAllObjects()
         postVoteUpdate = "none"
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -341,6 +343,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         return comments.count
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 321
+        }
+        else if expandedCells.contains(indexPath.row) {
+            return 321
+        }
+        else {
+            return 108
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 { //for RootPage, first item of the comments list is a placeholder for the post object
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCard", for: indexPath) as? PostCardTableViewCell
@@ -354,17 +368,17 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             if let selection = currentUserAction.actionRecord[comment.comment_id] {
                 switch selection {
                 case "N":
-                    cell!.setCell(comment: comment, indent: comment.nestedLevel!)
+                    cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
                 case "U":
-                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: true)
+                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: true, row: indexPath.row)
                 case "D":
-                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: false)
+                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: false, row: indexPath.row)
                 default:
-                    cell!.setCell(comment: comment, indent: comment.nestedLevel!)
+                    cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
                 }
             }
             else {
-                cell!.setCell(comment: comment, indent: comment.nestedLevel!)
+                cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
             }
             cell!.delegate = self
             
@@ -588,7 +602,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func beginUpdates() {
+    func beginUpdatesForSeeMore(row : Int) {
+        expandedCells.add(row)
+        tableView.beginUpdates()
+    }
+    
+    func beginUpdatesForSeeLess(row: Int) {
+        expandedCells.remove(row)
         tableView.beginUpdates()
     }
     
@@ -652,6 +672,7 @@ protocol PostPageDelegator {
     func resizePostCardOnVote(red : Bool)
     func commentHearted(commentID : String)
     func commentBrokenhearted(commentID : String)
-    func beginUpdates()
+    func beginUpdatesForSeeMore(row : Int)
+    func beginUpdatesForSeeLess(row : Int)
     func endUpdates()
 }

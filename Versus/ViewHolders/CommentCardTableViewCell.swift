@@ -33,18 +33,22 @@ class CommentCardTableViewCell: UITableViewCell {
     
     var currentComment : VSComment!
     var delegate:PostPageDelegator!
+    var rowNumber : Int!
     
-    func setCell(comment : VSComment, indent : CGFloat){
+    
+    func setCell(comment : VSComment, indent : CGFloat, row : Int){
         currentComment = comment
         author.text = comment.author
         time.text = getTimeString(time: comment.time)
         content.text = comment.content
         
-        if content.isTruncated {
-            showSeeMore()
-        }
-        else {
-            hideSeeMore()
+        DispatchQueue.main.async {
+            if self.content.isTruncated {
+                self.showSeeMore()
+            }
+            else {
+                self.hideSeeMore()
+            }
         }
         
         hearts.text = "\(comment.upvotes)"
@@ -53,13 +57,24 @@ class CommentCardTableViewCell: UITableViewCell {
         brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
         commentVote = none
         leftMargin.constant = indent * 48
+        
+        rowNumber = row
     }
     
-    func setCellWithSelection(comment : VSComment, indent : CGFloat, hearted : Bool){
+    func setCellWithSelection(comment : VSComment, indent : CGFloat, hearted : Bool, row : Int){
         currentComment = comment
         author.text = comment.author
         time.text = getTimeString(time: comment.time)
         content.text = comment.content
+        
+        DispatchQueue.main.async {
+            if self.content.isTruncated {
+                self.showSeeMore()
+            }
+            else {
+                self.hideSeeMore()
+            }
+        }
         hearts.text = "\(comment.upvotes)"
         brokenhearts.text = "\(comment.downvotes)"
         if hearted {
@@ -74,6 +89,8 @@ class CommentCardTableViewCell: UITableViewCell {
         }
         
         leftMargin.constant = indent * 48
+        
+        rowNumber = row
     }
 
     
@@ -221,14 +238,14 @@ class CommentCardTableViewCell: UITableViewCell {
     
     @IBAction func seeMoreTapped(_ sender: Any) {
         if content.numberOfLines == 0 {
-            delegate.beginUpdates()
+            delegate.beginUpdatesForSeeLess(row: rowNumber)
             content.numberOfLines = 2
             seeMoreButton.setTitle("See More", for: .normal)
             delegate.endUpdates()
             
         }
         else {
-            delegate.beginUpdates()
+            delegate.beginUpdatesForSeeMore(row: rowNumber)
             content.numberOfLines = 0
             seeMoreButton.setTitle("See Less", for: .normal)
             delegate.endUpdates()

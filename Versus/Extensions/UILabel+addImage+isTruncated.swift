@@ -59,7 +59,6 @@ extension UILabel
             options: .usesLineFragmentOrigin,
             attributes: [.font: font],
             context: nil).size
-        
         return labelTextSize.height > bounds.size.height
     }
 }
