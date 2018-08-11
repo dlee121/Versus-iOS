@@ -32,6 +32,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var tappedUsername : String?
     var keyboardIsShowing = false
     var replyTargetID, grandchildRealTargetID : String?
+    var replyTargetRowNumber : Int?
     var ref: DatabaseReference!
     var expandedCells = NSMutableSet()
     
@@ -612,10 +613,22 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                 }
                                 self.nodeMap[newComment.comment_id] = newCommentNode
                                 
+                                if self.replyTargetRowNumber! + 1 >= self.comments.count {
+                                    self.comments.append(newComment)
+                                }
+                                else {
+                                    self.comments.insert(newComment, at: self.replyTargetRowNumber! + 1)
+                                }
+                                
                                 print("newCommentID: \(newComment.comment_id)")
+                                /*
                                 self.comments.removeAll()
                                 self.comments.append(VSComment()) //placeholder item for post card
                                 self.setComments()
+                                */
+                                DispatchQueue.main.async {
+                                    self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
+                                }
                                 
                                 self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
                                 
@@ -742,6 +755,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func replyButtonTapped(replyTarget: VSComment, row: Int) {
+        
+        replyTargetRowNumber = row
         
         if replyTarget.nestedLevel != 2 {
             replyTargetID = replyTarget.comment_id
