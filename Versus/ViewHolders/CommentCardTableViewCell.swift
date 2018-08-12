@@ -23,6 +23,7 @@ class CommentCardTableViewCell: UITableViewCell {
     
     @IBOutlet weak var leftMargin: NSLayoutConstraint!
     
+    @IBOutlet weak var viewMoreHeight: NSLayoutConstraint!
     @IBOutlet weak var viewMoreRepliesCenter: NSLayoutConstraint!
     @IBOutlet weak var replyButtonTrailing: NSLayoutConstraint! //0 or 16
     @IBOutlet weak var seeMoreWidth: NSLayoutConstraint! //0 or 66
@@ -65,6 +66,7 @@ class CommentCardTableViewCell: UITableViewCell {
         if let childcount = comment.child_count {
             if childcount > 2 {
                 viewMoreRepliesCenter.constant = indent * 24
+                viewMoreHeight.constant = 21
                 viewMoreReplies.isHidden = false
                 
                 if childcount == 3 {
@@ -76,10 +78,12 @@ class CommentCardTableViewCell: UITableViewCell {
             }
             else {
                 viewMoreReplies.isHidden = true
+                viewMoreHeight.constant = 0
             }
         }
         else {
             viewMoreReplies.isHidden = true
+            viewMoreHeight.constant = 0
         }
     }
     
@@ -113,6 +117,29 @@ class CommentCardTableViewCell: UITableViewCell {
         leftMargin.constant = indent * 48
         
         rowNumber = row
+        
+        if let childcount = comment.child_count {
+            if childcount > 2 {
+                viewMoreRepliesCenter.constant = indent * 24
+                viewMoreHeight.constant = 21
+                viewMoreReplies.isHidden = false
+                
+                if childcount == 3 {
+                    viewMoreReplies.setTitle("View 1 More Reply", for: .normal)
+                }
+                else {
+                    viewMoreReplies.setTitle("View \(childcount-2) More Replies", for: .normal)
+                }
+            }
+            else {
+                viewMoreReplies.isHidden = true
+                viewMoreHeight.constant = 0
+            }
+        }
+        else {
+            viewMoreReplies.isHidden = true
+            viewMoreHeight.constant = 0
+        }
     }
 
     
