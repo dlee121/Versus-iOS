@@ -571,13 +571,53 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     if currentGrandchildRealTargetID != nil {
                         // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
                         
+                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: nodeMap[currentReplyTargetID!]!.nodeContent.parent_id)
                         
+                        newComment.nestedLevel = 2
+                        
+                        apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            if task.error != nil {
+                                DispatchQueue.main.async {
+                                    print(task.error!)
+                                }
+                            }
+                            else {
+                                
+                                let newCommentNode = VSCNode(comment: newComment)
+                                
+                                if let grandchildReplyTargetNode = self.nodeMap[currentGrandchildRealTargetID!] {
+                                    if let prevTailNode = grandchildReplyTargetNode.tailSibling {
+                                        prevTailNode.headSibling = newCommentNode
+                                        newCommentNode.tailSibling = prevTailNode
+                                    }
+                                    grandchildReplyTargetNode.tailSibling = newCommentNode
+                                    newCommentNode.headSibling = grandchildReplyTargetNode
+                                }
+                                
+                                self.nodeMap[newComment.comment_id] = newCommentNode
+                                
+                                if self.replyTargetRowNumber! + 1 >= self.comments.count {
+                                    self.comments.append(newComment)
+                                }
+                                else {
+                                    self.comments.insert(newComment, at: self.replyTargetRowNumber! + 1)
+                                }
+                                
+                                print("newCommentID: \(newComment.comment_id)")
+                                
+                                DispatchQueue.main.async {
+                                    self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
+                                }
+                                
+                                self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
+                                
+                            }
+                            return nil
+                        }
                         
                         
                     }
                     else { //a reply to a root comment or a child comment
-                        // a root comment to the post
-                        
                         var rootID : String!
                         let replyTarget = nodeMap[currentReplyTargetID!]!.nodeContent
                         let targetNestedLevel = replyTarget.nestedLevel
@@ -777,7 +817,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         replyTargetLabel.text = "Replying to: \(replyTarget.author)"
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            tableView.cellForRow(at: indexPath)?.selectionStyle = UITableViewCellSelectionStyle.none
+            if indexPath.row != row {
+                tableView.cellForRow(at: indexPath)?.selectionStyle = UITableViewCellSelectionStyle.none
+            }
         }
         
         tableView.cellForRow(at: IndexPath(row: row, section: 0))?.selectionStyle = UITableViewCellSelectionStyle.gray
