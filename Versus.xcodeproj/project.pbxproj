@@ -40,6 +40,8 @@
 		706F89ED2107EF1A00A78EFB /* PostsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89EC2107EF1A00A78EFB /* PostsHistoryViewController.swift */; };
 		706F89EF21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89EE21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift */; };
 		706F89F121080D8F00A78EFB /* VSComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89F021080D8F00A78EFB /* VSComment.swift */; };
+		70A7ED49211FBFB90059507A /* ChildPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A7ED48211FBFB90059507A /* ChildPageViewController.swift */; };
+		70A7ED4B211FC3410059507A /* PostPageDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A7ED4A211FC3410059507A /* PostPageDelegator.swift */; };
 		70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */; };
 		70B1704920F28D7C00459ACE /* Tab1CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */; };
 		70B1704B20F28D8600459ACE /* Tab2CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */; };
@@ -160,6 +162,8 @@
 		706F89EC2107EF1A00A78EFB /* PostsHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsHistoryViewController.swift; sourceTree = "<group>"; };
 		706F89EE21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		706F89F021080D8F00A78EFB /* VSComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSComment.swift; sourceTree = "<group>"; };
+		70A7ED48211FBFB90059507A /* ChildPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildPageViewController.swift; sourceTree = "<group>"; };
+		70A7ED4A211FC3410059507A /* PostPageDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageDelegator.swift; sourceTree = "<group>"; };
 		70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OIDCProvider.swift; sourceTree = "<group>"; };
 		70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab1CollectionViewController.swift; sourceTree = "<group>"; };
 		70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab2CollectionViewController.swift; sourceTree = "<group>"; };
@@ -317,6 +321,7 @@
 				70036ED1210ABA96000BE8E9 /* FGHViewController.swift */,
 				70CB9E4A2112B33C00D86E37 /* CategoryFilterViewController.swift */,
 				70CB9E4C21154DD300D86E37 /* RootPageViewController.swift */,
+				70A7ED48211FBFB90059507A /* ChildPageViewController.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -351,6 +356,7 @@
 				70B9A7E220ED650A00C06709 /* String+HashCode.swift */,
 				701C8CD220FAF4B90072AECD /* UILabel+addImage+isTruncated.swift */,
 				70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */,
+				70A7ED4A211FC3410059507A /* PostPageDelegator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -641,6 +647,7 @@
 				70CB9E4F211551BC00D86E37 /* PostCardTableViewCell.swift in Sources */,
 				70E80CCA20E6DB570067DF08 /* VSPostsListModel_hits_hits_item__source.swift in Sources */,
 				706F89E62106E38800A78EFB /* VSPostQMultiModel_docs_item.swift in Sources */,
+				70A7ED49211FBFB90059507A /* ChildPageViewController.swift in Sources */,
 				706F89EF21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift in Sources */,
 				70CB9E47210FE4D800D86E37 /* Array+Shuffle.swift in Sources */,
 				70CB9E4D21154DD300D86E37 /* RootPageViewController.swift in Sources */,
@@ -655,6 +662,7 @@
 				70E80BFA20E6976E0067DF08 /* MCViewController.swift in Sources */,
 				706F89F121080D8F00A78EFB /* VSComment.swift in Sources */,
 				70E80CC820E6DB570067DF08 /* VSPostEditModel_doc.swift in Sources */,
+				70A7ED4B211FC3410059507A /* PostPageDelegator.swift in Sources */,
 				70E80CDA20E6DB570067DF08 /* VSCommentsListModel__shards.swift in Sources */,
 				70E80CB520E6DB570067DF08 /* VSProfileInfoModel__source.swift in Sources */,
 				70E80CB120E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item.swift in Sources */,

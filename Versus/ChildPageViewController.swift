@@ -10,13 +10,12 @@ import UIKit
 import FirebaseDatabase
 
 
-class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator, UITextFieldDelegate {
-
+class ChildPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator, UITextFieldDelegate {
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textInput: UITextField!
     @IBOutlet weak var textInputContainer: UIView!
     @IBOutlet weak var textInputContainerBottom: NSLayoutConstraint!
-    
     @IBOutlet weak var commentSendButton: UIButton!
     @IBOutlet weak var replyTargetLabel: UILabel!
     
@@ -37,15 +36,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var expandedCells = NSMutableSet()
     
     /*
-        updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
-            ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
-    */
+     updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
+     ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
+     */
     var updateMap = [String : String]()
     
     /*
-        postVoteUpdate = r = red vote, b = black(blue) vote, rb = red to blue, br = blue to red
- 
-    */
+     postVoteUpdate = r = red vote, b = black(blue) vote, rb = red to blue, br = blue to red
+     
+     */
     var postVoteUpdate : String!
     
     
@@ -70,7 +69,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                selector: #selector(keyboardWillHide(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillHide,
                                                object: nil)
-
+        
         
     }
     
@@ -126,7 +125,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         textInputContainer.isHidden = false
         replyTargetLabel.isHidden = false
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -538,8 +537,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         currentUserAction.changed = true
     }
     
-    @IBAction func textChangeListener(_ sender: Any) {
-        
+    @IBAction func textChangeListener(_ sender: UITextField) {
         if let input = textInput.text{
             if input.count > 0 {
                 commentSendButton.isEnabled = true
@@ -556,8 +554,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    
-    @IBAction func sendButtonTapped(_ sender: Any) {
+    @IBAction func sendButtonTapped(_ sender: UIButton) {
         let currentReplyTargetID = replyTargetID
         let currentGrandchildRealTargetID = grandchildRealTargetID
         
@@ -834,5 +831,5 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         return true
     }
-
+    
 }
