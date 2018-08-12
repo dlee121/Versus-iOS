@@ -594,7 +594,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="H" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Vd-rf-611">
-                                                    <rect key="frame" x="32" y="69.5" width="13" height="30"/>
+                                                    <rect key="frame" x="36" y="69.5" width="13" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -614,14 +614,14 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Mi-NA-HWN">
-                                                    <rect key="frame" x="53" y="69" width="18" height="30.5"/>
+                                                    <rect key="frame" x="57" y="69" width="18" height="30.5"/>
                                                     <state key="normal" image="brokenheart_grey"/>
                                                     <connections>
                                                         <action selector="brokenheartTapped:" destination="wRp-Wl-UwL" eventType="touchUpInside" id="qfN-YR-zy7"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sC-5A-CsB">
-                                                    <rect key="frame" x="71" y="69" width="24" height="30.5"/>
+                                                    <rect key="frame" x="79" y="69" width="24" height="30.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -659,14 +659,14 @@
                                                 <constraint firstItem="nun-Ao-p1T" firstAttribute="leading" secondItem="UQd-Mi-JZv" secondAttribute="leading" constant="1" id="58X-RI-xVH"/>
                                                 <constraint firstItem="GMm-O3-fqC" firstAttribute="top" secondItem="Zsi-vD-uC0" secondAttribute="topMargin" id="Bqn-Fx-9Gw"/>
                                                 <constraint firstItem="1vw-g8-AlF" firstAttribute="top" secondItem="0sC-5A-CsB" secondAttribute="bottom" constant="4" id="CdQ-9H-hZk"/>
-                                                <constraint firstItem="6Vd-rf-611" firstAttribute="leading" secondItem="nun-Ao-p1T" secondAttribute="trailing" id="CpD-FO-I5f"/>
+                                                <constraint firstItem="6Vd-rf-611" firstAttribute="leading" secondItem="nun-Ao-p1T" secondAttribute="trailing" constant="4" id="CpD-FO-I5f"/>
                                                 <constraint firstItem="UQd-Mi-JZv" firstAttribute="leading" secondItem="Zsi-vD-uC0" secondAttribute="leadingMargin" id="E9q-40-kB9"/>
                                                 <constraint firstItem="GMm-O3-fqC" firstAttribute="bottom" secondItem="UQd-Mi-JZv" secondAttribute="bottom" id="EOO-e8-15Y"/>
                                                 <constraint firstItem="btM-bC-vqT" firstAttribute="bottom" secondItem="xZQ-ib-APf" secondAttribute="bottom" id="FTI-hC-GCd"/>
                                                 <constraint firstItem="8Mi-NA-HWN" firstAttribute="top" secondItem="6Vd-rf-611" secondAttribute="top" id="Flm-1X-eqM"/>
                                                 <constraint firstItem="9GV-at-02i" firstAttribute="leading" secondItem="Zsi-vD-uC0" secondAttribute="leadingMargin" id="GEF-Xi-8dO"/>
                                                 <constraint firstItem="xZQ-ib-APf" firstAttribute="bottom" secondItem="0sC-5A-CsB" secondAttribute="bottom" id="JFU-9y-h68"/>
-                                                <constraint firstItem="0sC-5A-CsB" firstAttribute="leading" secondItem="8Mi-NA-HWN" secondAttribute="trailing" id="JrM-P9-GIC"/>
+                                                <constraint firstItem="0sC-5A-CsB" firstAttribute="leading" secondItem="8Mi-NA-HWN" secondAttribute="trailing" constant="4" id="JrM-P9-GIC"/>
                                                 <constraint firstItem="9GV-at-02i" firstAttribute="trailing" secondItem="UQd-Mi-JZv" secondAttribute="trailing" id="KrS-Qm-8iQ"/>
                                                 <constraint firstItem="9GV-at-02i" firstAttribute="top" secondItem="Zsi-vD-uC0" secondAttribute="topMargin" id="KzT-Nr-L2r"/>
                                                 <constraint firstItem="GMm-O3-fqC" firstAttribute="leading" secondItem="UQd-Mi-JZv" secondAttribute="trailing" constant="8" id="LBs-uc-rbt"/>

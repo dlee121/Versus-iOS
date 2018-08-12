@@ -375,7 +375,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 { //for RootPage, first item of the comments list is a placeholder for the post object
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCard", for: indexPath) as? PostCardTableViewCell
-            cell!.setCell(post: currentPost, votedSide: currentUserAction.votedSide)
+            cell!.setCell(post: currentPost, votedSide: currentUserAction.votedSide, sortType: "Popular")
             cell!.delegate = self
             return cell!
         }

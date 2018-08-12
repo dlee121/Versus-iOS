@@ -144,17 +144,7 @@ class CommentCardTableViewCell: UITableViewCell {
     }
     
     func setTopCardCell(comment : VSComment, row : Int, sortType : String){
-        switch sortType {
-        case "Popular":
-            sortButton.setPostPageSortLabel(imageName: "sort_popular", suffix: " Popular")
-        case "Most Recent":
-            sortButton.setPostPageSortLabel(imageName: "sort_most_recent", suffix: " Most Recent")
-        case "Chronological":
-            sortButton.setPostPageSortLabel(imageName: "sort_chronological", suffix: " Chronological")
-            
-        default:
-            break
-        }
+        sortButton.setPostPageSortLabel(imageName: "sort_"+sortType, suffix: " "+sortType)
         
         currentComment = comment
         author.text = comment.author
@@ -180,17 +170,7 @@ class CommentCardTableViewCell: UITableViewCell {
     }
     
     func setTopCardCellWithSelection(comment : VSComment, hearted : Bool, row : Int, sortType : String){
-        switch sortType {
-        case "Popular":
-            sortButton.setPostPageSortLabel(imageName: "sort_popular", suffix: " Popular")
-        case "Most Recent":
-            sortButton.setPostPageSortLabel(imageName: "sort_most_recent", suffix: " Most Recent")
-        case "Chronological":
-            sortButton.setPostPageSortLabel(imageName: "sort_chronological", suffix: " Chronological")
-            
-        default:
-            break
-        }
+        sortButton.setPostPageSortLabel(imageName: "sort_"+sortType, suffix: " "+sortType)
         
         currentComment = comment
         author.text = comment.author

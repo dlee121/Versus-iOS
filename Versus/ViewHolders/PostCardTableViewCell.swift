@@ -41,9 +41,9 @@ class PostCardTableViewCell: UITableViewCell {
     var currentPost : PostObject!
     var delegate:PostPageDelegator!
     
-    func setCell(post : PostObject, votedSide : String){
+    func setCell(post : PostObject, votedSide : String, sortType : String){
         print("setting up post card")
-        
+        sortButton.setPostPageSortLabel(imageName: "sort_"+sortType, suffix: " "+sortType)
         currentPost = post
         question.text = post.question
         redname.text = post.redname
