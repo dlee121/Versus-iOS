@@ -36,6 +36,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var ref: DatabaseReference!
     var expandedCells = NSMutableSet()
     
+    var profileTap, vmrTap : Bool!
+    var vmrComment : VSComment?
+    
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
             ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -334,7 +337,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 if let secondChild = firstChild.tailSibling {
                     comments.append(secondChild.nodeContent)
                     
-                    if let firstGrandchild = firstChild.firstChild {
+                    if let firstGrandchild = secondChild.firstChild {
                         comments.append(firstGrandchild.nodeContent)
                         
                         if let secondGrandchild = firstGrandchild.tailSibling {
@@ -402,12 +405,21 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let profileVC = segue.destination as? ProfileViewController else {return}
-        profileVC.currentUsername = tappedUsername!
+        if profileTap {
+            guard let profileVC = segue.destination as? ProfileViewController else {return}
+            profileVC.currentUsername = tappedUsername!
+        }
+        else if vmrComment != nil{
+            guard let childPageVC = segue.destination as? ChildPageViewController else {return}
+            let view = childPageVC.view //to load the view
+            childPageVC.setUpChildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction)
+        }
         
     }
     
     func callSegueFromCell(profileUsername: String) {
+        profileTap = true
+        vmrTap = false
         tappedUsername = profileUsername
         //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
         performSegue(withIdentifier: "rootToProfile", sender: self)
@@ -826,6 +838,14 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.selectRow(at: IndexPath(row: row, section: 0), animated: true, scrollPosition: UITableViewScrollPosition.top)
         //tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: UITableViewScrollPosition.top, animated: true)
         
+    }
+    
+    func viewMoreRepliesTapped(topCardComment: VSComment) {
+        vmrTap = true
+        profileTap = false
+        vmrComment = topCardComment
+        //go to child page
+        performSegue(withIdentifier: "rootToChild", sender: self)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

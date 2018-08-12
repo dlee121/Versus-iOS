@@ -284,7 +284,7 @@ class CommentCardTableViewCell: UITableViewCell {
     
     
     @IBAction func viewMoreTapped(_ sender: UIButton) {
-        print("view more tapped")
+        delegate.viewMoreRepliesTapped(topCardComment: currentComment)
     }
     
 }

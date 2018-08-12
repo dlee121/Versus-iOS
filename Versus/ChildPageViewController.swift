@@ -19,7 +19,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var commentSendButton: UIButton!
     @IBOutlet weak var replyTargetLabel: UILabel!
     
-    
     var currentPost : PostObject!
     var comments = [VSComment]()
     let apiClient = VSVersusAPIClient.default()
@@ -34,6 +33,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     var replyTargetRowNumber : Int?
     var ref: DatabaseReference!
     var expandedCells = NSMutableSet()
+    var topCardComment : VSComment!
     
     /*
      updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -131,7 +131,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    func setUpRootPage(post : PostObject, userAction : UserAction){
+    func setUpChildPage(post : PostObject, comment : VSComment, userAction : UserAction){
         comments.removeAll()
         updateMap.removeAll()
         expandedCells.removeAllObjects()
@@ -140,7 +140,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             self.tableView.reloadData()
         }
         currentPost = post
-        comments.append(VSComment()) //placeholder for post object
+        topCardComment = comment
+        comments.append(topCardComment)
         currentUserAction = userAction
         commentsQuery()
         
@@ -149,7 +150,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     func commentsQuery(){
         
         //get the root comments, children, and grandchildren
-        apiClient.commentslistGet(c: currentPost.post_id, d: nil, a: "rci", b: "0").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        apiClient.commentslistGet(c: topCardComment.comment_id, d: nil, a: "rci", b: "0").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -204,8 +205,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                             else {
                                 if let cqResponses = cqTask.result?.responses {
                                     var rIndex = 0
-                                    var gcqPayload = ""
-                                    var gcqPayloadIndex = 0
                                     
                                     for cqResponseItem in cqResponses {
                                         let cqHitsObject = cqResponseItem.hits
@@ -233,69 +232,11 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                                 self.nodeMap[childComment.comment_id] = currNode
                                             }
                                             
-                                            //build payload for grandchild query
-                                            if gcqPayloadIndex == 0 {
-                                                gcqPayload.append(childComment.comment_id)
-                                            }
-                                            else {
-                                                gcqPayload.append(","+childComment.comment_id)
-                                            }
-                                            
-                                            gcqPayloadIndex += 1
-                                            
                                         }
                                         rIndex += 1
                                     }
                                     
-                                    if gcqPayloadIndex > 0 {
-                                        
-                                        //grandchild comments query
-                                        self.apiClient.cgcGet(a: "cgc", b: gcqPayload).continueWith(block:) {(gcqTask: AWSTask) -> AnyObject? in
-                                            if gcqTask.error != nil {
-                                                DispatchQueue.main.async {
-                                                    print(gcqTask.error!)
-                                                }
-                                            }
-                                            else {
-                                                if let gcqResponses = gcqTask.result?.responses {
-                                                    var cIndex = 0
-                                                    for gcqResponseItem in gcqResponses {
-                                                        let gcqHitsObject = gcqResponseItem.hits
-                                                        let currentParent = self.childComments[cIndex]
-                                                        currentParent.child_count = gcqHitsObject?.total!.intValue //set child count for parent child comment
-                                                        let parentNode = self.nodeMap[currentParent.comment_id]
-                                                        var prevNode : VSCNode?
-                                                        for gcqCommentItem in gcqResponseItem.hits!.hits! {
-                                                            
-                                                            let grandchildComment = VSComment(itemSource: gcqCommentItem.source!, id: gcqCommentItem.id!)
-                                                            grandchildComment.nestedLevel = 2
-                                                            self.grandchildComments.append(grandchildComment)
-                                                            
-                                                            if prevNode == nil {
-                                                                prevNode = VSCNode(comment: grandchildComment)
-                                                                parentNode?.firstChild = prevNode
-                                                                prevNode?.parent = parentNode
-                                                                self.nodeMap[grandchildComment.comment_id] = prevNode
-                                                            }
-                                                            else {
-                                                                let currNode = VSCNode(comment: grandchildComment)
-                                                                prevNode?.tailSibling = currNode
-                                                                currNode.headSibling = prevNode
-                                                                self.nodeMap[grandchildComment.comment_id] = currNode
-                                                            }
-                                                        }
-                                                        cIndex += 1
-                                                    }
-                                                }
-                                                //sets the comments list for tableView using the nodeMap
-                                                self.setComments()
-                                            }
-                                            return nil
-                                        }
-                                    }
-                                    else { //no child comments
-                                        self.setComments()
-                                    }
+                                    self.setComments()
                                 }
                             }
                             return nil
@@ -322,24 +263,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             if let firstChild = currentRootNode?.firstChild {
                 comments.append(firstChild.nodeContent)
                 
-                if let firstGrandchild = firstChild.firstChild {
-                    comments.append(firstGrandchild.nodeContent)
-                    
-                    if let secondGrandchild = firstGrandchild.tailSibling {
-                        comments.append(secondGrandchild.nodeContent)
-                    }
-                }
-                
                 if let secondChild = firstChild.tailSibling {
                     comments.append(secondChild.nodeContent)
-                    
-                    if let firstGrandchild = firstChild.firstChild {
-                        comments.append(firstGrandchild.nodeContent)
-                        
-                        if let secondGrandchild = firstGrandchild.tailSibling {
-                            comments.append(secondGrandchild.nodeContent)
-                        }
-                    }
                 }
             }
             
@@ -357,10 +282,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 321
-        }
-        else if expandedCells.contains(indexPath.row) {
+        if expandedCells.contains(indexPath.row) {
             return 321
         }
         else {
@@ -369,35 +291,26 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 { //for RootPage, first item of the comments list is a placeholder for the post object
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PostCard", for: indexPath) as? PostCardTableViewCell
-            cell!.setCell(post: currentPost, votedSide: currentUserAction.votedSide)
-            cell!.delegate = self
-            return cell!
-        }
-        else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
-            let comment = comments[indexPath.row]
-            if let selection = currentUserAction.actionRecord[comment.comment_id] {
-                switch selection {
-                case "N":
-                    cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
-                case "U":
-                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: true, row: indexPath.row)
-                case "D":
-                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: false, row: indexPath.row)
-                default:
-                    cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
-                }
-            }
-            else {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
+        let comment = comments[indexPath.row]
+        if let selection = currentUserAction.actionRecord[comment.comment_id] {
+            switch selection {
+            case "N":
+                cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+            case "U":
+                cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: true, row: indexPath.row)
+            case "D":
+                cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: false, row: indexPath.row)
+            default:
                 cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
             }
-            cell!.delegate = self
-            
-            return cell!
-            
         }
+        else {
+            cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+        }
+        cell!.delegate = self
+        
+        return cell!
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -413,51 +326,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func resizePostCardOnVote(red : Bool){
-        
-        if red { //voted left side
-            switch currentUserAction.votedSide {
-            case "none":
-                //this is a new vote; send notification to author
-                sendPostVoteNotification()
-                
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "r")
-                currentPost.redcount = NSNumber(value: currentPost.redcount.intValue + 1)
-                showToast(message: "Vote Submitted", length: 14)
-            case "BLK":
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "br")
-                currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue - 1)
-                currentPost.redcount = NSNumber(value: currentPost.redcount.intValue + 1)
-                showToast(message: "Vote Submitted", length: 14)
-            default:
-                break;
-            }
-            
-            currentUserAction.votedSide = "RED"
-        }
-        else { //voted right side, black/blue
-            switch currentUserAction.votedSide {
-            case "none":
-                //this is a new vote; send notification to author
-                sendPostVoteNotification()
-                
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "b")
-                currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue + 1)
-                showToast(message: "Vote Submitted", length: 14)
-            case "RED":
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "rb")
-                currentPost.redcount = NSNumber(value: currentPost.redcount.intValue - 1)
-                currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue + 1)
-                showToast(message: "Vote Submitted", length: 14)
-            default:
-                break;
-            }
-            
-            currentUserAction.votedSide = "BLK"
-        }
-        
-        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
-        
-        currentUserAction.changed = true
+        //empty method to conform to PostPageDelegator protocol
         
     }
     
@@ -823,6 +692,10 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.selectRow(at: IndexPath(row: row, section: 0), animated: true, scrollPosition: UITableViewScrollPosition.top)
         //tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: UITableViewScrollPosition.top, animated: true)
         
+    }
+    
+    func viewMoreRepliesTapped(topCardComment: VSComment) {
+        //go to grandchild page
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

@@ -973,8 +973,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="Jk1-If-Hre" id="mJU-Ti-mDa"/>
-                                    <outlet property="delegate" destination="Jk1-If-Hre" id="cPb-ve-ka4"/>
+                                    <outlet property="dataSource" destination="X1q-ax-jCK" id="0ee-dl-z7E"/>
+                                    <outlet property="delegate" destination="X1q-ax-jCK" id="ya5-Ba-UPL"/>
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edV-uV-NmA">

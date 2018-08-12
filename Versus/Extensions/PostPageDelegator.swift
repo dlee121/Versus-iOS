@@ -8,4 +8,5 @@ protocol PostPageDelegator {
     func endUpdates()
     func endUpdatesForSeeLess(row : Int)
     func replyButtonTapped(replyTarget : VSComment, row : Int)
+    func viewMoreRepliesTapped(topCardComment : VSComment)
 }
