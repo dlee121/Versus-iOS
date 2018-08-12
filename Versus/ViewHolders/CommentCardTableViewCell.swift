@@ -19,6 +19,7 @@ class CommentCardTableViewCell: UITableViewCell {
     @IBOutlet weak var brokenheartButton: UIButton!
     @IBOutlet weak var seeMoreButton: UIButton!
     @IBOutlet weak var viewMoreReplies: UIButton!
+    @IBOutlet weak var sortButton: UILabel!
     
     
     @IBOutlet weak var leftMargin: NSLayoutConstraint!
@@ -140,6 +141,84 @@ class CommentCardTableViewCell: UITableViewCell {
             viewMoreReplies.isHidden = true
             viewMoreHeight.constant = 0
         }
+    }
+    
+    func setTopCardCell(comment : VSComment, row : Int, sortType : String){
+        switch sortType {
+        case "Popular":
+            sortButton.setPostPageSortLabel(imageName: "sort_popular", suffix: " Popular")
+        case "Most Recent":
+            sortButton.setPostPageSortLabel(imageName: "sort_most_recent", suffix: " Most Recent")
+        case "Chronological":
+            sortButton.setPostPageSortLabel(imageName: "sort_chronological", suffix: " Chronological")
+            
+        default:
+            break
+        }
+        
+        currentComment = comment
+        author.text = comment.author
+        time.text = getTimeString(time: comment.time)
+        content.text = comment.content
+        
+        DispatchQueue.main.async {
+            if self.content.isTruncated || self.content.numberOfLines == 0{ //if content is truncated, or if numberOfLines == 0 which See More was tapped
+                self.showSeeMore()
+            }
+            else {
+                self.hideSeeMore()
+            }
+        }
+        
+        hearts.text = "\(comment.upvotes)"
+        brokenhearts.text = "\(comment.downvotes)"
+        heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
+        brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
+        commentVote = none
+        
+        rowNumber = row
+    }
+    
+    func setTopCardCellWithSelection(comment : VSComment, hearted : Bool, row : Int, sortType : String){
+        switch sortType {
+        case "Popular":
+            sortButton.setPostPageSortLabel(imageName: "sort_popular", suffix: " Popular")
+        case "Most Recent":
+            sortButton.setPostPageSortLabel(imageName: "sort_most_recent", suffix: " Most Recent")
+        case "Chronological":
+            sortButton.setPostPageSortLabel(imageName: "sort_chronological", suffix: " Chronological")
+            
+        default:
+            break
+        }
+        
+        currentComment = comment
+        author.text = comment.author
+        time.text = getTimeString(time: comment.time)
+        content.text = comment.content
+        
+        DispatchQueue.main.async {
+            if self.content.isTruncated {
+                self.showSeeMore()
+            }
+            else {
+                self.hideSeeMore()
+            }
+        }
+        hearts.text = "\(comment.upvotes)"
+        brokenhearts.text = "\(comment.downvotes)"
+        if hearted {
+            heartButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
+            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
+            commentVote = upvoted
+        }
+        else {
+            heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
+            brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_blue"), for: .normal)
+            commentVote = downvoted
+        }
+        
+        rowNumber = row
     }
 
     

@@ -24,7 +24,7 @@ extension UILabel
         self.attributedText = myString
     }
     
-    func setSelectedCategoryLabel(imageName: String, imageHeight: CGFloat, suffix : String) {
+    func setSelectedCategoryLabel(imageName: String, imageHeight: CGFloat, suffix: String) {
         if self.text!.isEmpty {
             self.text = ""
         }
@@ -42,6 +42,29 @@ extension UILabel
         let attachment2:NSTextAttachment = NSTextAttachment()
         attachment2.image = UIImage(named: "close")
         attachment2.bounds = CGRect(x: 0.0, y: self.font.descender/2, width: imageHeight/2, height: imageHeight/2)
+        let attachmentString2:NSAttributedString = NSAttributedString(attachment: attachment2)
+        myString.append(attachmentString2)
+        
+        self.attributedText = myString
+    }
+    
+    func setPostPageSortLabel(imageName: String, suffix: String ) {
+        self.text = ""
+        
+        let attachment:NSTextAttachment = NSTextAttachment()
+        attachment.image = UIImage(named: imageName)
+        //attachment.setImageHeight(height: imageHeight)
+        attachment.bounds = CGRect(x: 0.0, y: self.font.descender*2, width: 28, height: 28)
+        
+        let attachmentString:NSAttributedString = NSAttributedString(attachment: attachment)
+        let myString:NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
+        myString.append(attachmentString)
+        myString.append(NSAttributedString(string: suffix))
+        
+        
+        let attachment2:NSTextAttachment = NSTextAttachment()
+        attachment2.image = UIImage(named: "arrow_dropdown_gray")
+        attachment2.bounds = CGRect(x: 0.0, y: self.font.descender*2, width: 28, height: 28)
         let attachmentString2:NSAttributedString = NSAttributedString(attachment: attachment2)
         myString.append(attachmentString2)
         

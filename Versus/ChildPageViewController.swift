@@ -144,6 +144,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         comments.append(topCardComment)
         currentUserAction = userAction
         commentsQuery()
+        nodeMap[comment.comment_id] = VSCNode(comment: comment)
         
     }
     
@@ -282,6 +283,10 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 152
+        }
+        
         if expandedCells.contains(indexPath.row) {
             return 321
         }
@@ -291,26 +296,51 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
-        let comment = comments[indexPath.row]
-        if let selection = currentUserAction.actionRecord[comment.comment_id] {
-            switch selection {
-            case "N":
-                cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
-            case "U":
-                cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: true, row: indexPath.row)
-            case "D":
-                cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: false, row: indexPath.row)
-            default:
-                cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TopCard", for: indexPath) as? CommentCardTableViewCell
+            let comment = comments[indexPath.row]
+            if let selection = currentUserAction.actionRecord[comment.comment_id] {
+                switch selection {
+                case "N":
+                    cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: "Popular")
+                case "U":
+                    cell!.setTopCardCellWithSelection(comment: comment, hearted: true, row: indexPath.row, sortType: "Popular")
+                case "D":
+                    cell!.setTopCardCellWithSelection(comment: comment, hearted: false, row: indexPath.row, sortType: "Popular")
+                default:
+                    cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: "Popular")
+                }
             }
+            else {
+                cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: "Popular")
+            }
+            cell!.delegate = self
+            
+            return cell!
         }
         else {
-            cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
+            let comment = comments[indexPath.row]
+            if let selection = currentUserAction.actionRecord[comment.comment_id] {
+                switch selection {
+                case "N":
+                    cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+                case "U":
+                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: true, row: indexPath.row)
+                case "D":
+                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: false, row: indexPath.row)
+                default:
+                    cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+                }
+            }
+            else {
+                cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+            }
+            cell!.delegate = self
+            
+            return cell!
         }
-        cell!.delegate = self
         
-        return cell!
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
