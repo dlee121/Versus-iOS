@@ -18,10 +18,12 @@ class CommentCardTableViewCell: UITableViewCell {
     @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var brokenheartButton: UIButton!
     @IBOutlet weak var seeMoreButton: UIButton!
+    @IBOutlet weak var viewMoreReplies: UIButton!
     
     
     @IBOutlet weak var leftMargin: NSLayoutConstraint!
     
+    @IBOutlet weak var viewMoreRepliesCenter: NSLayoutConstraint!
     @IBOutlet weak var replyButtonTrailing: NSLayoutConstraint! //0 or 16
     @IBOutlet weak var seeMoreWidth: NSLayoutConstraint! //0 or 66
     
@@ -59,6 +61,26 @@ class CommentCardTableViewCell: UITableViewCell {
         leftMargin.constant = indent * 48
         
         rowNumber = row
+        
+        if let childcount = comment.child_count {
+            if childcount > 2 {
+                viewMoreRepliesCenter.constant = indent * 24
+                viewMoreReplies.isHidden = false
+                
+                if childcount == 3 {
+                    viewMoreReplies.setTitle("View 1 More Reply", for: .normal)
+                }
+                else {
+                    viewMoreReplies.setTitle("View \(childcount-2) More Replies", for: .normal)
+                }
+            }
+            else {
+                viewMoreReplies.isHidden = true
+            }
+        }
+        else {
+            viewMoreReplies.isHidden = true
+        }
     }
     
     func setCellWithSelection(comment : VSComment, indent : CGFloat, hearted : Bool, row : Int){
@@ -252,18 +274,17 @@ class CommentCardTableViewCell: UITableViewCell {
             
         }
         
-        
-        
-        
     }
     
     
     @IBAction func replyButtonTapped(_ sender: UIButton) {
-        
         delegate.replyButtonTapped(replyTarget: currentComment, row: rowNumber)
-        
-        
     }
     
-
+    
+    
+    @IBAction func viewMoreTapped(_ sender: UIButton) {
+        print("view more tapped")
+    }
+    
 }

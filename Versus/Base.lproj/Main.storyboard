@@ -642,12 +642,20 @@
                                                         <action selector="seeMoreTapped:" destination="wRp-Wl-UwL" eventType="touchUpInside" id="BVl-6A-SkP"/>
                                                     </connections>
                                                 </button>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1vw-g8-AlF">
+                                                    <rect key="frame" x="124" y="89" width="126" height="14.5"/>
+                                                    <state key="normal" title="View More Replies"/>
+                                                    <connections>
+                                                        <action selector="viewMoreTapped:" destination="wRp-Wl-UwL" eventType="touchUpInside" id="e9g-gM-Wss"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="UQd-Mi-JZv" firstAttribute="top" secondItem="Zsi-vD-uC0" secondAttribute="topMargin" id="2ip-C3-lyV"/>
                                                 <constraint firstItem="btM-bC-vqT" firstAttribute="trailing" secondItem="Zsi-vD-uC0" secondAttribute="trailingMargin" id="2n8-2Y-yCJ"/>
                                                 <constraint firstItem="nun-Ao-p1T" firstAttribute="leading" secondItem="UQd-Mi-JZv" secondAttribute="leading" constant="1" id="58X-RI-xVH"/>
                                                 <constraint firstItem="GMm-O3-fqC" firstAttribute="top" secondItem="Zsi-vD-uC0" secondAttribute="topMargin" id="Bqn-Fx-9Gw"/>
+                                                <constraint firstItem="1vw-g8-AlF" firstAttribute="top" secondItem="0sC-5A-CsB" secondAttribute="bottom" id="CdQ-9H-hZk"/>
                                                 <constraint firstItem="6Vd-rf-611" firstAttribute="leading" secondItem="nun-Ao-p1T" secondAttribute="trailing" id="CpD-FO-I5f"/>
                                                 <constraint firstItem="UQd-Mi-JZv" firstAttribute="leading" secondItem="Zsi-vD-uC0" secondAttribute="leadingMargin" id="E9q-40-kB9"/>
                                                 <constraint firstItem="GMm-O3-fqC" firstAttribute="bottom" secondItem="UQd-Mi-JZv" secondAttribute="bottom" id="EOO-e8-15Y"/>
@@ -673,6 +681,8 @@
                                                 <constraint firstItem="0sC-5A-CsB" firstAttribute="bottom" secondItem="8Mi-NA-HWN" secondAttribute="bottom" id="inj-F2-qZK"/>
                                                 <constraint firstItem="nun-Ao-p1T" firstAttribute="top" secondItem="AXi-bI-VON" secondAttribute="bottom" constant="8" id="jNa-ci-zfY"/>
                                                 <constraint firstItem="6Vd-rf-611" firstAttribute="top" secondItem="nun-Ao-p1T" secondAttribute="top" id="n10-Td-pfj"/>
+                                                <constraint firstItem="1vw-g8-AlF" firstAttribute="centerX" secondItem="Zsi-vD-uC0" secondAttribute="centerX" id="pzo-l3-Igf"/>
+                                                <constraint firstAttribute="bottom" secondItem="1vw-g8-AlF" secondAttribute="bottom" constant="4" id="rlv-6a-OD0"/>
                                                 <constraint firstItem="9GV-at-02i" firstAttribute="bottom" secondItem="UQd-Mi-JZv" secondAttribute="bottom" id="z9e-9t-KHQ"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -688,6 +698,8 @@
                                             <outlet property="seeMoreButton" destination="btM-bC-vqT" id="6vH-Ea-8fM"/>
                                             <outlet property="seeMoreWidth" destination="rZQ-sn-RQ4" id="7ee-di-utB"/>
                                             <outlet property="time" destination="GMm-O3-fqC" id="5rY-X0-S3y"/>
+                                            <outlet property="viewMoreReplies" destination="1vw-g8-AlF" id="DpL-Xg-Qxw"/>
+                                            <outlet property="viewMoreRepliesCenter" destination="pzo-l3-Igf" id="r99-KX-MAe"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
