@@ -595,8 +595,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                     }
                 }
                 else {
-                    // a root comment to the post
-                    let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentPost.post_id, postID: currentPost.post_id, newContent: text, rootID: "0")
+                    // a reply to the top card
+                    let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: topCardComment.comment_id, postID: topCardComment.post_id, newContent: text, rootID: "0")
                     newComment.nestedLevel = 0 //root comment in root page has nested level of 0
                     
                     apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
