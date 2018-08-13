@@ -35,7 +35,8 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     var ref: DatabaseReference!
     var expandedCells = NSMutableSet()
     var topCardComment : VSComment!
-    var parentVC : RootPageViewController?
+    var parentVC : UIViewController?
+    var fromRoot : Bool!
     
     /*
      updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -80,8 +81,12 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         textInput.resignFirstResponder()
         
         if isMovingFromParentViewController && parentVC != nil {
-            parentVC!.tableView.reloadData()
-            
+            if fromRoot {
+                (parentVC! as! RootPageViewController).tableView.reloadData()
+            }
+            else {
+                (parentVC! as! ChildPageViewController).tableView.reloadData()
+            }
         }
         
         if currentUserAction.changed {
@@ -137,7 +142,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         // Dispose of any resources that can be recreated.
     }
     
-    func setUpGrandchildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController){
+    func setUpGrandchildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : UIViewController){
         
         parentVC = parentPage
         comments.removeAll()
@@ -398,12 +403,23 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                 currentUserAction.actionRecord[commentID] = "U"
                 thisComment.upvotes += 1
             }
-            
-            if parentVC != nil {
-                if let node = parentVC?.nodeMap[thisComment.comment_id] {
-                    node.votedUpdate(upvotes: thisComment.upvotes, downvotes: thisComment.downvotes)
+            if fromRoot {
+                if let parent = parentVC as! RootPageViewController? {
+                    if let node = parent.nodeMap[thisComment.comment_id] {
+                        node.votedUpdate(upvotes: thisComment.upvotes, downvotes: thisComment.downvotes)
+                    }
                 }
             }
+            else {
+                if let parent = parentVC as! ChildPageViewController? {
+                    if let node = parent.nodeMap[thisComment.comment_id] {
+                        node.votedUpdate(upvotes: thisComment.upvotes, downvotes: thisComment.downvotes)
+                    }
+                }
+            }
+            
+            
+            
         }
         
         currentUserAction.changed = true
@@ -447,9 +463,18 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                 thisComment.downvotes += 1
             }
             
-            if parentVC != nil {
-                if let node = parentVC?.nodeMap[thisComment.comment_id] {
-                    node.votedUpdate(upvotes: thisComment.upvotes, downvotes: thisComment.downvotes)
+            if fromRoot {
+                if let parent = parentVC as! RootPageViewController? {
+                    if let node = parent.nodeMap[thisComment.comment_id] {
+                        node.votedUpdate(upvotes: thisComment.upvotes, downvotes: thisComment.downvotes)
+                    }
+                }
+            }
+            else {
+                if let parent = parentVC as! ChildPageViewController? {
+                    if let node = parent.nodeMap[thisComment.comment_id] {
+                        node.votedUpdate(upvotes: thisComment.upvotes, downvotes: thisComment.downvotes)
+                    }
                 }
             }
         }
@@ -529,6 +554,46 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                             
                             self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
                             
+                            if self.fromRoot {
+                                if let parent = self.parentVC as! RootPageViewController? {
+                                    if let node = parent.nodeMap[self.topCardComment.comment_id] {
+                                        node.nodeContent.child_count! += 1
+                                        if let prevFirstChild = node.firstChild {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.tailSibling = prevFirstChild
+                                            prevFirstChild.headSibling = newCommentNode
+                                            prevFirstChild.parent = nil
+                                            newCommentNode.parent = node
+                                        }
+                                        else {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.parent = node.firstChild
+                                        }
+                                        parent.setCommentsFromChildPage()
+                                    }
+                                }
+                            }
+                            else {
+                                if let parent = self.parentVC as! ChildPageViewController? {
+                                    if let node = parent.nodeMap[self.topCardComment.comment_id] {
+                                        node.nodeContent.child_count! += 1
+                                        if let prevFirstChild = node.firstChild {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.tailSibling = prevFirstChild
+                                            prevFirstChild.headSibling = newCommentNode
+                                            prevFirstChild.parent = nil
+                                            newCommentNode.parent = node
+                                        }
+                                        else {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.parent = node.firstChild
+                                        }
+                                        parent.setCommentsFromChildPage()
+                                    }
+                                }
+                            }
+                            
+                            
                         }
                         return nil
                     }
@@ -567,6 +632,45 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                             }
                             
                             self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
+                            
+                            if self.fromRoot {
+                                if let parent = self.parentVC as! RootPageViewController? {
+                                    if let node = parent.nodeMap[self.topCardComment.comment_id] {
+                                        node.nodeContent.child_count! += 1
+                                        if let prevFirstChild = node.firstChild {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.tailSibling = prevFirstChild
+                                            prevFirstChild.headSibling = newCommentNode
+                                            prevFirstChild.parent = nil
+                                            newCommentNode.parent = node
+                                        }
+                                        else {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.parent = node.firstChild
+                                        }
+                                        parent.setCommentsFromChildPage()
+                                    }
+                                }
+                            }
+                            else {
+                                if let parent = self.parentVC as! ChildPageViewController? {
+                                    if let node = parent.nodeMap[self.topCardComment.comment_id] {
+                                        node.nodeContent.child_count! += 1
+                                        if let prevFirstChild = node.firstChild {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.tailSibling = prevFirstChild
+                                            prevFirstChild.headSibling = newCommentNode
+                                            prevFirstChild.parent = nil
+                                            newCommentNode.parent = node
+                                        }
+                                        else {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.parent = node.firstChild
+                                        }
+                                        parent.setCommentsFromChildPage()
+                                    }
+                                }
+                            }
                             
                         }
                         return nil

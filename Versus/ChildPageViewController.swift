@@ -80,7 +80,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
         if isMovingFromParentViewController && parentVC != nil {
             parentVC!.tableView.reloadData()
-            
         }
         
         if currentUserAction.changed {
@@ -528,7 +527,23 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                 }
                                 
                                 self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
-                                
+                                if self.parentVC != nil {
+                                    if let node = self.parentVC!.nodeMap[currentReplyTargetID!] {
+                                        node.nodeContent.child_count! += 1
+                                        if let prevFirstChild = node.firstChild {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.tailSibling = prevFirstChild
+                                            prevFirstChild.headSibling = newCommentNode
+                                            prevFirstChild.parent = nil
+                                            newCommentNode.parent = node
+                                        }
+                                        else {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.parent = node.firstChild
+                                        }
+                                        self.parentVC!.setCommentsFromChildPage()
+                                    }
+                                }
                             }
                             return nil
                         }
@@ -581,6 +596,23 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                 }
                                 
                                 self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
+                                if self.parentVC != nil {
+                                    if let node = self.parentVC!.nodeMap[currentReplyTargetID!] {
+                                        node.nodeContent.child_count! += 1
+                                        if let prevFirstChild = node.firstChild {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.tailSibling = prevFirstChild
+                                            prevFirstChild.headSibling = newCommentNode
+                                            prevFirstChild.parent = nil
+                                            newCommentNode.parent = node
+                                        }
+                                        else {
+                                            node.firstChild = newCommentNode
+                                            newCommentNode.parent = node.firstChild
+                                        }
+                                        self.parentVC!.setCommentsFromChildPage()
+                                    }
+                                }
                                 
                             }
                             return nil
@@ -622,7 +654,23 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                             }
                             
                             self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
-                            
+                            if self.parentVC != nil {
+                                if let node = self.parentVC!.nodeMap[self.topCardComment.comment_id] {
+                                    node.nodeContent.child_count! += 1
+                                    if let prevFirstChild = node.firstChild {
+                                        node.firstChild = newCommentNode
+                                        newCommentNode.tailSibling = prevFirstChild
+                                        prevFirstChild.headSibling = newCommentNode
+                                        prevFirstChild.parent = nil
+                                        newCommentNode.parent = node
+                                    }
+                                    else {
+                                        node.firstChild = newCommentNode
+                                        newCommentNode.parent = node.firstChild
+                                    }
+                                    self.parentVC!.setCommentsFromChildPage()
+                                }
+                            }
                         }
                         return nil
                     }
@@ -632,6 +680,31 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 
             }
         }
+    }
+    
+    
+    func setCommentsFromChildPage() {
+        comments.removeAll()
+        comments.append(topCardComment)
+        
+        for i in 0...rootComments.count-1{
+            let currentRootNode = nodeMap[rootComments[i].comment_id]
+            comments.append(currentRootNode!.nodeContent)
+            
+            if let firstChild = currentRootNode?.firstChild {
+                firstChild.nodeContent.nestedLevel = 1
+                comments.append(firstChild.nodeContent)
+                
+                var childNode = firstChild
+                while let tail = childNode.tailSibling {
+                    tail.nodeContent.nestedLevel = 1
+                    comments.append(tail.nodeContent)
+                    childNode = tail
+                }
+            }
+            
+        }
+        
     }
     
     func beginUpdatesForSeeMore(row : Int) {

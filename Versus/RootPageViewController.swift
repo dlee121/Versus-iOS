@@ -356,6 +356,58 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    func setCommentsFromChildPage() {
+        comments.removeAll()
+        comments.append(VSComment())
+        
+        for i in 0...rootComments.count-1{
+            let currentRootNode = nodeMap[rootComments[i].comment_id]
+            comments.append(currentRootNode!.nodeContent)
+            
+            if let firstChild = currentRootNode?.firstChild {
+                firstChild.nodeContent.nestedLevel = 1
+                comments.append(firstChild.nodeContent)
+                
+                if let firstGrandchild = firstChild.firstChild {
+                    firstGrandchild.nodeContent.nestedLevel = 2
+                    comments.append(firstGrandchild.nodeContent)
+                    
+                    var grandchildNode = firstGrandchild
+                    while let grandTail = grandchildNode.tailSibling {
+                        grandTail.nodeContent.nestedLevel = 2
+                        comments.append(grandTail.nodeContent)
+                        grandchildNode = grandTail
+                    }
+                }
+                
+                
+                var childNode = firstChild
+                while let tail = childNode.tailSibling {
+                    tail.nodeContent.nestedLevel = 1
+                    comments.append(tail.nodeContent)
+                    
+                    if let firstGrandchild = tail.firstChild {
+                        firstGrandchild.nodeContent.nestedLevel = 2
+                        comments.append(firstGrandchild.nodeContent)
+                        
+                        var grandchildNode = firstGrandchild
+                        while let grandTail = grandchildNode.tailSibling {
+                            grandTail.nodeContent.nestedLevel = 2
+                            comments.append(grandTail.nodeContent)
+                            grandchildNode = grandTail
+                        }
+                    }
+                    
+                    childNode = tail
+                }
+            }
+            
+        }
+        
+        print("new comments size: \(comments.count)")
+        
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments.count
@@ -419,6 +471,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             else {
                 guard let grandchildPageVC = segue.destination as? GrandchildPageViewController else {return}
                 let view = grandchildPageVC.view //to load the view
+                grandchildPageVC.fromRoot = true
                 grandchildPageVC.setUpGrandchildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction, parentPage: self)
             }
         }
