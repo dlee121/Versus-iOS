@@ -30,7 +30,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     var currentUserAction : UserAction!
     var tappedUsername : String?
     var keyboardIsShowing = false
-    var replyTargetID, grandchildRealTargetID, grandchildReplyTargetAuthor: String?
+    var grandchildRealTargetID, grandchildReplyTargetAuthor: String?
     var replyTargetRowNumber : Int?
     var ref: DatabaseReference!
     var expandedCells = NSMutableSet()
@@ -110,7 +110,6 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         tableView.scrollIndicatorInsets = .zero
         textInputContainerBottom.constant = 0
         textInput.text = ""
-        replyTargetID = nil
         grandchildRealTargetID = nil
         grandchildReplyTargetAuthor = nil
         replyTargetLabel.text = ""
@@ -139,6 +138,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func setUpGrandchildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController){
+        
         parentVC = parentPage
         comments.removeAll()
         updateMap.removeAll()
@@ -457,6 +457,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         currentUserAction.changed = true
     }
     
+    
     @IBAction func textChangeListener(_ sender: UITextField) {
         if let input = textInput.text{
             if input.count > 0 {
@@ -474,8 +475,8 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    
     @IBAction func sendButtonTapped(_ sender: UIButton) {
-        let currentReplyTargetID = replyTargetID
         let currentGrandchildRealTargetID = grandchildRealTargetID
         
         if let text = textInput.text {
@@ -484,109 +485,52 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                 textInput.text = ""
                 textInput.resignFirstResponder()
                 
-                if currentReplyTargetID != nil && currentReplyTargetID != topCardComment.comment_id {
+                if currentGrandchildRealTargetID != nil {
                     
+                    // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
                     
-                    if currentGrandchildRealTargetID != nil {
-                        // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
-                        
-                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: nodeMap[currentReplyTargetID!]!.nodeContent.parent_id)
-                        
-                        newComment.nestedLevel = 1
-                        
-                        apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                            if task.error != nil {
-                                DispatchQueue.main.async {
-                                    print(task.error!)
+                    let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: topCardComment.comment_id, postID: topCardComment.post_id, newContent: text, rootID: topCardComment.parent_id)
+                    
+                    newComment.nestedLevel = 0
+                    
+                    apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        if task.error != nil {
+                            DispatchQueue.main.async {
+                                print(task.error!)
+                            }
+                        }
+                        else {
+                            
+                            let newCommentNode = VSCNode(comment: newComment)
+                            
+                            if let grandchildReplyTargetNode = self.nodeMap[currentGrandchildRealTargetID!] {
+                                if let prevTailNode = grandchildReplyTargetNode.tailSibling {
+                                    prevTailNode.headSibling = newCommentNode
+                                    newCommentNode.tailSibling = prevTailNode
                                 }
+                                grandchildReplyTargetNode.tailSibling = newCommentNode
+                                newCommentNode.headSibling = grandchildReplyTargetNode
+                            }
+                            
+                            self.nodeMap[newComment.comment_id] = newCommentNode
+                            
+                            if self.replyTargetRowNumber! + 1 >= self.comments.count {
+                                self.comments.append(newComment)
                             }
                             else {
-                                
-                                let newCommentNode = VSCNode(comment: newComment)
-                                
-                                if let grandchildReplyTargetNode = self.nodeMap[currentGrandchildRealTargetID!] {
-                                    if let prevTailNode = grandchildReplyTargetNode.tailSibling {
-                                        prevTailNode.headSibling = newCommentNode
-                                        newCommentNode.tailSibling = prevTailNode
-                                    }
-                                    grandchildReplyTargetNode.tailSibling = newCommentNode
-                                    newCommentNode.headSibling = grandchildReplyTargetNode
-                                }
-                                
-                                self.nodeMap[newComment.comment_id] = newCommentNode
-                                
-                                if self.replyTargetRowNumber! + 1 >= self.comments.count {
-                                    self.comments.append(newComment)
-                                }
-                                else {
-                                    self.comments.insert(newComment, at: self.replyTargetRowNumber! + 1)
-                                }
-                                
-                                print("newCommentID: \(newComment.comment_id)")
-                                
-                                DispatchQueue.main.async {
-                                    self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
-                                }
-                                
-                                self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
-                                
+                                self.comments.insert(newComment, at: self.replyTargetRowNumber! + 1)
                             }
-                            return nil
+                            
+                            print("newCommentID: \(newComment.comment_id)")
+                            
+                            DispatchQueue.main.async {
+                                self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
+                            }
+                            
+                            self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
+                            
                         }
-                        
-                        
-                    }
-                    else { //a reply to a child comment
-                        var rootID : String!
-                        let replyTarget = nodeMap[currentReplyTargetID!]!.nodeContent
-                        let targetNestedLevel = replyTarget.nestedLevel
-                        
-                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: replyTarget.parent_id)
-                        
-                        newComment.nestedLevel = 1
-                        
-                        
-                        apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                            if task.error != nil {
-                                DispatchQueue.main.async {
-                                    print(task.error!)
-                                }
-                            }
-                            else {
-                                
-                                let newCommentNode = VSCNode(comment: newComment)
-                                
-                                let replyTargetNode = self.nodeMap[currentReplyTargetID!]
-                                
-                                if let prevTopChildNode = replyTargetNode!.firstChild {
-                                    replyTargetNode!.firstChild = newCommentNode
-                                    newCommentNode.tailSibling = prevTopChildNode
-                                    prevTopChildNode.headSibling = newCommentNode
-                                }
-                                else {
-                                    replyTargetNode!.firstChild = newCommentNode
-                                }
-                                self.nodeMap[newComment.comment_id] = newCommentNode
-                                
-                                if self.replyTargetRowNumber! + 1 >= self.comments.count {
-                                    self.comments.append(newComment)
-                                }
-                                else {
-                                    self.comments.insert(newComment, at: self.replyTargetRowNumber! + 1)
-                                }
-                                
-                                print("newCommentID: \(newComment.comment_id)")
-                                
-                                DispatchQueue.main.async {
-                                    self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
-                                }
-                                
-                                self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
-                                
-                            }
-                            return nil
-                        }
-                        
+                        return nil
                     }
                     
                     
@@ -703,7 +647,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if replyTargetID != nil {
+        if grandchildRealTargetID != nil {
             return tableView.indexPathForSelectedRow
         }
         return indexPath
@@ -715,18 +659,14 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         replyTargetRowNumber = row
         
         
-        if replyTarget.nestedLevel != 1 {
-            replyTargetID = replyTarget.comment_id
+        if replyTarget.comment_id == topCardComment.comment_id {
             grandchildRealTargetID = nil
             grandchildReplyTargetAuthor = nil
-            
             textInput.text = ""
         }
         else if replyTarget.comment_id != topCardComment.comment_id{
             grandchildReplyTargetAuthor = replyTarget.author
             grandchildRealTargetID = replyTarget.comment_id
-            replyTargetID = replyTarget.parent_id
-            
             textInput.text = "@"+grandchildReplyTargetAuthor! + " "
         }
         

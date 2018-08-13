@@ -1110,9 +1110,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
-                                            <action selector="textChangeListener:" destination="Jk1-If-Hre" eventType="editingChanged" id="22q-FQ-qRd"/>
                                             <action selector="textChangeListener:" destination="X1q-ax-jCK" eventType="editingChanged" id="NRm-Wq-pzR"/>
-                                            <outlet property="delegate" destination="Jk1-If-Hre" id="CkT-Bi-mTQ"/>
+                                            <outlet property="delegate" destination="X1q-ax-jCK" id="fZ0-8Z-JbG"/>
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9HX-S1-50D">
@@ -1120,7 +1119,6 @@
                                         <state key="normal" backgroundImage="ic_send_grey"/>
                                         <connections>
                                             <action selector="sendButtonTapped:" destination="X1q-ax-jCK" eventType="touchUpInside" id="hp8-Ct-L8X"/>
-                                            <action selector="sendButtonTapped:" destination="Jk1-If-Hre" eventType="touchUpInside" id="sVX-S3-rmS"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1497,17 +1495,15 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
-                                            <action selector="textChangeListener:" destination="X1q-ax-jCK" eventType="editingChanged" id="L2N-Un-F3Z"/>
-                                            <action selector="textChangeListener:" destination="Jk1-If-Hre" eventType="editingChanged" id="swl-Ki-4JW"/>
-                                            <outlet property="delegate" destination="Jk1-If-Hre" id="XVe-2Y-nsl"/>
+                                            <action selector="textChangeListener:" destination="Ef4-68-ZeO" eventType="editingChanged" id="kiI-tb-uCY"/>
+                                            <outlet property="delegate" destination="Ef4-68-ZeO" id="rk6-3B-r6T"/>
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDr-Ri-9QI">
                                         <rect key="frame" x="332" y="8" width="35" height="35"/>
                                         <state key="normal" backgroundImage="ic_send_grey"/>
                                         <connections>
-                                            <action selector="sendButtonTapped:" destination="Jk1-If-Hre" eventType="touchUpInside" id="dy2-Iu-3LK"/>
-                                            <action selector="sendButtonTapped:" destination="X1q-ax-jCK" eventType="touchUpInside" id="uG0-a7-G3l"/>
+                                            <action selector="sendButtonTapped:" destination="Ef4-68-ZeO" eventType="touchUpInside" id="ihG-F8-Q1E"/>
                                         </connections>
                                     </button>
                                 </subviews>
