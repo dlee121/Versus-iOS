@@ -235,6 +235,10 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let mainVC = parent as! MCViewController
+        mainVC.goToPostPageRoot(post: posts[indexPath.row])
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

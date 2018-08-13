@@ -749,9 +749,11 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
             }
         }
         
-        tableView.cellForRow(at: IndexPath(row: row, section: 0))?.selectionStyle = UITableViewCellSelectionStyle.gray
+        if replyTarget.comment_id != topCardComment.comment_id {
+            tableView.cellForRow(at: IndexPath(row: row, section: 0))?.selectionStyle = UITableViewCellSelectionStyle.gray
+        }
+        
         tableView.selectRow(at: IndexPath(row: row, section: 0), animated: true, scrollPosition: UITableViewScrollPosition.top)
-        //tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: UITableViewScrollPosition.top, animated: true)
         
     }
     

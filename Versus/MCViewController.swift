@@ -105,10 +105,6 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
     
-    func goToPostPageRoot(){
-        performSegue(withIdentifier: "mainToRoot", sender: self)
-        
-    }
     
     func goToPostPageRoot(post : PostObject){
         selectedPost = post

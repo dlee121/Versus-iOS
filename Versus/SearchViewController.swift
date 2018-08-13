@@ -168,7 +168,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        mainContainer.goToPostPageRoot()
+        mainContainer.goToPostPageRoot(post: posts[indexPath.row])
         //performSegue(withIdentifier: "searchToRoot", sender: self)
     }
     

@@ -38,8 +38,6 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     var retrievalSize = 16
     
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
