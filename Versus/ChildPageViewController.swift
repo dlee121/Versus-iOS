@@ -489,7 +489,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                         
                         let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: nodeMap[currentReplyTargetID!]!.nodeContent.parent_id)
                         
-                        newComment.nestedLevel = 2
+                        newComment.nestedLevel = 1
                         
                         apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
@@ -714,7 +714,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
         replyTargetRowNumber = row
         
-        if replyTarget.nestedLevel != 2 {
+        if replyTarget.nestedLevel != 1 {
             replyTargetID = replyTarget.comment_id
             grandchildRealTargetID = nil
             grandchildReplyTargetAuthor = nil
