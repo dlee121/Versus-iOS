@@ -10,13 +10,12 @@ import UIKit
 import FirebaseDatabase
 
 
-class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator, UITextFieldDelegate {
-
+class GrandchildPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator, UITextFieldDelegate {
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textInput: UITextField!
     @IBOutlet weak var textInputContainer: UIView!
     @IBOutlet weak var textInputContainerBottom: NSLayoutConstraint!
-    
     @IBOutlet weak var commentSendButton: UIButton!
     @IBOutlet weak var replyTargetLabel: UILabel!
     
@@ -35,20 +34,19 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var replyTargetRowNumber : Int?
     var ref: DatabaseReference!
     var expandedCells = NSMutableSet()
-    
-    var profileTap, vmrTap : Bool!
-    var vmrComment : VSComment?
+    var topCardComment : VSComment!
+    var parentVC : RootPageViewController?
     
     /*
-        updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
-            ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
-    */
+     updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
+     ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
+     */
     var updateMap = [String : String]()
     
     /*
-        postVoteUpdate = r = red vote, b = black(blue) vote, rb = red to blue, br = blue to red
- 
-    */
+     postVoteUpdate = r = red vote, b = black(blue) vote, rb = red to blue, br = blue to red
+     
+     */
     var postVoteUpdate : String!
     
     
@@ -73,13 +71,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                selector: #selector(keyboardWillHide(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillHide,
                                                object: nil)
-
+        
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         textInput.resignFirstResponder()
+        
+        if isMovingFromParentViewController && parentVC != nil {
+            parentVC!.tableView.reloadData()
+            
+        }
         
         if currentUserAction.changed {
             apiClient.recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
@@ -129,13 +132,14 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         textInputContainer.isHidden = false
         replyTargetLabel.isHidden = false
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func setUpRootPage(post : PostObject, userAction : UserAction){
+    func setUpGrandchildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController){
+        parentVC = parentPage
         comments.removeAll()
         updateMap.removeAll()
         nodeMap.removeAll()
@@ -145,16 +149,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             self.tableView.reloadData()
         }
         currentPost = post
-        comments.append(VSComment()) //placeholder for post object
+        topCardComment = comment
+        comments.append(topCardComment)
         currentUserAction = userAction
         commentsQuery()
+        nodeMap[comment.comment_id] = VSCNode(comment: comment)
         
     }
     
     func commentsQuery(){
         
         //get the root comments, children, and grandchildren
-        apiClient.commentslistGet(c: currentPost.post_id, d: nil, a: "rci", b: "0").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        apiClient.commentslistGet(c: topCardComment.comment_id, d: nil, a: "rci", b: "0").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -209,8 +215,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             else {
                                 if let cqResponses = cqTask.result?.responses {
                                     var rIndex = 0
-                                    var gcqPayload = ""
-                                    var gcqPayloadIndex = 0
                                     
                                     for cqResponseItem in cqResponses {
                                         let cqHitsObject = cqResponseItem.hits
@@ -238,69 +242,11 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                 self.nodeMap[childComment.comment_id] = currNode
                                             }
                                             
-                                            //build payload for grandchild query
-                                            if gcqPayloadIndex == 0 {
-                                                gcqPayload.append(childComment.comment_id)
-                                            }
-                                            else {
-                                                gcqPayload.append(","+childComment.comment_id)
-                                            }
-                                            
-                                            gcqPayloadIndex += 1
-                                            
                                         }
                                         rIndex += 1
                                     }
                                     
-                                    if gcqPayloadIndex > 0 {
-                                        
-                                        //grandchild comments query
-                                        self.apiClient.cgcGet(a: "cgc", b: gcqPayload).continueWith(block:) {(gcqTask: AWSTask) -> AnyObject? in
-                                            if gcqTask.error != nil {
-                                                DispatchQueue.main.async {
-                                                    print(gcqTask.error!)
-                                                }
-                                            }
-                                            else {
-                                                if let gcqResponses = gcqTask.result?.responses {
-                                                    var cIndex = 0
-                                                    for gcqResponseItem in gcqResponses {
-                                                        let gcqHitsObject = gcqResponseItem.hits
-                                                        let currentParent = self.childComments[cIndex]
-                                                        currentParent.child_count = gcqHitsObject?.total!.intValue //set child count for parent child comment
-                                                        let parentNode = self.nodeMap[currentParent.comment_id]
-                                                        var prevNode : VSCNode?
-                                                        for gcqCommentItem in gcqResponseItem.hits!.hits! {
-                                                            
-                                                            let grandchildComment = VSComment(itemSource: gcqCommentItem.source!, id: gcqCommentItem.id!)
-                                                            grandchildComment.nestedLevel = 2
-                                                            self.grandchildComments.append(grandchildComment)
-                                                            
-                                                            if prevNode == nil {
-                                                                prevNode = VSCNode(comment: grandchildComment)
-                                                                parentNode?.firstChild = prevNode
-                                                                prevNode?.parent = parentNode
-                                                                self.nodeMap[grandchildComment.comment_id] = prevNode
-                                                            }
-                                                            else {
-                                                                let currNode = VSCNode(comment: grandchildComment)
-                                                                prevNode?.tailSibling = currNode
-                                                                currNode.headSibling = prevNode
-                                                                self.nodeMap[grandchildComment.comment_id] = currNode
-                                                            }
-                                                        }
-                                                        cIndex += 1
-                                                    }
-                                                }
-                                                //sets the comments list for tableView using the nodeMap
-                                                self.setComments()
-                                            }
-                                            return nil
-                                        }
-                                    }
-                                    else { //no child comments
-                                        self.setComments()
-                                    }
+                                    self.setComments()
                                 }
                             }
                             return nil
@@ -327,24 +273,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             if let firstChild = currentRootNode?.firstChild {
                 comments.append(firstChild.nodeContent)
                 
-                if let firstGrandchild = firstChild.firstChild {
-                    comments.append(firstGrandchild.nodeContent)
-                    
-                    if let secondGrandchild = firstGrandchild.tailSibling {
-                        comments.append(secondGrandchild.nodeContent)
-                    }
-                }
-                
                 if let secondChild = firstChild.tailSibling {
                     comments.append(secondChild.nodeContent)
-                    
-                    if let firstGrandchild = secondChild.firstChild {
-                        comments.append(firstGrandchild.nodeContent)
-                        
-                        if let secondGrandchild = firstGrandchild.tailSibling {
-                            comments.append(secondGrandchild.nodeContent)
-                        }
-                    }
                 }
             }
             
@@ -363,9 +293,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 321
+            return 152
         }
-        else if expandedCells.contains(indexPath.row) {
+        
+        if expandedCells.contains(indexPath.row) {
             return 321
         }
         else {
@@ -374,10 +305,26 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 { //for RootPage, first item of the comments list is a placeholder for the post object
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PostCard", for: indexPath) as? PostCardTableViewCell
-            cell!.setCell(post: currentPost, votedSide: currentUserAction.votedSide, sortType: "Popular")
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TopCard", for: indexPath) as? CommentCardTableViewCell
+            let comment = comments[indexPath.row]
+            if let selection = currentUserAction.actionRecord[comment.comment_id] {
+                switch selection {
+                case "N":
+                    cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: "Popular")
+                case "U":
+                    cell!.setTopCardCellWithSelection(comment: comment, hearted: true, row: indexPath.row, sortType: "Popular")
+                case "D":
+                    cell!.setTopCardCellWithSelection(comment: comment, hearted: false, row: indexPath.row, sortType: "Popular")
+                default:
+                    cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: "Popular")
+                }
+            }
+            else {
+                cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: "Popular")
+            }
             cell!.delegate = self
+            
             return cell!
         }
         else {
@@ -401,84 +348,24 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             cell!.delegate = self
             
             return cell!
-            
         }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if profileTap {
-            guard let profileVC = segue.destination as? ProfileViewController else {return}
-            profileVC.currentUsername = tappedUsername!
-        }
-        else if vmrComment != nil{
-            if vmrComment!.nestedLevel == 0 {
-                guard let childPageVC = segue.destination as? ChildPageViewController else {return}
-                let view = childPageVC.view //to load the view
-                childPageVC.setUpChildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction, parentPage: self)
-            }
-            else {
-                guard let grandchildPageVC = segue.destination as? GrandchildPageViewController else {return}
-                let view = grandchildPageVC.view //to load the view
-                grandchildPageVC.setUpGrandchildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction, parentPage: self)
-            }
-        }
+        guard let profileVC = segue.destination as? ProfileViewController else {return}
+        profileVC.currentUsername = tappedUsername!
         
     }
     
     func callSegueFromCell(profileUsername: String) {
-        profileTap = true
-        vmrTap = false
         tappedUsername = profileUsername
         //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
-        performSegue(withIdentifier: "rootToProfile", sender: self)
+        performSegue(withIdentifier: "childToProfile", sender: self)
     }
     
     func resizePostCardOnVote(red : Bool){
-        
-        if red { //voted left side
-            switch currentUserAction.votedSide {
-            case "none":
-                //this is a new vote; send notification to author
-                sendPostVoteNotification()
-                
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "r")
-                currentPost.redcount = NSNumber(value: currentPost.redcount.intValue + 1)
-                showToast(message: "Vote Submitted", length: 14)
-            case "BLK":
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "br")
-                currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue - 1)
-                currentPost.redcount = NSNumber(value: currentPost.redcount.intValue + 1)
-                showToast(message: "Vote Submitted", length: 14)
-            default:
-                break;
-            }
-            
-            currentUserAction.votedSide = "RED"
-        }
-        else { //voted right side, black/blue
-            switch currentUserAction.votedSide {
-            case "none":
-                //this is a new vote; send notification to author
-                sendPostVoteNotification()
-                
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "b")
-                currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue + 1)
-                showToast(message: "Vote Submitted", length: 14)
-            case "RED":
-                apiClient.vGet(e: nil, c: currentPost.post_id, d: nil, a: "v", b: "rb")
-                currentPost.redcount = NSNumber(value: currentPost.redcount.intValue - 1)
-                currentPost.blackcount = NSNumber(value: currentPost.blackcount.intValue + 1)
-                showToast(message: "Vote Submitted", length: 14)
-            default:
-                break;
-            }
-            
-            currentUserAction.votedSide = "BLK"
-        }
-        
-        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
-        
-        currentUserAction.changed = true
+        //empty method to conform to PostPageDelegator protocol
         
     }
     
@@ -510,6 +397,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 apiClient.vGet(e: nil, c: thisComment.author, d: nil, a: "ui", b: "1")
                 currentUserAction.actionRecord[commentID] = "U"
                 thisComment.upvotes += 1
+            }
+            
+            if parentVC != nil {
+                if let node = parentVC?.nodeMap[thisComment.comment_id] {
+                    node.votedUpdate(upvotes: thisComment.upvotes, downvotes: thisComment.downvotes)
+                }
             }
         }
         
@@ -553,13 +446,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 currentUserAction.actionRecord[commentID] = "D"
                 thisComment.downvotes += 1
             }
+            
+            if parentVC != nil {
+                if let node = parentVC?.nodeMap[thisComment.comment_id] {
+                    node.votedUpdate(upvotes: thisComment.upvotes, downvotes: thisComment.downvotes)
+                }
+            }
         }
         
         currentUserAction.changed = true
     }
     
-    @IBAction func textChangeListener(_ sender: Any) {
-        
+    @IBAction func textChangeListener(_ sender: UITextField) {
         if let input = textInput.text{
             if input.count > 0 {
                 commentSendButton.isEnabled = true
@@ -576,8 +474,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    
-    @IBAction func sendButtonTapped(_ sender: Any) {
+    @IBAction func sendButtonTapped(_ sender: UIButton) {
         let currentReplyTargetID = replyTargetID
         let currentGrandchildRealTargetID = grandchildRealTargetID
         
@@ -587,13 +484,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 textInput.text = ""
                 textInput.resignFirstResponder()
                 
-                if currentReplyTargetID != nil {
+                if currentReplyTargetID != nil && currentReplyTargetID != topCardComment.comment_id {
+                    
+                    
                     if currentGrandchildRealTargetID != nil {
                         // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
                         
                         let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: nodeMap[currentReplyTargetID!]!.nodeContent.parent_id)
                         
-                        newComment.nestedLevel = 2
+                        newComment.nestedLevel = 1
                         
                         apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
@@ -637,22 +536,14 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         
                     }
-                    else { //a reply to a root comment or a child comment
+                    else { //a reply to a child comment
                         var rootID : String!
                         let replyTarget = nodeMap[currentReplyTargetID!]!.nodeContent
                         let targetNestedLevel = replyTarget.nestedLevel
-                        if targetNestedLevel == 0 { //reply to a root comment
-                            print("root reply tap")
-                            rootID = "0"
-                        }
-                        else { //reply to a child comment
-                            print("child reply tap")
-                            rootID = replyTarget.parent_id
-                        }
                         
-                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: rootID)
+                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: replyTarget.parent_id)
                         
-                        newComment.nestedLevel = targetNestedLevel! + 1 //root comment in root page has nested level of 0
+                        newComment.nestedLevel = 1
                         
                         
                         apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -697,10 +588,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         }
                         
                     }
+                    
+                    
                 }
                 else {
-                    // a root comment to the post
-                    let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentPost.post_id, postID: currentPost.post_id, newContent: text, rootID: "0")
+                    // a reply to the top card
+                    let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: topCardComment.comment_id, postID: topCardComment.post_id, newContent: text, rootID: "0")
                     newComment.nestedLevel = 0 //root comment in root page has nested level of 0
                     
                     apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -736,6 +629,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     }
                     
                 }
+                
+                
             }
         }
     }
@@ -815,17 +710,19 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func replyButtonTapped(replyTarget: VSComment, cell: CommentCardTableViewCell) {
+        
         let row = tableView.indexPath(for: cell)!.row
         replyTargetRowNumber = row
         
-        if replyTarget.nestedLevel != 2 {
+        
+        if replyTarget.nestedLevel != 1 {
             replyTargetID = replyTarget.comment_id
             grandchildRealTargetID = nil
             grandchildReplyTargetAuthor = nil
             
             textInput.text = ""
         }
-        else {
+        else if replyTarget.comment_id != topCardComment.comment_id{
             grandchildReplyTargetAuthor = replyTarget.author
             grandchildRealTargetID = replyTarget.comment_id
             replyTargetID = replyTarget.parent_id
@@ -849,18 +746,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func viewMoreRepliesTapped(topCardComment: VSComment) {
-        vmrTap = true
-        profileTap = false
-        vmrComment = topCardComment
-        if topCardComment.nestedLevel == 0 {
-            //go to child page
-            performSegue(withIdentifier: "rootToChild", sender: self)
-        }
-        else {
-            //go to child page
-            performSegue(withIdentifier: "rootToGrandchild", sender: self)
-        }
-        
+        //go to grandchild page
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -869,5 +755,5 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         return true
     }
-
+    
 }

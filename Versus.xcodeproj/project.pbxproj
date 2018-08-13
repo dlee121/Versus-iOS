@@ -62,6 +62,7 @@
 		70CB9E51211552D200D86E37 /* CommentCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E50211552D200D86E37 /* CommentCardTableViewCell.swift */; };
 		70CB9E532115671700D86E37 /* VSCNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E522115671700D86E37 /* VSCNode.swift */; };
 		70CB9E552116976100D86E37 /* UserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E542116976100D86E37 /* UserAction.swift */; };
+		70E331D621212454007414D6 /* GrandchildPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E331D521212454007414D6 /* GrandchildPageViewController.swift */; };
 		70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */; };
 		70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF520E6944B0067DF08 /* UsernameViewController.swift */; };
 		70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF720E694560067DF08 /* PasswordViewController.swift */; };
@@ -184,6 +185,7 @@
 		70CB9E50211552D200D86E37 /* CommentCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCardTableViewCell.swift; sourceTree = "<group>"; };
 		70CB9E522115671700D86E37 /* VSCNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSCNode.swift; sourceTree = "<group>"; };
 		70CB9E542116976100D86E37 /* UserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAction.swift; sourceTree = "<group>"; };
+		70E331D521212454007414D6 /* GrandchildPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrandchildPageViewController.swift; sourceTree = "<group>"; };
 		70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewController.swift; sourceTree = "<group>"; };
 		70E80BF520E6944B0067DF08 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
 		70E80BF720E694560067DF08 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				70CB9E4A2112B33C00D86E37 /* CategoryFilterViewController.swift */,
 				70CB9E4C21154DD300D86E37 /* RootPageViewController.swift */,
 				70A7ED48211FBFB90059507A /* ChildPageViewController.swift */,
+				70E331D521212454007414D6 /* GrandchildPageViewController.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -676,6 +679,7 @@
 				70B1704920F28D7C00459ACE /* Tab1CollectionViewController.swift in Sources */,
 				701C8CCF20F978C80072AECD /* BronzeLeaderTableViewCell.swift in Sources */,
 				70E80CB320E6DB570067DF08 /* VSPostsListModel_hits.swift in Sources */,
+				70E331D621212454007414D6 /* GrandchildPageViewController.swift in Sources */,
 				70E80CC420E6DB570067DF08 /* VSPIVModel_docs_item__source.swift in Sources */,
 				70B1704D20F28D8D00459ACE /* Tab3CollectionViewController.swift in Sources */,
 				70E80CAF20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item.swift in Sources */,

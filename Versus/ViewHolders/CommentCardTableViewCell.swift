@@ -41,7 +41,6 @@ class CommentCardTableViewCell: UITableViewCell {
     
     
     func setCell(comment : VSComment, indent : CGFloat, row : Int){
-        print(comment.content+":\nrow \(row)")
         currentComment = comment
         author.text = comment.author
         time.text = getTimeString(time: comment.time)
