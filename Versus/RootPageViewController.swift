@@ -365,16 +365,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             comments.append(currentRootNode!.nodeContent)
             
             if let firstChild = currentRootNode?.firstChild {
-                firstChild.nodeContent.nestedLevel = 1
                 comments.append(firstChild.nodeContent)
                 
                 if let firstGrandchild = firstChild.firstChild {
-                    firstGrandchild.nodeContent.nestedLevel = 2
                     comments.append(firstGrandchild.nodeContent)
                     
                     var grandchildNode = firstGrandchild
                     while let grandTail = grandchildNode.tailSibling {
-                        grandTail.nodeContent.nestedLevel = 2
                         comments.append(grandTail.nodeContent)
                         grandchildNode = grandTail
                     }
@@ -383,16 +380,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 var childNode = firstChild
                 while let tail = childNode.tailSibling {
-                    tail.nodeContent.nestedLevel = 1
                     comments.append(tail.nodeContent)
                     
                     if let firstGrandchild = tail.firstChild {
-                        firstGrandchild.nodeContent.nestedLevel = 2
                         comments.append(firstGrandchild.nodeContent)
                         
                         var grandchildNode = firstGrandchild
                         while let grandTail = grandchildNode.tailSibling {
-                            grandTail.nodeContent.nestedLevel = 2
                             comments.append(grandTail.nodeContent)
                             grandchildNode = grandTail
                         }
@@ -435,20 +429,38 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
             let comment = comments[indexPath.row]
+            let indent : CGFloat!
+            switch comment.nestedLevel {
+            case 0:
+                indent = 0
+            case 1:
+                indent = 1
+            case 2:
+                indent = 2
+            case 3:
+                indent = 1
+            case 4:
+                indent = 2
+            case 5:
+                indent = 2
+            default:
+                indent = 0
+            }
+            
             if let selection = currentUserAction.actionRecord[comment.comment_id] {
                 switch selection {
                 case "N":
-                    cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+                    cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
                 case "U":
-                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: true, row: indexPath.row)
+                    cell!.setCellWithSelection(comment: comment, indent: indent, hearted: true, row: indexPath.row)
                 case "D":
-                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: false, row: indexPath.row)
+                    cell!.setCellWithSelection(comment: comment, indent: indent, hearted: false, row: indexPath.row)
                 default:
-                    cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+                    cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
                 }
             }
             else {
-                cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+                cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
             }
             cell!.delegate = self
             
@@ -910,7 +922,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             performSegue(withIdentifier: "rootToChild", sender: self)
         }
         else {
-            //go to child page
+            //go to grandchild page
             performSegue(withIdentifier: "rootToGrandchild", sender: self)
         }
         

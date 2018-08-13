@@ -36,6 +36,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     var topCardComment : VSComment!
     var parentVC : RootPageViewController?
     
+    var vmrTap, profileTap : Bool!
+    var vmrComment : VSComment!
+    
     /*
      updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
      ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -150,8 +153,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         topCardComment = comment
         comments.append(topCardComment)
         currentUserAction = userAction
-        commentsQuery()
         nodeMap[comment.comment_id] = VSCNode(comment: comment)
+        commentsQuery()
+        
         
     }
     
@@ -173,7 +177,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                     var cqPayloadIndex = 0
                     for item in rootQueryResults {
                         let comment = VSComment(itemSource: item.source!, id: item.id!)
-                        comment.nestedLevel = 0
+                        comment.nestedLevel = 3
                         self.rootComments.append(comment)
                         
                         //set up node structure with current root comment
@@ -223,7 +227,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                         for cqCommentItem in cqResponseItem.hits!.hits! {
                                             
                                             let childComment = VSComment(itemSource: cqCommentItem.source!, id: cqCommentItem.id!)
-                                            childComment.nestedLevel = 1
+                                            childComment.nestedLevel = 4
                                             self.childComments.append(childComment)
                                             
                                             //set up node structure with current child comment
@@ -306,6 +310,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TopCard", for: indexPath) as? CommentCardTableViewCell
             let comment = comments[indexPath.row]
+            
             if let selection = currentUserAction.actionRecord[comment.comment_id] {
                 switch selection {
                 case "N":
@@ -328,20 +333,34 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
             let comment = comments[indexPath.row]
+            
+            let indent : CGFloat!
+            print("nested level = \(comment.nestedLevel) for \(comment.content)")
+            switch comment.nestedLevel {
+            case 3:
+                indent = 0
+            case 4:
+                indent = 1
+            case 5:
+                indent = 1
+            default:
+                indent = comment.nestedLevel
+            }
+            
             if let selection = currentUserAction.actionRecord[comment.comment_id] {
                 switch selection {
                 case "N":
-                    cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+                    cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
                 case "U":
-                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: true, row: indexPath.row)
+                    cell!.setCellWithSelection(comment: comment, indent: indent, hearted: true, row: indexPath.row)
                 case "D":
-                    cell!.setCellWithSelection(comment: comment, indent: comment.nestedLevel!, hearted: false, row: indexPath.row)
+                    cell!.setCellWithSelection(comment: comment, indent: indent, hearted: false, row: indexPath.row)
                 default:
-                    cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+                    cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
                 }
             }
             else {
-                cell!.setCell(comment: comment, indent: comment.nestedLevel!, row: indexPath.row)
+                cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
             }
             cell!.delegate = self
             
@@ -351,12 +370,22 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let profileVC = segue.destination as? ProfileViewController else {return}
-        profileVC.currentUsername = tappedUsername!
+        if profileTap {
+            guard let profileVC = segue.destination as? ProfileViewController else {return}
+            profileVC.currentUsername = tappedUsername!
+        }
+        else if vmrComment != nil{
+            guard let grandchildPageVC = segue.destination as? GrandchildPageViewController else {return}
+            let view = grandchildPageVC.view //to load the view
+            grandchildPageVC.fromRoot = false
+            grandchildPageVC.setUpGrandchildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction, parentPage: self, grandparentPage: parentVC!)
+        }
         
     }
     
     func callSegueFromCell(profileUsername: String) {
+        profileTap = true
+        vmrTap = false
         tappedUsername = profileUsername
         //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
         performSegue(withIdentifier: "childToProfile", sender: self)
@@ -490,7 +519,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                         
                         let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: nodeMap[currentReplyTargetID!]!.nodeContent.parent_id)
                         
-                        newComment.nestedLevel = 1
+                        newComment.nestedLevel = 4
                         
                         apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
@@ -529,7 +558,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                 self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
                                 if self.parentVC != nil {
                                     if let node = self.parentVC!.nodeMap[currentReplyTargetID!] {
-                                        node.nodeContent.child_count! += 1
                                         if let prevFirstChild = node.firstChild {
                                             node.firstChild = newCommentNode
                                             newCommentNode.tailSibling = prevFirstChild
@@ -557,8 +585,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                         
                         let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: replyTarget.parent_id)
                         
-                        newComment.nestedLevel = 1
-                        
+                        newComment.nestedLevel = 4
+                        print("new comment nested at 4")
                         
                         apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
@@ -598,7 +626,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                 self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
                                 if self.parentVC != nil {
                                     if let node = self.parentVC!.nodeMap[currentReplyTargetID!] {
-                                        node.nodeContent.child_count! += 1
                                         if let prevFirstChild = node.firstChild {
                                             node.firstChild = newCommentNode
                                             newCommentNode.tailSibling = prevFirstChild
@@ -625,8 +652,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 else {
                     // a reply to the top card
                     let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: topCardComment.comment_id, postID: topCardComment.post_id, newContent: text, rootID: "0")
-                    newComment.nestedLevel = 0 //root comment in root page has nested level of 0
-                    
+                    newComment.nestedLevel = 3 //root comment in child page has nested level of 3 (which is 0 in root page)
+                    print("new comment nested at 3")
                     apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
                         if task.error != nil {
                             DispatchQueue.main.async {
@@ -656,7 +683,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                             self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
                             if self.parentVC != nil {
                                 if let node = self.parentVC!.nodeMap[self.topCardComment.comment_id] {
-                                    node.nodeContent.child_count! += 1
                                     if let prevFirstChild = node.firstChild {
                                         node.firstChild = newCommentNode
                                         newCommentNode.tailSibling = prevFirstChild
@@ -692,12 +718,10 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             comments.append(currentRootNode!.nodeContent)
             
             if let firstChild = currentRootNode?.firstChild {
-                firstChild.nodeContent.nestedLevel = 1
                 comments.append(firstChild.nodeContent)
                 
                 var childNode = firstChild
                 while let tail = childNode.tailSibling {
-                    tail.nodeContent.nestedLevel = 1
                     comments.append(tail.nodeContent)
                     childNode = tail
                 }
@@ -818,7 +842,13 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func viewMoreRepliesTapped(topCardComment: VSComment) {
+        vmrTap = true
+        profileTap = false
+        vmrComment = topCardComment
         //go to grandchild page
+        performSegue(withIdentifier: "childToGrandchild", sender: self)
+        
+        
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

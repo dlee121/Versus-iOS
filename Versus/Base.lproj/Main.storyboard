@@ -1552,6 +1552,7 @@
                         <outlet property="textInput" destination="6Xx-r1-MVy" id="iVl-Ag-IAd"/>
                         <outlet property="textInputContainer" destination="UAZ-1x-qgY" id="xnD-g4-0gh"/>
                         <outlet property="textInputContainerBottom" destination="j6m-BW-6vV" id="dge-Km-xP7"/>
+                        <segue destination="00O-u0-BLe" kind="show" identifier="grandchildToProfile" id="ndU-Xn-ImY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IIF-NQ-CFy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3763,9 +3764,9 @@
         <segue reference="kMN-CP-0NP"/>
         <segue reference="iVN-9A-tOw"/>
         <segue reference="XJc-pI-oXd"/>
-        <segue reference="qbd-PO-7a5"/>
+        <segue reference="ndU-Xn-ImY"/>
         <segue reference="uAF-H9-Oin"/>
-        <segue reference="pLb-S7-nGp"/>
+        <segue reference="fc6-RI-lzA"/>
         <segue reference="tN5-20-0qe"/>
         <segue reference="JGk-D3-39j"/>
         <segue reference="onp-lO-nwi"/>
