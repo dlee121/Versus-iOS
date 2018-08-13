@@ -807,8 +807,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         return indexPath
     }
     
-    func replyButtonTapped(replyTarget: VSComment, row: Int) {
-        
+    func replyButtonTapped(replyTarget: VSComment, cell: CommentCardTableViewCell) {
+        let row = tableView.indexPath(for: cell)!.row
         replyTargetRowNumber = row
         
         if replyTarget.nestedLevel != 2 {

@@ -483,7 +483,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 textInput.text = ""
                 textInput.resignFirstResponder()
                 
-                if currentReplyTargetID != nil {
+                if currentReplyTargetID != nil && currentReplyTargetID != topCardComment.comment_id {
+                    
+                    
                     if currentGrandchildRealTargetID != nil {
                         // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
                         
@@ -533,22 +535,14 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                         
                         
                     }
-                    else { //a reply to a root comment or a child comment
+                    else { //a reply to a child comment
                         var rootID : String!
                         let replyTarget = nodeMap[currentReplyTargetID!]!.nodeContent
                         let targetNestedLevel = replyTarget.nestedLevel
-                        if targetNestedLevel == 0 { //reply to a root comment
-                            print("root reply tap")
-                            rootID = "0"
-                        }
-                        else { //reply to a child comment
-                            print("child reply tap")
-                            rootID = replyTarget.parent_id
-                        }
                         
-                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: rootID)
+                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: replyTarget.parent_id)
                         
-                        newComment.nestedLevel = targetNestedLevel! + 1 //root comment in root page has nested level of 0
+                        newComment.nestedLevel = 1
                         
                         
                         apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -593,6 +587,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                         }
                         
                     }
+                    
+                    
                 }
                 else {
                     // a reply to the top card
@@ -632,6 +628,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                     }
                     
                 }
+                
+                
             }
         }
     }
@@ -710,9 +708,11 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         return indexPath
     }
     
-    func replyButtonTapped(replyTarget: VSComment, row: Int) {
+    func replyButtonTapped(replyTarget: VSComment, cell: CommentCardTableViewCell) {
         
+        let row = tableView.indexPath(for: cell)!.row
         replyTargetRowNumber = row
+        
         
         if replyTarget.nestedLevel != 1 {
             replyTargetID = replyTarget.comment_id
@@ -721,7 +721,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             
             textInput.text = ""
         }
-        else {
+        else if replyTarget.comment_id != topCardComment.comment_id{
             grandchildReplyTargetAuthor = replyTarget.author
             grandchildRealTargetID = replyTarget.comment_id
             replyTargetID = replyTarget.parent_id
