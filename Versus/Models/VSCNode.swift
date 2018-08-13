@@ -16,6 +16,11 @@ class VSCNode {
         nodeContent = comment
     }
     
+    func votedUpdate(upvotes: Int, downvotes: Int){
+        nodeContent.upvotes = upvotes
+        nodeContent.downvotes = downvotes
+    }
+    
     
     
 }

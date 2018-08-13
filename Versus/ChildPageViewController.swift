@@ -34,6 +34,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     var ref: DatabaseReference!
     var expandedCells = NSMutableSet()
     var topCardComment : VSComment!
+    var parentVC : RootPageViewController?
     
     /*
      updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -76,6 +77,11 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         textInput.resignFirstResponder()
+        
+        if isMovingFromParentViewController && parentVC != nil {
+            parentVC!.tableView.reloadData()
+            
+        }
         
         if currentUserAction.changed {
             apiClient.recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
@@ -131,9 +137,11 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    func setUpChildPage(post : PostObject, comment : VSComment, userAction : UserAction){
+    func setUpChildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController){
+        parentVC = parentPage
         comments.removeAll()
         updateMap.removeAll()
+        nodeMap.removeAll()
         expandedCells.removeAllObjects()
         postVoteUpdate = "none"
         DispatchQueue.main.async {
@@ -352,7 +360,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     func callSegueFromCell(profileUsername: String) {
         tappedUsername = profileUsername
         //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
-        performSegue(withIdentifier: "rootToProfile", sender: self)
+        performSegue(withIdentifier: "childToProfile", sender: self)
     }
     
     func resizePostCardOnVote(red : Bool){
@@ -388,6 +396,12 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 apiClient.vGet(e: nil, c: thisComment.author, d: nil, a: "ui", b: "1")
                 currentUserAction.actionRecord[commentID] = "U"
                 thisComment.upvotes += 1
+            }
+            
+            if parentVC != nil {
+                if let node = parentVC?.nodeMap[thisComment.comment_id] {
+                    node.votedUpdate(upvotes: thisComment.upvotes, downvotes: thisComment.downvotes)
+                }
             }
         }
         
@@ -430,6 +444,12 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 }
                 currentUserAction.actionRecord[commentID] = "D"
                 thisComment.downvotes += 1
+            }
+            
+            if parentVC != nil {
+                if let node = parentVC?.nodeMap[thisComment.comment_id] {
+                    node.votedUpdate(upvotes: thisComment.upvotes, downvotes: thisComment.downvotes)
+                }
             }
         }
         

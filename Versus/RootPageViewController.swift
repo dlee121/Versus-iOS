@@ -138,6 +138,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     func setUpRootPage(post : PostObject, userAction : UserAction){
         comments.removeAll()
         updateMap.removeAll()
+        nodeMap.removeAll()
         expandedCells.removeAllObjects()
         postVoteUpdate = "none"
         DispatchQueue.main.async {
@@ -412,7 +413,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         else if vmrComment != nil{
             guard let childPageVC = segue.destination as? ChildPageViewController else {return}
             let view = childPageVC.view //to load the view
-            childPageVC.setUpChildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction)
+            childPageVC.setUpChildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction, parentPage: self)
         }
         
     }
