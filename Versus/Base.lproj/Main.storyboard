@@ -1099,7 +1099,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aFR-VA-RvC">
-                                <rect key="frame" x="0.0" y="540" width="375" height="51"/>
+                                <rect key="frame" x="0.0" y="567" width="375" height="51"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Join the discussion!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hLV-Xh-cNn">
                                         <rect key="frame" x="8" y="8" width="316" height="35"/>
@@ -1136,7 +1136,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edV-uV-NmA">
-                                <rect key="frame" x="8" y="519" width="0.0" height="21"/>
+                                <rect key="frame" x="8" y="546" width="0.0" height="21"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="sdh-bh-rTb"/>
@@ -1150,7 +1150,7 @@
                         <constraints>
                             <constraint firstItem="69O-FS-4aR" firstAttribute="bottom" secondItem="kh9-vK-rCJ" secondAttribute="bottom" constant="43" id="1eE-db-GnJ"/>
                             <constraint firstItem="aFR-VA-RvC" firstAttribute="leading" secondItem="69O-FS-4aR" secondAttribute="leading" id="82X-rF-FXZ"/>
-                            <constraint firstItem="hLV-Xh-cNn" firstAttribute="bottom" secondItem="69O-FS-4aR" secondAttribute="bottom" constant="-35" id="G4D-MF-9NQ"/>
+                            <constraint firstItem="aFR-VA-RvC" firstAttribute="bottom" secondItem="69O-FS-4aR" secondAttribute="bottom" id="G4D-MF-9NQ"/>
                             <constraint firstItem="69O-FS-4aR" firstAttribute="trailing" secondItem="aFR-VA-RvC" secondAttribute="trailing" id="Slt-ep-4hi"/>
                             <constraint firstItem="edV-uV-NmA" firstAttribute="leading" secondItem="69O-FS-4aR" secondAttribute="leading" constant="8" id="byN-T8-7lk"/>
                             <constraint firstItem="kh9-vK-rCJ" firstAttribute="top" secondItem="69O-FS-4aR" secondAttribute="top" id="crM-s7-yHY"/>
@@ -1484,7 +1484,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UAZ-1x-qgY">
-                                <rect key="frame" x="0.0" y="532" width="375" height="51"/>
+                                <rect key="frame" x="0.0" y="567" width="375" height="51"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Join the discussion!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Xx-r1-MVy">
                                         <rect key="frame" x="8" y="8" width="316" height="35"/>
@@ -1521,7 +1521,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQ5-Jt-Tfb">
-                                <rect key="frame" x="8" y="511" width="0.0" height="21"/>
+                                <rect key="frame" x="8" y="546" width="0.0" height="21"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="fmW-T4-VIQ"/>
@@ -1538,7 +1538,7 @@
                             <constraint firstItem="UAZ-1x-qgY" firstAttribute="leading" secondItem="OQX-TW-bka" secondAttribute="leading" id="G74-mm-MIB"/>
                             <constraint firstItem="VQ5-Jt-Tfb" firstAttribute="leading" secondItem="OQX-TW-bka" secondAttribute="leading" constant="8" id="L1X-XW-g5S"/>
                             <constraint firstItem="UAZ-1x-qgY" firstAttribute="top" secondItem="VQ5-Jt-Tfb" secondAttribute="bottom" id="XKU-gJ-BHP"/>
-                            <constraint firstItem="UAZ-1x-qgY" firstAttribute="bottom" secondItem="OQX-TW-bka" secondAttribute="bottom" constant="-35" id="j6m-BW-6vV"/>
+                            <constraint firstItem="UAZ-1x-qgY" firstAttribute="bottom" secondItem="OQX-TW-bka" secondAttribute="bottom" id="j6m-BW-6vV"/>
                             <constraint firstItem="7bO-sD-hj7" firstAttribute="leading" secondItem="OQX-TW-bka" secondAttribute="leading" id="mbY-3T-2xz"/>
                             <constraint firstItem="UAZ-1x-qgY" firstAttribute="trailing" secondItem="OQX-TW-bka" secondAttribute="trailing" id="nVO-wK-z7D"/>
                             <constraint firstItem="7bO-sD-hj7" firstAttribute="top" secondItem="hs2-um-2aZ" secondAttribute="top" id="rE1-8K-hBb"/>
@@ -3764,7 +3764,7 @@
         <segue reference="kMN-CP-0NP"/>
         <segue reference="iVN-9A-tOw"/>
         <segue reference="XJc-pI-oXd"/>
-        <segue reference="ndU-Xn-ImY"/>
+        <segue reference="K6P-9d-yI2"/>
         <segue reference="uAF-H9-Oin"/>
         <segue reference="fc6-RI-lzA"/>
         <segue reference="tN5-20-0qe"/>
