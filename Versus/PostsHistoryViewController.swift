@@ -21,6 +21,7 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     var loadThreshold = 2
     var retrievalSize = 20
     var currentUsername : String!
+    var isMe : Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,7 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
         // Dispose of any resources that can be recreated.
     }
     
-    func setUpPostsHistory(username : String) {
+    func setUpPostsHistory(username : String, thisIsMe : Bool) {
         fromIndex = 0
         posts.removeAll()
         currentUsername = username
@@ -108,13 +109,13 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if currentUsername == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+        if isMe {
             let meVC = parent as! MeViewController
-            meVC.handleCommentsHistoryClick()
+            meVC.handlePostsHistoryClick(post: posts[indexPath.row])
         }
         else {
             let profileVC = parent as! ProfileViewController
-            profileVC.handleCommentsHistoryClick()
+            profileVC.handlePostsHistoryClick(post: posts[indexPath.row])
         }
         
         tableView.deselectRow(at: indexPath, animated: true)

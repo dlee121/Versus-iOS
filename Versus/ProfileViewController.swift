@@ -39,6 +39,9 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     let c = 2
     let p = 3
     
+    var clickedComment : VSComment?
+    var clickedPost : PostObject?
+    
     override func viewDidLoad() {
         self.loadDesign()
         super.viewDidLoad()
@@ -221,8 +224,8 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         let child_1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CommentsHistory")
         let child_2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostsHistory")
         let view = child_2.view
-        (child_1 as! CommentsHistoryViewController).setUpCommentsHistory(username: currentUsername)
-        (child_2 as! PostsHistoryViewController).setUpPostsHistory(username: currentUsername)
+        (child_1 as! CommentsHistoryViewController).setUpCommentsHistory(username: currentUsername, thisIsMe: false)
+        (child_2 as! PostsHistoryViewController).setUpPostsHistory(username: currentUsername, thisIsMe: false)
         return [child_1, child_2]
     }
     
@@ -293,13 +296,22 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         performSegue(withIdentifier: "profileToFGH", sender: self)
     }
     
-    func handleCommentsHistoryClick(){
+    func handleCommentsHistoryClick(comment : VSComment){
         fgcp = c
-        performSegue(withIdentifier: "profileToRoot", sender: self)
+        clickedComment = comment
+        
+        if clickedComment?.parent_id == clickedComment?.post_id {
+            performSegue(withIdentifier: "profileToChild", sender: self) //root comment was clicked, go to child page with this root comment as top card
+        }
+        else {
+            //child page with clicked comment (child click) or clicked comment's parent (grandchild click) as top card
+            performSegue(withIdentifier: "profileToGrandchild", sender: self)
+        }
     }
     
-    func handlePostsHistoryClick(){
+    func handlePostsHistoryClick(post : PostObject){
         fgcp = p
+        clickedPost = post
         performSegue(withIdentifier: "profileToRoot", sender: self)
     }
     
@@ -319,7 +331,189 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
             fghVC.setUpFPage(followers: combineLists(list1: hList, list2: gList))
         case c:
             //set up comments history item click segue
-            return
+            //set up comments history item click segue
+            if clickedComment != nil {
+                if clickedComment!.root == "0" {
+                    if clickedComment!.post_id == clickedComment!.parent_id { //root comment
+                        
+                        //go to a child page with this root comment as the top card
+                        guard let childVC = segue.destination as? ChildPageViewController else {return}
+                        let view = childVC.view //necessary for loading the view
+                        let userActionID = currentUsername+clickedComment!.post_id
+                        
+                        VSVersusAPIClient.default().postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            if task.error != nil {
+                                DispatchQueue.main.async {
+                                    print(task.error!)
+                                }
+                            }
+                            else {
+                                if let postResult = task.result {
+                                    
+                                    let postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
+                                    
+                                    VSVersusAPIClient.default().pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                        
+                                        if task.error != nil {
+                                            DispatchQueue.main.async {
+                                                print(task.error!)
+                                            }
+                                        }
+                                        else {
+                                            if let result = task.result {
+                                                postObject.profileImageVersion = result.pi!.intValue
+                                            }
+                                        }
+                                        return nil
+                                    }
+                                    
+                                    VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                        
+                                        if task.error != nil {
+                                            childVC.setUpChildPage(post: postObject, comment: self.clickedComment!, userAction: UserAction(idIn: userActionID), parentPage: nil)
+                                        }
+                                        else {
+                                            if let result = task.result {
+                                                childVC.setUpChildPage(post: postObject, comment: self.clickedComment!, userAction: UserAction(itemSource: result, idIn: userActionID), parentPage: nil)
+                                            }
+                                            else {
+                                                childVC.setUpChildPage(post: postObject, comment: self.clickedComment!, userAction: UserAction(idIn: userActionID), parentPage: nil)
+                                            }
+                                        }
+                                        return nil
+                                    }
+                                }
+                            }
+                            return nil
+                        }
+                        
+                    }
+                    else { //child comment
+                        //go to a grandchild page with this child comment as the top card
+                        guard let grandchildVC = segue.destination as? GrandchildPageViewController else {return}
+                        let view = grandchildVC.view //necessary for loading the view
+                        let userActionID = currentUsername+clickedComment!.post_id
+                        
+                        VSVersusAPIClient.default().postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            if task.error != nil {
+                                DispatchQueue.main.async {
+                                    print(task.error!)
+                                }
+                            }
+                            else {
+                                if let postResult = task.result {
+                                    
+                                    let postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
+                                    
+                                    VSVersusAPIClient.default().pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                        
+                                        if task.error != nil {
+                                            DispatchQueue.main.async {
+                                                print(task.error!)
+                                            }
+                                        }
+                                        else {
+                                            if let result = task.result {
+                                                postObject.profileImageVersion = result.pi!.intValue
+                                            }
+                                        }
+                                        return nil
+                                    }
+                                    
+                                    VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                        
+                                        if task.error != nil {
+                                            grandchildVC.setUpGrandchildPage(post: postObject, comment: self.clickedComment!, userAction: UserAction(idIn: userActionID), parentPage: nil, grandparentPage: nil)
+                                        }
+                                        else {
+                                            if let result = task.result {
+                                                grandchildVC.setUpGrandchildPage(post: postObject, comment: self.clickedComment!, userAction: UserAction(itemSource: result, idIn: userActionID), parentPage: nil, grandparentPage: nil)
+                                                
+                                            }
+                                            else {
+                                                grandchildVC.setUpGrandchildPage(post: postObject, comment: self.clickedComment!, userAction: UserAction(idIn: userActionID), parentPage: nil, grandparentPage: nil)
+                                            }
+                                        }
+                                        return nil
+                                    }
+                                }
+                            }
+                            return nil
+                        }
+                        
+                    }
+                }
+                else { //grandchild comment
+                    //go to a grandchild page with this grandchild comment's parent comment as the top card
+                    guard let grandchildVC = segue.destination as? GrandchildPageViewController else {return}
+                    let view = grandchildVC.view //necessary for loading the view
+                    let userActionID = currentUsername+clickedComment!.post_id
+                    
+                    VSVersusAPIClient.default().postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        if task.error != nil {
+                            DispatchQueue.main.async {
+                                print(task.error!)
+                            }
+                        }
+                        else {
+                            if let postResult = task.result {
+                                
+                                let postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
+                                
+                                VSVersusAPIClient.default().pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                    
+                                    if task.error != nil {
+                                        DispatchQueue.main.async {
+                                            print(task.error!)
+                                        }
+                                    }
+                                    else {
+                                        if let result = task.result {
+                                            postObject.profileImageVersion = result.pi!.intValue
+                                        }
+                                    }
+                                    return nil
+                                }
+                                
+                                VSVersusAPIClient.default().commentGet(a: "c", b: self.clickedComment?.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                    if task.error != nil {
+                                        DispatchQueue.main.async {
+                                            print(task.error!)
+                                        }
+                                    }
+                                    else {
+                                        if let commentResult = task.result { //this parent (child) of the clicked comment (grandchild), for the top card
+                                            
+                                            let topcardComment = VSComment(itemSource: commentResult.source!, id: commentResult.id!)
+                                            
+                                            VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                                
+                                                if task.error != nil {
+                                                    grandchildVC.setUpGrandchildPage(post: postObject, comment: topcardComment, userAction: UserAction(idIn: userActionID), parentPage: nil, grandparentPage: nil)
+                                                }
+                                                else {
+                                                    if let result = task.result {
+                                                        grandchildVC.setUpGrandchildPage(post: postObject, comment: topcardComment, userAction: UserAction(itemSource: result, idIn: userActionID), parentPage: nil, grandparentPage: nil)
+                                                        
+                                                    }
+                                                    else {
+                                                        grandchildVC.setUpGrandchildPage(post: postObject, comment: topcardComment, userAction: UserAction(idIn: userActionID), parentPage: nil, grandparentPage: nil)
+                                                    }
+                                                }
+                                                return nil
+                                            }
+                                        }
+                                    }
+                                    return nil
+                                }
+                            }
+                        }
+                        return nil
+                    }
+                    
+                }
+            }
+            
         case p:
             //set up posts history item click segue
             return

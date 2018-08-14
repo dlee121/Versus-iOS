@@ -139,7 +139,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    func setUpChildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController){
+    func setUpChildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController?){
         parentVC = parentPage
         comments.removeAll()
         updateMap.removeAll()
@@ -377,7 +377,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         else if vmrComment != nil{
             guard let grandchildPageVC = segue.destination as? GrandchildPageViewController else {return}
             let view = grandchildPageVC.view //to load the view
-            grandchildPageVC.fromRoot = false
+            //grandchildPageVC.fromRoot = false
             grandchildPageVC.setUpGrandchildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction, parentPage: self, grandparentPage: parentVC!)
         }
         

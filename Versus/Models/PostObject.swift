@@ -67,6 +67,25 @@ class PostObject {
         
     }
     
+    init (itemSource : VSPostModel__source, id : String){
+        question = itemSource.q!
+        author = itemSource.a!
+        time = itemSource.t!
+        redname = itemSource.rn!
+        redcount = itemSource.rc!
+        blackname = itemSource.bn!
+        blackcount = itemSource.bc!
+        category = itemSource.c!
+        post_id = id
+        redimg = itemSource.ri!
+        blackimg = itemSource.bi!
+        pt = itemSource.pt!
+        ps = itemSource.ps!
+        
+        profileImageVersion = 0
+    }
+    
+    
     func setProfileImageVersion(piv : Int){
         profileImageVersion = piv
     }

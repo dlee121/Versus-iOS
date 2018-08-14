@@ -483,7 +483,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             else {
                 guard let grandchildPageVC = segue.destination as? GrandchildPageViewController else {return}
                 let view = grandchildPageVC.view //to load the view
-                grandchildPageVC.fromRoot = true
+                //grandchildPageVC.fromRoot = true
                 grandchildPageVC.setUpGrandchildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction, parentPage: self)
             }
         }

@@ -23,6 +23,7 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     var loadThreshold = 2
     var currentUsername : String!
     var retrievalSize = 20
+    var isMe : Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,8 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
         // Dispose of any resources that can be recreated.
     }
     
-    func setUpCommentsHistory(username : String) {
+    func setUpCommentsHistory(username : String, thisIsMe : Bool) {
+        isMe = thisIsMe
         fromIndex = 0
         currentUsername = username
         comments.removeAll()
@@ -191,13 +193,13 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if currentUsername == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+        if isMe {
             let meVC = parent as! MeViewController
-            meVC.handleCommentsHistoryClick()
+            meVC.handleCommentsHistoryClick(comment: comments[indexPath.row])
         }
         else {
             let profileVC = parent as! ProfileViewController
-            profileVC.handleCommentsHistoryClick()
+            profileVC.handleCommentsHistoryClick(comment: comments[indexPath.row])
         }
         
         tableView.deselectRow(at: indexPath, animated: true)

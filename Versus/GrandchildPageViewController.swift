@@ -143,7 +143,8 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         // Dispose of any resources that can be recreated.
     }
     
-    func setUpGrandchildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController){
+    func setUpGrandchildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController?){
+        fromRoot = true
         
         parentRootVC = parentPage
         comments.removeAll()
@@ -164,7 +165,9 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         
     }
     
-    func setUpGrandchildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : ChildPageViewController, grandparentPage: RootPageViewController){
+    func setUpGrandchildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : ChildPageViewController?, grandparentPage: RootPageViewController?){
+        fromRoot = false
+        
         parentChildVC = parentPage
         parentRootVC = grandparentPage
         

@@ -54,6 +54,20 @@ class VSComment {
         
     }
     
+    init(itemSource : VSCommentModel__source, id : String){
+        parent_id = itemSource.pr!
+        post_id = itemSource.pt!
+        time = itemSource.t!
+        comment_id = id
+        author = itemSource.a!
+        content = itemSource.ct!
+        root = itemSource.r!
+        topmedal = itemSource.m!.intValue
+        upvotes = itemSource.u!.intValue
+        downvotes = itemSource.d!.intValue
+        comment_influence = itemSource.ci!.intValue
+    }
+    
     init(){ //to initiate this object as a placeholder for the post object, used for Post Page's Root Page
         parent_id = "0"
         post_id = "0"
