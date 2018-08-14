@@ -292,7 +292,7 @@
         <!--Root Page View Controller-->
         <scene sceneID="s0k-Zo-b6Y">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="Jk1-If-Hre" customClass="RootPageViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="rootPage" hidesBottomBarWhenPushed="YES" id="Jk1-If-Hre" customClass="RootPageViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3fB-hi-7Tq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -793,7 +793,7 @@
         <!--Child Page View Controller-->
         <scene sceneID="asO-ao-OM3">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="X1q-ax-jCK" customClass="ChildPageViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="childPage" hidesBottomBarWhenPushed="YES" id="X1q-ax-jCK" customClass="ChildPageViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8gQ-zT-1jM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3762,13 +3762,13 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kMN-CP-0NP"/>
-        <segue reference="iVN-9A-tOw"/>
-        <segue reference="YuF-tM-5cL"/>
+        <segue reference="nft-7p-rrg"/>
+        <segue reference="XJc-pI-oXd"/>
         <segue reference="qbd-PO-7a5"/>
         <segue reference="uAF-H9-Oin"/>
         <segue reference="pLb-S7-nGp"/>
         <segue reference="tN5-20-0qe"/>
-        <segue reference="Ugw-90-kaO"/>
+        <segue reference="47a-tk-DFo"/>
         <segue reference="onp-lO-nwi"/>
         <segue reference="5A0-ex-P7l"/>
         <segue reference="3gN-D4-VVL"/>

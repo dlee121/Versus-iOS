@@ -52,7 +52,9 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     var postVoteUpdate : String!
     
     
+    
     override func viewDidLoad() {
+        print("gc loaded")
         super.viewDidLoad()
         //tableView.allowsSelection = false
         ref = Database.database().reference()
@@ -64,6 +66,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         super.viewWillAppear(animated)
         keyboardIsShowing = false
         self.tabBarController?.tabBar.isHidden = true
+        
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(notification:)),
@@ -186,6 +189,42 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         nodeMap[comment.comment_id] = VSCNode(comment: comment)
         print("setup grandchild page query called")
         commentsQuery()
+        
+        
+        if var viewControllers = navigationController?.viewControllers {
+            if parentRootVC == nil && parentChildVC == nil {
+                if viewControllers.count > 1 && !(viewControllers[viewControllers.count-2] is ChildPageViewController) {
+                    let rootPageVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
+                    let rView = rootPageVC?.view
+                    let childPageVC = storyboard!.instantiateViewController(withIdentifier: "childPage") as? ChildPageViewController
+                    let cView = childPageVC?.view
+                    viewControllers.insert(childPageVC!, at: viewControllers.count-1)
+                    viewControllers.insert(rootPageVC!, at: viewControllers.count-2)
+                    navigationController?.viewControllers = viewControllers
+                    
+                    rootPageVC?.setUpRootPage(post: currentPost, userAction: currentUserAction)
+                    
+                    VSVersusAPIClient.default().commentGet(a: "c", b: topCardComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        if task.error != nil {
+                            DispatchQueue.main.async {
+                                print(task.error!)
+                            }
+                        }
+                        else {
+                            if let commentResult = task.result { //this parent (child) of the clicked comment (grandchild), for the top card
+                                
+                                childPageVC?.setUpChildPage(post: self.currentPost, comment: VSComment(itemSource: commentResult.source!, id: commentResult.id!), userAction: self.currentUserAction, parentPage: rootPageVC)
+                            }
+                        }
+                        return nil
+                    }
+                    
+                }
+            }
+            
+        }
+        
+        
         
     }
     
