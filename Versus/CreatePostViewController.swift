@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreatePostViewController: UIViewController {
+class CreatePostViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +27,23 @@ class CreatePostViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
+        switch textField.returnKeyType {
+        case UIReturnKeyType.next:
+            // Try to find next responder
+            if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+                nextField.becomeFirstResponder()
+            } else {
+                // Not found, so remove keyboard.
+                textField.resignFirstResponder()
+            }
+            
+        default:
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
     
     
 }
