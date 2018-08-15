@@ -33,7 +33,7 @@ class TabBarViewController: UITabBarController {
         
         let paddingBottom : CGFloat = 10.0
         
-        let button = UIButton(type: .custom)
+        
         button.autoresizingMask = [.flexibleRightMargin, .flexibleTopMargin, .flexibleLeftMargin, .flexibleBottomMargin]
         button.frame = CGRect(x: 0.0, y: 0.0, width: 58, height: 58)
         button.setBackgroundImage(buttonImage, for: .normal)
@@ -46,6 +46,7 @@ class TabBarViewController: UITabBarController {
         
         self.tabBar.addSubview(button)
         self.tabBar.bringSubview(toFront: button)
+        (self.tabBar as! CustomTabBar).middleButton = button
         
         button.addTarget(self, action: #selector(handleTouchTabbarCenter), for: .touchUpInside)
         
@@ -69,5 +70,7 @@ class TabBarViewController: UITabBarController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
 }
+

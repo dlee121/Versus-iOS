@@ -125,6 +125,7 @@
 		70E80CE220E6DB570067DF08 /* VSCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA920E6DB570067DF08 /* VSCommentModel.swift */; };
 		70E80CE320E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CAA20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift */; };
 		70FC66292124C97D00783FD5 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC66282124C97D00783FD5 /* TabBarViewController.swift */; };
+		70FC662B2124D77900783FD5 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC662A2124D77900783FD5 /* CustomTabBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -251,6 +252,7 @@
 		70E80CA920E6DB570067DF08 /* VSCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentModel.swift; sourceTree = "<group>"; };
 		70E80CAA20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostInfoMultiModel_docs_item__source.swift; sourceTree = "<group>"; };
 		70FC66282124C97D00783FD5 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		70FC662A2124D77900783FD5 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		B216951D7ECAD287D38ECF83 /* Pods-Versus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Versus.release.xcconfig"; path = "Pods/Target Support Files/Pods-Versus/Pods-Versus.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -328,6 +330,7 @@
 				70A7ED48211FBFB90059507A /* ChildPageViewController.swift */,
 				70E331D521212454007414D6 /* GrandchildPageViewController.swift */,
 				70FC66282124C97D00783FD5 /* TabBarViewController.swift */,
+				70FC662A2124D77900783FD5 /* CustomTabBar.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 				70E80CB020E6DB570067DF08 /* VSPIVModel.swift in Sources */,
 				70E80CAB20E6DB570067DF08 /* VSLeaderboardModel.swift in Sources */,
 				70E80CAD20E6DB570067DF08 /* VSCGCModel_responses_item_hits.swift in Sources */,
+				70FC662B2124D77900783FD5 /* CustomTabBar.swift in Sources */,
 				70E80CC520E6DB570067DF08 /* VSPIVSingle.swift in Sources */,
 				70E80CDB20E6DB570067DF08 /* VSCommentsListModel_hits_hits_item.swift in Sources */,
 				70E80CCF20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item.swift in Sources */,
