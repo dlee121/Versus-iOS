@@ -3660,10 +3660,35 @@
             </objects>
             <point key="canvasLocation" x="4709.6000000000004" y="698.5007496251875"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--View Controller-->
+        <scene sceneID="HFU-jM-XJc">
+            <objects>
+                <viewController id="van-DZ-Ibd" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gga-JS-qJW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create a Post" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u2K-8C-DOE">
+                                <rect key="frame" x="134.58431372550729" y="299.1725490196086" width="102.99999999999989" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Twr-Wj-gez"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" id="ipP-Yz-E0I"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HJi-BF-Prn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-931" y="957"/>
+        </scene>
+        <!--Tab Bar View Controller-->
         <scene sceneID="zuc-hH-N7J">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Npi-V0-gi3" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Npi-V0-gi3" customClass="TabBarViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="p9v-Yl-6ms">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -3673,6 +3698,7 @@
                     <connections>
                         <segue destination="kjw-ln-za4" kind="relationship" relationship="viewControllers" id="m4u-ar-9K9"/>
                         <segue destination="NAK-AK-i1K" kind="relationship" relationship="viewControllers" id="3Kc-W5-hfB"/>
+                        <segue destination="van-DZ-Ibd" kind="relationship" relationship="viewControllers" id="RtA-Tc-U3C"/>
                         <segue destination="CUe-Dm-Vcv" kind="relationship" relationship="viewControllers" id="plM-pq-t3C"/>
                         <segue destination="esn-Io-i8e" kind="relationship" relationship="viewControllers" id="pyH-Dh-z3e"/>
                     </connections>

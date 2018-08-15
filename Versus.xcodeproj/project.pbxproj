@@ -124,6 +124,7 @@
 		70E80CE120E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA820E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item__source.swift */; };
 		70E80CE220E6DB570067DF08 /* VSCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA920E6DB570067DF08 /* VSCommentModel.swift */; };
 		70E80CE320E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CAA20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift */; };
+		70FC66292124C97D00783FD5 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC66282124C97D00783FD5 /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -249,6 +250,7 @@
 		70E80CA820E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListCompactModel_hits_hits_item__source.swift; sourceTree = "<group>"; };
 		70E80CA920E6DB570067DF08 /* VSCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentModel.swift; sourceTree = "<group>"; };
 		70E80CAA20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostInfoMultiModel_docs_item__source.swift; sourceTree = "<group>"; };
+		70FC66282124C97D00783FD5 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		B216951D7ECAD287D38ECF83 /* Pods-Versus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Versus.release.xcconfig"; path = "Pods/Target Support Files/Pods-Versus/Pods-Versus.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -325,6 +327,7 @@
 				70CB9E4C21154DD300D86E37 /* RootPageViewController.swift */,
 				70A7ED48211FBFB90059507A /* ChildPageViewController.swift */,
 				70E331D521212454007414D6 /* GrandchildPageViewController.swift */,
+				70FC66282124C97D00783FD5 /* TabBarViewController.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				70E331D621212454007414D6 /* GrandchildPageViewController.swift in Sources */,
 				70E80CC420E6DB570067DF08 /* VSPIVModel_docs_item__source.swift in Sources */,
 				70B1704D20F28D8D00459ACE /* Tab3CollectionViewController.swift in Sources */,
+				70FC66292124C97D00783FD5 /* TabBarViewController.swift in Sources */,
 				70E80CAF20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item.swift in Sources */,
 				70E80CE220E6DB570067DF08 /* VSCommentModel.swift in Sources */,
 				70CB9E45210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift in Sources */,
