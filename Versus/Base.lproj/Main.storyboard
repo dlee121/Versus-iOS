@@ -3672,26 +3672,28 @@
                                 <rect key="frame" x="8" y="104" width="171.5" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="52r-Qo-9hP">
                                 <rect key="frame" x="195.5" y="104" width="171.5" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rVv-mn-Vyd">
                                 <rect key="frame" x="8" y="66" width="359" height="30"/>
                                 <state key="normal" title="Button"/>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O8y-GY-kUt">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus_blue" translatesAutoresizingMaskIntoConstraints="NO" id="O8y-GY-kUt">
                                 <rect key="frame" x="8" y="142" width="171.5" height="171.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="171.5" id="aCL-Z0-R1C"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d0G-hc-p5j">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus_blue" translatesAutoresizingMaskIntoConstraints="NO" id="d0G-hc-p5j">
                                 <rect key="frame" x="195.5" y="142" width="171.5" height="171.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="171.5" id="kf9-uU-CJg"/>
                                 </constraints>
@@ -3700,10 +3702,10 @@
                                 <rect key="frame" x="8" y="28" width="359" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="O8y-GY-kUt" firstAttribute="leading" secondItem="Twr-Wj-gez" secondAttribute="leading" constant="8" id="0Ht-gv-wYp"/>
                             <constraint firstItem="f6x-U9-3bz" firstAttribute="top" secondItem="rVv-mn-Vyd" secondAttribute="bottom" constant="8" id="1lk-gy-Ozq"/>
@@ -3826,6 +3828,7 @@
         <image name="ic_send_grey" width="24" height="24"/>
         <image name="logo_2_64" width="32" height="32"/>
         <image name="logo_splash" width="133" height="106"/>
+        <image name="plus_blue" width="96" height="96"/>
         <image name="profile_icon_f" width="32" height="32"/>
         <namedColor name="VS_Blue">
             <color red="0.36899998784065247" green="0.82700002193450928" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3836,7 +3839,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kMN-CP-0NP"/>
-        <segue reference="nft-7p-rrg"/>
+        <segue reference="iVN-9A-tOw"/>
         <segue reference="XJc-pI-oXd"/>
         <segue reference="K6P-9d-yI2"/>
         <segue reference="l8u-kQ-1dz"/>
