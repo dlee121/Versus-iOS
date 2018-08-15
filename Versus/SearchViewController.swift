@@ -24,6 +24,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     var loadThreshold = 6
     var currentInput : String!
     var mainContainer : MCViewController!
+    var currentSearchTerm = ""
     
     
     override func viewDidLoad() {
@@ -190,7 +191,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        searchThis(input: searchText)
+        if searchText != currentSearchTerm {
+            searchThis(input: searchText)
+        }
+        currentSearchTerm = searchText
     }
 
     /*
