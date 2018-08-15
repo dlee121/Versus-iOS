@@ -326,6 +326,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let profileVC = segue.destination as? ProfileViewController else {return}
+        profileVC.fromPostPage = true
         profileVC.currentUsername = tappedUsername!
         
     }

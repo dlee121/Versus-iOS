@@ -472,6 +472,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if profileTap {
             guard let profileVC = segue.destination as? ProfileViewController else {return}
+            profileVC.fromPostPage = true
             profileVC.currentUsername = tappedUsername!
         }
         else if vmrComment != nil{

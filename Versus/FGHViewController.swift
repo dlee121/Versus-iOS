@@ -174,6 +174,7 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let profileVC = segue.destination as? ProfileViewController else {return}
+        profileVC.fromPostPage = false
         profileVC.currentUsername = tappedUsername
         //let backItem = UIBarButtonItem()
         //backItem.title = "Leader..."

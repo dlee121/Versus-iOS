@@ -24,6 +24,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var bronzeMedals: UILabel!
     @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var fghIcon: UIImageView!
+    @IBOutlet weak var containerViewBottom: NSLayoutConstraint!
     
     var currentUsername : String!
     var fList = [String]()
@@ -42,6 +43,8 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     var clickedComment : VSComment?
     var clickedPost : PostObject?
     
+    var fromPostPage : Bool?
+    
     override func viewDidLoad() {
         self.loadDesign()
         super.viewDidLoad()
@@ -56,16 +59,16 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         
         navigationItem.title = currentUsername
         
-        //navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "Chalkduster", size: 5)!], for: .normal)
-        
-        
-        
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
+        
+        if fromPostPage != nil && fromPostPage! {
+            containerViewBottom.constant = -tabBarController!.tabBar.frame.height
+        }
     }
     
     override func viewWillAppear(_ animated: Bool){
