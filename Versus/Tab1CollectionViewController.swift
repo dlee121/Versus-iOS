@@ -330,8 +330,6 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
-    
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentComment = comments[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_mycircle", for: indexPath) as! MyCircleTableViewCell
@@ -352,6 +350,29 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let mainVC = parent as! MCViewController
+        let clickedComment = comments[indexPath.row]
+        var piv : Int!
+        if let postInfo = postInfos[clickedComment.post_id] {
+            if let imageVersion = profileImageVersions[postInfo.a!.lowercased()] {
+                piv = imageVersion
+            }
+            else {
+                piv = 0
+            }
+        }
+        else {
+            piv = 0
+        }
+        
+        mainVC.myCircleItemClick(comment: clickedComment, postProfileImage: piv)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     
     
     override func didReceiveMemoryWarning() {
