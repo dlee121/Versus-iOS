@@ -126,6 +126,7 @@
 		70E80CE320E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CAA20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift */; };
 		70FC66292124C97D00783FD5 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC66282124C97D00783FD5 /* TabBarViewController.swift */; };
 		70FC662B2124D77900783FD5 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC662A2124D77900783FD5 /* CustomTabBar.swift */; };
+		70FC662D2124DCB400783FD5 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC662C2124DCB400783FD5 /* CreatePostViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -253,6 +254,7 @@
 		70E80CAA20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostInfoMultiModel_docs_item__source.swift; sourceTree = "<group>"; };
 		70FC66282124C97D00783FD5 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		70FC662A2124D77900783FD5 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		70FC662C2124DCB400783FD5 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		B216951D7ECAD287D38ECF83 /* Pods-Versus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Versus.release.xcconfig"; path = "Pods/Target Support Files/Pods-Versus/Pods-Versus.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -311,6 +313,7 @@
 				701C8CC120F8C4F00072AECD /* LeaderboardViewController.swift */,
 				701C8CC320F8C51F0072AECD /* NotificationsViewController.swift */,
 				701C8CC520F8C5510072AECD /* MeViewController.swift */,
+				706F89E82107EAB300A78EFB /* ProfileViewController.swift */,
 				70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */,
 				70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */,
 				70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */,
@@ -320,8 +323,6 @@
 				701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */,
 				701B9BB020E3FB22003C9E7E /* Info.plist */,
 				702499A020E57EC70024E871 /* Extensions */,
-				70B1705020F2F97800459ACE /* ButtonBarView.swift */,
-				706F89E82107EAB300A78EFB /* ProfileViewController.swift */,
 				706F89EA2107EEF300A78EFB /* CommentsHistoryViewController.swift */,
 				706F89EC2107EF1A00A78EFB /* PostsHistoryViewController.swift */,
 				70036ED1210ABA96000BE8E9 /* FGHViewController.swift */,
@@ -329,6 +330,8 @@
 				70CB9E4C21154DD300D86E37 /* RootPageViewController.swift */,
 				70A7ED48211FBFB90059507A /* ChildPageViewController.swift */,
 				70E331D521212454007414D6 /* GrandchildPageViewController.swift */,
+				70FC662C2124DCB400783FD5 /* CreatePostViewController.swift */,
+				70B1705020F2F97800459ACE /* ButtonBarView.swift */,
 				70FC66282124C97D00783FD5 /* TabBarViewController.swift */,
 				70FC662A2124D77900783FD5 /* CustomTabBar.swift */,
 			);
@@ -692,6 +695,7 @@
 				70FC66292124C97D00783FD5 /* TabBarViewController.swift in Sources */,
 				70E80CAF20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item.swift in Sources */,
 				70E80CE220E6DB570067DF08 /* VSCommentModel.swift in Sources */,
+				70FC662D2124DCB400783FD5 /* CreatePostViewController.swift in Sources */,
 				70CB9E45210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift in Sources */,
 				70E80CB420E6DB570067DF08 /* VSPostModel__source.swift in Sources */,
 				701C8CD320FAF4B90072AECD /* UILabel+addImage+isTruncated.swift in Sources */,
