@@ -10,13 +10,14 @@ import UIKit
 
 class CustomTabBar: UITabBar {
     var middleButton : UIButton!
+    var radius : CGFloat!
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         
         if middleButton != nil {
             let from = point
             let to = middleButton.center
-            return sqrt((from.x - to.x) * (from.x - to.x) + (from.y - to.y) * (from.y - to.y)) <= 29 ? middleButton : super.hitTest(point, with: event)
+            return sqrt((from.x - to.x) * (from.x - to.x) + (from.y - to.y) * (from.y - to.y)) <= radius ? middleButton : super.hitTest(point, with: event)
         }
         
         return super.hitTest(point, with: event)

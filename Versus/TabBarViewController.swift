@@ -32,10 +32,10 @@ class TabBarViewController: UITabBarController {
     func addCenterButton(withImage buttonImage : UIImage, highlightImage: UIImage) {
         
         let paddingBottom : CGFloat = 10.0
-        
+        let diameter : CGFloat = 58
         
         button.autoresizingMask = [.flexibleRightMargin, .flexibleTopMargin, .flexibleLeftMargin, .flexibleBottomMargin]
-        button.frame = CGRect(x: 0.0, y: 0.0, width: 58, height: 58)
+        button.frame = CGRect(x: 0.0, y: 0.0, width: diameter, height: diameter)
         button.setBackgroundImage(buttonImage, for: .normal)
         button.setBackgroundImage(highlightImage, for: .highlighted)
         
@@ -47,6 +47,7 @@ class TabBarViewController: UITabBarController {
         self.tabBar.addSubview(button)
         self.tabBar.bringSubview(toFront: button)
         (self.tabBar as! CustomTabBar).middleButton = button
+        (self.tabBar as! CustomTabBar).radius = diameter/2
         
         button.addTarget(self, action: #selector(handleTouchTabbarCenter), for: .touchUpInside)
         
