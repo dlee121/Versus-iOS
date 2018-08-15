@@ -190,7 +190,6 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         print("setup grandchild page query called")
         commentsQuery()
         
-        
         if var viewControllers = navigationController?.viewControllers {
             if parentRootVC == nil && parentChildVC == nil {
                 if viewControllers.count > 1 {

@@ -156,7 +156,19 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         nodeMap[comment.comment_id] = VSCNode(comment: comment)
         commentsQuery()
         
-        
+        if let vcCount = navigationController?.viewControllers.count {
+            if parentVC == nil {
+                if vcCount > 1 {
+                    let rootPageVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
+                    let rView = rootPageVC?.view
+                    navigationController?.viewControllers.insert(rootPageVC!, at: vcCount-1)
+                    
+                    rootPageVC?.setUpRootPage(post: currentPost, userAction: currentUserAction)
+                    
+                }
+            }
+            
+        }
     }
     
     func commentsQuery(){
