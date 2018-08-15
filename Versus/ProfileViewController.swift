@@ -532,10 +532,42 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
             }
             
         case p:
-            //set up posts history item click segue
             let backItem = UIBarButtonItem()
             backItem.title = currentUsername
             navigationItem.backBarButtonItem = backItem
+            
+            guard let rootVC = segue.destination as? RootPageViewController else {return}
+            let view = rootVC.view //necessary for loading the view
+            let userActionID = currentUsername+clickedPost!.post_id
+            
+            //set up posts history item click segue
+            apiClient.postGet(a: "p", b: clickedPost!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                if task.error != nil {
+                    DispatchQueue.main.async {
+                        print(task.error!)
+                    }
+                }
+                else {
+                    if let postResult = task.result {
+                        var postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
+                        self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            if task.error != nil {
+                                rootVC.setUpRootPage(post: postObject, userAction: UserAction(idIn: userActionID))
+                            }
+                            else {
+                                if let recordResult = task.result {
+                                    rootVC.setUpRootPage(post: postObject, userAction: UserAction(itemSource: recordResult, idIn: userActionID))
+                                }
+                                else {
+                                    rootVC.setUpRootPage(post: postObject, userAction: UserAction(idIn: userActionID))
+                                }
+                            }
+                            return nil
+                        }
+                    }
+                }
+                return nil
+            }
             
             return
         default:

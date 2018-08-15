@@ -35,6 +35,7 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func setUpPostsHistory(username : String, thisIsMe : Bool) {
+        isMe = thisIsMe
         fromIndex = 0
         posts.removeAll()
         currentUsername = username
