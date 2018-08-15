@@ -21,6 +21,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     let postSegue = 1
     let logoutSegue = 2
     var clickedComment : VSComment?
+    var clickedCommentPostPIV : Int?
     
     override func viewDidLoad() {
         self.loadDesign()
@@ -121,6 +122,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     func myCircleItemClick(comment : VSComment, postProfileImage : Int){
         segueType = myCircleSegue
         clickedComment = comment
+        clickedCommentPostPIV = postProfileImage
         if comment.root == "0" {
             if comment.post_id == comment.parent_id { //root comment
                 performSegue(withIdentifier: "mainToChild", sender: self)
@@ -180,21 +182,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
                                 if let postResult = task.result {
                                     
                                     let postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
-                                    
-                                    self.apiClient.pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                                        
-                                        if task.error != nil {
-                                            DispatchQueue.main.async {
-                                                print(task.error!)
-                                            }
-                                        }
-                                        else {
-                                            if let result = task.result {
-                                                postObject.profileImageVersion = result.pi!.intValue
-                                            }
-                                        }
-                                        return nil
-                                    }
+                                    postObject.profileImageVersion = self.clickedCommentPostPIV!
                                     
                                     self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                         
@@ -233,21 +221,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
                                 if let postResult = task.result {
                                     
                                     let postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
-                                    
-                                    self.apiClient.pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                                        
-                                        if task.error != nil {
-                                            DispatchQueue.main.async {
-                                                print(task.error!)
-                                            }
-                                        }
-                                        else {
-                                            if let result = task.result {
-                                                postObject.profileImageVersion = result.pi!.intValue
-                                            }
-                                        }
-                                        return nil
-                                    }
+                                    postObject.profileImageVersion = self.clickedCommentPostPIV!
                                     
                                     self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                         
@@ -289,21 +263,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
                             if let postResult = task.result {
                                 
                                 let postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
-                                
-                                self.apiClient.pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                                    
-                                    if task.error != nil {
-                                        DispatchQueue.main.async {
-                                            print(task.error!)
-                                        }
-                                    }
-                                    else {
-                                        if let result = task.result {
-                                            postObject.profileImageVersion = result.pi!.intValue
-                                        }
-                                    }
-                                    return nil
-                                }
+                                postObject.profileImageVersion = self.clickedCommentPostPIV!
                                 
                                 self.apiClient.commentGet(a: "c", b: self.clickedComment?.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                     if task.error != nil {
