@@ -271,16 +271,28 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         
         switch fgcp {
         case f:
+            let backItem = UIBarButtonItem()
+            backItem.title = currentUsername
+            navigationItem.backBarButtonItem = backItem
+            
             guard let fghVC = segue.destination as? FGHViewController else {return}
             let view = fghVC.view //necessary for loading the view
             fghVC.fORg = fgcp
             fghVC.setUpFPage(followers: combineLists(list1: hList, list2: fList))
         case g:
+            let backItem = UIBarButtonItem()
+            backItem.title = currentUsername
+            navigationItem.backBarButtonItem = backItem
+            
             guard let fghVC = segue.destination as? FGHViewController else {return}
             let view = fghVC.view //necessary for loading the view
             fghVC.fORg = fgcp
             fghVC.setUpFPage(followers: combineLists(list1: hList, list2: gList))
         case c:
+            let backItem = UIBarButtonItem()
+            backItem.title = "Back"
+            navigationItem.backBarButtonItem = backItem
+            
             //set up comments history item click segue
             if clickedComment != nil {
                 if clickedComment!.root == "0" {
@@ -399,6 +411,7 @@ class MeViewController: ButtonBarPagerTabStripViewController {
                     let view = grandchildVC.view //necessary for loading the view
                     let userActionID = currentUsername+clickedComment!.post_id
                     
+                    
                     VSVersusAPIClient.default().postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                         if task.error != nil {
                             DispatchQueue.main.async {
@@ -466,6 +479,10 @@ class MeViewController: ButtonBarPagerTabStripViewController {
             
         case p:
             //set up posts history item click segue
+            let backItem = UIBarButtonItem()
+            backItem.title = currentUsername
+            navigationItem.backBarButtonItem = backItem
+            
             return
         default:
             return

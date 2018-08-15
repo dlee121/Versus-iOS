@@ -193,7 +193,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         
         if var viewControllers = navigationController?.viewControllers {
             if parentRootVC == nil && parentChildVC == nil {
-                if viewControllers.count > 1 && !(viewControllers[viewControllers.count-2] is ChildPageViewController) {
+                if viewControllers.count > 1 {
                     let rootPageVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
                     let rView = rootPageVC?.view
                     let childPageVC = storyboard!.instantiateViewController(withIdentifier: "childPage") as? ChildPageViewController
