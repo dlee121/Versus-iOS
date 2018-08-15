@@ -57,7 +57,7 @@ class PostObject {
         redname = compactSource.rn!
         
         category = 0
-        post_id = ""
+        post_id = id
         redimg = 0
         blackimg = 0
         pt = 0

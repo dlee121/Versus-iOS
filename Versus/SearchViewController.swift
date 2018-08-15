@@ -168,8 +168,22 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        mainContainer.goToPostPageRoot(post: posts[indexPath.row])
-        //performSegue(withIdentifier: "searchToRoot", sender: self)
+        apiClient.postGet(a: "p", b: posts[indexPath.row].post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            if task.error != nil {
+                DispatchQueue.main.async {
+                    print(task.error!)
+                }
+            }
+            else {
+                if let postResult = task.result {
+                    var clickedPost = PostObject(itemSource: postResult.source!, id: postResult.id!)
+                    DispatchQueue.main.async {
+                        self.mainContainer.goToPostPageRoot(post: clickedPost)
+                    }
+                }
+            }
+            return nil
+        }
     }
     
     

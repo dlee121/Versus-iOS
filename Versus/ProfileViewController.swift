@@ -45,6 +45,8 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     
     var fromPostPage : Bool?
     
+    let apiClient = VSVersusAPIClient.default()
+    
     override func viewDidLoad() {
         self.loadDesign()
         super.viewDidLoad()
@@ -83,7 +85,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         self.fghIcon.image = nil
         setupFGH()
         
-        VSVersusAPIClient.default().profileinfoGet(a: "pim", b: currentUsername.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        apiClient.profileinfoGet(a: "pim", b: currentUsername.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -355,7 +357,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                         let view = childVC.view //necessary for loading the view
                         let userActionID = currentUsername+clickedComment!.post_id
                         
-                        VSVersusAPIClient.default().postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        apiClient.postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
                                 DispatchQueue.main.async {
                                     print(task.error!)
@@ -366,7 +368,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                                     
                                     let postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
                                     
-                                    VSVersusAPIClient.default().pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                    self.apiClient.pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                         
                                         if task.error != nil {
                                             DispatchQueue.main.async {
@@ -381,8 +383,8 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                                         return nil
                                     }
                                     
-                                    VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                                        
+                                    self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                
                                         if task.error != nil {
                                             childVC.setUpChildPage(post: postObject, comment: self.clickedComment!, userAction: UserAction(idIn: userActionID), parentPage: nil)
                                         }
@@ -408,7 +410,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                         let view = grandchildVC.view //necessary for loading the view
                         let userActionID = currentUsername+clickedComment!.post_id
                         
-                        VSVersusAPIClient.default().postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        apiClient.postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
                                 DispatchQueue.main.async {
                                     print(task.error!)
@@ -419,7 +421,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                                     
                                     let postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
                                     
-                                    VSVersusAPIClient.default().pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                    self.apiClient.pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                         
                                         if task.error != nil {
                                             DispatchQueue.main.async {
@@ -434,7 +436,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                                         return nil
                                     }
                                     
-                                    VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                    self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                         
                                         if task.error != nil {
                                             grandchildVC.setUpGrandchildPage(post: postObject, comment: self.clickedComment!, userAction: UserAction(idIn: userActionID), parentPage: nil, grandparentPage: nil)
@@ -464,7 +466,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                     let userActionID = currentUsername+clickedComment!.post_id
                     
                     
-                    VSVersusAPIClient.default().postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    apiClient.postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                         if task.error != nil {
                             DispatchQueue.main.async {
                                 print(task.error!)
@@ -475,7 +477,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                                 
                                 let postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
                                 
-                                VSVersusAPIClient.default().pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                self.apiClient.pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                     
                                     if task.error != nil {
                                         DispatchQueue.main.async {
@@ -490,7 +492,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                                     return nil
                                 }
                                 
-                                VSVersusAPIClient.default().commentGet(a: "c", b: self.clickedComment?.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                self.apiClient.commentGet(a: "c", b: self.clickedComment?.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                     if task.error != nil {
                                         DispatchQueue.main.async {
                                             print(task.error!)
@@ -501,7 +503,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                                             
                                             let topcardComment = VSComment(itemSource: commentResult.source!, id: commentResult.id!)
                                             
-                                            VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                            self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                                 
                                                 if task.error != nil {
                                                     grandchildVC.setUpGrandchildPage(post: postObject, comment: topcardComment, userAction: UserAction(idIn: userActionID), parentPage: nil, grandparentPage: nil)

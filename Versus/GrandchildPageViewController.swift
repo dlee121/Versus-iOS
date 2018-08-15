@@ -203,7 +203,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                     
                     rootPageVC?.setUpRootPage(post: currentPost, userAction: currentUserAction)
                     
-                    VSVersusAPIClient.default().commentGet(a: "c", b: topCardComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    apiClient.commentGet(a: "c", b: topCardComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                         if task.error != nil {
                             DispatchQueue.main.async {
                                 print(task.error!)
