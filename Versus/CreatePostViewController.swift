@@ -96,6 +96,15 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func postButtonTapped(_ sender: UIButton) {
+        if selectedCategory == nil || selectedCategory!.count <= 0 {
+            showToast(message: "Please select a category", length: 24)
+        }
+        else if question.text!.count <= 0 {
+            showToast(message: "Please enter a question or topic for this post", length: 40)
+        }
+        else if redName.text!.count <= 0 || blueName.text!.count <= 0 {
+            showMultilineToast(message: "Please enter what you'd like to compare\n(pictures optional)", length: 37, lines: 2)
+        }
         
         
         
