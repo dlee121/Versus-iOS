@@ -2235,7 +2235,7 @@
             <objects>
                 <viewController id="Bbt-9Q-VzI" customClass="MeViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5zA-V8-dXq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="98c-fl-5ts" userLabel="rightHalf">
@@ -3689,6 +3689,9 @@
                                 <state key="normal" title="Select a Category">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="categoryButtonTapped:" destination="van-DZ-Ibd" eventType="touchUpInside" id="eyw-VV-Rdc"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f6x-U9-3bz">
                                 <rect key="frame" x="8" y="114" width="171.5" height="35"/>
@@ -3771,6 +3774,17 @@
                         <viewLayoutGuide key="safeArea" id="Twr-Wj-gez"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" id="ipP-Yz-E0I"/>
+                    <connections>
+                        <outlet property="blueName" destination="52r-Qo-9hP" id="eCp-AM-Vdi"/>
+                        <outlet property="categoryButton" destination="rVv-mn-Vyd" id="GWa-pm-BaV"/>
+                        <outlet property="leftImage" destination="ytB-Ne-okn" id="sCA-9M-6wr"/>
+                        <outlet property="leftOptionalLabel" destination="ccv-6g-CJ8" id="zoG-WT-Obo"/>
+                        <outlet property="question" destination="HgI-2N-H71" id="mUC-Kr-xIZ"/>
+                        <outlet property="redName" destination="f6x-U9-3bz" id="ptC-tI-XrR"/>
+                        <outlet property="rightImage" destination="fFM-4F-f6m" id="xY0-cb-Jtl"/>
+                        <outlet property="rightOptionalLabel" destination="IYX-sG-wHa" id="axg-if-5mh"/>
+                        <segue destination="Daz-4Z-Xec" kind="presentation" identifier="presentCategorySelector" id="kUu-8a-Bhy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HJi-BF-Prn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3881,12 +3895,12 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kMN-CP-0NP"/>
-        <segue reference="iVN-9A-tOw"/>
+        <segue reference="kUu-8a-Bhy"/>
         <segue reference="XJc-pI-oXd"/>
-        <segue reference="qbd-PO-7a5"/>
-        <segue reference="uAF-H9-Oin"/>
-        <segue reference="pLb-S7-nGp"/>
-        <segue reference="tN5-20-0qe"/>
+        <segue reference="K6P-9d-yI2"/>
+        <segue reference="l8u-kQ-1dz"/>
+        <segue reference="d2v-Cf-zOy"/>
+        <segue reference="DOc-Pv-QZP"/>
         <segue reference="gSn-Xx-xNp"/>
         <segue reference="onp-lO-nwi"/>
         <segue reference="5A0-ex-P7l"/>

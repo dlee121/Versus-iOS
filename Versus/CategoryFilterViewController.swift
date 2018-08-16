@@ -37,8 +37,12 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
     ]
     var apiClient = VSVersusAPIClient.default()
     var selectedCategory : Int!
-    var tab2Or3 : Int!
+    var tab2Or3OrCP : Int! //2 = tab 2, 3 = tab 3, 4 = CreatePost
     var originVC : UIViewController!
+    
+    let Tab2Filter = 2
+    let Tab3Filter = 3
+    let CreatePost = 4
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -166,20 +170,25 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
         selectedCategory = indexPath.row
         tableView.deselectRow(at: indexPath, animated: true)
         
-        switch tab2Or3 {
-        case 2:
+        switch tab2Or3OrCP {
+        case Tab2Filter:
             let tab2VC = originVC as? Tab2CollectionViewController
             tab2VC?.categorySelection = "\(indexPath.row)"
             tab2VC?.categorySelectionLabel.text = ""
             tab2VC?.categorySelectionLabel.setSelectedCategoryLabel(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 30, suffix: getCategoryName(categoryInt: indexPath.row))
             tab2VC?.refresh()
             
-        case 3:
+        case Tab3Filter:
             let tab3VC = originVC as? Tab3CollectionViewController
             tab3VC?.categorySelection = "\(indexPath.row)"
             tab3VC?.categorySelectionLabel.text = ""
             tab3VC?.categorySelectionLabel.setSelectedCategoryLabel(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 30, suffix: getCategoryName(categoryInt: indexPath.row))
             tab3VC?.refresh()
+            
+        case CreatePost:
+            let createPostVC = originVC as? CreatePostViewController
+            createPostVC?.seletedCategory = "\(indexPath.row)"
+            createPostVC?.categoryButton.setTitle(getCategoryName(categoryInt: indexPath.row), for: .normal)
             
         default:
             let tab2VC = originVC as? Tab2CollectionViewController

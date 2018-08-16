@@ -10,6 +10,18 @@ import UIKit
 
 class CreatePostViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var question: UITextField!
+    @IBOutlet weak var categoryButton: UIButton!
+    @IBOutlet weak var redName: UITextField!
+    @IBOutlet weak var blueName: UITextField!
+    @IBOutlet weak var leftImage: UIButton!
+    @IBOutlet weak var rightImage: UIButton!
+    @IBOutlet weak var leftOptionalLabel: UILabel!
+    @IBOutlet weak var rightOptionalLabel: UILabel!
+    
+    var prepareCategoryPage : Bool!
+    var seletedCategory : String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,6 +56,28 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate {
         
         return true
     }
+    
+    
+    @IBAction func categoryButtonTapped(_ sender: UIButton) {
+        
+        prepareCategoryPage = true
+        performSegue(withIdentifier: "presentCategorySelector", sender: self)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if prepareCategoryPage {
+            guard let categoriesVC = segue.destination as? CategoryFilterViewController else {return}
+            categoriesVC.tab2Or3OrCP = 4
+            categoriesVC.originVC = self
+        }
+        else { //this is for segue to PostPage. Be sure to set prepareCategoryFilter = false to access this block
+            
+            //TODO: handle preparation for post item click here
+        }
+    }
+    
+    
     
     
 }
