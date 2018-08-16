@@ -19,6 +19,9 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     @IBOutlet weak var leftOptionalLabel: UILabel!
     @IBOutlet weak var rightOptionalLabel: UILabel!
     
+    @IBOutlet weak var leftImageCancelButton: UIButton!
+    
+    @IBOutlet weak var rightImageCancelButton: UIButton!
     var prepareCategoryPage : Bool!
     var leftClick = true
     var selectedCategory : String?
@@ -28,6 +31,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
+        leftImage.imageView!.contentMode = .scaleAspectFit
+        rightImage.imageView!.contentMode = .scaleAspectFit
         
 
         // Do any additional setup after loading the view.
@@ -204,14 +209,16 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         if let image = info[UIImagePickerControllerOriginalImage] as?  UIImage {
             
             if leftClick {
-                leftImage.imageView!.contentMode = .scaleAspectFit
                 leftImage.backgroundColor = .black
                 leftImage.setImage(image, for: .normal)
+                leftOptionalLabel.isHidden = true
+                leftImageCancelButton.isHidden = false
             }
             else {
-                rightImage.imageView!.contentMode = .scaleAspectFit
                 rightImage.backgroundColor = .black
                 rightImage.setImage(image, for: .normal)
+                rightOptionalLabel.isHidden = true
+                rightImageCancelButton.isHidden = false
             }
             
         }
@@ -220,9 +227,25 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         }
         
         self.dismiss(animated: true, completion: nil)
-        leftOptionalLabel.isHidden = true
-        rightOptionalLabel.isHidden = true
+        
     }
+    
+    
+    @IBAction func leftImageCancelTapped(_ sender: UIButton) {
+        leftImage.backgroundColor = .white
+        leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+        leftImageCancelButton.isHidden = true
+        leftOptionalLabel.isHidden = false
+    }
+    
+    @IBAction func rightImageCancelTapped(_ sender: UIButton) {
+        rightImage.backgroundColor = .white
+        rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+        rightImageCancelButton.isHidden = true
+        rightOptionalLabel.isHidden = false
+    }
+    
+    
     
     
     

@@ -3803,7 +3803,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMf-Jn-OoJ">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMf-Jn-OoJ">
                                 <rect key="frame" x="153.5" y="197" width="22" height="22"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -3811,8 +3811,11 @@
                                     <constraint firstAttribute="height" constant="22" id="MCN-Uf-Rw1"/>
                                 </constraints>
                                 <state key="normal" image="close"/>
+                                <connections>
+                                    <action selector="leftImageCancelTapped:" destination="van-DZ-Ibd" eventType="touchUpInside" id="1Qh-vh-L7X"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVo-RJ-DFp">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVo-RJ-DFp">
                                 <rect key="frame" x="341" y="197" width="22" height="22"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -3820,6 +3823,9 @@
                                     <constraint firstAttribute="width" constant="22" id="Xw1-zq-XBS"/>
                                 </constraints>
                                 <state key="normal" image="close"/>
+                                <connections>
+                                    <action selector="rightImageCancelTapped:" destination="van-DZ-Ibd" eventType="touchUpInside" id="03C-Ar-t7K"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
@@ -3864,10 +3870,12 @@
                         <outlet property="blueName" destination="52r-Qo-9hP" id="eCp-AM-Vdi"/>
                         <outlet property="categoryButton" destination="rVv-mn-Vyd" id="GWa-pm-BaV"/>
                         <outlet property="leftImage" destination="ytB-Ne-okn" id="sCA-9M-6wr"/>
+                        <outlet property="leftImageCancelButton" destination="YMf-Jn-OoJ" id="rAu-x4-o9Z"/>
                         <outlet property="leftOptionalLabel" destination="ccv-6g-CJ8" id="zoG-WT-Obo"/>
                         <outlet property="question" destination="HgI-2N-H71" id="mUC-Kr-xIZ"/>
                         <outlet property="redName" destination="f6x-U9-3bz" id="ptC-tI-XrR"/>
                         <outlet property="rightImage" destination="fFM-4F-f6m" id="xY0-cb-Jtl"/>
+                        <outlet property="rightImageCancelButton" destination="TVo-RJ-DFp" id="yjc-xo-e2y"/>
                         <outlet property="rightOptionalLabel" destination="IYX-sG-wHa" id="axg-if-5mh"/>
                         <segue destination="Daz-4Z-Xec" kind="presentation" identifier="presentCategorySelector" id="kUu-8a-Bhy"/>
                     </connections>
