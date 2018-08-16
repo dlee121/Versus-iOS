@@ -20,7 +20,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var rightOptionalLabel: UILabel!
     
     var prepareCategoryPage : Bool!
-    var seletedCategory : String?
+    var selectedCategory : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,23 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        //self.tabBarController?.tabBar.isHidden = false
+        question.text = ""
+        categoryButton.setTitle("Select a Category", for: .normal)
+        redName.text = ""
+        blueName.text = ""
+        leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+        rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+        leftOptionalLabel.isHidden = false
+        rightOptionalLabel.isHidden = false
+        selectedCategory = ""
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

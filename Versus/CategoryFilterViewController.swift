@@ -187,7 +187,7 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
             
         case CreatePost:
             let createPostVC = originVC as? CreatePostViewController
-            createPostVC?.seletedCategory = "\(indexPath.row)"
+            createPostVC?.selectedCategory = "\(indexPath.row)"
             createPostVC?.categoryButton.setTitle(getCategoryName(categoryInt: indexPath.row), for: .normal)
             
         default:
