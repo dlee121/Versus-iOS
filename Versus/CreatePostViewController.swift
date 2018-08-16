@@ -95,6 +95,19 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    @IBAction func postButtonTapped(_ sender: UIButton) {
+        
+        
+        
+    }
+    
+    
+    
+    @IBAction func backButtonTapped(_ sender: UIButton) {
+        (tabBarController as! TabBarViewController).createPostBack()
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     
     
 }

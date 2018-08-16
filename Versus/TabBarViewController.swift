@@ -11,6 +11,7 @@ import UIKit
 class TabBarViewController: UITabBarController {
 
     let button = UIButton.init(type: .custom)
+    var previousTabNum = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,12 +20,23 @@ class TabBarViewController: UITabBarController {
         addCenterButton(withImage: #imageLiteral(resourceName: "main_fab"), highlightImage: #imageLiteral(resourceName: "main_fab"))
     }
     
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        //necessary in case user taps the actual middle tap element exposed below the center button instead of tapping the center button
+        previousTabNum = selectedIndex
+    }
+    
+    func createPostBack(){
+        selectedIndex = previousTabNum
+        tabBar.isHidden = false
+    }
+    
     @objc
     func handleTouchTabbarCenter(sender : UIButton)
     {
         if let count = self.tabBar.items?.count
         {
             let i = floor(Double(count / 2))
+            previousTabNum = selectedIndex
             self.selectedViewController = self.viewControllers?[Int(i)]
         }
     }
