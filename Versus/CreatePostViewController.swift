@@ -202,10 +202,15 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as?  UIImage {
+            
             if leftClick {
+                leftImage.imageView!.contentMode = .scaleAspectFit
+                leftImage.backgroundColor = .black
                 leftImage.setImage(image, for: .normal)
             }
             else {
+                rightImage.imageView!.contentMode = .scaleAspectFit
+                rightImage.backgroundColor = .black
                 rightImage.setImage(image, for: .normal)
             }
             
