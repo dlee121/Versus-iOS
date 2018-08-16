@@ -3745,6 +3745,9 @@
                                     <constraint firstAttribute="height" constant="171.5" id="2Bq-Gs-VYg"/>
                                 </constraints>
                                 <state key="normal" image="plus_blue"/>
+                                <connections>
+                                    <action selector="leftImageButtonTapped:" destination="van-DZ-Ibd" eventType="touchUpInside" id="Z8Z-7r-XS1"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFM-4F-f6m">
                                 <rect key="frame" x="195.5" y="193" width="171.5" height="171.5"/>
@@ -3753,6 +3756,9 @@
                                     <constraint firstAttribute="height" constant="171.5" id="iru-XR-GcR"/>
                                 </constraints>
                                 <state key="normal" image="plus_blue"/>
+                                <connections>
+                                    <action selector="rightImageButtonTapped:" destination="van-DZ-Ibd" eventType="touchUpInside" id="1eE-f6-OYP"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Optional)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccv-6g-CJ8">
                                 <rect key="frame" x="54.5" y="335.5" width="77" height="21"/>
