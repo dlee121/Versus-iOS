@@ -34,18 +34,6 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate {
         self.tabBarController?.tabBar.isHidden = true
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        //self.tabBarController?.tabBar.isHidden = false
-        question.text = ""
-        categoryButton.setTitle("Select a Category", for: .normal)
-        redName.text = ""
-        blueName.text = ""
-        leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
-        rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
-        leftOptionalLabel.isHidden = false
-        rightOptionalLabel.isHidden = false
-        selectedCategory = ""
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -115,6 +103,15 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate {
     @IBAction func backButtonTapped(_ sender: UIButton) {
         (tabBarController as! TabBarViewController).createPostBack()
         tabBarController?.tabBar.isHidden = false
+        question.text = ""
+        categoryButton.setTitle("Select a Category", for: .normal)
+        redName.text = ""
+        blueName.text = ""
+        leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+        rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+        leftOptionalLabel.isHidden = false
+        rightOptionalLabel.isHidden = false
+        selectedCategory = ""
     }
     
     
