@@ -57,6 +57,11 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         // Do any additional setup after loading the view.
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")

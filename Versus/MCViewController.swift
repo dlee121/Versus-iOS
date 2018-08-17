@@ -61,6 +61,12 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         
     }
     
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         print("called here 1")
     }

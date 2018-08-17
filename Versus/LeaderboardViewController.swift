@@ -22,6 +22,11 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         apiClient.leaderboardGet(a: "lb").continueWith(block:) {(task: AWSTask) -> AnyObject? in

@@ -85,7 +85,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             parentVC!.tableView.reloadData()
         }
         
-        if currentUserAction.changed {
+        if currentUserAction != nil && currentUserAction.changed {
             apiClient.recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
         }
         

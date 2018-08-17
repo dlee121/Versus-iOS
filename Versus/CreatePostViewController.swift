@@ -52,6 +52,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
     }
     
@@ -100,6 +101,9 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         else { //this is for segue to PostPage. Be sure to set prepareCategoryFilter = false to access this block
             guard let rootVC = segue.destination as? RootPageViewController else {return}
             rootVC.createPostVC = self
+            let backItem = UIBarButtonItem()
+            backItem.title = "Back"
+            navigationItem.backBarButtonItem = backItem
             rootVC.setUpRootPage(post: createdPost!, userAction: UserAction(idIn: UserDefaults.standard.string(forKey: "KEY_USERNAME")!+createdPost!.post_id), fromCreatePost: true)
         }
     }
@@ -150,7 +154,6 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     @objc
     func backButtonTapped() {
         (tabBarController as! TabBarViewController).createPostBack()
-        tabBarController?.tabBar.isHidden = false
         question.text = ""
         categoryButton.setTitle("Select a Category", for: .normal)
         redName.text = ""

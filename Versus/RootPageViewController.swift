@@ -89,11 +89,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         if isMovingFromParentViewController && fromCreatePost && createPostVC != nil{
-            print("asdf ayy we got it")
             createPostVC?.backButtonTapped()
-        }
-        else {
-            print("asdf this too dawg")
         }
         
         NotificationCenter.default.removeObserver(self)
