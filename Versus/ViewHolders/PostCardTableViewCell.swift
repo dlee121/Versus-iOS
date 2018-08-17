@@ -54,6 +54,12 @@ class PostCardTableViewCell: UITableViewCell {
         else {
             profileImage.image = #imageLiteral(resourceName: "default_profile")
         }
+        
+        DispatchQueue.main.async {
+            self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
+            self.profileImage.clipsToBounds = true
+        }
+        
         author.text = post.author
         votecount.text = "\(post.redcount.intValue+post.blackcount.intValue) votes"
         if post.redimg.intValue % 10 == S3 {
