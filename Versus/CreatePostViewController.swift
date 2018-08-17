@@ -305,99 +305,119 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     func uploadImages(postID : String) {
         if leftImageSet == S3 {
             let imageKey = postID+"-left.jpeg"
-            let image = leftImage.currentImage!
-            let fileManager = FileManager.default
-            let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
-            let imageData = UIImageJPEGRepresentation(image, 0.5)
-            fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
-            
-            let fileUrl = NSURL(fileURLWithPath: path)
-            let uploadRequest = AWSS3TransferManagerUploadRequest()
-            uploadRequest?.bucket = "versus.pictures"
-            uploadRequest?.key = imageKey
-            uploadRequest?.contentType = "image/jpeg"
-            uploadRequest?.body = fileUrl as URL
-            uploadRequest?.serverSideEncryption = AWSS3ServerSideEncryption.awsKms
-            /*
-            uploadRequest?.uploadProgress = { (bytesSent, totalBytesSent, totalBytesExpectedToSend) -> Void in
-                DispatchQueue.main.async(execute: {
-                    self.amountUploaded = totalBytesSent // To show the updating data status in label.
-                    self.fileSize = totalBytesExpectedToSend
-                })
-            }
-            */
-            
-            let transferManager = AWSS3TransferManager.default()
-            transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
-                
-                if let error = task.error as? NSError {
-                    if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                        switch code {
-                        case .cancelled, .paused:
-                            break
-                        default:
-                            print("Error uploading: \(uploadRequest!.key) Error: \(error)")
-                        }
-                    } else {
-                        print("Error uploading: \(uploadRequest!.key) Error: \(error)")
-                    }
-                    return nil
+            let image : UIImage!
+            if let rawImage = leftImage.currentImage {
+                if rawImage.size.width >= rawImage.size.height {
+                    image = rawImage.resized(toWidth: 304)
                 }
                 else {
-                    //for now we don't handle additional code for image upload success
+                    image = rawImage.resized(toHeight: 304)
                 }
                 
-                return nil
-            })
+                let fileManager = FileManager.default
+                let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
+                let imageData = UIImageJPEGRepresentation(image, 0.5)
+                fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
+                
+                let fileUrl = NSURL(fileURLWithPath: path)
+                let uploadRequest = AWSS3TransferManagerUploadRequest()
+                uploadRequest?.bucket = "versus.pictures"
+                uploadRequest?.key = imageKey
+                uploadRequest?.contentType = "image/jpeg"
+                uploadRequest?.body = fileUrl as URL
+                uploadRequest?.serverSideEncryption = AWSS3ServerSideEncryption.awsKms
+                /*
+                 uploadRequest?.uploadProgress = { (bytesSent, totalBytesSent, totalBytesExpectedToSend) -> Void in
+                 DispatchQueue.main.async(execute: {
+                 self.amountUploaded = totalBytesSent // To show the updating data status in label.
+                 self.fileSize = totalBytesExpectedToSend
+                 })
+                 }
+                 */
+                
+                let transferManager = AWSS3TransferManager.default()
+                transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
+                    
+                    if let error = task.error as? NSError {
+                        if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
+                            switch code {
+                            case .cancelled, .paused:
+                                break
+                            default:
+                                print("Error uploading: \(uploadRequest!.key) Error: \(error)")
+                            }
+                        } else {
+                            print("Error uploading: \(uploadRequest!.key) Error: \(error)")
+                        }
+                        return nil
+                    }
+                    else {
+                        //for now we don't handle additional code for image upload success
+                    }
+                    
+                    return nil
+                })
+                
+            }
         }
         
         
         if rightImageSet == S3 {
             let imageKey = postID+"-right.jpeg"
-            let image = rightImage.currentImage!
-            let fileManager = FileManager.default
-            let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
-            let imageData = UIImageJPEGRepresentation(image, 0.5)
-            fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
-            
-            let fileUrl = NSURL(fileURLWithPath: path)
-            let uploadRequest = AWSS3TransferManagerUploadRequest()
-            uploadRequest?.bucket = "versus.pictures"
-            uploadRequest?.key = imageKey
-            uploadRequest?.contentType = "image/jpeg"
-            uploadRequest?.body = fileUrl as URL
-            uploadRequest?.serverSideEncryption = AWSS3ServerSideEncryption.awsKms
-            /*
-             uploadRequest?.uploadProgress = { (bytesSent, totalBytesSent, totalBytesExpectedToSend) -> Void in
-             DispatchQueue.main.async(execute: {
-             self.amountUploaded = totalBytesSent // To show the updating data status in label.
-             self.fileSize = totalBytesExpectedToSend
-             })
-             }
-             */
-            
-            let transferManager = AWSS3TransferManager.default()
-            transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
-                
-                if let error = task.error as? NSError {
-                    if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                        switch code {
-                        case .cancelled, .paused:
-                            break
-                        default:
-                            print("Error uploading: \(uploadRequest!.key) Error: \(error)")
-                        }
-                    } else {
-                        print("Error uploading: \(uploadRequest!.key) Error: \(error)")
-                    }
-                    return nil
+            let image : UIImage!
+            if let rawImage = rightImage.currentImage {
+                if rawImage.size.width >= rawImage.size.height {
+                    image = rawImage.resized(toWidth: 304)
                 }
                 else {
-                    //for now we don't handle additional code for image upload success
+                    image = rawImage.resized(toHeight: 304)
                 }
                 
-                return nil
-            })
+                let fileManager = FileManager.default
+                let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
+                let imageData = UIImageJPEGRepresentation(image, 0.5)
+                fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
+                
+                let fileUrl = NSURL(fileURLWithPath: path)
+                let uploadRequest = AWSS3TransferManagerUploadRequest()
+                uploadRequest?.bucket = "versus.pictures"
+                uploadRequest?.key = imageKey
+                uploadRequest?.contentType = "image/jpeg"
+                uploadRequest?.body = fileUrl as URL
+                uploadRequest?.serverSideEncryption = AWSS3ServerSideEncryption.awsKms
+                /*
+                 uploadRequest?.uploadProgress = { (bytesSent, totalBytesSent, totalBytesExpectedToSend) -> Void in
+                 DispatchQueue.main.async(execute: {
+                 self.amountUploaded = totalBytesSent // To show the updating data status in label.
+                 self.fileSize = totalBytesExpectedToSend
+                 })
+                 }
+                 */
+                
+                let transferManager = AWSS3TransferManager.default()
+                transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
+                    
+                    if let error = task.error as? NSError {
+                        if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
+                            switch code {
+                            case .cancelled, .paused:
+                                break
+                            default:
+                                print("Error uploading: \(uploadRequest!.key) Error: \(error)")
+                            }
+                        } else {
+                            print("Error uploading: \(uploadRequest!.key) Error: \(error)")
+                        }
+                        return nil
+                    }
+                    else {
+                        //for now we don't handle additional code for image upload success
+                    }
+                    
+                    return nil
+                })
+                
+            }
         }
         
         
