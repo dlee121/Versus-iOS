@@ -148,14 +148,14 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
             let userActionId = UserDefaults.standard.string(forKey: "KEY_USERNAME")! + selectedPost.post_id
             apiClient.recordGet(a: "rcg", b: userActionId).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                 if task.error != nil {
-                    rootVC.setUpRootPage(post: self.selectedPost, userAction: UserAction(idIn: userActionId))
+                    rootVC.setUpRootPage(post: self.selectedPost, userAction: UserAction(idIn: userActionId), fromCreatePost: false)
                 }
                 else {
                     if let result = task.result {
-                        rootVC.setUpRootPage(post: self.selectedPost, userAction: UserAction(itemSource: result, idIn: userActionId))
+                        rootVC.setUpRootPage(post: self.selectedPost, userAction: UserAction(itemSource: result, idIn: userActionId), fromCreatePost: false)
                     }
                     else {
-                        rootVC.setUpRootPage(post: self.selectedPost, userAction: UserAction(idIn: userActionId))
+                        rootVC.setUpRootPage(post: self.selectedPost, userAction: UserAction(idIn: userActionId), fromCreatePost: false)
                     }
                 }
                 return nil

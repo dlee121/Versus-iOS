@@ -39,6 +39,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var profileTap, vmrTap : Bool!
     var vmrComment : VSComment?
     
+    var fromCreatePost : Bool!
+    var createPostVC : CreatePostViewController?
+    
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
             ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -83,6 +86,14 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if currentUserAction.changed {
             apiClient.recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
+        }
+        
+        if isMovingFromParentViewController && fromCreatePost && createPostVC != nil{
+            print("asdf ayy we got it")
+            createPostVC?.backButtonTapped()
+        }
+        else {
+            print("asdf this too dawg")
         }
         
         NotificationCenter.default.removeObserver(self)
@@ -135,7 +146,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    func setUpRootPage(post : PostObject, userAction : UserAction){
+    func setUpRootPage(post : PostObject, userAction : UserAction, fromCreatePost : Bool){
+        self.fromCreatePost = fromCreatePost
         comments.removeAll()
         updateMap.removeAll()
         nodeMap.removeAll()

@@ -163,7 +163,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                     let rView = rootPageVC?.view
                     navigationController?.viewControllers.insert(rootPageVC!, at: vcCount-1)
                     
-                    rootPageVC?.setUpRootPage(post: currentPost, userAction: currentUserAction)
+                    rootPageVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
                     
                 }
             }

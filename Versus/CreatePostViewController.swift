@@ -36,6 +36,9 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Create a Post"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "POST", style: .done, target: self, action: #selector(postButtonTapped))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "close"), style: .done, target: self, action: #selector(backButtonTapped))
         imagePicker.delegate = self
         leftImage.imageView!.contentMode = .scaleAspectFill
         rightImage.imageView!.contentMode = .scaleAspectFill
@@ -96,12 +99,13 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         }
         else { //this is for segue to PostPage. Be sure to set prepareCategoryFilter = false to access this block
             guard let rootVC = segue.destination as? RootPageViewController else {return}
-            rootVC.setUpRootPage(post: createdPost!, userAction: UserAction(idIn: UserDefaults.standard.string(forKey: "KEY_USERNAME")!+createdPost!.post_id))
+            rootVC.createPostVC = self
+            rootVC.setUpRootPage(post: createdPost!, userAction: UserAction(idIn: UserDefaults.standard.string(forKey: "KEY_USERNAME")!+createdPost!.post_id), fromCreatePost: true)
         }
     }
     
-    
-    @IBAction func postButtonTapped(_ sender: UIButton) {
+    @objc
+    func postButtonTapped() {
         if selectedCategory == nil || selectedCategory!.count <= 0 {
             showToast(message: "Please select a category", length: 24)
         }
@@ -143,9 +147,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         }
     }
     
-    
-    
-    @IBAction func backButtonTapped(_ sender: UIButton) {
+    @objc
+    func backButtonTapped() {
         (tabBarController as! TabBarViewController).createPostBack()
         tabBarController?.tabBar.isHidden = false
         question.text = ""
@@ -162,6 +165,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         leftImageSet = DEFAULT
         rightImageSet = DEFAULT
     }
+    
     
     
     @IBAction func leftImageButtonTapped(_ sender: UIButton) {

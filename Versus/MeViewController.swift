@@ -501,14 +501,14 @@ class MeViewController: ButtonBarPagerTabStripViewController {
                         var postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
                         self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
-                                rootVC.setUpRootPage(post: postObject, userAction: UserAction(idIn: userActionID))
+                                rootVC.setUpRootPage(post: postObject, userAction: UserAction(idIn: userActionID), fromCreatePost: false)
                             }
                             else {
                                 if let recordResult = task.result {
-                                    rootVC.setUpRootPage(post: postObject, userAction: UserAction(itemSource: recordResult, idIn: userActionID))
+                                    rootVC.setUpRootPage(post: postObject, userAction: UserAction(itemSource: recordResult, idIn: userActionID), fromCreatePost: false)
                                 }
                                 else {
-                                    rootVC.setUpRootPage(post: postObject, userAction: UserAction(idIn: userActionID))
+                                    rootVC.setUpRootPage(post: postObject, userAction: UserAction(idIn: userActionID), fromCreatePost: false)
                                 }
                             }
                             return nil

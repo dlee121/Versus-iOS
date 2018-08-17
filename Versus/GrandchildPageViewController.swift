@@ -201,7 +201,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                     viewControllers.insert(rootPageVC!, at: viewControllers.count-2)
                     navigationController?.viewControllers = viewControllers
                     
-                    rootPageVC?.setUpRootPage(post: currentPost, userAction: currentUserAction)
+                    rootPageVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
                     
                     apiClient.commentGet(a: "c", b: topCardComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                         if task.error != nil {
