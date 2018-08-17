@@ -105,6 +105,23 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
             backItem.title = "Back"
             navigationItem.backBarButtonItem = backItem
             rootVC.setUpRootPage(post: createdPost!, userAction: UserAction(idIn: UserDefaults.standard.string(forKey: "KEY_USERNAME")!+createdPost!.post_id), fromCreatePost: true)
+            
+            
+            question.text = ""
+            categoryButton.setTitle("Select a Category", for: .normal)
+            redName.text = ""
+            blueName.text = ""
+            leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+            leftImage.backgroundColor = .white
+            rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+            rightImage.backgroundColor = .white
+            leftOptionalLabel.isHidden = false
+            rightOptionalLabel.isHidden = false
+            selectedCategory = ""
+            leftImageSet = DEFAULT
+            rightImageSet = DEFAULT
+            
+            
         }
     }
     
@@ -123,10 +140,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
             
             let newPost = PostObject(q: question.text!, rn: redName.text!, bn: blueName.text!, a: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, c: selectedCategoryNum!, ri: leftImageSet, bi: rightImageSet)
             createdPost = newPost
-            if leftImageSet == S3 {
-                uploadImages(postID: newPost.post_id)
-            }
-            if rightImageSet == S3 {
+            
+            if leftImageSet == S3 || rightImageSet == S3{
                 uploadImages(postID: newPost.post_id)
             }
             
