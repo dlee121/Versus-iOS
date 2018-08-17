@@ -148,7 +148,9 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         redName.text = ""
         blueName.text = ""
         leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+        leftImage.backgroundColor = .white
         rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+        rightImage.backgroundColor = .white
         leftOptionalLabel.isHidden = false
         rightOptionalLabel.isHidden = false
         selectedCategory = ""
@@ -325,7 +327,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 uploadRequest?.key = imageKey
                 uploadRequest?.contentType = "image/jpeg"
                 uploadRequest?.body = fileUrl as URL
-                uploadRequest?.serverSideEncryption = AWSS3ServerSideEncryption.awsKms
+                
                 /*
                  uploadRequest?.uploadProgress = { (bytesSent, totalBytesSent, totalBytesExpectedToSend) -> Void in
                  DispatchQueue.main.async(execute: {
@@ -384,7 +386,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 uploadRequest?.key = imageKey
                 uploadRequest?.contentType = "image/jpeg"
                 uploadRequest?.body = fileUrl as URL
-                uploadRequest?.serverSideEncryption = AWSS3ServerSideEncryption.awsKms
+                
                 /*
                  uploadRequest?.uploadProgress = { (bytesSent, totalBytesSent, totalBytesExpectedToSend) -> Void in
                  DispatchQueue.main.async(execute: {
