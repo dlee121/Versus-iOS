@@ -85,6 +85,48 @@ class PostObject {
         profileImageVersion = 0
     }
     
+    init (q : String, rn : String, bn : String, a : String, c : NSNumber, ri : NSNumber, bi : NSNumber) {
+        question = q
+        author = a
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        time = formatter.string(from: Date())
+        
+        redname = rn
+        redcount = 0
+        blackname = bn
+        blackcount = 0
+        category = c
+        post_id = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        
+        redimg = ri
+        blackimg = bi
+        
+        pt = NSNumber(value: Int(((NSDate().timeIntervalSince1970/60)/60)/24))
+        ps = 0
+        
+        profileImageVersion = 0
+    }
+    
+    func getPostPutModel() -> VSPostPutModel {
+        var putModel = VSPostPutModel()
+        putModel?.q = question
+        putModel?.a = author
+        putModel?.t = time
+        putModel?.rn = redname
+        putModel?.rc = redcount
+        putModel?.bn = blackname
+        putModel?.bc = blackcount
+        putModel?.c = category
+        putModel?.ri = redimg
+        putModel?.bi = blackimg
+        putModel?.pt = pt
+        putModel?.ps = ps
+        
+        return putModel!
+    }
+    
     
     func setProfileImageVersion(piv : Int){
         profileImageVersion = piv
