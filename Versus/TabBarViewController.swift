@@ -30,6 +30,8 @@ class TabBarViewController: UITabBarController {
         tabBar.isHidden = false
     }
     
+    
+    
     @objc
     func handleTouchTabbarCenter(sender : UIButton)
     {

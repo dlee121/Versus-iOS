@@ -28,6 +28,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     var leftClick = true
     var selectedCategory : String?
     var selectedCategoryNum : NSNumber?
+    var createdPost : PostObject?
     
     let imagePicker = UIImagePickerController()
     let DEFAULT : NSNumber = 0
@@ -94,8 +95,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
             categoriesVC.originVC = self
         }
         else { //this is for segue to PostPage. Be sure to set prepareCategoryFilter = false to access this block
-            
-            //TODO: handle preparation for post item click here
+            guard let rootVC = segue.destination as? RootPageViewController else {return}
+            rootVC.setUpRootPage(post: createdPost!, userAction: UserAction(idIn: UserDefaults.standard.string(forKey: "KEY_USERNAME")!+createdPost!.post_id))
         }
     }
     
@@ -113,7 +114,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         else {
             
             let newPost = PostObject(q: question.text!, rn: redName.text!, bn: blueName.text!, a: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, c: selectedCategoryNum!, ri: leftImageSet, bi: rightImageSet)
-            
+            createdPost = newPost
             if leftImageSet == S3 {
                 uploadImages(postID: newPost.post_id)
             }
@@ -130,6 +131,10 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 else {
                     //Post creation successful. Navigate to the corresponding post page.
                     print("ayyyyyyyy postID: \(newPost.post_id)")
+                    DispatchQueue.main.async {
+                        self.prepareCategoryPage = false
+                        self.performSegue(withIdentifier: "createPostToPostPage", sender: self)
+                    }
                     
                 }
                 return nil
