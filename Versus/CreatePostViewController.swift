@@ -328,15 +328,6 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 uploadRequest?.contentType = "image/jpeg"
                 uploadRequest?.body = fileUrl as URL
                 
-                /*
-                 uploadRequest?.uploadProgress = { (bytesSent, totalBytesSent, totalBytesExpectedToSend) -> Void in
-                 DispatchQueue.main.async(execute: {
-                 self.amountUploaded = totalBytesSent // To show the updating data status in label.
-                 self.fileSize = totalBytesExpectedToSend
-                 })
-                 }
-                 */
-                
                 let transferManager = AWSS3TransferManager.default()
                 transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
                     
@@ -386,15 +377,6 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 uploadRequest?.key = imageKey
                 uploadRequest?.contentType = "image/jpeg"
                 uploadRequest?.body = fileUrl as URL
-                
-                /*
-                 uploadRequest?.uploadProgress = { (bytesSent, totalBytesSent, totalBytesExpectedToSend) -> Void in
-                 DispatchQueue.main.async(execute: {
-                 self.amountUploaded = totalBytesSent // To show the updating data status in label.
-                 self.fileSize = totalBytesExpectedToSend
-                 })
-                 }
-                 */
                 
                 let transferManager = AWSS3TransferManager.default()
                 transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
