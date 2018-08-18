@@ -63,6 +63,9 @@
 		70CB9E532115671700D86E37 /* VSCNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E522115671700D86E37 /* VSCNode.swift */; };
 		70CB9E552116976100D86E37 /* UserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E542116976100D86E37 /* UserAction.swift */; };
 		70D17FED2126613000A0C9D6 /* UIImage+resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D17FEC2126613000A0C9D6 /* UIImage+resize.swift */; };
+		70D17FEF2127869B00A0C9D6 /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D17FEE2127869B00A0C9D6 /* NotificationsTableViewCell.swift */; };
+		70D17FF121278A4E00A0C9D6 /* NotificationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D17FF021278A4E00A0C9D6 /* NotificationItem.swift */; };
+		70D17FF32127B88900A0C9D6 /* AtomicInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D17FF22127B88900A0C9D6 /* AtomicInteger.swift */; };
 		70E331D621212454007414D6 /* GrandchildPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E331D521212454007414D6 /* GrandchildPageViewController.swift */; };
 		70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */; };
 		70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF520E6944B0067DF08 /* UsernameViewController.swift */; };
@@ -190,6 +193,9 @@
 		70CB9E522115671700D86E37 /* VSCNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSCNode.swift; sourceTree = "<group>"; };
 		70CB9E542116976100D86E37 /* UserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAction.swift; sourceTree = "<group>"; };
 		70D17FEC2126613000A0C9D6 /* UIImage+resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+resize.swift"; sourceTree = "<group>"; };
+		70D17FEE2127869B00A0C9D6 /* NotificationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewCell.swift; sourceTree = "<group>"; };
+		70D17FF021278A4E00A0C9D6 /* NotificationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationItem.swift; sourceTree = "<group>"; };
+		70D17FF22127B88900A0C9D6 /* AtomicInteger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtomicInteger.swift; sourceTree = "<group>"; };
 		70E331D521212454007414D6 /* GrandchildPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrandchildPageViewController.swift; sourceTree = "<group>"; };
 		70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayViewController.swift; sourceTree = "<group>"; };
 		70E80BF520E6944B0067DF08 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
@@ -358,6 +364,7 @@
 				70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */,
 				70CB9E4E211551BC00D86E37 /* PostCardTableViewCell.swift */,
 				70CB9E50211552D200D86E37 /* CommentCardTableViewCell.swift */,
+				70D17FEE2127869B00A0C9D6 /* NotificationsTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -372,6 +379,7 @@
 				70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */,
 				70A7ED4A211FC3410059507A /* PostPageDelegator.swift */,
 				70D17FEC2126613000A0C9D6 /* UIImage+resize.swift */,
+				70D17FF22127B88900A0C9D6 /* AtomicInteger.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -386,6 +394,7 @@
 				700DB5CA21081CF5008E546A /* PostInfo.swift */,
 				70CB9E522115671700D86E37 /* VSCNode.swift */,
 				70CB9E542116976100D86E37 /* UserAction.swift */,
+				70D17FF021278A4E00A0C9D6 /* NotificationItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -658,6 +667,7 @@
 				70E80CB920E6DB570067DF08 /* VSLeaderboardModel__shards.swift in Sources */,
 				70036ED4210ABBCF000BE8E9 /* FGHTableViewCell.swift in Sources */,
 				70E80CD220E6DB570067DF08 /* VSPostsListModel.swift in Sources */,
+				70D17FEF2127869B00A0C9D6 /* NotificationsTableViewCell.swift in Sources */,
 				702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */,
 				70E80CD720E6DB570067DF08 /* VSCGCModel.swift in Sources */,
 				700DB5CB21081CF5008E546A /* PostInfo.swift in Sources */,
@@ -674,6 +684,7 @@
 				70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */,
 				70E80CBF20E6DB570067DF08 /* VSCGCModel_responses_item.swift in Sources */,
 				70E80CD620E6DB570067DF08 /* VSPostsListModel__shards.swift in Sources */,
+				70D17FF32127B88900A0C9D6 /* AtomicInteger.swift in Sources */,
 				70E80CD120E6DB570067DF08 /* VSPostsListModel_hits_hits_item.swift in Sources */,
 				70E80CE120E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item__source.swift in Sources */,
 				70E80BFA20E6976E0067DF08 /* MCViewController.swift in Sources */,
@@ -706,6 +717,7 @@
 				70E80CD420E6DB570067DF08 /* VSEmailGetModel.swift in Sources */,
 				701B9BA520E3FB20003C9E7E /* AppDelegate.swift in Sources */,
 				706F89E52106E38800A78EFB /* VSPostQModel.swift in Sources */,
+				70D17FF121278A4E00A0C9D6 /* NotificationItem.swift in Sources */,
 				70E80CBD20E6DB570067DF08 /* VSCommentsListModel_hits.swift in Sources */,
 				70E80CCC20E6DB570067DF08 /* VSRecordPutModel.swift in Sources */,
 				70E80CC320E6DB570067DF08 /* VSLeaderboardModel_hits.swift in Sources */,
