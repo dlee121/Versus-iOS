@@ -16,6 +16,9 @@ class NotificationsTableViewCell: UITableViewCell {
     @IBOutlet weak var body: UILabel!
     @IBOutlet weak var time: UILabel!
     
+    @IBOutlet weak var secondImageTop: NSLayoutConstraint!
+    @IBOutlet weak var secondImageHeight: NSLayoutConstraint!
+    
     let TYPE_U = 0 //new comment upvote notification
     let TYPE_C = 1 //new comment reply notification
     let TYPE_V = 2 //new post vote notification
@@ -29,22 +32,36 @@ class NotificationsTableViewCell: UITableViewCell {
         case TYPE_U:
             break
         case TYPE_C:
-            secondImage.image = nil
+            hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
             
-            break
         case TYPE_V:
             break
         case TYPE_R:
             break
         case TYPE_F:
-            secondImage.image = nil
+            hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
-            break
+            
         case TYPE_M:
-            break
+            switch item.medalType {
+            case "g":
+                secondImage.image = #imageLiteral(resourceName: "medalGold")
+                showSecondImage()
+            case "s":
+                secondImage.image = #imageLiteral(resourceName: "medalSilver")
+                showSecondImage()
+            case "b":
+                secondImage.image = #imageLiteral(resourceName: "medalBronze")
+                showSecondImage()
+            default:
+                hideSecondImage()
+            }
+            body.text = item.body
+            time.text = item.getTimeString()
+            
         case TYPE_EM:
             break
         default:
@@ -52,6 +69,18 @@ class NotificationsTableViewCell: UITableViewCell {
         }
         
         
+        
+    }
+    
+    func showSecondImage(){
+        secondImageHeight.constant = 42
+        secondImageTop.constant = 8
+    }
+    
+    func hideSecondImage(){
+        secondImageHeight.constant = 0
+        secondImageTop.constant = 0
+        secondImage.image = nil
         
     }
 

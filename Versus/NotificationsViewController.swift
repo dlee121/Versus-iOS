@@ -62,8 +62,8 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 
                                 for child in section{
                                     let childKeySplit = child.key.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: true)
-                                    let commentID: String = String(childKeySplit[0])
-                                    let commentContent: String = String(childKeySplit[1])
+                                    let commentID = String(childKeySplit[0])
+                                    let commentContent = String(childKeySplit[1])
                                     
                                     self.ref.child(self.userNotificationsPath+"c/"+child.key).queryOrderedByValue().queryLimited(toLast: 8).observeSingleEvent(of: .value, with: { (dataSnapshot) in
                                         var usernames = ""
@@ -162,40 +162,36 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 }
                                 
                             case "m":
+                                let section = notificationType.value as! [String : String]
+                                for child in section {
+                                    let commentID = child.key
+                                    let childKeySplit = child.value.split(separator: ":", maxSplits: 2, omittingEmptySubsequences: true)
+                                    let medalType = String(childKeySplit[0])
+                                    let timeValue = Int(childKeySplit[1])
+                                    var commentContent = String(childKeySplit[2].replacingOccurrences(of: "^", with: " "))
+                                    
+                                    if commentContent.count > 25 && commentContent[commentContent.count - 3 ... commentContent.count - 1] == "   " {
+                                        commentContent = commentContent[0 ... commentContent.count - 4].trimmingCharacters(in: .whitespaces) + "..."
+                                    }
+                                    
+                                    var header : String!
+                                    
+                                    switch medalType {
+                                    case "g":
+                                        header = "Congratulations! You won a Gold Medal for,"
+                                    case "s":
+                                        header = "Congratulations! You won a Silver Medal for,"
+                                    case "b":
+                                        header = "Congratulations! You won a Bronze Medal for,"
+                                    default:
+                                        header = "Congratulations! You won a medal for,"
+                                    }
+                                    
+                                    let body = header + "\n\""+commentContent+"\""
+                                    self.notificationItems.append(NotificationItem(body: body, type: self.TYPE_M, payload: commentID, timestamp: timeValue!, medalType: medalType, key: commentID))
+                                    
+                                }
                                 
-                                
-                                /*
-                                 for(DataSnapshot child : typeChild.getChildren()){
-                                 String commentID = child.getKey();
-                                 String[] args = child.getValue(String.class).split(":",3);
-                                 String medalType = args[0];
-                                 long timeValue = Long.parseLong(args[1]);
-                                 String commentContent = args[2].replace('^', ' ');
-                                 String header;
-                                 switch (medalType){
-                                 case "g":
-                                 header = "Congratulations! You won a Gold Medal for,";
-                                 break;
-                                 case "s":
-                                 header = "Congratulations! You won a Silver Medal for,";
-                                 break;
-                                 case "b":
-                                 header = "Congratulations! You won a Bronze Medal for,";
-                                 break;
-                                 default:
-                                 header = "Congratulations! You won a medal for,";
-                                 break;
-                                 }
-                                 
-                                 String body = header + "\n\""+commentContent+"\"";
-                                 notificationItems.add(new NotificationItem(body, TYPE_M, commentID, timeValue, medalType, child.getKey()));
-                                 }
-                                 if(typeChildCount.decrementAndGet() == 0){
-                                 finalizeList();
-                                 }
-                                 */
-                                
-                                //placeholder
                                 if atomicCounter.decrementAndGet() == 0{
                                     self.finalizeList()
                                 }
