@@ -11,7 +11,10 @@ import FirebaseDatabase
 
 class NotificationsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    var notificationItems = [NotificationItem]()
+    @IBOutlet weak var tableView: UITableView!
+    
+    
+    var notificationItems : [NotificationItem]!
     let apiClient = VSVersusAPIClient.default()
     var userNotificationsPath : String!
     var ref : DatabaseReference!
@@ -26,37 +29,42 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationItems = [NotificationItem]()
         navigationItem.title = "Notifications"
         ref = Database.database().reference()
         var currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         userNotificationsPath = getUsernameHash(username: currentUsername!)+"/"+currentUsername!+"/n/"
-        ref.child(userNotificationsPath).observeSingleEvent(of: .value, with: { (snapshot) in
+        
+        ref.child(userNotificationsPath).observe(DataEventType.value, with: { (snapshot) in
             // Get user value
             
-            let value = snapshot.value as? [String : [String : Int]]
+            //print(snapshot.value)
+            let value = snapshot.value as? [String : AnyObject]
             if value != nil {
                 let atomicCounter = AtomicInteger(value: value!.count)
-                for notificationType in value! {
+                for notificationType in value! { //notificationType = notificationTypeKey : [notificationKey : [Username : TimeValue]]
                     switch notificationType.key {
                     case "c":
-                        var cCount = notificationType.value.count
+                        let section = notificationType.value as! [String : [String : Int]]
+                        
+                        var cCount = section.count
                         if cCount == 0 {
                             if atomicCounter.decrementAndGet() == 0 {
                                 self.finalizeList()
                             }
                         }
                         
-                        for child in notificationType.value {
+                        for child in section{
                             let childKeySplit = child.key.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: true)
                             let commentID: String = String(childKeySplit[0])
-                            var commentContent: String = String(childKeySplit[1])
+                            let commentContent: String = String(childKeySplit[1])
                             
                             self.ref.child(self.userNotificationsPath+"c/"+child.key).queryOrderedByValue().queryLimited(toLast: 8).observeSingleEvent(of: .value, with: { (dataSnapshot) in
                                 var usernames = ""
                                 var i = dataSnapshot.childrenCount
                                 var timeValue = Int(NSDate().timeIntervalSince1970)
                                 
-                                let grandchildren = snapshot.value as? [String : Int]
+                                let grandchildren = dataSnapshot.value as? [String : Int]
                                 for grandchild in grandchildren! {
                                     usernames.append(grandchild.key + ", ")
                                     i -= 1
@@ -67,8 +75,12 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 
                                 if usernames.count >= 26 {
                                     usernames = String(usernames[0 ... 25])
-                                    if let lastIndex = usernames.range(of: ",", options: .backwards)?.lowerBound {
-                                        usernames = String(usernames[0 ..< usernames.distance(from: usernames.startIndex, to: lastIndex)])
+                                    if String(usernames[25]) == "," {
+                                        usernames = String(usernames[0 ..< 25])
+                                        usernames.append("...")
+                                    }
+                                    else if String(usernames[24]) == "," {
+                                        usernames = String(usernames[0 ..< 24])
                                         usernames.append("...")
                                     }
                                     else {
@@ -86,7 +98,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 
                                 cCount -= 1
                                 if cCount == 0 {
-                                    if atomicCounter.decrementAndGet() == 0 {
+                                    if atomicCounter.decrementAndGet() == 0{
                                         self.finalizeList()
                                     }
                                 }
@@ -96,13 +108,14 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                             }
                         }
                         
+                        
                     case "f":
                         self.ref.child(self.userNotificationsPath+"f/").queryOrderedByValue().queryLimited(toLast: 8).observeSingleEvent(of: .value, with: { (dataSnapshot) in
                             var usernames = ""
                             var i = dataSnapshot.childrenCount
                             var timeValue = Int(NSDate().timeIntervalSince1970)
                             
-                            let grandchildren = snapshot.value as? [String : Int]
+                            let grandchildren = dataSnapshot.value as? [String : Int]
                             for grandchild in grandchildren! {
                                 usernames.append(grandchild.key + ", ")
                                 i -= 1
@@ -139,13 +152,66 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                         
                     case "m":
                         
+                        
+                        /*
+                        for(DataSnapshot child : typeChild.getChildren()){
+                            String commentID = child.getKey();
+                            String[] args = child.getValue(String.class).split(":",3);
+                            String medalType = args[0];
+                            long timeValue = Long.parseLong(args[1]);
+                            String commentContent = args[2].replace('^', ' ');
+                            String header;
+                            switch (medalType){
+                            case "g":
+                                header = "Congratulations! You won a Gold Medal for,";
+                                break;
+                            case "s":
+                                header = "Congratulations! You won a Silver Medal for,";
+                                break;
+                            case "b":
+                                header = "Congratulations! You won a Bronze Medal for,";
+                                break;
+                            default:
+                                header = "Congratulations! You won a medal for,";
+                                break;
+                            }
+                            
+                            String body = header + "\n\""+commentContent+"\"";
+                            notificationItems.add(new NotificationItem(body, TYPE_M, commentID, timeValue, medalType, child.getKey()));
+                        }
+                        if(typeChildCount.decrementAndGet() == 0){
+                            finalizeList();
+                        }
+                        */
+                        
+                        //placeholder
+                        if atomicCounter.decrementAndGet() == 0{
+                            self.finalizeList()
+                        }
+                        
                     case "r":
+                        //placeholder
+                        if atomicCounter.decrementAndGet() == 0{
+                            self.finalizeList()
+                        }
                         
                     case "u":
+                        //placeholder
+                        if atomicCounter.decrementAndGet() == 0{
+                            self.finalizeList()
+                        }
                         
                     case "v":
+                        //placeholder
+                        if atomicCounter.decrementAndGet() == 0{
+                            self.finalizeList()
+                        }
                         
                     case "em":
+                        //placeholder
+                        if atomicCounter.decrementAndGet() == 0{
+                            self.finalizeList()
+                        }
                         
                     default:
                         break
@@ -166,7 +232,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     }
 
     func finalizeList() {
-        
+        tableView.reloadData()
         
     }
     
@@ -186,20 +252,12 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "notificationItem", for: indexPath) as? NotificationsTableViewCell
-        cell!.setCell()
+        cell!.setCell(item: notificationItems[indexPath.row])
         return cell!
     }
     
-    //initial loader that retrieves all notifications and sorts them into the list, and realtime addition/change listner for each notification branch to add new items as they come
-    func initialLoad(){
-        var atomicCounter = AtomicInteger(value: <#T##Int#>)
-        
-        
-        
-        
-        
-    }
     
     func getUsernameHash(username : String) -> String {
         var usernameHash : Int32

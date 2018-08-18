@@ -2255,7 +2255,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UP6-Vc-b5w">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="112"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="112.5"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_black_120" translatesAutoresizingMaskIntoConstraints="NO" id="SPx-XI-qwE">
                                                             <rect key="frame" x="8" y="8" width="42" height="42"/>
@@ -2271,8 +2271,8 @@
                                                                 <constraint firstAttribute="width" constant="42" id="aMo-Uq-kfj"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kT-mJ-oCU">
-                                                            <rect key="frame" x="58" y="8" width="309" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kT-mJ-oCU">
+                                                            <rect key="frame" x="58" y="8" width="309" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -2283,14 +2283,15 @@
                                                         <constraint firstItem="SPx-XI-qwE" firstAttribute="leading" secondItem="UP6-Vc-b5w" secondAttribute="leading" constant="8" id="D2t-1M-IpR"/>
                                                         <constraint firstItem="1kT-mJ-oCU" firstAttribute="leading" secondItem="SPx-XI-qwE" secondAttribute="trailing" constant="8" id="H9b-vD-qxR"/>
                                                         <constraint firstAttribute="trailing" secondItem="1kT-mJ-oCU" secondAttribute="trailing" constant="8" id="V4u-kz-QUt"/>
-                                                        <constraint firstItem="7ce-ld-vvy" firstAttribute="top" secondItem="SPx-XI-qwE" secondAttribute="bottom" constant="8" id="Viu-Do-TIw"/>
                                                         <constraint firstItem="SPx-XI-qwE" firstAttribute="top" secondItem="UP6-Vc-b5w" secondAttribute="top" constant="8" id="e4Z-HL-368"/>
                                                         <constraint firstItem="7ce-ld-vvy" firstAttribute="leading" secondItem="UP6-Vc-b5w" secondAttribute="leading" constant="8" id="mVG-9s-kf1"/>
+                                                        <constraint firstItem="7ce-ld-vvy" firstAttribute="top" secondItem="SPx-XI-qwE" secondAttribute="bottom" constant="8" id="mit-WZ-v4V"/>
+                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="1kT-mJ-oCU" secondAttribute="bottom" constant="8" id="pxa-ED-LgP"/>
                                                         <constraint firstItem="1kT-mJ-oCU" firstAttribute="top" secondItem="UP6-Vc-b5w" secondAttribute="top" constant="8" id="zKs-WD-1if"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8KM-J0-Oyt">
-                                                    <rect key="frame" x="15" y="116" width="34" height="21"/>
+                                                    <rect key="frame" x="15" y="116.5" width="34" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2305,6 +2306,11 @@
                                                 <constraint firstItem="UP6-Vc-b5w" firstAttribute="leading" secondItem="QMD-Mi-RBe" secondAttribute="leading" id="zwU-Qn-aME"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="body" destination="1kT-mJ-oCU" id="LCt-Tz-LJv"/>
+                                            <outlet property="secondImage" destination="7ce-ld-vvy" id="fhU-hj-2Xm"/>
+                                            <outlet property="time" destination="8KM-J0-Oyt" id="mK1-P4-x2y"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -2323,6 +2329,9 @@
                         <viewLayoutGuide key="safeArea" id="5AP-Ny-mdD"/>
                     </view>
                     <navigationItem key="navigationItem" id="9BU-CP-YfO"/>
+                    <connections>
+                        <outlet property="tableView" destination="SdU-u2-Iry" id="Qsl-b2-G09"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BHD-H4-O9b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
