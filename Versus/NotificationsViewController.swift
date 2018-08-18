@@ -93,13 +93,49 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 
                             }){ (error) in
                                 print(error.localizedDescription)
-                                
                             }
                         }
                         
-                        
-                        
                     case "f":
+                        self.ref.child(self.userNotificationsPath+"f/").queryOrderedByValue().queryLimited(toLast: 8).observeSingleEvent(of: .value, with: { (dataSnapshot) in
+                            var usernames = ""
+                            var i = dataSnapshot.childrenCount
+                            var timeValue = Int(NSDate().timeIntervalSince1970)
+                            
+                            let grandchildren = snapshot.value as? [String : Int]
+                            for grandchild in grandchildren! {
+                                usernames.append(grandchild.key + ", ")
+                                i -= 1
+                                if i == 0 {
+                                    timeValue = grandchild.value
+                                }
+                            }
+                            
+                            if usernames.count >= 26 {
+                                usernames = String(usernames[0 ... 25])
+                                if let lastIndex = usernames.range(of: ",", options: .backwards)?.lowerBound {
+                                    usernames = String(usernames[0 ..< usernames.distance(from: usernames.startIndex, to: lastIndex)])
+                                    usernames.append("...")
+                                }
+                                else {
+                                    usernames.append("...")
+                                }
+                            }
+                            else {
+                                if let lastIndex = usernames.range(of: ",", options: .backwards)?.lowerBound {
+                                    usernames = String(usernames[0 ..< usernames.distance(from: usernames.startIndex, to: lastIndex)])
+                                }
+                            }
+                            let body = usernames + "\nstarted following you!"
+                            self.notificationItems.append(NotificationItem(body: body, type: self.TYPE_F, timestamp: timeValue, key: dataSnapshot.key))
+                            
+                            if atomicCounter.decrementAndGet() == 0 {
+                                self.finalizeList()
+                            }
+                            
+                        }){ (error) in
+                            print(error.localizedDescription)
+                        }
                         
                     case "m":
                         
