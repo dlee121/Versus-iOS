@@ -278,8 +278,12 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 for child in section{
                                     let childKeySplit = child.key.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: true)
                                     let commentID = String(childKeySplit[0])
-                                    let commentContent = String(childKeySplit[1])
+                                    var commentContent = String(childKeySplit[1].replacingOccurrences(of: "^", with: " "))
                                     let newHeartsCount = child.value.count
+                                    
+                                    if commentContent.count > 25 && commentContent[commentContent.count - 3 ... commentContent.count - 1] == "   " {
+                                        commentContent = commentContent[0 ... commentContent.count - 4].trimmingCharacters(in: .whitespaces) + "..."
+                                    }
                                     
                                     self.ref.child(self.userNotificationsPath+"u/"+child.key).queryOrderedByValue().queryLimited(toLast: 1).observeSingleEvent(of: .value, with: { (dataSnapshot) in
                                         
@@ -288,10 +292,10 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                             let timeValue = mostRecent.value
                                             var body : String!
                                             if newHeartsCount == 1 {
-                                                body = "You got \(newHeartsCount) Heart on a comment, \"" + commentContent.replacingOccurrences(of: "^", with: " ") + "\""
+                                                body = "You got \(newHeartsCount) Heart on a comment, \"" + commentContent + "\""
                                             }
                                             else {
-                                                body = "You got \(newHeartsCount) Hearts on a comment, \"" + commentContent.replacingOccurrences(of: "^", with: " ") + "\""
+                                                body = "You got \(newHeartsCount) Hearts on a comment, \"" + commentContent + "\""
                                             }
                                             
                                             self.notificationItems.append(NotificationItem(body: body, type: self.TYPE_U, payload: commentID, timestamp: timeValue, key: dataSnapshot.key))
