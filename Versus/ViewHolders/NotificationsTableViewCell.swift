@@ -30,7 +30,11 @@ class NotificationsTableViewCell: UITableViewCell {
     func setCell(item : NotificationItem){
         switch item.type! {
         case TYPE_U:
-            break
+            secondImage.image = #imageLiteral(resourceName: "heart_red")
+            showSecondImage()
+            body.text = item.body
+            time.text = item.getTimeString()
+            
         case TYPE_C:
             hideSecondImage()
             body.text = item.body
@@ -43,7 +47,6 @@ class NotificationsTableViewCell: UITableViewCell {
             body.text = item.body
             time.text = item.getTimeString()
             
-            break
         case TYPE_F:
             hideSecondImage()
             body.text = item.body

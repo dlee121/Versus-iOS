@@ -262,9 +262,48 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 }
                                 
                             case "u":
-                                //placeholder
-                                if atomicCounter.decrementAndGet() == 0{
-                                    self.finalizeList()
+                                let section = notificationType.value as! [String : [String : Int]]
+                                
+                                var uCount = section.count
+                                if uCount == 0 {
+                                    if atomicCounter.decrementAndGet() == 0 {
+                                        self.finalizeList()
+                                    }
+                                }
+                                
+                                for child in section{
+                                    let childKeySplit = child.key.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: true)
+                                    let commentID = String(childKeySplit[0])
+                                    let commentContent = String(childKeySplit[1])
+                                    let newHeartsCount = child.value.count
+                                    
+                                    self.ref.child(self.userNotificationsPath+"u/"+child.key).queryOrderedByValue().queryLimited(toLast: 1).observeSingleEvent(of: .value, with: { (dataSnapshot) in
+                                        
+                                        let grandchildren = dataSnapshot.value as? [String : Int]
+                                        for mostRecent in grandchildren! {
+                                            let timeValue = mostRecent.value
+                                            var body : String!
+                                            if newHeartsCount == 1 {
+                                                body = "You got \(newHeartsCount) Heart on a comment, \"" + commentContent.replacingOccurrences(of: "^", with: " ") + "\""
+                                            }
+                                            else {
+                                                body = "You got \(newHeartsCount) Hearts on a comment, \""
+                                                    + commentContent.replacingOccurrences(of: "^", with: " ") + "\""
+                                            }
+                                            
+                                            self.notificationItems.append(NotificationItem(body: body, type: self.TYPE_U, payload: commentID, timestamp: timeValue, key: dataSnapshot.key))
+                                            
+                                            uCount -= 1
+                                            if uCount == 0 {
+                                                if atomicCounter.decrementAndGet() == 0 {
+                                                    self.finalizeList()
+                                                }
+                                            }
+                                        }
+                                        
+                                    }){ (error) in
+                                        print(error.localizedDescription)
+                                    }
                                 }
                                 
                             case "v":
