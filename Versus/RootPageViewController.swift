@@ -42,6 +42,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var fromCreatePost : Bool!
     var createPostVC : CreatePostViewController?
     
+    var fromIndex : Int?
+    var nowLoading = false
+    var loadThreshold = 8
+    let retrievalSize = 16
+    var reactivateLoadMore = false
+    var fromIndexIncrement : Int?
+    
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
             ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -159,6 +166,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             self.tableView.reloadData()
         }
         currentPost = post
+        fromIndex = 0
+        nowLoading = false
         comments.append(VSComment()) //placeholder for post object
         currentUserAction = userAction
         commentsQuery()
@@ -168,8 +177,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     func commentsQuery(){
         
         //get the root comments, children, and grandchildren
-        apiClient.commentslistGet(c: currentPost.post_id, d: nil, a: "rci", b: "0").continueWith(block:) {(task: AWSTask) -> AnyObject? in
-            
+        apiClient.commentslistGet(c: currentPost.post_id, d: nil, a: "rci", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            print("commentQuery with fromIndex == \(self.fromIndex!)")
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -209,6 +218,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         }
                         
                         cqPayloadIndex += 1
+                    }
+                    
+                    self.fromIndexIncrement = rootIndex
+                    if rootIndex == self.retrievalSize {
+                        self.reactivateLoadMore = true
+                    }
+                    else {
+                        self.reactivateLoadMore = false
+                        self.nowLoading = true
                     }
                     
                     if cqPayloadIndex > 0 {
@@ -331,10 +349,19 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastElement = comments.count - 1 - loadThreshold
+        if !nowLoading && indexPath.row == lastElement {
+            nowLoading = true
+            //fromIndex already set in commenteQuery, after getting root comments
+            commentsQuery()
+        }
+    }
+    
     
     
     func setComments(){
-        for i in 0...rootComments.count-1{
+        for i in fromIndex!...rootComments.count-1{
             let currentRootNode = nodeMap[rootComments[i].comment_id]
             comments.append(currentRootNode!.nodeContent)
             
@@ -363,9 +390,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
         }
-        
+        fromIndex! += fromIndexIncrement!
         DispatchQueue.main.async {
             self.tableView.reloadData()
+            if self.reactivateLoadMore {
+                self.nowLoading = false
+            }
         }
         
     }
