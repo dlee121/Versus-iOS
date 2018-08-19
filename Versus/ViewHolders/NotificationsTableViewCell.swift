@@ -45,7 +45,6 @@ class NotificationsTableViewCell: UITableViewCell {
             body.text = item.body
             time.text = item.getTimeString()
             
-            break
         case TYPE_R:
             hideSecondImage()
             body.text = item.body

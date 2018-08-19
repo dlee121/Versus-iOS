@@ -63,7 +63,11 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 for child in section{
                                     let childKeySplit = child.key.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: true)
                                     let commentID = String(childKeySplit[0])
-                                    let commentContent = String(childKeySplit[1])
+                                    var commentContent = String(childKeySplit[1].replacingOccurrences(of: "^", with: " "))
+                                    
+                                    if commentContent.count > 25 && commentContent[commentContent.count - 3 ... commentContent.count - 1] == "   " {
+                                        commentContent = commentContent[0 ... commentContent.count - 4].trimmingCharacters(in: .whitespaces) + "..."
+                                    }
                                     
                                     self.ref.child(self.userNotificationsPath+"c/"+child.key).queryOrderedByValue().queryLimited(toLast: 8).observeSingleEvent(of: .value, with: { (dataSnapshot) in
                                         var usernames = ""
@@ -99,7 +103,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                             }
                                         }
                                         
-                                        let body = usernames + "\nreplied to your comment, \"" + commentContent.replacingOccurrences(of: "^", with: " ") + "\""
+                                        let body = usernames + "\nreplied to your comment, \"" + commentContent + "\""
                                         self.notificationItems.append(NotificationItem(body: body, type: self.TYPE_C, payload: commentID, timestamp: timeValue, key: dataSnapshot.key))
                                         
                                         cCount -= 1
