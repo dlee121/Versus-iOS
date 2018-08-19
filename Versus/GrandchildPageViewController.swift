@@ -39,6 +39,13 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     var parentRootVC : RootPageViewController?
     var parentChildVC : ChildPageViewController?
     
+    var fromIndex : Int?
+    var nowLoading = false
+    var loadThreshold = 8
+    let retrievalSize = 16
+    var reactivateLoadMore = false
+    var fromIndexIncrement : Int?
+    
     /*
      updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
      ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -159,6 +166,8 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
             self.tableView.reloadData()
         }
         currentPost = post
+        fromIndex = 0
+        nowLoading = false
         topCardComment = comment
         comments.append(topCardComment)
         currentUserAction = userAction
@@ -228,10 +237,13 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func commentsQuery(){
+        if fromIndex == nil {
+            fromIndex = 0
+        }
         
         //get the root comments, children, and grandchildren
-        apiClient.commentslistGet(c: topCardComment.comment_id, d: nil, a: "rci", b: "0").continueWith(block:) {(task: AWSTask) -> AnyObject? in
-            
+        apiClient.commentslistGet(c: topCardComment.comment_id, d: nil, a: "rci", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            print("gc commentQuery with fromIndex == \(self.fromIndex!)")
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -249,6 +261,13 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                     
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
+                        self.fromIndex! += rootQueryResults.count
+                        if rootQueryResults.count == self.retrievalSize {
+                            self.nowLoading = false
+                        }
+                        else {
+                            self.nowLoading = true
+                        }
                     }
                 }
             }
@@ -256,6 +275,14 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastElement = comments.count - 1 - loadThreshold
+        if !nowLoading && indexPath.row == lastElement {
+            nowLoading = true
+            //fromIndex already set in commenteQuery, after getting root comments
+            commentsQuery()
+        }
+    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

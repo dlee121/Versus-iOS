@@ -175,6 +175,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func commentsQuery(){
+        if fromIndex == nil {
+            fromIndex = 0
+        }
         
         //get the root comments, children, and grandchildren
         apiClient.commentslistGet(c: currentPost.post_id, d: nil, a: "rci", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
