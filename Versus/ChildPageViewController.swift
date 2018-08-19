@@ -585,6 +585,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                         self.parentVC!.setCommentsFromChildPage()
                                     }
                                 }
+                                
+                                self.sendCommentReplyNotification(replyTargetComment: self.nodeMap[currentGrandchildRealTargetID!]!.nodeContent)
+                                
                             }
                             return nil
                         }
@@ -593,7 +596,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                     }
                     else { //a reply to a child comment
                         var rootID : String!
-                        let replyTarget = nodeMap[currentReplyTargetID!]!.nodeContent
+                        let replyTargetNode = nodeMap[currentReplyTargetID!]
+                        let replyTarget = replyTargetNode!.nodeContent
                         let targetNestedLevel = replyTarget.nestedLevel
                         
                         let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: replyTarget.parent_id)
@@ -611,7 +615,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                 
                                 let newCommentNode = VSCNode(comment: newComment)
                                 
-                                let replyTargetNode = self.nodeMap[currentReplyTargetID!]
+                                
                                 
                                 if let prevTopChildNode = replyTargetNode!.firstChild {
                                     replyTargetNode!.firstChild = newCommentNode
@@ -653,6 +657,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                         self.parentVC!.setCommentsFromChildPage()
                                     }
                                 }
+                                
+                                self.sendCommentReplyNotification(replyTargetComment: replyTarget)
                                 
                             }
                             return nil
@@ -710,6 +716,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                     self.parentVC!.setCommentsFromChildPage()
                                 }
                             }
+                            self.sendCommentReplyNotification(replyTargetComment: self.topCardComment)
                         }
                         return nil
                     }
@@ -792,14 +799,12 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
     }
     
-    func sendPostVoteNotification() {
-        
-        if currentPost.author != "deleted" && currentPost.author != UserDefaults.standard.string(forKey: "KEY_USERNAME")! {
-            let nKey = currentPost.post_id + ":" + sanitizeContentForURL(content: currentPost.redname)+":"+sanitizeContentForURL(content: currentPost.blackname)+":"+sanitizeContentForURL(content: currentPost.question)
-            let postAuthorPath = getUsernameHash(username: currentPost.author) + "/" + currentPost.author + "/n/v/" + nKey
-            ref.child(postAuthorPath).child(UserDefaults.standard.string(forKey: "KEY_USERNAME")!).setValue(Int(NSDate().timeIntervalSince1970))
+    func sendCommentReplyNotification(replyTargetComment : VSComment){
+        if replyTargetComment.author != "deleted" && replyTargetComment.author != UserDefaults.standard.string(forKey: "KEY_USERNAME")! {
+            let payloadContent = sanitizeCommentContent(content: replyTargetComment.content)
+            let commentAuthorPath = getUsernameHash(username: replyTargetComment.author) + "/" + replyTargetComment.author + "/n/c/" + replyTargetComment.comment_id + ":" + payloadContent
+            ref.child(commentAuthorPath).child(UserDefaults.standard.string(forKey: "KEY_USERNAME")!).setValue(Int(NSDate().timeIntervalSince1970))
         }
-        
     }
     
     func getUsernameHash(username : String) -> String {

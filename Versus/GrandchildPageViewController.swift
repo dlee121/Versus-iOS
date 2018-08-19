@@ -586,7 +586,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                                 }
                             }
                             
-                            
+                            self.sendCommentReplyNotification(replyTargetComment: self.nodeMap[currentGrandchildRealTargetID!]!.nodeContent)
                         }
                         return nil
                     }
@@ -680,6 +680,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                                 }
                             }
                             
+                            self.sendCommentReplyNotification(replyTargetComment: self.topCardComment!)
                         }
                         return nil
                     }
@@ -739,14 +740,12 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         
     }
     
-    func sendPostVoteNotification() {
-        
-        if currentPost.author != "deleted" && currentPost.author != UserDefaults.standard.string(forKey: "KEY_USERNAME")! {
-            let nKey = currentPost.post_id + ":" + sanitizeContentForURL(content: currentPost.redname)+":"+sanitizeContentForURL(content: currentPost.blackname)+":"+sanitizeContentForURL(content: currentPost.question)
-            let postAuthorPath = getUsernameHash(username: currentPost.author) + "/" + currentPost.author + "/n/v/" + nKey
-            ref.child(postAuthorPath).child(UserDefaults.standard.string(forKey: "KEY_USERNAME")!).setValue(Int(NSDate().timeIntervalSince1970))
+    func sendCommentReplyNotification(replyTargetComment : VSComment){
+        if replyTargetComment.author != "deleted" && replyTargetComment.author != UserDefaults.standard.string(forKey: "KEY_USERNAME")! {
+            let payloadContent = sanitizeCommentContent(content: replyTargetComment.content)
+            let commentAuthorPath = getUsernameHash(username: replyTargetComment.author) + "/" + replyTargetComment.author + "/n/c/" + replyTargetComment.comment_id + ":" + payloadContent
+            ref.child(commentAuthorPath).child(UserDefaults.standard.string(forKey: "KEY_USERNAME")!).setValue(Int(NSDate().timeIntervalSince1970))
         }
-        
     }
     
     func getUsernameHash(username : String) -> String {

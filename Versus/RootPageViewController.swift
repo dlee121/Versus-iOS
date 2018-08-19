@@ -704,6 +704,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                 }
                                 
                                 self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
+                                self.sendCommentReplyNotification(replyTargetComment: self.nodeMap[currentGrandchildRealTargetID!]!.nodeContent)
                                 
                             }
                             return nil
@@ -716,11 +717,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         let replyTarget = nodeMap[currentReplyTargetID!]!.nodeContent
                         let targetNestedLevel = replyTarget.nestedLevel
                         if targetNestedLevel == 0 { //reply to a root comment
-                            print("root reply tap")
                             rootID = "0"
                         }
                         else { //reply to a child comment
-                            print("child reply tap")
                             rootID = replyTarget.parent_id
                         }
                         
@@ -765,6 +764,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                 }
                                 
                                 self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
+                                self.sendCommentReplyNotification(replyTargetComment: replyTarget)
                                 
                             }
                             return nil
@@ -804,7 +804,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             }
                             
                             self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
-                            
+                            self.sendRootCommentNotification()
                         }
                         return nil
                     }
@@ -860,6 +860,22 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             ref.child(commentAuthorPath).child(UserDefaults.standard.string(forKey: "KEY_USERNAME")!).setValue(Int(NSDate().timeIntervalSince1970))
         }
         
+    }
+    
+    func sendCommentReplyNotification(replyTargetComment : VSComment){
+        if replyTargetComment.author != "deleted" && replyTargetComment.author != UserDefaults.standard.string(forKey: "KEY_USERNAME")! {
+            let payloadContent = sanitizeCommentContent(content: replyTargetComment.content)
+            let commentAuthorPath = getUsernameHash(username: replyTargetComment.author) + "/" + replyTargetComment.author + "/n/c/" + replyTargetComment.comment_id + ":" + payloadContent
+            ref.child(commentAuthorPath).child(UserDefaults.standard.string(forKey: "KEY_USERNAME")!).setValue(Int(NSDate().timeIntervalSince1970))
+        }
+    }
+    
+    func sendRootCommentNotification(){
+        if currentPost.author != "deleted" && currentPost.author != UserDefaults.standard.string(forKey: "KEY_USERNAME")! {
+            var nKey = currentPost.post_id+":"+sanitizeContentForURL(content: currentPost.redname)+":"+sanitizeContentForURL(content:currentPost.blackname)
+            let postAuthorPath = getUsernameHash(username: currentPost.author) + "/" + currentPost.author + "/n/r/" + nKey
+            ref.child(postAuthorPath).child(UserDefaults.standard.string(forKey: "KEY_USERNAME")!).setValue(Int(NSDate().timeIntervalSince1970))
+        }
     }
     
     func sendPostVoteNotification() {
