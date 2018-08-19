@@ -14,7 +14,7 @@ class CustomTabBar: UITabBar {
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         
-        if middleButton != nil {
+        if middleButton != nil && !isHidden{
             let from = point
             let to = middleButton.center
             return sqrt((from.x - to.x) * (from.x - to.x) + (from.y - to.y) * (from.y - to.y)) <= radius ? middleButton : super.hitTest(point, with: event)
