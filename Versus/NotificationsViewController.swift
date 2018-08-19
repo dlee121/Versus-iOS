@@ -306,9 +306,49 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 }
                                 
                             case "v":
-                                //placeholder
-                                if atomicCounter.decrementAndGet() == 0{
-                                    self.finalizeList()
+                                let section = notificationType.value as! [String : [String : Int]]
+                                
+                                var vCount = section.count
+                                if vCount == 0 {
+                                    if atomicCounter.decrementAndGet() == 0 {
+                                        self.finalizeList()
+                                    }
+                                }
+                                
+                                for child in section{
+                                    let childKeySplit = child.key.split(separator: ":", maxSplits: 3, omittingEmptySubsequences: true)
+                                    let postID = String(childKeySplit[0])
+                                    let redName = String(childKeySplit[1].replacingOccurrences(of: "^", with: " "))
+                                    let blueName = String(childKeySplit[2].replacingOccurrences(of: "^", with: " "))
+                                    let question = String(childKeySplit[3].replacingOccurrences(of: "^", with: " "))
+                                    let newVotesCount = child.value.count
+                                    
+                                    self.ref.child(self.userNotificationsPath+"v/"+child.key).queryOrderedByValue().queryLimited(toLast: 1).observeSingleEvent(of: .value, with: { (dataSnapshot) in
+                                        
+                                        let grandchildren = dataSnapshot.value as? [String : Int]
+                                        for mostRecent in grandchildren! {
+                                            let timeValue = mostRecent.value
+                                            var body : String!
+                                            if newVotesCount == 1 {
+                                                body = "You got \(newVotesCount) New Vote on your post\n" + question + "\n\"" + redName + " vs. " + blueName + "\""
+                                            }
+                                            else {
+                                                body = "You got \(newVotesCount) New Votes on your post\n" + question + "\n\"" + redName + " vs. " + blueName + "\""
+                                            }
+                                            
+                                            self.notificationItems.append(NotificationItem(body: body, type: self.TYPE_V, payload: postID, timestamp: timeValue, key: dataSnapshot.key))
+                                            
+                                            vCount -= 1
+                                            if vCount == 0 {
+                                                if atomicCounter.decrementAndGet() == 0 {
+                                                    self.finalizeList()
+                                                }
+                                            }
+                                        }
+                                        
+                                    }){ (error) in
+                                        print(error.localizedDescription)
+                                    }
                                 }
                                 
                             case "em":
