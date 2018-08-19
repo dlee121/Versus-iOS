@@ -719,10 +719,20 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         return strIn.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "[ /\\\\.\\\\$\\[\\]\\\\#]", with: "^", options: .regularExpression, range: nil).replacingOccurrences(of: ":", with: ";")
     }
     
+    func sanitizeCommentContent(content : String) -> String {
+        var strIn = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        if strIn.count > 26 {
+            strIn = String(strIn[..<26].trimmingCharacters(in: .whitespacesAndNewlines) + "...")
+        }
+        
+        return strIn.replacingOccurrences(of: "[ /\\\\.\\\\$\\[\\]\\\\#]", with: "^", options: .regularExpression, range: nil).replacingOccurrences(of: ":", with: ";")
+        
+    }
+    
     func sendCommentUpvoteNotification(upvotedComment : VSComment){
         
         if upvotedComment.author != "deleted" && upvotedComment.author != UserDefaults.standard.string(forKey: "KEY_USERNAME")! {
-            let payloadContent = sanitizeContentForURL(content: upvotedComment.content)
+            let payloadContent = sanitizeCommentContent(content: upvotedComment.content)
             let commentAuthorPath = getUsernameHash(username: upvotedComment.author) + "/" + upvotedComment.author + "/n/u/" + upvotedComment.comment_id + ":" + payloadContent
             ref.child(commentAuthorPath).child(UserDefaults.standard.string(forKey: "KEY_USERNAME")!).setValue(Int(NSDate().timeIntervalSince1970))
         }

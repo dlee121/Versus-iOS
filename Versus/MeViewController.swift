@@ -300,7 +300,6 @@ class MeViewController: ButtonBarPagerTabStripViewController {
             let backItem = UIBarButtonItem()
             backItem.title = "Back"
             navigationItem.backBarButtonItem = backItem
-            
             //set up comments history item click segue
             if clickedComment != nil {
                 if clickedComment!.root == "0" {

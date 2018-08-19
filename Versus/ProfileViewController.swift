@@ -355,7 +355,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                         //go to a child page with this root comment as the top card
                         guard let childVC = segue.destination as? ChildPageViewController else {return}
                         let view = childVC.view //necessary for loading the view
-                        let userActionID = currentUsername+clickedComment!.post_id
+                        let userActionID = UserDefaults.standard.string(forKey: "KEY_USERNAME")!+clickedComment!.post_id
                         
                         apiClient.postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
@@ -408,7 +408,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                         //go to a grandchild page with this child comment as the top card
                         guard let grandchildVC = segue.destination as? GrandchildPageViewController else {return}
                         let view = grandchildVC.view //necessary for loading the view
-                        let userActionID = currentUsername+clickedComment!.post_id
+                        let userActionID = UserDefaults.standard.string(forKey: "KEY_USERNAME")!+clickedComment!.post_id
                         
                         apiClient.postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
@@ -463,7 +463,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                     //go to a grandchild page with this grandchild comment's parent comment as the top card
                     guard let grandchildVC = segue.destination as? GrandchildPageViewController else {return}
                     let view = grandchildVC.view //necessary for loading the view
-                    let userActionID = currentUsername+clickedComment!.post_id
+                    let userActionID = UserDefaults.standard.string(forKey: "KEY_USERNAME")!+clickedComment!.post_id
                     
                     
                     apiClient.postGet(a: "p", b: clickedComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -538,7 +538,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
             
             guard let rootVC = segue.destination as? RootPageViewController else {return}
             let view = rootVC.view //necessary for loading the view
-            let userActionID = currentUsername+clickedPost!.post_id
+            let userActionID = UserDefaults.standard.string(forKey: "KEY_USERNAME")!+clickedPost!.post_id
             
             //set up posts history item click segue
             apiClient.postGet(a: "p", b: clickedPost!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
