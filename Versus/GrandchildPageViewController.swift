@@ -84,16 +84,16 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         super.viewWillDisappear(animated)
         textInput.resignFirstResponder()
         
-        if isMovingFromParentViewController && (parentRootVC != nil || parentChildVC != nil) {
-            if fromRoot {
-                parentRootVC!.tableView.reloadData()
-            }
-            else {
-                parentChildVC!.tableView.reloadData()
-            }
-        }
-        
         if currentUserAction.changed {
+            if isMovingFromParentViewController && (parentRootVC != nil || parentChildVC != nil) {
+                if fromRoot {
+                    parentRootVC!.tableView.reloadData()
+                }
+                else {
+                    parentChildVC!.tableView.reloadData()
+                }
+            }
+            
             apiClient.recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
         }
         
@@ -193,15 +193,15 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         if var viewControllers = navigationController?.viewControllers {
             if parentRootVC == nil && parentChildVC == nil {
                 if viewControllers.count > 1 {
-                    let rootPageVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
-                    let rView = rootPageVC?.view
-                    let childPageVC = storyboard!.instantiateViewController(withIdentifier: "childPage") as? ChildPageViewController
-                    let cView = childPageVC?.view
-                    viewControllers.insert(childPageVC!, at: viewControllers.count-1)
-                    viewControllers.insert(rootPageVC!, at: viewControllers.count-2)
+                    parentRootVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
+                    let rView = parentRootVC?.view
+                    parentChildVC = storyboard!.instantiateViewController(withIdentifier: "childPage") as? ChildPageViewController
+                    let cView = parentChildVC?.view
+                    viewControllers.insert(parentChildVC!, at: viewControllers.count-1)
+                    viewControllers.insert(parentRootVC!, at: viewControllers.count-2)
                     navigationController?.viewControllers = viewControllers
                     
-                    rootPageVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
+                    parentRootVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
                     
                     apiClient.commentGet(a: "c", b: topCardComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                         if task.error != nil {
@@ -212,7 +212,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                         else {
                             if let commentResult = task.result { //this parent (child) of the clicked comment (grandchild), for the top card
                                 
-                                childPageVC?.setUpChildPage(post: self.currentPost, comment: VSComment(itemSource: commentResult.source!, id: commentResult.id!), userAction: self.currentUserAction, parentPage: rootPageVC)
+                                self.parentChildVC?.setUpChildPage(post: self.currentPost, comment: VSComment(itemSource: commentResult.source!, id: commentResult.id!), userAction: self.currentUserAction, parentPage: self.parentRootVC)
                             }
                         }
                         return nil

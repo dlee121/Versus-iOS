@@ -62,6 +62,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        textInput.setNeedsLayout()
+        commentSendButton.setNeedsLayout()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         //hidesBottomBarWhenPushed = true
         super.viewWillAppear(animated)

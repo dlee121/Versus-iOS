@@ -59,6 +59,12 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        textInput.setNeedsLayout()
+        commentSendButton.setNeedsLayout()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         //hidesBottomBarWhenPushed = true
         super.viewWillAppear(animated)
@@ -81,11 +87,11 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewWillDisappear(animated)
         textInput.resignFirstResponder()
         
-        if isMovingFromParentViewController && parentVC != nil {
-            parentVC!.tableView.reloadData()
-        }
-        
-        if currentUserAction != nil && currentUserAction.changed {
+        if currentUserAction.changed {
+            if isMovingFromParentViewController && parentVC != nil {
+                parentVC!.tableView.reloadData()
+            }
+            
             apiClient.recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
         }
         
@@ -159,11 +165,11 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         if let vcCount = navigationController?.viewControllers.count {
             if parentVC == nil {
                 if vcCount > 1 {
-                    let rootPageVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
-                    let rView = rootPageVC?.view
-                    navigationController?.viewControllers.insert(rootPageVC!, at: vcCount-1)
+                    parentVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
+                    let rView = parentVC?.view
+                    navigationController?.viewControllers.insert(parentVC!, at: vcCount-1)
                     
-                    rootPageVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
+                    parentVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
                     
                 }
             }
