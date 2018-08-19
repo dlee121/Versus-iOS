@@ -287,8 +287,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                                 body = "You got \(newHeartsCount) Heart on a comment, \"" + commentContent.replacingOccurrences(of: "^", with: " ") + "\""
                                             }
                                             else {
-                                                body = "You got \(newHeartsCount) Hearts on a comment, \""
-                                                    + commentContent.replacingOccurrences(of: "^", with: " ") + "\""
+                                                body = "You got \(newHeartsCount) Hearts on a comment, \"" + commentContent.replacingOccurrences(of: "^", with: " ") + "\""
                                             }
                                             
                                             self.notificationItems.append(NotificationItem(body: body, type: self.TYPE_U, payload: commentID, timestamp: timeValue, key: dataSnapshot.key))
