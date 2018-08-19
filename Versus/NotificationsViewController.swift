@@ -197,9 +197,68 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 }
                                 
                             case "r":
-                                //placeholder
-                                if atomicCounter.decrementAndGet() == 0{
-                                    self.finalizeList()
+                                let section = notificationType.value as! [String : [String : Int]]
+                                
+                                var rCount = section.count
+                                if rCount == 0 {
+                                    if atomicCounter.decrementAndGet() == 0 {
+                                        self.finalizeList()
+                                    }
+                                }
+                                
+                                for child in section{
+                                    let childKeySplit = child.key.split(separator: ":", maxSplits: 2, omittingEmptySubsequences: true)
+                                    let postID = String(childKeySplit[0])
+                                    let redName = String(childKeySplit[1].replacingOccurrences(of: "^", with: " "))
+                                    let blueName = String(childKeySplit[2].replacingOccurrences(of: "^", with: " "))
+                                    
+                                    self.ref.child(self.userNotificationsPath+"r/"+child.key).queryOrderedByValue().queryLimited(toLast: 8).observeSingleEvent(of: .value, with: { (dataSnapshot) in
+                                        var usernames = ""
+                                        var i = dataSnapshot.childrenCount
+                                        var timeValue = Int(NSDate().timeIntervalSince1970)
+                                        
+                                        let grandchildren = dataSnapshot.value as? [String : Int]
+                                        for grandchild in grandchildren! {
+                                            usernames.append(grandchild.key + ", ")
+                                            i -= 1
+                                            if i == 0 {
+                                                timeValue = grandchild.value
+                                            }
+                                        }
+                                        
+                                        if usernames.count >= 26 {
+                                            usernames = String(usernames[0 ... 25])
+                                            if String(usernames[25]) == "," {
+                                                usernames = String(usernames[0 ..< 25])
+                                                usernames.append("...")
+                                            }
+                                            else if String(usernames[24]) == "," {
+                                                usernames = String(usernames[0 ..< 24])
+                                                usernames.append("...")
+                                            }
+                                            else {
+                                                usernames.append("...")
+                                            }
+                                        }
+                                        else {
+                                            if let lastIndex = usernames.range(of: ",", options: .backwards)?.lowerBound {
+                                                usernames = String(usernames[0 ..< usernames.distance(from: usernames.startIndex, to: lastIndex)])
+                                            }
+                                        }
+                                        
+                                        let body = usernames + "\ncommented on \"" + redName + " vs. " + blueName + "\""
+                                        self.notificationItems.append(NotificationItem(body: body, type: self.TYPE_R, payload: postID, timestamp: timeValue, key: dataSnapshot.key))
+                                        
+                                        rCount -= 1
+                                        if rCount == 0 {
+                                            if atomicCounter.decrementAndGet() == 0{
+                                                self.finalizeList()
+                                            }
+                                        }
+                                        
+                                    }){ (error) in
+                                        print(error.localizedDescription)
+                                    }
                                 }
                                 
                             case "u":
