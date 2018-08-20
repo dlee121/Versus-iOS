@@ -344,6 +344,20 @@ class CommentCardTableViewCell: UITableViewCell {
         seeMoreWidth.constant = 0
     }
     
+    func setCommentMedal(medalType : String) {
+        switch medalType {
+        case "g":
+            time.addImage(imageName: "medalGold", imageHeight: 24)
+        case "s":
+            time.addImage(imageName: "medalSilver", imageHeight: 24)
+        case "b":
+            time.addImage(imageName: "medalBronze", imageHeight: 24)
+        default:
+            break
+        }
+        
+    }
+    
     @IBAction func seeMoreTapped(_ sender: Any) {
         if content.numberOfLines == 0 {
             delegate.beginUpdates()
@@ -362,12 +376,9 @@ class CommentCardTableViewCell: UITableViewCell {
         
     }
     
-    
     @IBAction func replyButtonTapped(_ sender: UIButton) {
         delegate.replyButtonTapped(replyTarget: currentComment, cell: self)
     }
-    
-    
     
     @IBAction func viewMoreTapped(_ sender: UIButton) {
         delegate.viewMoreRepliesTapped(topCardComment: currentComment)

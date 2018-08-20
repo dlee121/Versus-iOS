@@ -49,6 +49,11 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var reactivateLoadMore = false
     var fromIndexIncrement : Int?
     
+    var medalWinnersList = [String : String]() //commentID : medalType
+    var winnerTreeRoots = NSMutableSet() //HashSet to prevent duplicate addition of medal winner's root into rootComments
+    var medalistCQPayload = ""
+    var medalistCQPayloadPostID = ""
+    
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
             ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -158,6 +163,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     func setUpRootPage(post : PostObject, userAction : UserAction, fromCreatePost : Bool){
         self.fromCreatePost = fromCreatePost
         comments.removeAll()
+        rootComments.removeAll()
         updateMap.removeAll()
         nodeMap.removeAll()
         expandedCells.removeAllObjects()
@@ -170,17 +176,172 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         nowLoading = false
         comments.append(VSComment()) //placeholder for post object
         currentUserAction = userAction
-        commentsQuery()
+        setMedals() //this function will call commentsQuery() upon completion
         
     }
     
-    func commentsQuery(){
+    func getNestedLevel(commentModel : VSCommentsListModel_hits_hits_item__source) -> Int {
+        if commentModel.pr == commentModel.pt {
+            return 0
+        }
+        else if commentModel.r == "0" {
+            return 1
+        }
+        else {
+            return 2
+        }
+    }
+    
+    
+    func setMedals(){
+        medalWinnersList.removeAll()
+        winnerTreeRoots.removeAllObjects()
+        apiClient.commentslistGet(c: nil, d: nil, a: "m", b: currentPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            if task.error != nil {
+                DispatchQueue.main.async {
+                    print(task.error!)
+                }
+            }
+            else {
+                self.medalistCQPayload = ""
+                self.medalistCQPayloadPostID = self.currentPost.post_id
+                
+                if let results = task.result?.hits?.hits {
+                    var i = 0
+                    for item in results {
+                        
+                        switch i {
+                        case 0: //gold
+                            self.medalWinnersList[item.id!] = "g"
+                            
+                        case 1: //silver
+                            self.medalWinnersList[item.id!] = "s"
+                            
+                        case 2: //bronze
+                            self.medalWinnersList[item.id!] = "b"
+                            
+                            
+                        default:
+                            break
+                            
+                        }
+                        
+                        switch self.getNestedLevel(commentModel: item.source!) {
+                        case 0:
+                            if !self.winnerTreeRoots.contains(item.id) {
+                                let newComment = VSComment(itemSource: item.source!, id: item.id!)
+                                newComment.nestedLevel = 0
+                                self.rootComments.append(newComment)
+                                self.winnerTreeRoots.add(item.id!)
+                                
+                                //build payload for child comment query
+                                if i == 0 {
+                                    self.medalistCQPayload.append(newComment.comment_id)
+                                }
+                                else {
+                                    self.medalistCQPayload.append(","+newComment.comment_id)
+                                }
+                            }
+                        case 1:
+                            if !self.winnerTreeRoots.contains(item.source?.pr) {
+                                
+                                let group = DispatchGroup()
+                                
+                                self.apiClient.commentGet(a: "c", b: item.source!.pr).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                    group.enter()
+                                    
+                                    if task.error != nil {
+                                        DispatchQueue.main.async {
+                                            print(task.error!)
+                                        }
+                                    }
+                                    else {
+                                        let getCommentResult = task.result
+                                        
+                                        let newComment = VSComment(itemSource: getCommentResult!.source!, id: getCommentResult!.id!)
+                                        newComment.nestedLevel = 0
+                                        self.rootComments.append(newComment)
+                                        self.winnerTreeRoots.add(getCommentResult!.id!)
+                                        
+                                        //build payload for child comment query
+                                        if i == 0 {
+                                            self.medalistCQPayload.append(newComment.comment_id)
+                                        }
+                                        else {
+                                            self.medalistCQPayload.append(","+newComment.comment_id)
+                                        }
+                                    }
+                                    group.leave()
+                                    return nil
+                                }
+                                
+                                group.wait()
+                                
+                                
+                            }
+                            
+                        case 2:
+                            if !self.winnerTreeRoots.contains(item.source?.r) {
+                                let group = DispatchGroup()
+                                
+                                
+                                self.apiClient.commentGet(a: "c", b: item.source?.r).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                    group.enter()
+                                    
+                                    if task.error != nil {
+                                        DispatchQueue.main.async {
+                                            print(task.error!)
+                                        }
+                                    }
+                                    else {
+                                        let getCommentResult = task.result
+                                        
+                                        let newComment = VSComment(itemSource: getCommentResult!.source!, id: getCommentResult!.id!)
+                                        newComment.nestedLevel = 0
+                                        self.rootComments.append(newComment)
+                                        self.winnerTreeRoots.add(getCommentResult!.id!)
+                                        
+                                        //build payload for child comment query
+                                        if i == 0 {
+                                            self.medalistCQPayload.append(newComment.comment_id)
+                                        }
+                                        else {
+                                            self.medalistCQPayload.append(","+newComment.comment_id)
+                                        }
+                                    }
+                                    group.leave()
+                                    return nil
+                                }
+                                
+                                group.wait()
+                                
+                            }
+                            
+                            
+                        default:
+                            break
+                        }
+                        
+                        i += 1
+                    }
+                }
+                
+                self.commentsQuery(queryType: "rci")
+                
+                
+            }
+            return nil
+        }
+        
+    }
+    
+    func commentsQuery(queryType : String){
         if fromIndex == nil {
             fromIndex = 0
         }
         
         //get the root comments, children, and grandchildren
-        apiClient.commentslistGet(c: currentPost.post_id, d: nil, a: "rci", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        apiClient.commentslistGet(c: currentPost.post_id, d: nil, a: queryType, b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             print("commentQuery with fromIndex == \(self.fromIndex!)")
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -193,15 +354,20 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     var prevNode : VSCNode?
                     var cqPayload = ""
                     var cqPayloadIndex = 0
+                    
                     for item in rootQueryResults {
                         let comment = VSComment(itemSource: item.source!, id: item.id!)
                         comment.nestedLevel = 0
-                        self.rootComments.append(comment)
                         
                         //set up node structure with current root comment
                         if rootIndex == 0 {
                             prevNode = VSCNode(comment: comment)
                             self.nodeMap[comment.comment_id] = prevNode
+                            
+                            if self.medalistCQPayload.count > 0 && self.medalistCQPayloadPostID == self.currentPost.post_id {
+                                cqPayload.append(self.medalistCQPayload+",")
+                            }
+                            
                         }
                         else {
                             let currNode = VSCNode(comment: comment)
@@ -210,17 +376,22 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             self.nodeMap[comment.comment_id] = currNode
                         }
                         
+                        if !self.winnerTreeRoots.contains(comment.comment_id) {
+                            self.rootComments.append(comment)
+                            
+                            //build payload for child comment query
+                            if cqPayloadIndex == 0 {
+                                cqPayload.append(comment.comment_id)
+                            }
+                            else {
+                                cqPayload.append(","+comment.comment_id)
+                            }
+                            
+                            cqPayloadIndex += 1
+                        }
+                        
                         rootIndex += 1
                         
-                        //build payload for child comment query
-                        if cqPayloadIndex == 0 {
-                            cqPayload.append(comment.comment_id)
-                        }
-                        else {
-                            cqPayload.append(","+comment.comment_id)
-                        }
-                        
-                        cqPayloadIndex += 1
                     }
                     
                     self.fromIndexIncrement = rootIndex
@@ -232,7 +403,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.nowLoading = true
                     }
                     
-                    if cqPayloadIndex > 0 {
+                    if cqPayload.count > 0 {
                         
                         //child comments query
                         self.apiClient.cgcGet(a: "cgc", b: cqPayload).continueWith(block:) {(cqTask: AWSTask) -> AnyObject? in
@@ -357,7 +528,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         if !nowLoading && indexPath.row == lastElement {
             nowLoading = true
             //fromIndex already set in commenteQuery, after getting root comments
-            commentsQuery()
+            commentsQuery(queryType: "rci")
         }
     }
     
@@ -509,6 +680,11 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             else {
                 cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
             }
+            
+            if let medalType = medalWinnersList[comment.comment_id] {
+                cell!.setCommentMedal(medalType: medalType)
+            }
+            
             cell!.delegate = self
             
             return cell!
