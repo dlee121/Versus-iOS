@@ -345,11 +345,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             
                         case 2:
                             if !self.winnerTreeRoots.contains(item.source?.r) {
-                                let group = DispatchGroup()
                                 
-                                
+                                group.enter()
                                 self.apiClient.commentGet(a: "c", b: item.source?.r).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                                    group.enter()
+                                    
                                     
                                     if task.error != nil {
                                         DispatchQueue.main.async {
@@ -376,7 +375,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                     return nil
                                 }
                                 
-                                group.wait()
                                 
                             }
                             
@@ -388,7 +386,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         i += 1
                     }
                 }
-                
                 
                 group.notify(queue: .main) {
                     self.commentsQuery(queryType: "rci")
