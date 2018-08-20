@@ -28,6 +28,7 @@
 		701C8CD120F978E20072AECD /* PlainLeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CD020F978E20072AECD /* PlainLeaderTableViewCell.swift */; };
 		701C8CD320FAF4B90072AECD /* UILabel+addImage+isTruncated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CD220FAF4B90072AECD /* UILabel+addImage+isTruncated.swift */; };
 		702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702499A120E57F050024E871 /* UIViewController+Toast.swift */; };
+		70484B82212A56D000E198F9 /* MedalUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */; };
 		7056672920FD62A400CB87AD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672820FD62A400CB87AD /* SearchViewController.swift */; };
 		7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */; };
 		7056672F2101564D00CB87AD /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */; };
@@ -158,6 +159,7 @@
 		701C8CD020F978E20072AECD /* PlainLeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainLeaderTableViewCell.swift; sourceTree = "<group>"; };
 		701C8CD220FAF4B90072AECD /* UILabel+addImage+isTruncated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+addImage+isTruncated.swift"; sourceTree = "<group>"; };
 		702499A120E57F050024E871 /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
+		70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedalUpdateRequest.swift; sourceTree = "<group>"; };
 		7056672820FD62A400CB87AD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostTableViewCell.swift; sourceTree = "<group>"; };
 		7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewCell.swift; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				70CB9E522115671700D86E37 /* VSCNode.swift */,
 				70CB9E542116976100D86E37 /* UserAction.swift */,
 				70D17FF021278A4E00A0C9D6 /* NotificationItem.swift */,
+				70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				70FC662D2124DCB400783FD5 /* CreatePostViewController.swift in Sources */,
 				70CB9E45210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift in Sources */,
 				70E80CB420E6DB570067DF08 /* VSPostModel__source.swift in Sources */,
+				70484B82212A56D000E198F9 /* MedalUpdateRequest.swift in Sources */,
 				701C8CD320FAF4B90072AECD /* UILabel+addImage+isTruncated.swift in Sources */,
 				70E80CD420E6DB570067DF08 /* VSEmailGetModel.swift in Sources */,
 				701B9BA520E3FB20003C9E7E /* AppDelegate.swift in Sources */,

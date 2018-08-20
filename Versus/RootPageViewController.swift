@@ -54,6 +54,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var medalistCQPayload = ""
     var medalistCQPayloadPostID = ""
     
+    let goldPoints = 30
+    let silverPoints = 15
+    let bronzePoints = 5
+    
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
             ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -192,6 +196,56 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    func sendMedalNotification(newMedal : Int, item : VSCommentsListModel_hits_hits_item){
+        var pointsIncrement = 0
+        var usernameHash = getUsernameHash(username: item.source!.a!)
+        var incrementKey : String!
+        switch newMedal {
+        case 3:
+            incrementKey = "g"
+            pointsIncrement = goldPoints
+            
+        case 2:
+            incrementKey = "s"
+            pointsIncrement = silverPoints
+            
+        case 1:
+            incrementKey = "b"
+            pointsIncrement = bronzePoints
+            
+        default:
+            break
+        }
+        
+        if incrementKey != nil {
+            var decrementKey = ""
+            switch item.source!.m {
+            case 0:
+                break
+            case 1:
+                decrementKey = "b"
+                pointsIncrement -= bronzePoints
+            case 2:
+                decrementKey = "s"
+                pointsIncrement -= silverPoints
+            default:
+                break
+            }
+            
+            var medalType = incrementKey + decrementKey
+            var timeValueSecs : Int = Int(NSDate().timeIntervalSince1970)
+            var timeValue : Int = ((timeValueSecs / 60 ) / 60 ) / 24 ////now timeValue is in days since epoch
+            
+            let updateRequest = "updates/\(timeValue)/\(usernameHash)/\(item.source!.a!)/\(item.id)/\(medalType)"
+            let medalUpdateRequest = MedalUpdateRequest(p: pointsIncrement, t: timeValueSecs, c: sanitizeCommentContent(content: item.source!.ct!))
+            ref.child(updateRequest).setValue(medalUpdateRequest)
+            
+            //medalWinner.setTopmedal(currentMedal) now we set the top medal outside this function, right after this function call returns
+            
+        }
+        
+        
+    }
     
     func setMedals(){
         medalWinnersList.removeAll()
@@ -203,6 +257,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
             else {
+                
+                let group = DispatchGroup()
+                
+                
                 self.medalistCQPayload = ""
                 self.medalistCQPayloadPostID = self.currentPost.post_id
                 
@@ -213,12 +271,21 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         switch i {
                         case 0: //gold
                             self.medalWinnersList[item.id!] = "g"
+                            if item.source!.m!.intValue < 3 {
+                                self.sendMedalNotification(newMedal: 3, item: item)
+                            }
                             
                         case 1: //silver
                             self.medalWinnersList[item.id!] = "s"
+                            if item.source!.m!.intValue < 2 {
+                                self.sendMedalNotification(newMedal: 2, item: item)
+                            }
                             
                         case 2: //bronze
                             self.medalWinnersList[item.id!] = "b"
+                            if item.source!.m!.intValue < 1 {
+                                self.sendMedalNotification(newMedal: 1, item: item)
+                            }
                             
                             
                         default:
@@ -244,11 +311,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             }
                         case 1:
                             if !self.winnerTreeRoots.contains(item.source?.pr) {
-                                
-                                let group = DispatchGroup()
-                                
+                                group.enter()
                                 self.apiClient.commentGet(a: "c", b: item.source!.pr).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                                    group.enter()
                                     
                                     if task.error != nil {
                                         DispatchQueue.main.async {
@@ -262,7 +326,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                         newComment.nestedLevel = 0
                                         self.rootComments.append(newComment)
                                         self.winnerTreeRoots.add(getCommentResult!.id!)
-                                        
+                                        print("added commentID: " + getCommentResult!.id!)
                                         //build payload for child comment query
                                         if i == 0 {
                                             self.medalistCQPayload.append(newComment.comment_id)
@@ -271,12 +335,11 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.medalistCQPayload.append(","+newComment.comment_id)
                                         }
                                     }
+                                    
                                     group.leave()
+                                    
                                     return nil
                                 }
-                                
-                                group.wait()
-                                
                                 
                             }
                             
@@ -326,7 +389,11 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     }
                 }
                 
-                self.commentsQuery(queryType: "rci")
+                
+                group.notify(queue: .main) {
+                    self.commentsQuery(queryType: "rci")
+                }
+                
                 
                 
             }
@@ -377,6 +444,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         }
                         
                         if !self.winnerTreeRoots.contains(comment.comment_id) {
+                            print("sure come right thru commentID: " + comment.comment_id)
                             self.rootComments.append(comment)
                             
                             //build payload for child comment query
@@ -388,6 +456,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             }
                             
                             cqPayloadIndex += 1
+                        }
+                        else {
+                            print("hey man i saw that commentID in the winnerTreeRoots man we already got that commentID maaaan")
                         }
                         
                         rootIndex += 1
