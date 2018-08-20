@@ -46,6 +46,13 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     var reactivateLoadMore = false
     var fromIndexIncrement : Int?
     
+    var medalWinnersList = [String : String]() //commentID : medalType
+    var winnerTreeRoots = NSMutableSet() //HashSet to prevent duplicate addition of medal winner's root into rootComments
+    
+    let goldPoints = 30
+    let silverPoints = 15
+    let bronzePoints = 5
+    
     /*
      updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
      ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -173,7 +180,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         currentUserAction = userAction
         nodeMap[comment.comment_id] = VSCNode(comment: comment)
         print("setup grandchild page query called")
-        commentsQuery()
+        setMedals() //this function will call commentsQuery() upon completion
         
     }
     
@@ -197,7 +204,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         currentUserAction = userAction
         nodeMap[comment.comment_id] = VSCNode(comment: comment)
         print("setup grandchild page query called")
-        commentsQuery()
+        setMedals() //this function will call commentsQuery() upon completion
         
         if var viewControllers = navigationController?.viewControllers {
             if parentRootVC == nil && parentChildVC == nil {
@@ -229,20 +236,136 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                     
                 }
             }
+        }
+    }
+    
+    func getNestedLevel(commentModel : VSCommentsListModel_hits_hits_item__source) -> Int {
+        if commentModel.r != "0" {
+            return 5
+        }
+        return -1 //only level 5 comments for grandchild page
+    }
+    
+    func sendMedalNotification(newMedal : Int, item : VSCommentsListModel_hits_hits_item){
+        var pointsIncrement = 0
+        var usernameHash = getUsernameHash(username: item.source!.a!)
+        var incrementKey : String!
+        switch newMedal {
+        case 3:
+            incrementKey = "g"
+            pointsIncrement = goldPoints
+            
+        case 2:
+            incrementKey = "s"
+            pointsIncrement = silverPoints
+            
+        case 1:
+            incrementKey = "b"
+            pointsIncrement = bronzePoints
+            
+        default:
+            break
+        }
+        
+        if incrementKey != nil {
+            var decrementKey = ""
+            switch item.source!.m {
+            case 0:
+                break
+            case 1:
+                decrementKey = "b"
+                pointsIncrement -= bronzePoints
+            case 2:
+                decrementKey = "s"
+                pointsIncrement -= silverPoints
+            default:
+                break
+            }
+            
+            var medalType = incrementKey + decrementKey
+            var timeValueSecs : Int = Int(NSDate().timeIntervalSince1970)
+            var timeValue : Int = ((timeValueSecs / 60 ) / 60 ) / 24 ////now timeValue is in days since epoch
+            
+            let updateRequest = "updates/\(timeValue)/\(usernameHash)/\(item.source!.a!)/\(item.id)/\(medalType)"
+            let medalUpdateRequest = MedalUpdateRequest(p: pointsIncrement, t: timeValueSecs, c: sanitizeCommentContent(content: item.source!.ct!))
+            ref.child(updateRequest).setValue(medalUpdateRequest)
+            
+            //medalWinner.setTopmedal(currentMedal) now we set the top medal outside this function, right after this function call returns
             
         }
         
         
+    }
+    
+    func setMedals(){
+        medalWinnersList.removeAll()
+        winnerTreeRoots.removeAllObjects()
+        apiClient.commentslistGet(c: nil, d: nil, a: "m", b: currentPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            if task.error != nil {
+                DispatchQueue.main.async {
+                    print(task.error!)
+                }
+            }
+            else {
+                
+                if let results = task.result?.hits?.hits {
+                    var i = 0
+                    for item in results {
+                        
+                        switch i {
+                        case 0: //gold
+                            self.medalWinnersList[item.id!] = "g"
+                            if item.source!.m!.intValue < 3 {
+                                self.sendMedalNotification(newMedal: 3, item: item)
+                            }
+                            
+                        case 1: //silver
+                            self.medalWinnersList[item.id!] = "s"
+                            if item.source!.m!.intValue < 2 {
+                                self.sendMedalNotification(newMedal: 2, item: item)
+                            }
+                            
+                        case 2: //bronze
+                            self.medalWinnersList[item.id!] = "b"
+                            if item.source!.m!.intValue < 1 {
+                                self.sendMedalNotification(newMedal: 1, item: item)
+                            }
+                            
+                            
+                        default:
+                            break
+                            
+                        }
+                        
+                        if self.getNestedLevel(commentModel: item.source!) == 5 {
+                            if !self.winnerTreeRoots.contains(item.id) {
+                                let newComment = VSComment(itemSource: item.source!, id: item.id!)
+                                newComment.nestedLevel = 5
+                                self.comments.append(newComment)
+                                self.winnerTreeRoots.add(item.id!)
+                                self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
+                            }
+                        }
+                        
+                        i += 1
+                    }
+                }
+                
+                self.commentsQuery(queryType: "rci")
+                
+            }
+            return nil
+        }
         
     }
     
-    func commentsQuery(){
+    func commentsQuery(queryType : String){
         if fromIndex == nil {
             fromIndex = 0
         }
         
         //get the root comments, children, and grandchildren
-        apiClient.commentslistGet(c: topCardComment.comment_id, d: nil, a: "rci", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        apiClient.commentslistGet(c: topCardComment.comment_id, d: nil, a: queryType, b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             print("gc commentQuery with fromIndex == \(self.fromIndex!)")
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -280,7 +403,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         if !nowLoading && indexPath.row == lastElement {
             nowLoading = true
             //fromIndex already set in commenteQuery, after getting root comments
-            commentsQuery()
+            commentsQuery(queryType: "rci")
         }
     }
     
@@ -321,6 +444,11 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
             else {
                 cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: "Popular")
             }
+            
+            if let medalType = medalWinnersList[comment.comment_id] {
+                cell!.setCommentMedal(medalType: medalType)
+            }
+            
             cell!.delegate = self
             
             return cell!

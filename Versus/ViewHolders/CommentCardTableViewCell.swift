@@ -348,10 +348,19 @@ class CommentCardTableViewCell: UITableViewCell {
         switch medalType {
         case "g":
             time.addImage(imageName: "medalGold", imageHeight: 24)
+            if currentComment.topmedal < 3 {
+                currentComment.topmedal = 3
+            }
         case "s":
             time.addImage(imageName: "medalSilver", imageHeight: 24)
+            if currentComment.topmedal < 2 {
+                currentComment.topmedal = 2
+            }
         case "b":
             time.addImage(imageName: "medalBronze", imageHeight: 24)
+            if currentComment.topmedal < 1 {
+                currentComment.topmedal = 1
+            }
         default:
             break
         }

@@ -264,6 +264,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.medalistCQPayload = ""
                 self.medalistCQPayloadPostID = self.currentPost.post_id
                 
+                var prevNode : VSCNode?
+                
                 if let results = task.result?.hits?.hits {
                     var i = 0
                     for item in results {
@@ -301,6 +303,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                 self.rootComments.append(newComment)
                                 self.winnerTreeRoots.add(item.id!)
                                 
+                                //should we connect medalists to nodeMap?
+                                
                                 //build payload for child comment query
                                 if i == 0 {
                                     self.medalistCQPayload.append(newComment.comment_id)
@@ -326,7 +330,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                         newComment.nestedLevel = 0
                                         self.rootComments.append(newComment)
                                         self.winnerTreeRoots.add(getCommentResult!.id!)
-                                        print("added commentID: " + getCommentResult!.id!)
+                                        
+                                        //should we connect medalists to nodeMap?
+                                        
                                         //build payload for child comment query
                                         if i == 0 {
                                             self.medalistCQPayload.append(newComment.comment_id)
@@ -362,6 +368,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                         newComment.nestedLevel = 0
                                         self.rootComments.append(newComment)
                                         self.winnerTreeRoots.add(getCommentResult!.id!)
+                                        
+                                        //should we connect medalists to nodeMap?
                                         
                                         //build payload for child comment query
                                         if i == 0 {
@@ -419,6 +427,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     var cqPayload = ""
                     var cqPayloadIndex = 0
                     
+                    if self.medalistCQPayload.count > 0 && self.medalistCQPayloadPostID == self.currentPost.post_id {
+                        cqPayload.append(self.medalistCQPayload+",")
+                    }
+                    
                     for item in rootQueryResults {
                         let comment = VSComment(itemSource: item.source!, id: item.id!)
                         comment.nestedLevel = 0
@@ -427,11 +439,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         if rootIndex == 0 {
                             prevNode = VSCNode(comment: comment)
                             self.nodeMap[comment.comment_id] = prevNode
-                            
-                            if self.medalistCQPayload.count > 0 && self.medalistCQPayloadPostID == self.currentPost.post_id {
-                                cqPayload.append(self.medalistCQPayload+",")
-                            }
-                            
                         }
                         else {
                             let currNode = VSCNode(comment: comment)
@@ -453,9 +460,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             }
                             
                             cqPayloadIndex += 1
-                        }
-                        else {
-                            print("hey man i saw that commentID in the winnerTreeRoots man we already got that commentID maaaan")
                         }
                         
                         rootIndex += 1
