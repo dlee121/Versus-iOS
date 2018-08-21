@@ -243,6 +243,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             medalUpdateRequest["t"] = timeValueSecs
             ref.child(updateRequest).setValue(medalUpdateRequest)
             
+            print("medal update triggered")
+            
             //medalWinner.setTopmedal(currentMedal) now we set the top medal outside this function, right after this function call returns
             
         }
