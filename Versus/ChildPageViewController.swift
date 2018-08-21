@@ -249,7 +249,10 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             var timeValue : Int = ((timeValueSecs / 60 ) / 60 ) / 24 ////now timeValue is in days since epoch
             
             let updateRequest = "updates/\(timeValue)/\(usernameHash)/\(item.source!.a!)/\(item.id)/\(medalType)"
-            let medalUpdateRequest = MedalUpdateRequest(p: pointsIncrement, t: timeValueSecs, c: sanitizeCommentContent(content: item.source!.ct!))
+            var medalUpdateRequest = [String : Any]()
+            medalUpdateRequest["c"] = sanitizeCommentContent(content: item.source!.ct!)
+            medalUpdateRequest["p"] = pointsIncrement
+            medalUpdateRequest["t"] = timeValueSecs
             ref.child(updateRequest).setValue(medalUpdateRequest)
             
             //medalWinner.setTopmedal(currentMedal) now we set the top medal outside this function, right after this function call returns
@@ -315,8 +318,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                 let newComment = VSComment(itemSource: item.source!, id: item.id!)
                                 newComment.nestedLevel = 3
                                 self.rootComments.append(newComment)
-                                
-                                //should we connect medalists to nodeMap?
+                                self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
                                 
                                 switch li {
                                 case 0:
@@ -347,8 +349,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                         let newComment = VSComment(itemSource: getCommentResult!.source!, id: getCommentResult!.id!)
                                         newComment.nestedLevel = 4
                                         self.rootComments.append(newComment)
-                                        
-                                        //should we connect medalists to nodeMap?
+                                        self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
                                         
                                         switch li {
                                         case 0:
