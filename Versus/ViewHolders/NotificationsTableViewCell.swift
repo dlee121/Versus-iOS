@@ -73,6 +73,7 @@ class NotificationsTableViewCell: UITableViewCell {
             time.text = item.getTimeString()
             
         case TYPE_EM:
+            
             break
         default:
             break

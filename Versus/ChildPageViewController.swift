@@ -379,6 +379,15 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 }
                 
                 group.notify(queue: .main) {
+                    if mcq0 != nil {
+                        self.medalistCQPayload.append(mcq0!)
+                    }
+                    if mcq1 != nil {
+                        self.medalistCQPayload.append(","+mcq1!)
+                    }
+                    if mcq2 != nil {
+                        self.medalistCQPayload.append(","+mcq2!)
+                    }
                     self.commentsQuery(queryType: "rci")
                 }
                 
@@ -456,6 +465,10 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                     else {
                         self.reactivateLoadMore = false
                         self.nowLoading = true
+                    }
+                    
+                    if cqPayload.count > 9 && cqPayload[cqPayload.count-1] == "," {
+                        cqPayload = String(cqPayload[0 ... cqPayload.count-2])
                     }
                     
                     if cqPayload.count > 0 {

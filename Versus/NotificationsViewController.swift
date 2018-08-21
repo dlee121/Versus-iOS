@@ -360,6 +360,8 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 }
                                 
                             case "em":
+                                let payloadContent = "Click here to add an email address for account recovery in case you forget your password.\nYou can also add or change it later in Settings (located at the top right of Me page)."
+                                self.notificationItems.append(NotificationItem(body: payloadContent, type: self.TYPE_EM, timestamp: Int(NSDate().timeIntervalSince1970)))
                                 //placeholder
                                 if atomicCounter.decrementAndGet() == 0{
                                     self.finalizeList()

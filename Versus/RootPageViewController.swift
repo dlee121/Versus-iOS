@@ -474,7 +474,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         }
                         
                         if !self.winnerTreeRoots.contains(comment.comment_id) {
-                            print("sure come right thru commentID: " + comment.comment_id)
                             self.rootComments.append(comment)
                             
                             //build payload for child comment query
@@ -501,8 +500,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.nowLoading = true
                     }
                     
+                    if cqPayload.count > 9 && cqPayload[cqPayload.count-1] == "," {
+                        cqPayload = String(cqPayload[0 ... cqPayload.count-2])
+                    }
+                    
                     if cqPayload.count > 0 {
-                        print("cqpaylod was \(cqPayload)")
+                        print("cqpayload was \(cqPayload)")
                         //child comments query
                         self.apiClient.cgcGet(a: "cgc", b: cqPayload).continueWith(block:) {(cqTask: AWSTask) -> AnyObject? in
                             if cqTask.error != nil {
