@@ -339,10 +339,10 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                         
                         if self.getNestedLevel(commentModel: item.source!) == 5 {
                             if !self.winnerTreeRoots.contains(item.id) {
+                                self.winnerTreeRoots.add(item.id!)
                                 let newComment = VSComment(itemSource: item.source!, id: item.id!)
                                 newComment.nestedLevel = 5
                                 self.comments.append(newComment)
-                                self.winnerTreeRoots.add(item.id!)
                                 self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
                             }
                         }

@@ -263,10 +263,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 self.medalistCQPayload = ""
                 self.medalistCQPayloadPostID = self.currentPost.post_id
-                
+                var mcq0, mcq1, mcq2 : String?
                 var prevNode : VSCNode?
-                
                 if let results = task.result?.hits?.hits {
+                    
                     var i = 0
                     for item in results {
                         
@@ -297,24 +297,30 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         switch self.getNestedLevel(commentModel: item.source!) {
                         case 0:
+                            let li = i
                             if !self.winnerTreeRoots.contains(item.id) {
+                                self.winnerTreeRoots.add(item.id!)
                                 let newComment = VSComment(itemSource: item.source!, id: item.id!)
                                 newComment.nestedLevel = 0
                                 self.rootComments.append(newComment)
-                                self.winnerTreeRoots.add(item.id!)
                                 
                                 //should we connect medalists to nodeMap?
                                 
-                                //build payload for child comment query
-                                if i == 0 {
-                                    self.medalistCQPayload.append(newComment.comment_id)
-                                }
-                                else {
-                                    self.medalistCQPayload.append(","+newComment.comment_id)
+                                switch li {
+                                case 0:
+                                    mcq0 = newComment.comment_id
+                                case 1:
+                                    mcq1 = newComment.comment_id
+                                case 2:
+                                    mcq2 = newComment.comment_id
+                                default:
+                                    break
                                 }
                             }
                         case 1:
+                            let li = i
                             if !self.winnerTreeRoots.contains(item.source?.pr) {
+                                self.winnerTreeRoots.add(item.source!.pr)
                                 group.enter()
                                 self.apiClient.commentGet(a: "c", b: item.source!.pr).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                     
@@ -329,16 +335,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                         let newComment = VSComment(itemSource: getCommentResult!.source!, id: getCommentResult!.id!)
                                         newComment.nestedLevel = 0
                                         self.rootComments.append(newComment)
-                                        self.winnerTreeRoots.add(getCommentResult!.id!)
                                         
                                         //should we connect medalists to nodeMap?
                                         
-                                        //build payload for child comment query
-                                        if i == 0 {
-                                            self.medalistCQPayload.append(newComment.comment_id)
-                                        }
-                                        else {
-                                            self.medalistCQPayload.append(","+newComment.comment_id)
+                                        switch li {
+                                        case 0:
+                                            mcq0 = newComment.comment_id
+                                        case 1:
+                                            mcq1 = newComment.comment_id
+                                        case 2:
+                                            mcq2 = newComment.comment_id
+                                        default:
+                                            break
                                         }
                                     }
                                     
@@ -350,8 +358,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             }
                             
                         case 2:
+                            let li = i
                             if !self.winnerTreeRoots.contains(item.source?.r) {
-                                
+                                self.winnerTreeRoots.add(item.source!.r)
                                 group.enter()
                                 self.apiClient.commentGet(a: "c", b: item.source?.r).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                     
@@ -367,16 +376,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                         let newComment = VSComment(itemSource: getCommentResult!.source!, id: getCommentResult!.id!)
                                         newComment.nestedLevel = 0
                                         self.rootComments.append(newComment)
-                                        self.winnerTreeRoots.add(getCommentResult!.id!)
                                         
                                         //should we connect medalists to nodeMap?
                                         
-                                        //build payload for child comment query
-                                        if i == 0 {
-                                            self.medalistCQPayload.append(newComment.comment_id)
-                                        }
-                                        else {
-                                            self.medalistCQPayload.append(","+newComment.comment_id)
+                                        switch li {
+                                        case 0:
+                                            mcq0 = newComment.comment_id
+                                        case 1:
+                                            mcq1 = newComment.comment_id
+                                        case 2:
+                                            mcq2 = newComment.comment_id
+                                        default:
+                                            break
                                         }
                                     }
                                     group.leave()
@@ -391,11 +402,24 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             break
                         }
                         
+                        
                         i += 1
+                        
+                        
                     }
                 }
                 
                 group.notify(queue: .main) {
+                    if mcq0 != nil {
+                        self.medalistCQPayload.append(mcq0!)
+                    }
+                    if mcq1 != nil {
+                        self.medalistCQPayload.append(","+mcq1!)
+                    }
+                    if mcq2 != nil {
+                        self.medalistCQPayload.append(","+mcq2!)
+                    }
+                    print("mcq: "+self.medalistCQPayload)
                     self.commentsQuery(queryType: "rci")
                 }
                 
@@ -476,7 +500,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     }
                     
                     if cqPayload.count > 0 {
-                        
+                        print("cqpaylod was \(cqPayload)")
                         //child comments query
                         self.apiClient.cgcGet(a: "cgc", b: cqPayload).continueWith(block:) {(cqTask: AWSTask) -> AnyObject? in
                             if cqTask.error != nil {

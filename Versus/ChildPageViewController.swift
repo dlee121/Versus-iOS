@@ -307,10 +307,10 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                         switch self.getNestedLevel(commentModel: item.source!) {
                         case 3:
                             if !self.winnerTreeRoots.contains(item.id) {
+                                self.winnerTreeRoots.add(item.id!)
                                 let newComment = VSComment(itemSource: item.source!, id: item.id!)
                                 newComment.nestedLevel = 3
                                 self.rootComments.append(newComment)
-                                self.winnerTreeRoots.add(item.id!)
                                 
                                 //should we connect medalists to nodeMap?
                                 
@@ -324,6 +324,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                             }
                         case 4:
                             if !self.winnerTreeRoots.contains(item.source?.pr) {
+                                self.winnerTreeRoots.add(item.source!.pr)
                                 group.enter()
                                 self.apiClient.commentGet(a: "c", b: item.source!.pr).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                     
@@ -338,7 +339,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                         let newComment = VSComment(itemSource: getCommentResult!.source!, id: getCommentResult!.id!)
                                         newComment.nestedLevel = 4
                                         self.rootComments.append(newComment)
-                                        self.winnerTreeRoots.add(getCommentResult!.id!)
                                         
                                         //should we connect medalists to nodeMap?
                                         
