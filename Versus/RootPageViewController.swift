@@ -236,7 +236,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             var timeValueSecs : Int = Int(NSDate().timeIntervalSince1970)
             var timeValue : Int = ((timeValueSecs / 60 ) / 60 ) / 24 ////now timeValue is in days since epoch
             
-            let updateRequest = "updates/\(timeValue)/\(usernameHash)/\(item.source!.a!)/\(item.id)/\(medalType)"
+            let updateRequest = "updates/\(timeValue)/\(usernameHash)/\(item.source!.a!)/\(item.id!)/\(medalType)"
             var medalUpdateRequest = [String : Any]()
             medalUpdateRequest["c"] = sanitizeCommentContent(content: item.source!.ct!)
             medalUpdateRequest["p"] = pointsIncrement
