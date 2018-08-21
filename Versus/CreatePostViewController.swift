@@ -127,6 +127,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     
     @objc
     func postButtonTapped() {
+        view.endEditing(true)
         if selectedCategory == nil || selectedCategory!.count <= 0 {
             showToast(message: "Please select a category", length: 24)
         }
