@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NotificationItem {
+class NotificationItem: Comparable {
     
     let TYPE_U = 0 //new comment upvote notification
     let TYPE_C = 1 //new comment reply notification
@@ -55,7 +55,7 @@ class NotificationItem {
     
     func getTimeString() -> String {
         var timeFormat = 0
-        var timediff = NSDate().timeIntervalSince1970 - Double(timestamp!)
+        var timediff = Int(NSDate().timeIntervalSince1970 - Double(timestamp!))
         
         //time format constants: 0 = seconds, 1 = minutes, 2 = hours, 3 = days , 4 = weeks, 5 = months, 6 = years
         if timediff >= 60 {  //if 60 seconds or more, convert to minutes
@@ -87,6 +87,9 @@ class NotificationItem {
             }
         }
         
+        if timediff == 0 {
+            return "Just now"
+        }
         
         if timediff > 1 { //if timediff is not a singular value
             timeFormat += 7
@@ -130,6 +133,16 @@ class NotificationItem {
         }
     }
     
+    static func < (lhs: NotificationItem, rhs: NotificationItem) -> Bool {
+        return lhs.timestamp! < rhs.timestamp!
+    }
     
+    static func == (lhs: NotificationItem, rhs: NotificationItem) -> Bool {
+        return lhs.timestamp! == rhs.timestamp!
+    }
     
 }
+
+
+
+
