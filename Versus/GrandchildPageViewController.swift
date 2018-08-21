@@ -240,7 +240,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func getNestedLevel(commentModel : VSCommentsListModel_hits_hits_item__source) -> Int {
-        if commentModel.r != "0" {
+        if commentModel.r != "0" && commentModel.pr == topCardComment.comment_id {
             return 5
         }
         return -1 //only level 5 comments for grandchild page

@@ -196,12 +196,15 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func getNestedLevel(commentModel : VSCommentsListModel_hits_hits_item__source) -> Int {
-        if commentModel.r != "0" {
-            return 4
+        if commentModel.pr == topCardComment.comment_id {
+            if commentModel.r != "0" {
+                return 4
+            }
+            else {
+                return 3
+            }
         }
-        else if commentModel.pr == topCardComment.comment_id {
-            return 3
-        }
+        
         return -1
     }
     
@@ -272,7 +275,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 
                 self.medalistCQPayload = ""
                 self.medalistCQPayloadPostID = self.currentPost.post_id
-                
+                var mcq0, mcq1, mcq2 : String?
                 var prevNode : VSCNode?
                 
                 if let results = task.result?.hits?.hits {
@@ -306,6 +309,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                         
                         switch self.getNestedLevel(commentModel: item.source!) {
                         case 3:
+                            let li = i
                             if !self.winnerTreeRoots.contains(item.id) {
                                 self.winnerTreeRoots.add(item.id!)
                                 let newComment = VSComment(itemSource: item.source!, id: item.id!)
@@ -314,15 +318,19 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                 
                                 //should we connect medalists to nodeMap?
                                 
-                                //build payload for child comment query
-                                if i == 0 {
-                                    self.medalistCQPayload.append(newComment.comment_id)
-                                }
-                                else {
-                                    self.medalistCQPayload.append(","+newComment.comment_id)
+                                switch li {
+                                case 0:
+                                    mcq0 = newComment.comment_id
+                                case 1:
+                                    mcq1 = newComment.comment_id
+                                case 2:
+                                    mcq2 = newComment.comment_id
+                                default:
+                                    break
                                 }
                             }
                         case 4:
+                            let li = i
                             if !self.winnerTreeRoots.contains(item.source?.pr) {
                                 self.winnerTreeRoots.add(item.source!.pr)
                                 group.enter()
@@ -342,12 +350,15 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                         
                                         //should we connect medalists to nodeMap?
                                         
-                                        //build payload for child comment query
-                                        if i == 0 {
-                                            self.medalistCQPayload.append(newComment.comment_id)
-                                        }
-                                        else {
-                                            self.medalistCQPayload.append(","+newComment.comment_id)
+                                        switch li {
+                                        case 0:
+                                            mcq0 = newComment.comment_id
+                                        case 1:
+                                            mcq1 = newComment.comment_id
+                                        case 2:
+                                            mcq2 = newComment.comment_id
+                                        default:
+                                            break
                                         }
                                     }
                                     
@@ -518,15 +529,18 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     
     
     func setComments(){
+        
         for i in fromIndex!...rootComments.count-1{
-            let currentRootNode = nodeMap[rootComments[i].comment_id]
-            comments.append(currentRootNode!.nodeContent)
-            
-            if let firstChild = currentRootNode?.firstChild {
-                comments.append(firstChild.nodeContent)
+            print("rootComments-\(i) = \(rootComments[i].content)")
+            if let currentRootNode = nodeMap[rootComments[i].comment_id] {
+                comments.append(currentRootNode.nodeContent)
                 
-                if let secondChild = firstChild.tailSibling {
-                    comments.append(secondChild.nodeContent)
+                if let firstChild = currentRootNode.firstChild {
+                    comments.append(firstChild.nodeContent)
+                    
+                    if let secondChild = firstChild.tailSibling {
+                        comments.append(secondChild.nodeContent)
+                    }
                 }
             }
             
