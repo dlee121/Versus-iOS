@@ -16,7 +16,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     
     var notificationItems : [NotificationItem]!
     let apiClient = VSVersusAPIClient.default()
-    var userNotificationsPath : String!
+    var userNotificationsPath, nrtPath : String!
     var ref : DatabaseReference!
     var initialLoadLock = false
     var initialLoaderHandle : UInt!
@@ -44,6 +44,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         ref = Database.database().reference()
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         userNotificationsPath = getUsernameHash(username: currentUsername!)+"/"+currentUsername!+"/n/"
+        nrtPath = getUsernameHash(username: currentUsername!)+"/"+currentUsername!+"/nrt/"
         initialLoaderHandle = ref.child(userNotificationsPath).observe(DataEventType.value, with: { (snapshot) in
             if !self.initialLoadLock {
                 self.initialLoadLock = true
@@ -401,9 +402,11 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         
         tableView.reloadData()
         
-        //we use a regular listener (as opposed to single-use ones) to take advantage of the caching while querying the subtrees of the notifications path
-        
+        ref.child(nrtPath).setValue(Int(NSDate().timeIntervalSince1970))
+        tabBarController?.tabBar.items?[3].badgeValue = nil
+        (tabBarController as? TabBarViewController)?.setBadge = false
     }
+    
 
     
     

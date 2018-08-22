@@ -17,6 +17,8 @@ class TabBarViewController: UITabBarController {
     var ref : DatabaseReference = Database.database().reference()
     var currentUsername, userNotificationsPath, nrtPath : String!
     var observerHandle : UInt!
+    var setBadge = false
+    var notificationsTab : NotificationsViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -155,7 +157,10 @@ class TabBarViewController: UITabBarController {
                                 print("we got new notifications!, \(notificationTimes[0]) > \(notificationReadTime), \(notificationTimes.count) items")
                                 
                                 DispatchQueue.main.async {
-                                    self.tabBar.items?[3].badgeValue = "New"
+                                    if self.selectedIndex != 3 {
+                                        self.tabBar.items?[3].badgeValue = "New"
+                                    }
+                                    self.setBadge = true
                                 }
                             }
                             else {
@@ -190,7 +195,14 @@ class TabBarViewController: UITabBarController {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         //necessary in case user taps the actual middle tap element exposed below the center button instead of tapping the center button
         previousTabNum = selectedIndex
+        
+        if previousTabNum == 3 && setBadge{ //exiting notifications tab
+            print("exiting notifications, setting badge again")
+            self.tabBar.items?[3].badgeValue = "New" //in case a new notification arrived while user was in the notifications page
+        }
     }
+    
+    
     
     func createPostBack(){
         selectedIndex = previousTabNum
