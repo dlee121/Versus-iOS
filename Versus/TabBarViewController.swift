@@ -16,6 +16,7 @@ class TabBarViewController: UITabBarController {
     var observer: NSObjectProtocol!
     var ref : DatabaseReference = Database.database().reference()
     var currentUsername, userNotificationsPath, nrtPath : String!
+    var observerHandle : UInt!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -27,13 +28,12 @@ class TabBarViewController: UITabBarController {
     
     
     deinit {
-        ref.child(userNotificationsPath).removeAllObservers()
+        ref.child(userNotificationsPath).removeObserver(withHandle: observerHandle)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("tab bar appear")
-        
     }
     
     func addNotificationObserver() {
@@ -42,8 +42,11 @@ class TabBarViewController: UITabBarController {
         nrtPath = getUsernameHash(username: currentUsername!)+"/"+currentUsername!+"/nrt/"
         var notificationTimes = [Int]()
         
+        if observerHandle != nil {
+            ref.child(userNotificationsPath).removeObserver(withHandle: observerHandle)
+        }
         
-        self.ref.child(self.userNotificationsPath).observe(DataEventType.value, with: { (snapshot) in
+        observerHandle = self.ref.child(self.userNotificationsPath).observe(DataEventType.value, with: { (snapshot) in
             let group = DispatchGroup()
             
             if let value = snapshot.value as? [String : AnyObject] {
@@ -152,6 +155,10 @@ class TabBarViewController: UITabBarController {
                             if notificationTimes.count > 0 && notificationTimes[0] > notificationReadTime{
                                 
                                 print("we got new notifications!, \(notificationTimes[0]) > \(notificationReadTime), \(notificationTimes.count) items")
+                                
+                                DispatchQueue.main.async {
+                                    self.tabBar.items?[3].badgeValue = "New"
+                                }
                             }
                             else {
                                 //no new notifications

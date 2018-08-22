@@ -2345,11 +2345,11 @@
             <objects>
                 <viewController id="Bbt-9Q-VzI" customClass="MeViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5zA-V8-dXq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="98c-fl-5ts" userLabel="rightHalf">
-                                <rect key="frame" x="187.5" y="20" width="187.5" height="138"/>
+                                <rect key="frame" x="187.5" y="64" width="187.5" height="138"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="PXt-3B-OIy" userLabel="FGHStack">
                                         <rect key="frame" x="9.5" y="8" width="170" height="30"/>
@@ -2422,7 +2422,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oep-lH-iyh" userLabel="leftHalf">
-                                <rect key="frame" x="0.0" y="28" width="187.5" height="122"/>
+                                <rect key="frame" x="0.0" y="72" width="187.5" height="122"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_profile" translatesAutoresizingMaskIntoConstraints="NO" id="FhX-oz-DSV">
                                         <rect key="frame" x="33.5" y="0.0" width="122" height="122"/>
@@ -2439,7 +2439,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OMG-cX-lsH" customClass="ButtonBarView" customModule="XLPagerTabStrip">
-                                <rect key="frame" x="0.0" y="158" width="375" height="46"/>
+                                <rect key="frame" x="0.0" y="202" width="375" height="46"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="Ere-5m-erZ"/>
@@ -2453,7 +2453,7 @@
                                 <cells/>
                             </collectionView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kd3-wd-LCM">
-                                <rect key="frame" x="0.0" y="204" width="375" height="463"/>
+                                <rect key="frame" x="0.0" y="248" width="375" height="370"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
@@ -3963,7 +3963,7 @@
         <scene sceneID="9CY-0Z-of7">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kjw-ln-za4" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Main" id="uro-Sa-czA"/>
+                    <tabBarItem key="tabBarItem" title="Main" image="home_grey" id="uro-Sa-czA"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jTJ-wX-jzU">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -3982,7 +3982,7 @@
         <scene sceneID="8vN-GR-ORe">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NAK-AK-i1K" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Leaderboard" id="GMS-nB-x2O"/>
+                    <tabBarItem key="tabBarItem" title="Leaderboard" image="leaderboard_icon_grey" id="GMS-nB-x2O"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NNu-Q9-eIy">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -4001,7 +4001,7 @@
         <scene sceneID="guN-1u-taq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="esn-Io-i8e" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Me" id="78X-t5-xnJ"/>
+                    <tabBarItem key="tabBarItem" title="Me" image="notifications_grey" id="78X-t5-xnJ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qxS-fi-FFJ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -4039,7 +4039,7 @@
         <scene sceneID="MLP-Qs-Qy9">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hYY-A5-m9u" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notifications" id="h8j-cp-VdS"/>
+                    <tabBarItem key="tabBarItem" title="Notifications" image="notifications_grey" id="h8j-cp-VdS"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YGS-Wp-VYw">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -4066,10 +4066,13 @@
         <image name="crownSilver" width="32" height="16"/>
         <image name="default_profile" width="64" height="64"/>
         <image name="heart_grey" width="16" height="16"/>
+        <image name="home_grey" width="32" height="32"/>
         <image name="ic_send_grey" width="24" height="24"/>
+        <image name="leaderboard_icon_grey" width="24" height="24"/>
         <image name="logo_2_64" width="32" height="32"/>
         <image name="logo_black_120" width="60" height="60"/>
         <image name="logo_splash" width="133" height="106"/>
+        <image name="notifications_grey" width="32" height="32"/>
         <image name="plus_blue" width="96" height="96"/>
         <image name="profile_icon_f" width="32" height="32"/>
         <namedColor name="VS_Blue">
@@ -4084,7 +4087,7 @@
         <segue reference="iVN-9A-tOw"/>
         <segue reference="XJc-pI-oXd"/>
         <segue reference="qbd-PO-7a5"/>
-        <segue reference="uAF-H9-Oin"/>
+        <segue reference="l8u-kQ-1dz"/>
         <segue reference="pLb-S7-nGp"/>
         <segue reference="tN5-20-0qe"/>
         <segue reference="gSn-Xx-xNp"/>
