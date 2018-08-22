@@ -20,6 +20,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     var ref : DatabaseReference!
     var initialLoadLock = false
     var initialLoaderHandle : UInt!
+    var currentUsername : String!
     
     let TYPE_U = 0 //new comment upvote notification
     let TYPE_C = 1 //new comment reply notification
@@ -33,9 +34,15 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         super.viewDidLoad()
         notificationItems = [NotificationItem]()
         navigationItem.title = "Notifications"
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        notificationItems.removeAll()
         initialLoadLock = false
         ref = Database.database().reference()
-        var currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
+        currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         userNotificationsPath = getUsernameHash(username: currentUsername!)+"/"+currentUsername!+"/n/"
         initialLoaderHandle = ref.child(userNotificationsPath).observe(DataEventType.value, with: { (snapshot) in
             if !self.initialLoadLock {
@@ -375,12 +382,17 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                 
             }
             else {
-                
+                print("hohohoho")
             }
             
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        ref.child(userNotificationsPath).removeObserver(withHandle: initialLoaderHandle)
     }
 
     func finalizeList() {
@@ -390,12 +402,15 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         tableView.reloadData()
         
         //we use a regular listener (as opposed to single-use ones) to take advantage of the caching while querying the subtrees of the notifications path
-        ref.removeObserver(withHandle: initialLoaderHandle)
+        
     }
+
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        print("didReceiveMemoryWarning")
     }
     
     override func viewDidAppear(_ animated: Bool) {
