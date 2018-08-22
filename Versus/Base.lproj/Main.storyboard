@@ -3982,7 +3982,9 @@
         <scene sceneID="8vN-GR-ORe">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NAK-AK-i1K" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Leaderboard" image="leaderboard_icon_grey" id="GMS-nB-x2O"/>
+                    <tabBarItem key="tabBarItem" title="Leaderboard" image="leaderboard_icon_grey" id="GMS-nB-x2O">
+                        <inset key="imageInsets" minX="0.0" minY="2" maxX="0.0" maxY="-2"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NNu-Q9-eIy">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -4001,7 +4003,7 @@
         <scene sceneID="guN-1u-taq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="esn-Io-i8e" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Me" image="notifications_grey" id="78X-t5-xnJ"/>
+                    <tabBarItem key="tabBarItem" title="Me" image="ic_me" id="78X-t5-xnJ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qxS-fi-FFJ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -4067,12 +4069,13 @@
         <image name="default_profile" width="64" height="64"/>
         <image name="heart_grey" width="16" height="16"/>
         <image name="home_grey" width="32" height="32"/>
+        <image name="ic_me" width="32" height="32"/>
         <image name="ic_send_grey" width="24" height="24"/>
         <image name="leaderboard_icon_grey" width="24" height="24"/>
         <image name="logo_2_64" width="32" height="32"/>
         <image name="logo_black_120" width="60" height="60"/>
         <image name="logo_splash" width="133" height="106"/>
-        <image name="notifications_grey" width="32" height="32"/>
+        <image name="notifications_grey" width="18" height="18"/>
         <image name="plus_blue" width="96" height="96"/>
         <image name="profile_icon_f" width="32" height="32"/>
         <namedColor name="VS_Blue">
