@@ -360,19 +360,22 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                 self.winnerTreeRoots.add(item.id!)
                                 let newComment = VSComment(itemSource: item.source!, id: item.id!)
                                 newComment.nestedLevel = 3
-                                self.rootComments.append(newComment)
-                                self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
-                                
-                                switch li {
-                                case 0:
-                                    mcq0 = newComment.comment_id
-                                case 1:
-                                    mcq1 = newComment.comment_id
-                                case 2:
-                                    mcq2 = newComment.comment_id
-                                default:
-                                    break
+                                if self.topicComment == nil || self.topicComment?.comment_id != item.id! {
+                                    self.rootComments.append(newComment)
+                                    self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
+                                    switch li {
+                                    case 0:
+                                        mcq0 = newComment.comment_id
+                                    case 1:
+                                        mcq1 = newComment.comment_id
+                                    case 2:
+                                        mcq2 = newComment.comment_id
+                                    default:
+                                        break
+                                    }
                                 }
+                                
+                                
                             }
                         case 4:
                             let li = i
@@ -391,19 +394,22 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                         
                                         let newComment = VSComment(itemSource: getCommentResult!.source!, id: getCommentResult!.id!)
                                         newComment.nestedLevel = 4
-                                        self.rootComments.append(newComment)
-                                        self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
-                                        
-                                        switch li {
-                                        case 0:
-                                            mcq0 = newComment.comment_id
-                                        case 1:
-                                            mcq1 = newComment.comment_id
-                                        case 2:
-                                            mcq2 = newComment.comment_id
-                                        default:
-                                            break
+                                        if self.topicComment == nil || self.topicComment?.comment_id != item.id! {
+                                            self.rootComments.append(newComment)
+                                            self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
+                                            switch li {
+                                            case 0:
+                                                mcq0 = newComment.comment_id
+                                            case 1:
+                                                mcq1 = newComment.comment_id
+                                            case 2:
+                                                mcq2 = newComment.comment_id
+                                            default:
+                                                break
+                                            }
                                         }
+                                        
+                                        
                                     }
                                     
                                     group.leave()
@@ -487,7 +493,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                             self.nodeMap[comment.comment_id] = currNode
                         }
                         
-                        if !self.winnerTreeRoots.contains(comment.comment_id) {
+                        if !(self.winnerTreeRoots.contains(comment.comment_id) || (self.topicComment != nil && self.topicComment!.comment_id == comment.comment_id))  {
                             print("sure come right thru commentID: " + comment.comment_id)
                             self.rootComments.append(comment)
                             
@@ -504,9 +510,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                         
                         rootIndex += 1
                         
-                    }
-                    if self.topicComment != nil {
-                        rootIndex += 1
                     }
                     
                     self.fromIndexIncrement = rootIndex

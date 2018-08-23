@@ -23,9 +23,6 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     var currentPost : PostObject!
     var comments = [VSComment]()
     let apiClient = VSVersusAPIClient.default()
-    var rootComments = [VSComment]()
-    var childComments = [VSComment]()
-    var grandchildComments = [VSComment]()
     var nodeMap = [String : VSCNode]()
     var currentUserAction : UserAction!
     var tappedUsername : String?
@@ -178,7 +175,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         currentPost = post
         topCardComment = comment
         comments.append(topCardComment)
-        self.rootComments.append(topicComment)
+        self.comments.append(topicComment)
         self.nodeMap[topicComment.comment_id] = VSCNode(comment: topicComment)
         currentUserAction = userAction
         nodeMap[comment.comment_id] = VSCNode(comment: comment)
@@ -404,8 +401,10 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                                 self.winnerTreeRoots.add(item.id!)
                                 let newComment = VSComment(itemSource: item.source!, id: item.id!)
                                 newComment.nestedLevel = 5
-                                self.comments.append(newComment)
-                                self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
+                                if self.topicComment == nil || self.topicComment?.comment_id != item.id! {
+                                    self.comments.append(newComment)
+                                    self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
+                                }
                             }
                         }
                         
@@ -439,9 +438,12 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                 if let rootQueryResults = task.result?.hits?.hits {
                     for item in rootQueryResults {
                         let comment = VSComment(itemSource: item.source!, id: item.id!)
-                        comment.nestedLevel = 5
-                        self.comments.append(comment)
-                        self.nodeMap[comment.comment_id] = VSCNode(comment: comment)
+                        if !(self.winnerTreeRoots.contains(comment.comment_id) || (self.topicComment != nil && self.topicComment!.comment_id == comment.comment_id))  {
+                            comment.nestedLevel = 5
+                            self.comments.append(comment)
+                            self.nodeMap[comment.comment_id] = VSCNode(comment: comment)
+                        }
+                        
                     }
                     
                     DispatchQueue.main.async {
@@ -812,7 +814,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                 }
                 else {
                     // a reply to the top card
-                    let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: topCardComment.comment_id, postID: topCardComment.post_id, newContent: text, rootID: "0")
+                    let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: topCardComment.comment_id, postID: topCardComment.post_id, newContent: text, rootID: topCardComment.parent_id)
                     newComment.nestedLevel = 5
                     
                     apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -836,7 +838,6 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                             print("newCommentID: \(newComment.comment_id)")
                             
                             DispatchQueue.main.async {
-                                self.rootComments.insert(newComment, at: 0)
                                 self.comments.insert(newComment, at: 1)
                                 self.tableView.insertRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
                             }
