@@ -2255,7 +2255,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UP6-Vc-b5w">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
+                                                    <rect key="frame" x="8" y="8" width="359" height="85.5"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_black_120" translatesAutoresizingMaskIntoConstraints="NO" id="SPx-XI-qwE">
                                                             <rect key="frame" x="8" y="8" width="42" height="42"/>
@@ -2272,7 +2272,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kT-mJ-oCU">
-                                                            <rect key="frame" x="58" y="8" width="309" height="20.5"/>
+                                                            <rect key="frame" x="58" y="8" width="293" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -2299,16 +2299,17 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="UP6-Vc-b5w" secondAttribute="trailing" id="4Ce-Ot-aeu"/>
-                                                <constraint firstItem="8KM-J0-Oyt" firstAttribute="top" secondItem="UP6-Vc-b5w" secondAttribute="bottom" constant="4" id="BdW-0i-0ca"/>
+                                                <constraint firstAttribute="trailing" secondItem="UP6-Vc-b5w" secondAttribute="trailing" constant="8" id="4Ce-Ot-aeu"/>
+                                                <constraint firstItem="8KM-J0-Oyt" firstAttribute="top" secondItem="UP6-Vc-b5w" secondAttribute="bottom" id="BdW-0i-0ca"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="8KM-J0-Oyt" secondAttribute="bottom" id="Ek8-aQ-hUI"/>
                                                 <constraint firstItem="8KM-J0-Oyt" firstAttribute="leading" secondItem="QMD-Mi-RBe" secondAttribute="leadingMargin" id="NCR-1j-J5v"/>
-                                                <constraint firstItem="UP6-Vc-b5w" firstAttribute="top" secondItem="QMD-Mi-RBe" secondAttribute="top" id="baO-Ge-1s4"/>
-                                                <constraint firstItem="UP6-Vc-b5w" firstAttribute="leading" secondItem="QMD-Mi-RBe" secondAttribute="leading" id="zwU-Qn-aME"/>
+                                                <constraint firstItem="UP6-Vc-b5w" firstAttribute="top" secondItem="QMD-Mi-RBe" secondAttribute="top" constant="8" id="baO-Ge-1s4"/>
+                                                <constraint firstItem="UP6-Vc-b5w" firstAttribute="leading" secondItem="QMD-Mi-RBe" secondAttribute="leading" constant="8" id="zwU-Qn-aME"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="body" destination="1kT-mJ-oCU" id="LCt-Tz-LJv"/>
+                                            <outlet property="notificationContainer" destination="UP6-Vc-b5w" id="Yg0-Ts-EYJ"/>
                                             <outlet property="secondImage" destination="7ce-ld-vvy" id="fhU-hj-2Xm"/>
                                             <outlet property="secondImageHeight" destination="Obq-mm-Lrm" id="2dx-rm-NRC"/>
                                             <outlet property="secondImageTop" destination="mit-WZ-v4V" id="ma9-tw-9Qe"/>

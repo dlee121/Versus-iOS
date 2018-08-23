@@ -15,6 +15,7 @@ class NotificationsTableViewCell: UITableViewCell {
     @IBOutlet weak var secondImage: UIImageView!
     @IBOutlet weak var body: UILabel!
     @IBOutlet weak var time: UILabel!
+    @IBOutlet weak var notificationContainer: UIView!
     
     @IBOutlet weak var secondImageTop: NSLayoutConstraint!
     @IBOutlet weak var secondImageHeight: NSLayoutConstraint!
@@ -82,8 +83,10 @@ class NotificationsTableViewCell: UITableViewCell {
             break
         }
         
-        
-        
+        DispatchQueue.main.async {
+            self.notificationContainer.layer.cornerRadius = 15
+            self.notificationContainer.clipsToBounds = true
+        }
     }
     
     func showSecondImage(){

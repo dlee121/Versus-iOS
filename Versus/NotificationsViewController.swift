@@ -34,7 +34,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         super.viewDidLoad()
         notificationItems = [NotificationItem]()
         navigationItem.title = "Notifications"
-        
+        tableView.separatorStyle = .none
     }
     
     override func viewWillAppear(_ animated: Bool) {
