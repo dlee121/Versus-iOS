@@ -41,6 +41,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         ref = Database.database().reference()
         screenWidth = self.view.frame.size.width
         textsVSCHeight = screenWidth / 1.6
+        tableView.separatorStyle = .none
         if comments.count == 0 {
             myCircleInitialSetup()
         }
