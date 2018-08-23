@@ -21,6 +21,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     var initialLoadLock = false
     var initialLoaderHandle : UInt!
     var currentUsername : String!
+    var fList = [String]()
     
     let TYPE_U = 0 //new comment upvote notification
     let TYPE_C = 1 //new comment reply notification
@@ -29,6 +30,14 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     let TYPE_F = 4 //new follower notification
     let TYPE_M = 5 //new medal notification
     let TYPE_EM = 6 //for password reset email setup notification
+    
+    var segueType = 0
+    
+    let rootSegue = 0
+    let childSegue = 1
+    let grandchildSegue = 2
+    let followerSegue = 3
+    let emailSegue = 4
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -431,6 +440,107 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         let cell = tableView.dequeueReusableCell(withIdentifier: "notificationItem", for: indexPath) as? NotificationsTableViewCell
         cell!.setCell(item: notificationItems[indexPath.row])
         return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = notificationItems[indexPath.row]
+        
+        switch item.type {
+        case TYPE_C:
+            goToComment(commentID: item.payload!)
+        case TYPE_F:
+            goToFollowersPage()
+        case TYPE_M:
+            goToComment(commentID: item.payload!)
+        case TYPE_R:
+            goToPost(postID: item.payload!)
+        case TYPE_U:
+            goToComment(commentID: item.payload!)
+        case TYPE_V:
+            goToPost(postID: item.payload!)
+        case TYPE_EM:
+            //TODO: implement email reset and handle this click
+            break
+        default:
+            break
+        }
+        
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func goToComment(commentID : String) {
+        
+        
+    }
+    
+    func goToPost(postID : String) {
+        
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segueType {
+        case rootSegue:
+            break
+        case childSegue:
+            break
+        case grandchildSegue:
+            break
+        case followerSegue:
+            /*
+            let backItem = UIBarButtonItem()
+            backItem.title = currentUsername
+            navigationItem.backBarButtonItem = backItem
+            */
+            guard let fghVC = segue.destination as? FGHViewController else {return}
+            let view = fghVC.view //necessary for loading the view
+            fghVC.fORg = 0
+            print("fList size = \(fList.count)")
+            fghVC.setUpFPage(followers: fList)
+            
+            break
+        case emailSegue:
+            break
+        default:
+            break
+        }
+    }
+    
+    func goToFollowersPage(){
+        fList.removeAll()
+        
+        let userPath = getUsernameHash(username: currentUsername) + "/" + currentUsername
+        let fPath = userPath + "/f"
+        let hPath = userPath + "/h"
+        ref.child(hPath).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let enumerator = snapshot.children
+            while let item = enumerator.nextObject() as? DataSnapshot {
+                self.fList.append(item.key)
+            }
+            
+            
+            self.ref.child(fPath).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let enumerator = snapshot.children
+                while let item = enumerator.nextObject() as? DataSnapshot {
+                    self.fList.append(item.key)
+                }
+                DispatchQueue.main.async {
+                    self.segueType = self.followerSegue
+                    self.performSegue(withIdentifier: "notificationsToFGH", sender: self)
+                }
+                
+            }) { (error) in
+                print(error.localizedDescription)
+            }
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+        
+        
     }
     
     

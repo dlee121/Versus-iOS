@@ -74,6 +74,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                 }
                 
                 let gPath = "\(usernameHash)/" + currentUsername + "/g"
+                let hPath = "\(usernameHash)/" + currentUsername + "/h"
                 
                 self.ref.child(gPath).observeSingleEvent(of: .value, with: { (snapshot) in
                     
@@ -82,7 +83,18 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                         self.gList.append(item.key)
                     }
                     
-                    self.myCircleQuery()
+                    self.ref.child(hPath).observeSingleEvent(of: .value, with: { (snapshot) in
+                        
+                        let enumerator = snapshot.children
+                        while let item = enumerator.nextObject() as? DataSnapshot {
+                            self.gList.append(item.key)
+                        }
+                        
+                        self.myCircleQuery()
+                        
+                    }) { (error) in
+                        print(error.localizedDescription)
+                    }
                     
                 }) { (error) in
                     print(error.localizedDescription)
