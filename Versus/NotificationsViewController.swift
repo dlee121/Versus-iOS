@@ -33,11 +33,14 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     
     var segueType = 0
     
-    let rootSegue = 0
-    let childSegue = 1
-    let grandchildSegue = 2
-    let followerSegue = 3
-    let emailSegue = 4
+    let postSegue = 0
+    let rootSegue = 1
+    let childSegue = 2
+    let grandchildSegue = 3
+    let followerSegue = 4
+    let emailSegue = 5
+    
+    var seguePostID : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -449,15 +452,20 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         case TYPE_C:
             goToComment(commentID: item.payload!)
         case TYPE_F:
+            segueType = followerSegue
             goToFollowersPage()
         case TYPE_M:
             goToComment(commentID: item.payload!)
         case TYPE_R:
-            goToPost(postID: item.payload!)
+            segueType = postSegue
+            seguePostID = item.payload!
+            performSegue(withIdentifier: "notificationsToRoot", sender: self)
         case TYPE_U:
             goToComment(commentID: item.payload!)
         case TYPE_V:
-            goToPost(postID: item.payload!)
+            segueType = postSegue
+            seguePostID = item.payload!
+            performSegue(withIdentifier: "notificationsToRoot", sender: self)
         case TYPE_EM:
             //TODO: implement email reset and handle this click
             break
@@ -474,13 +482,59 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         
     }
     
-    func goToPost(postID : String) {
-        
-        
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segueType {
+        case postSegue:
+            guard let rootVC = segue.destination as? RootPageViewController else {return}
+            let view = rootVC.view //necessary for loading the view
+            let userActionID = UserDefaults.standard.string(forKey: "KEY_USERNAME")!+seguePostID!
+            
+            apiClient.postGet(a: "p", b: seguePostID!).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                if task.error != nil {
+                    DispatchQueue.main.async {
+                        print(task.error!)
+                    }
+                }
+                else {
+                    if let postResult = task.result {
+                        
+                        let postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
+                        
+                        self.apiClient.pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            
+                            if task.error != nil {
+                                DispatchQueue.main.async {
+                                    print(task.error!)
+                                }
+                            }
+                            else {
+                                if let result = task.result {
+                                    postObject.profileImageVersion = result.pi!.intValue
+                                }
+                            }
+                            return nil
+                        }
+                        
+                        self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            
+                            if task.error != nil {
+                                rootVC.setUpRootPage(post: postObject, userAction: UserAction(idIn: userActionID), fromCreatePost: false)
+                            }
+                            else {
+                                if let result = task.result {
+                                    rootVC.setUpRootPage(post: postObject, userAction: UserAction(itemSource: result, idIn: userActionID), fromCreatePost: false)
+                                }
+                                else {
+                                    rootVC.setUpRootPage(post: postObject, userAction: UserAction(idIn: userActionID), fromCreatePost: false)
+                                }
+                            }
+                            return nil
+                        }
+                    }
+                }
+                return nil
+            }
+            
         case rootSegue:
             break
         case childSegue:
@@ -528,7 +582,6 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                     self.fList.append(item.key)
                 }
                 DispatchQueue.main.async {
-                    self.segueType = self.followerSegue
                     self.performSegue(withIdentifier: "notificationsToFGH", sender: self)
                 }
                 
