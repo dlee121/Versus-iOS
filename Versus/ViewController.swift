@@ -31,24 +31,13 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
-        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            // ...
-            if user == nil{
-                //not currently signed in
-                print("not currently signed in")
-            }
-            else{
-                //currently signed in
-                print("signed in as " + user!.email!)
-            }
-        }
-        
-        
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        Auth.auth().removeStateDidChangeListener(handle)
-        
+        //remove session data, log out firebase user, then segue back to start screen
+        UserDefaults.standard.removeObject(forKey: "KEY_BDAY")
+        UserDefaults.standard.removeObject(forKey: "KEY_EMAIL")
+        UserDefaults.standard.removeObject(forKey: "KEY_USERNAME")
+        UserDefaults.standard.removeObject(forKey: "KEY_PI")
+        UserDefaults.standard.removeObject(forKey: "KEY_IS_NATIVE")
+        try! Auth.auth().signOut()
     }
     
     override func didReceiveMemoryWarning() {

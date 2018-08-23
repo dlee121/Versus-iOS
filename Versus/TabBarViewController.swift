@@ -31,6 +31,7 @@ class TabBarViewController: UITabBarController {
         ref.child(userNotificationsPath).removeObserver(withHandle: observerHandle)
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("tab bar appear")

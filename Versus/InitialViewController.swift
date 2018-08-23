@@ -19,24 +19,29 @@ class InitialViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if let user = Auth.auth().currentUser {
-            //get user token, set up cognito auth credentials, then segue to MainContainer
-            user.getIDTokenForcingRefresh(true){ (idToken, error) in
-                
-                let oidcProvider = OIDCProvider(input: idToken! as NSString)
-                let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
-                credentialsProvider.clearCredentials()
-                let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
-                //login session configuration is stored in the default
-                AWSServiceManager.default().defaultServiceConfiguration = configuration
-                
-                self.performSegue(withIdentifier: "initialToMain", sender: self)
-                
+            if UserDefaults.standard.string(forKey: "KEY_USERNAME") != nil {
+                //get user token, set up cognito auth credentials, then segue to MainContainer
+                user.getIDTokenForcingRefresh(true){ (idToken, error) in
+                    
+                    let oidcProvider = OIDCProvider(input: idToken! as NSString)
+                    let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+                    credentialsProvider.clearCredentials()
+                    let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+                    //login session configuration is stored in the default
+                    AWSServiceManager.default().defaultServiceConfiguration = configuration
+                    
+                    self.performSegue(withIdentifier: "initialToMain", sender: self)
+                }
+            }
+            else {
+                performSegue(withIdentifier: "initialToStart", sender: self)
             }
         }
         else{
             //user not logged in, segue to Start Screen
             performSegue(withIdentifier: "initialToStart", sender: self)
         }
+ 
     }
 
     override func didReceiveMemoryWarning() {
