@@ -2495,6 +2495,7 @@
                         <segue destination="Jk1-If-Hre" kind="show" identifier="meToRoot" id="Ugw-90-kaO"/>
                         <segue destination="X1q-ax-jCK" kind="show" identifier="meToChild" id="Z4A-4J-KyV"/>
                         <segue destination="Ef4-68-ZeO" kind="show" identifier="meToGrandchild" id="eXY-0P-CUx"/>
+                        <segue destination="MPl-zV-x38" kind="presentation" identifier="meToSettings" id="8yu-d5-eX7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ZV-hy-7i7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2744,6 +2745,54 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hkt-FP-1CY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4900" y="2237"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="ef9-Ck-gyh">
+            <objects>
+                <viewController id="MPl-zV-x38" customClass="SettingsViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fSl-RT-NiF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ykO-NA-c5Q">
+                                <rect key="frame" x="0.0" y="20" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="Hha-GG-p4z"/>
+                                    <constraint firstAttribute="height" constant="44" id="YQN-iH-xHL"/>
+                                </constraints>
+                                <state key="normal" image="close"/>
+                                <connections>
+                                    <action selector="closeButtonTapped:" destination="MPl-zV-x38" eventType="touchUpInside" id="uLU-63-11m"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ljy-QU-m8W">
+                                <rect key="frame" x="155.5" y="31.5" width="63.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HT0-vt-JYy">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ykO-NA-c5Q" firstAttribute="leading" secondItem="iGM-S7-wX7" secondAttribute="leading" id="5fI-dE-yLN"/>
+                            <constraint firstItem="HT0-vt-JYy" firstAttribute="bottom" secondItem="iGM-S7-wX7" secondAttribute="bottom" id="BMi-xt-ihT"/>
+                            <constraint firstItem="ykO-NA-c5Q" firstAttribute="top" secondItem="fSl-RT-NiF" secondAttribute="top" constant="20" id="D12-rE-24u"/>
+                            <constraint firstItem="HT0-vt-JYy" firstAttribute="leading" secondItem="iGM-S7-wX7" secondAttribute="leading" id="FRO-yY-BPv"/>
+                            <constraint firstItem="ljy-QU-m8W" firstAttribute="centerY" secondItem="ykO-NA-c5Q" secondAttribute="centerY" id="G8t-25-IXn"/>
+                            <constraint firstItem="ljy-QU-m8W" firstAttribute="centerX" secondItem="iGM-S7-wX7" secondAttribute="centerX" id="IqE-7Q-DmK"/>
+                            <constraint firstItem="HT0-vt-JYy" firstAttribute="top" secondItem="ykO-NA-c5Q" secondAttribute="bottom" id="WrL-bT-bvz"/>
+                            <constraint firstItem="iGM-S7-wX7" firstAttribute="trailing" secondItem="HT0-vt-JYy" secondAttribute="trailing" id="xZa-85-Uqo"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="iGM-S7-wX7"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="35U-ji-qqs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5648.8000000000002" y="2236.7316341829087"/>
         </scene>
         <!--Comments History View Controller-->
         <scene sceneID="iAg-Gb-hvH">
@@ -4093,12 +4142,12 @@
     <inferredMetricsTieBreakers>
         <segue reference="kMN-CP-0NP"/>
         <segue reference="iVN-9A-tOw"/>
-        <segue reference="sD2-CK-5N3"/>
+        <segue reference="YuF-tM-5cL"/>
         <segue reference="qbd-PO-7a5"/>
         <segue reference="l8u-kQ-1dz"/>
-        <segue reference="1ow-RI-pot"/>
-        <segue reference="zXv-cb-ova"/>
-        <segue reference="Zrk-uo-HWn"/>
+        <segue reference="eXY-0P-CUx"/>
+        <segue reference="Z4A-4J-KyV"/>
+        <segue reference="Ugw-90-kaO"/>
         <segue reference="1o0-2n-eSQ"/>
         <segue reference="5A0-ex-P7l"/>
         <segue reference="Lbc-3X-Z2H"/>

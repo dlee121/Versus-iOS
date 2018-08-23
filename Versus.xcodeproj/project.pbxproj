@@ -132,6 +132,7 @@
 		70FC66292124C97D00783FD5 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC66282124C97D00783FD5 /* TabBarViewController.swift */; };
 		70FC662B2124D77900783FD5 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC662A2124D77900783FD5 /* CustomTabBar.swift */; };
 		70FC662D2124DCB400783FD5 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FC662C2124DCB400783FD5 /* CreatePostViewController.swift */; };
+		70FEE426212F7302000638C6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FEE425212F7302000638C6 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -265,6 +266,7 @@
 		70FC66282124C97D00783FD5 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		70FC662A2124D77900783FD5 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		70FC662C2124DCB400783FD5 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
+		70FEE425212F7302000638C6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B216951D7ECAD287D38ECF83 /* Pods-Versus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Versus.release.xcconfig"; path = "Pods/Target Support Files/Pods-Versus/Pods-Versus.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -344,6 +346,7 @@
 				70B1705020F2F97800459ACE /* ButtonBarView.swift */,
 				70FC66282124C97D00783FD5 /* TabBarViewController.swift */,
 				70FC662A2124D77900783FD5 /* CustomTabBar.swift */,
+				70FEE425212F7302000638C6 /* SettingsViewController.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -634,6 +637,7 @@
 				70E80CC620E6DB570067DF08 /* VSPostInfoMultiModel.swift in Sources */,
 				70E80CDF20E6DB570067DF08 /* VSPostsListCompactModel.swift in Sources */,
 				7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */,
+				70FEE426212F7302000638C6 /* SettingsViewController.swift in Sources */,
 				701B9BA720E3FB20003C9E7E /* ViewController.swift in Sources */,
 				70B9A7E120ED64C200C06709 /* Character+UInt32.swift in Sources */,
 				706F89E42106E38800A78EFB /* VSPostQMultiModel_docs_item__source.swift in Sources */,

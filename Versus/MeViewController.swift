@@ -52,7 +52,7 @@ class MeViewController: ButtonBarPagerTabStripViewController {
             self.followers.titleLabel?.textAlignment = NSTextAlignment.center
         }
         
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .done, target: self, action: #selector(settingsButtonTapped))
 
         // Do any additional setup after loading the view.
     }
@@ -97,6 +97,14 @@ class MeViewController: ButtonBarPagerTabStripViewController {
             }
             return nil
         }
+        
+    }
+    
+    @objc
+    func settingsButtonTapped() {
+        
+        performSegue(withIdentifier: "meToSettings", sender: self)
+        
         
     }
     
