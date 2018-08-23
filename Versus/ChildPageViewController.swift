@@ -45,6 +45,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     let retrievalSize = 16
     var reactivateLoadMore = false
     var fromIndexIncrement : Int?
+    var topicComment : VSComment?
     
     var medalWinnersList = [String : String]() //commentID : medalType
     var winnerTreeRoots = NSMutableSet() //HashSet to prevent duplicate addition of medal winner's root into rootComments
@@ -161,8 +162,48 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         // Dispose of any resources that can be recreated.
     }
     
+    func commentClickSetUpChildPage (post : PostObject, comment : VSComment, userAction : UserAction, topicComment : VSComment) {
+        parentVC = nil
+        self.topicComment = topicComment
+        comments.removeAll()
+        updateMap.removeAll()
+        nodeMap.removeAll()
+        expandedCells.removeAllObjects()
+        postVoteUpdate = "none"
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        currentPost = post
+        fromIndex = 0
+        nowLoading = false
+        topCardComment = comment
+        comments.append(topCardComment)
+        self.rootComments.append(topicComment)
+        self.nodeMap[topicComment.comment_id] = VSCNode(comment: topicComment)
+        currentUserAction = userAction
+        nodeMap[comment.comment_id] = VSCNode(comment: comment)
+        medalistCQPayload = topicComment.comment_id
+        medalistCQPayloadPostID = post.post_id
+        setMedals() //this function will call commentsQuery() upon completion
+        
+        if let vcCount = navigationController?.viewControllers.count {
+            if parentVC == nil {
+                if vcCount > 1 {
+                    parentVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
+                    let rView = parentVC?.view
+                    navigationController?.viewControllers.insert(parentVC!, at: vcCount-1)
+                    
+                    parentVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
+                    
+                }
+            }
+            
+        }
+    }
+    
     func setUpChildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController?){
         parentVC = parentPage
+        topicComment = nil
         comments.removeAll()
         updateMap.removeAll()
         nodeMap.removeAll()
@@ -276,7 +317,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 let group = DispatchGroup()
                 
                 
-                self.medalistCQPayload = ""
+                if self.topicComment == nil {
+                    self.medalistCQPayload = ""
+                }
                 self.medalistCQPayloadPostID = self.currentPost.post_id
                 var mcq0, mcq1, mcq2 : String?
                 var prevNode : VSCNode?
@@ -380,7 +423,12 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 
                 group.notify(queue: .main) {
                     if mcq0 != nil {
-                        self.medalistCQPayload.append(mcq0!)
+                        if self.topicComment != nil {
+                            self.medalistCQPayload.append(","+mcq0!)
+                        }
+                        else {
+                            self.medalistCQPayload.append(mcq0!)
+                        }
                     }
                     if mcq1 != nil {
                         self.medalistCQPayload.append(","+mcq1!)
@@ -456,6 +504,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                         
                         rootIndex += 1
                         
+                    }
+                    if self.topicComment != nil {
+                        rootIndex += 1
                     }
                     
                     self.fromIndexIncrement = rootIndex

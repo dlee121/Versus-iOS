@@ -2337,6 +2337,8 @@
                         <outlet property="tableView" destination="SdU-u2-Iry" id="Qsl-b2-G09"/>
                         <segue destination="FiI-G2-tcw" kind="show" identifier="notificationsToFGH" id="sD2-CK-5N3"/>
                         <segue destination="Jk1-If-Hre" kind="show" identifier="notificationsToRoot" id="Zrk-uo-HWn"/>
+                        <segue destination="X1q-ax-jCK" kind="show" identifier="notificationsToChild" id="zXv-cb-ova"/>
+                        <segue destination="Ef4-68-ZeO" kind="show" identifier="notificationsToGrandchild" id="1ow-RI-pot"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BHD-H4-O9b" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4094,8 +4096,8 @@
         <segue reference="sD2-CK-5N3"/>
         <segue reference="qbd-PO-7a5"/>
         <segue reference="l8u-kQ-1dz"/>
-        <segue reference="XiZ-1a-L3E"/>
-        <segue reference="FM7-NP-gPO"/>
+        <segue reference="1ow-RI-pot"/>
+        <segue reference="zXv-cb-ova"/>
         <segue reference="Zrk-uo-HWn"/>
         <segue reference="1o0-2n-eSQ"/>
         <segue reference="5A0-ex-P7l"/>

@@ -41,6 +41,9 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     let emailSegue = 5
     
     var seguePostID : String?
+    var segueComment, segueTopComment : VSComment?
+    var seguePost : PostObject?
+    var segueUserAction : UserAction?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -478,7 +481,110 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func goToComment(commentID : String) {
-        
+        self.apiClient.commentGet(a: "c", b: commentID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            
+            if task.error != nil {
+                DispatchQueue.main.async {
+                    print(task.error!)
+                }
+            }
+            else {
+                if let result = task.result {
+                    self.segueComment = VSComment(itemSource: result.source!, id: result.id!)
+                    self.apiClient.postGet(a: "p", b: self.segueComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        
+                        if task.error != nil {
+                            DispatchQueue.main.async {
+                                print(task.error!)
+                            }
+                        }
+                        else {
+                            if let result = task.result {
+                                self.seguePost = PostObject(itemSource: result.source!, id: result.id!)
+                                
+                                
+                                let userActionID = self.currentUsername + self.seguePost!.post_id
+                                
+                                self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                    
+                                    if task.error != nil {
+                                        self.segueUserAction = UserAction(idIn: userActionID)
+                                    }
+                                    else {
+                                        if let result = task.result {
+                                            self.segueUserAction = UserAction(itemSource: result, idIn: userActionID)
+                                        }
+                                        else {
+                                            self.segueUserAction = UserAction(idIn: userActionID)
+                                        }
+                                    }
+                                    
+                                    if self.segueComment!.root == "0" {
+                                        if self.segueComment!.post_id == self.segueComment!.parent_id {
+                                            //root comment
+                                            self.segueComment!.nestedLevel = 0
+                                            self.segueType = self.rootSegue
+                                            DispatchQueue.main.async {
+                                                self.performSegue(withIdentifier: "notificationsToRoot", sender: self)
+                                            }
+                                        }
+                                        else {
+                                            //child comment
+                                            self.segueComment!.nestedLevel = 3
+                                            self.segueType = self.childSegue
+                                            self.apiClient.commentGet(a: "c", b: self.segueComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                                
+                                                if task.error != nil {
+                                                    self.segueUserAction = UserAction(idIn: userActionID)
+                                                }
+                                                else {
+                                                    if let result = task.result {
+                                                        self.segueTopComment = VSComment(itemSource: result.source!, id: result.id!)
+                                                        DispatchQueue.main.async {
+                                                            self.performSegue(withIdentifier: "notificationsToChild", sender: self)
+                                                        }
+                                                    }
+                                                }
+                                                return nil
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        //grandchild comment
+                                        self.segueComment!.nestedLevel = 5
+                                        self.segueType = self.grandchildSegue
+                                        self.apiClient.commentGet(a: "c", b: self.segueComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                            
+                                            if task.error != nil {
+                                                self.segueUserAction = UserAction(idIn: userActionID)
+                                            }
+                                            else {
+                                                if let result = task.result {
+                                                    self.segueTopComment = VSComment(itemSource: result.source!, id: result.id!)
+                                                    DispatchQueue.main.async {
+                                                        self.performSegue(withIdentifier: "notificationsToGrandchild", sender: self)
+                                                    }
+                                                }
+                                            }
+                                            return nil
+                                        }
+                                    }
+                                    
+                                    
+                                    return nil
+                                }
+                            }
+                        }
+                        return nil
+                    }
+                    
+                    
+                    
+                    
+                }
+            }
+            return nil
+        }
         
     }
     
@@ -487,7 +593,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         case postSegue:
             guard let rootVC = segue.destination as? RootPageViewController else {return}
             let view = rootVC.view //necessary for loading the view
-            let userActionID = UserDefaults.standard.string(forKey: "KEY_USERNAME")!+seguePostID!
+            let userActionID = currentUsername+seguePostID!
             
             apiClient.postGet(a: "p", b: seguePostID!).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                 if task.error != nil {
@@ -536,11 +642,20 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
             }
             
         case rootSegue:
-            break
+            guard let rootVC = segue.destination as? RootPageViewController else {return}
+            let view = rootVC.view //necessary for loading the view
+            rootVC.commentClickSetUpRootPage(post: seguePost!, userAction: segueUserAction!, topicComment: segueComment!)
+            
         case childSegue:
-            break
+            guard let childVC = segue.destination as? ChildPageViewController else {return}
+            let view = childVC.view //necessary for loading the view
+            childVC.commentClickSetUpChildPage(post: seguePost!, comment: segueTopComment!, userAction: segueUserAction!, topicComment: segueComment!)
+            
         case grandchildSegue:
-            break
+            guard let gcVC = segue.destination as? GrandchildPageViewController else {return}
+            let view = gcVC.view //necessary for loading the view
+            gcVC.commentClickSetUpGrandchildPage(post: seguePost!, comment: segueTopComment!, userAction: segueUserAction!, topicComment: segueComment!)
+            
         case followerSegue:
             /*
             let backItem = UIBarButtonItem()

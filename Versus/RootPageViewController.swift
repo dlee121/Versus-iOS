@@ -48,6 +48,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     let retrievalSize = 16
     var reactivateLoadMore = false
     var fromIndexIncrement : Int?
+    var topicComment : VSComment?
     
     var medalWinnersList = [String : String]() //commentID : medalType
     var winnerTreeRoots = NSMutableSet() //HashSet to prevent duplicate addition of medal winner's root into rootComments
@@ -164,8 +165,33 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
+    func commentClickSetUpRootPage (post : PostObject, userAction : UserAction, topicComment : VSComment) {
+        fromCreatePost = false
+        self.topicComment = topicComment
+        comments.removeAll()
+        rootComments.removeAll()
+        updateMap.removeAll()
+        nodeMap.removeAll()
+        expandedCells.removeAllObjects()
+        postVoteUpdate = "none"
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        currentPost = post
+        fromIndex = 0
+        nowLoading = false
+        comments.append(VSComment()) //placeholder for post object
+        self.rootComments.append(topicComment)
+        self.nodeMap[topicComment.comment_id] = VSCNode(comment: topicComment)
+        currentUserAction = userAction
+        medalistCQPayload = topicComment.comment_id
+        medalistCQPayloadPostID = post.post_id
+        setMedals() //this function will call commentsQuery() upon completion
+    }
+    
     func setUpRootPage(post : PostObject, userAction : UserAction, fromCreatePost : Bool){
         self.fromCreatePost = fromCreatePost
+        topicComment = nil
         comments.removeAll()
         rootComments.removeAll()
         updateMap.removeAll()
@@ -265,8 +291,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 let group = DispatchGroup()
                 
-                
-                self.medalistCQPayload = ""
+                if self.topicComment == nil {
+                    self.medalistCQPayload = ""
+                }
                 self.medalistCQPayloadPostID = self.currentPost.post_id
                 var mcq0, mcq1, mcq2 : String?
                 var prevNode : VSCNode?
@@ -413,7 +440,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 group.notify(queue: .main) {
                     if mcq0 != nil {
-                        self.medalistCQPayload.append(mcq0!)
+                        if self.topicComment != nil {
+                            self.medalistCQPayload.append(","+mcq0!)
+                        }
+                        else {
+                            self.medalistCQPayload.append(mcq0!)
+                        }
                     }
                     if mcq1 != nil {
                         self.medalistCQPayload.append(","+mcq1!)
@@ -489,6 +521,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         rootIndex += 1
                         
+                    }
+                    
+                    if self.topicComment != nil {
+                        rootIndex += 1
                     }
                     
                     self.fromIndexIncrement = rootIndex
