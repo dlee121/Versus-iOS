@@ -17,7 +17,6 @@
 		701B9BAA20E3FB20003C9E7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BA820E3FB20003C9E7E /* Main.storyboard */; };
 		701B9BAC20E3FB22003C9E7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BAB20E3FB22003C9E7E /* Assets.xcassets */; };
 		701B9BAF20E3FB22003C9E7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BAD20E3FB22003C9E7E /* LaunchScreen.storyboard */; };
-		701B9BB720E3FEEB003C9E7E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */; };
 		701C8CC220F8C4F00072AECD /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CC120F8C4F00072AECD /* LeaderboardViewController.swift */; };
 		701C8CC420F8C51F0072AECD /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CC320F8C51F0072AECD /* NotificationsViewController.swift */; };
 		701C8CC620F8C5510072AECD /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CC520F8C5510072AECD /* MeViewController.swift */; };
@@ -48,6 +47,7 @@
 		70B1704B20F28D8600459ACE /* Tab2CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */; };
 		70B1704D20F28D8D00459ACE /* Tab3CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */; };
 		70B1705120F2F97800459ACE /* ButtonBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1705020F2F97800459ACE /* ButtonBarView.swift */; };
+		70B58F442130ABF700557661 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70B58F432130ABF600557661 /* GoogleService-Info.plist */; };
 		70B9A7E120ED64C200C06709 /* Character+UInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E020ED64C200C06709 /* Character+UInt32.swift */; };
 		70B9A7E320ED650A00C06709 /* String+HashCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E220ED650A00C06709 /* String+HashCode.swift */; };
 		70B9A7E520ED93B600C06709 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E420ED93B600C06709 /* InitialViewController.swift */; };
@@ -149,7 +149,6 @@
 		701B9BAB20E3FB22003C9E7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		701B9BAE20E3FB22003C9E7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		701B9BB020E3FB22003C9E7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		701C8CC120F8C4F00072AECD /* LeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
 		701C8CC320F8C51F0072AECD /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		701C8CC520F8C5510072AECD /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
@@ -180,6 +179,8 @@
 		70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab2CollectionViewController.swift; sourceTree = "<group>"; };
 		70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab3CollectionViewController.swift; sourceTree = "<group>"; };
 		70B1705020F2F97800459ACE /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
+		70B58F3C212F7DF100557661 /* Versus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Versus.entitlements; sourceTree = "<group>"; };
+		70B58F432130ABF600557661 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		70B9A7E020ED64C200C06709 /* Character+UInt32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+UInt32.swift"; sourceTree = "<group>"; };
 		70B9A7E220ED650A00C06709 /* String+HashCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HashCode.swift"; sourceTree = "<group>"; };
 		70B9A7E420ED93B600C06709 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
@@ -311,6 +312,7 @@
 		701B9BA320E3FB20003C9E7E /* Versus */ = {
 			isa = PBXGroup;
 			children = (
+				70B58F3C212F7DF100557661 /* Versus.entitlements */,
 				701C8CC920F977D80072AECD /* ViewHolders */,
 				70AD4C4D20EAD976000C9433 /* Models */,
 				70E80C6F20E6CD150067DF08 /* VSAPI */,
@@ -332,7 +334,7 @@
 				701B9BA820E3FB20003C9E7E /* Main.storyboard */,
 				701B9BAB20E3FB22003C9E7E /* Assets.xcassets */,
 				701B9BAD20E3FB22003C9E7E /* LaunchScreen.storyboard */,
-				701B9BB620E3FEEB003C9E7E /* GoogleService-Info.plist */,
+				70B58F432130ABF600557661 /* GoogleService-Info.plist */,
 				701B9BB020E3FB22003C9E7E /* Info.plist */,
 				702499A020E57EC70024E871 /* Extensions */,
 				706F89EA2107EEF300A78EFB /* CommentsHistoryViewController.swift */,
@@ -518,6 +520,11 @@
 				TargetAttributes = {
 					701B9BA020E3FB20003C9E7E = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -545,7 +552,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				701B9BAF20E3FB22003C9E7E /* LaunchScreen.storyboard in Resources */,
-				701B9BB720E3FEEB003C9E7E /* GoogleService-Info.plist in Resources */,
+				70B58F442130ABF700557661 /* GoogleService-Info.plist in Resources */,
 				701B9BAC20E3FB22003C9E7E /* Assets.xcassets in Resources */,
 				701B9BAA20E3FB20003C9E7E /* Main.storyboard in Resources */,
 			);
@@ -567,6 +574,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -579,6 +587,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nuke.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -878,6 +887,7 @@
 			baseConfigurationReference = 048C4BA7173C812C742C4401 /* Pods-Versus.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Versus/Versus.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q366THJ2T3;
@@ -900,6 +910,7 @@
 			baseConfigurationReference = B216951D7ECAD287D38ECF83 /* Pods-Versus.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Versus/Versus.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q366THJ2T3;

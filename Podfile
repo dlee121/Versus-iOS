@@ -10,6 +10,7 @@ target 'Versus' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
+  pod 'Firebase/Messaging'
   pod 'AWSAPIGateway'
   pod 'AWSS3'
   pod 'Nuke'

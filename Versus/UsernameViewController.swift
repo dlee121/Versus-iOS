@@ -164,6 +164,11 @@ class UsernameViewController: UIViewController {
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //dismiss keyboard when the view is tapped on
+        usernameIn.resignFirstResponder()
+    }
+    
     @IBAction func nextTapped(_ sender: UIButton) {
         if confirmed && confirmedInput != nil {
             performSegue(withIdentifier: "goToPassword", sender: self)

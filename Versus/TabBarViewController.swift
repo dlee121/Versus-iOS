@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseDatabase
+import FirebaseMessaging
 
 class TabBarViewController: UITabBarController {
 
@@ -24,6 +25,8 @@ class TabBarViewController: UITabBarController {
         // Do any additional setup after loading the view, typically from a nib.
         addCenterButton(withImage: #imageLiteral(resourceName: "main_fab"), highlightImage: #imageLiteral(resourceName: "main_fab"))
         addNotificationObserver()
+        
+        Messaging.messaging().subscribe(toTopic: currentUsername)
     }
     
     

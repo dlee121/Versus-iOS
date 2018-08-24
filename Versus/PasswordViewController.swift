@@ -224,6 +224,11 @@ class PasswordViewController: UIViewController {
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //dismiss keyboard when the view is tapped on
+        passwordIn.resignFirstResponder()
+    }
+    
     /*
     // MARK: - Navigation
 

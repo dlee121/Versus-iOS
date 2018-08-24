@@ -9,6 +9,7 @@
 import UIKit
 import XLPagerTabStrip
 import Firebase
+import FirebaseMessaging
 
 class MCViewController: ButtonBarPagerTabStripViewController, UISearchControllerDelegate {
     
@@ -105,6 +106,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     }
     
     @IBAction func logOutTapped(_ sender: UIButton) {
+        Messaging.messaging().unsubscribe(fromTopic: UserDefaults.standard.string(forKey: "KEY_USERNAME")!)
         //remove session data, log out firebase user, then segue back to start screen
         UserDefaults.standard.removeObject(forKey: "KEY_BDAY")
         UserDefaults.standard.removeObject(forKey: "KEY_EMAIL")

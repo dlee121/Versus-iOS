@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>688623904224-qa1s2apejt1qb6i3hsnes4828j243adl.apps.googleusercontent.com</string>
+	<string>688623904224-ctddfcum9pn3qm9211vgffh5v7ngqnhl.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.688623904224-qa1s2apejt1qb6i3hsnes4828j243adl</string>
+	<string>com.googleusercontent.apps.688623904224-ctddfcum9pn3qm9211vgffh5v7ngqnhl</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDaX2xprMdE8QP92FGTHgzh_i8FBmRNERI</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.vs.bcd.versus</string>
+	<string>com.vs.bcd.Versus</string>
 	<key>PROJECT_ID</key>
 	<string>bcd-versus</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:688623904224:ios:a5b347d9f3fb6916</string>
+	<string>1:688623904224:ios:f0266f12d8153ed3</string>
 	<key>DATABASE_URL</key>
 	<string>https://bcd-versus.firebaseio.com</string>
 </dict>
