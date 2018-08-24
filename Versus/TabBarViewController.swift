@@ -38,7 +38,16 @@ class TabBarViewController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("tab bar appear")
+        
     }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("tab bar disappear")
+        
+    }
+    
     
     func addNotificationObserver() {
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
@@ -190,11 +199,6 @@ class TabBarViewController: UITabBarController {
     }
     
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        print("tab bar disappear")
-        
-    }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         //necessary in case user taps the actual middle tap element exposed below the center button instead of tapping the center button

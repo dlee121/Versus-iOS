@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Firebase
 import AWSCore
+import Firebase
 import UserNotifications
 import FirebaseInstanceID
 import FirebaseMessaging
@@ -54,7 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     // The callback to handle data message received via FCM for devices running iOS 10 or above.
     func applicationReceivedRemoteMessage(_ remoteMessage: MessagingRemoteMessage) {
-        print("remote message received y'all")
         print(remoteMessage.appData)
     }
 
@@ -65,11 +64,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+            Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
+        }
+        
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+            Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
+        }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -80,6 +86,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func getUsernameHash(username : String) -> String {
+        var usernameHash : Int32
+        if(username.count < 5){
+            usernameHash = username.hashCode()
+        }
+        else{
+            var hashIn = ""
+            
+            hashIn.append(username[0])
+            hashIn.append(username[username.count-2])
+            hashIn.append(username[1])
+            hashIn.append(username[username.count-1])
+            
+            usernameHash = hashIn.hashCode()
+        }
+        
+        return "\(usernameHash)"
+    }
 
 }
 
