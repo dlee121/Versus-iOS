@@ -77,12 +77,25 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             //performSegue(withIdentifier: "logOutToStart", sender: self)
             //self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
             
+            
+            guard let window = UIApplication.shared.keyWindow else {
+                return
+            }
+            
+            guard let rootViewController = window.rootViewController else {
+                return
+            }
+            
             let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc : ViewController = storyboard.instantiateViewController(withIdentifier: "loginPage") as! ViewController
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
-            appDelegate.window?.rootViewController = vc
-            appDelegate.window?.makeKeyAndVisible()
+            vc.view.frame = rootViewController.view.frame
+            vc.view.layoutIfNeeded()
+            
+            UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                window.rootViewController = vc
+            }, completion: { completed in
+                // maybe do something here
+            })
 
             break
         case 1:
