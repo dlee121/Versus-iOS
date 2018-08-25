@@ -76,6 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
             Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
         }
+        
+        //clear any push notification displayed on the phone
+        
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

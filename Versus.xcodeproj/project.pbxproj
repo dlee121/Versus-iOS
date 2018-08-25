@@ -48,6 +48,7 @@
 		70B1704D20F28D8D00459ACE /* Tab3CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */; };
 		70B1705120F2F97800459ACE /* ButtonBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1705020F2F97800459ACE /* ButtonBarView.swift */; };
 		70B58F442130ABF700557661 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70B58F432130ABF600557661 /* GoogleService-Info.plist */; };
+		70B58F462131E2BE00557661 /* SettingsItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B58F452131E2BE00557661 /* SettingsItemTableViewCell.swift */; };
 		70B9A7E120ED64C200C06709 /* Character+UInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E020ED64C200C06709 /* Character+UInt32.swift */; };
 		70B9A7E320ED650A00C06709 /* String+HashCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E220ED650A00C06709 /* String+HashCode.swift */; };
 		70B9A7E520ED93B600C06709 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E420ED93B600C06709 /* InitialViewController.swift */; };
@@ -181,6 +182,7 @@
 		70B1705020F2F97800459ACE /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
 		70B58F3C212F7DF100557661 /* Versus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Versus.entitlements; sourceTree = "<group>"; };
 		70B58F432130ABF600557661 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		70B58F452131E2BE00557661 /* SettingsItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItemTableViewCell.swift; sourceTree = "<group>"; };
 		70B9A7E020ED64C200C06709 /* Character+UInt32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+UInt32.swift"; sourceTree = "<group>"; };
 		70B9A7E220ED650A00C06709 /* String+HashCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HashCode.swift"; sourceTree = "<group>"; };
 		70B9A7E420ED93B600C06709 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				70CB9E4E211551BC00D86E37 /* PostCardTableViewCell.swift */,
 				70CB9E50211552D200D86E37 /* CommentCardTableViewCell.swift */,
 				70D17FEE2127869B00A0C9D6 /* NotificationsTableViewCell.swift */,
+				70B58F452131E2BE00557661 /* SettingsItemTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -651,6 +654,7 @@
 				70B9A7E120ED64C200C06709 /* Character+UInt32.swift in Sources */,
 				706F89E42106E38800A78EFB /* VSPostQMultiModel_docs_item__source.swift in Sources */,
 				70E80CBB20E6DB570067DF08 /* Empty.swift in Sources */,
+				70B58F462131E2BE00557661 /* SettingsItemTableViewCell.swift in Sources */,
 				7056672920FD62A400CB87AD /* SearchViewController.swift in Sources */,
 				70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */,
 				706F89EB2107EEF300A78EFB /* CommentsHistoryViewController.swift in Sources */,

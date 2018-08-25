@@ -20,7 +20,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     var mainSegueType : Int!
     let myCircleSegue = 0
     let mainSeguePostSegue = 1
-    let logoutSegue = 2
+    
     var clickedComment : VSComment?
     var clickedCommentPostPIV : Int?
     
@@ -121,21 +121,6 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         }
         
     }
-    
-    @IBAction func logOutTapped(_ sender: UIButton) {
-        Messaging.messaging().unsubscribe(fromTopic: currentUsername)
-        //remove session data, log out firebase user, then segue back to start screen
-        UserDefaults.standard.removeObject(forKey: "KEY_BDAY")
-        UserDefaults.standard.removeObject(forKey: "KEY_EMAIL")
-        UserDefaults.standard.removeObject(forKey: "KEY_USERNAME")
-        UserDefaults.standard.removeObject(forKey: "KEY_PI")
-        UserDefaults.standard.removeObject(forKey: "KEY_IS_NATIVE")
-        try! Auth.auth().signOut()
-        mainSegueType = logoutSegue
-        performSegue(withIdentifier: "logOutToStart", sender: self)
-        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
-    }
-    
     
     func goToPostPageRoot(post : PostObject){
         selectedPost = post
