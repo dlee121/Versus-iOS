@@ -48,7 +48,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     let grandchildSegue = 3
     let followerSegue = 4
     
-    var clickedComment, segueComment, segueTopComment : VSComment?
+    var segueComment, segueTopComment : VSComment?
     var clickedPost, seguePost : PostObject?
     var segueUserAction : UserAction?
     
@@ -310,11 +310,9 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         performSegue(withIdentifier: "profileToFGH", sender: self)
     }
     
-    func handleCommentsHistoryClick(comment : VSComment){
+    func handleCommentsHistoryClick(commentID : String){
         fgcp = c
-        clickedComment = comment
-        
-        goToComment(commentID: comment.comment_id)
+        goToComment(commentID: commentID)
     }
     
     func handlePostsHistoryClick(post : PostObject){

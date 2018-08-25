@@ -195,11 +195,11 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
         
         if isMe {
             let meVC = parent as! MeViewController
-            meVC.handleCommentsHistoryClick(comment: comments[indexPath.row])
+            meVC.handleCommentsHistoryClick(commentID: comments[indexPath.row].comment_id)
         }
         else {
             let profileVC = parent as! ProfileViewController
-            profileVC.handleCommentsHistoryClick(comment: comments[indexPath.row])
+            profileVC.handleCommentsHistoryClick(commentID: comments[indexPath.row].comment_id)
         }
         
         tableView.deselectRow(at: indexPath, animated: true)

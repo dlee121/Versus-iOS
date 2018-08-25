@@ -42,7 +42,7 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     let grandchildSegue = 3
     let followerSegue = 4
     
-    var clickedComment, segueComment, segueTopComment : VSComment?
+    var segueComment, segueTopComment : VSComment?
     var clickedPost, seguePost : PostObject?
     var segueUserAction : UserAction?
     
@@ -271,11 +271,9 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         performSegue(withIdentifier: "meToFGH", sender: self)
     }
     
-    func handleCommentsHistoryClick(comment : VSComment){
+    func handleCommentsHistoryClick(commentID : String){
         fgcp = c
-        clickedComment = comment
-        
-        goToComment(commentID: comment.comment_id)
+        goToComment(commentID: commentID)
     }
     
     func handlePostsHistoryClick(post : PostObject){
