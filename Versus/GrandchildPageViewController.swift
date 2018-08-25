@@ -90,6 +90,40 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                                                object: nil)
         
         
+        
+        if var viewControllers = navigationController?.viewControllers {
+            if parentRootVC == nil && parentChildVC == nil {
+                if viewControllers.count > 0 {
+                    parentRootVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
+                    let rView = parentRootVC?.view
+                    parentChildVC = storyboard!.instantiateViewController(withIdentifier: "childPage") as? ChildPageViewController
+                    let cView = parentChildVC?.view
+                    viewControllers.insert(parentChildVC!, at: viewControllers.count-1)
+                    viewControllers.insert(parentRootVC!, at: viewControllers.count-2)
+                    navigationController?.viewControllers = viewControllers
+                    
+                    parentRootVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
+                    
+                    apiClient.commentGet(a: "c", b: topCardComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        if task.error != nil {
+                            DispatchQueue.main.async {
+                                print(task.error!)
+                            }
+                        }
+                        else {
+                            if let commentResult = task.result { //this parent (child) of the clicked comment (grandchild), for the top card
+                                
+                                self.parentChildVC?.setUpChildPage(post: self.currentPost, comment: VSComment(itemSource: commentResult.source!, id: commentResult.id!), userAction: self.currentUserAction, parentPage: self.parentRootVC)
+                            }
+                        }
+                        return nil
+                    }
+                    
+                }
+            }
+        }
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -182,38 +216,6 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         print("setup grandchild page query called")
         setMedals() //this function will call commentsQuery() upon completion
         
-        if var viewControllers = navigationController?.viewControllers {
-            if parentRootVC == nil && parentChildVC == nil {
-                if viewControllers.count > 1 {
-                    parentRootVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
-                    let rView = parentRootVC?.view
-                    parentChildVC = storyboard!.instantiateViewController(withIdentifier: "childPage") as? ChildPageViewController
-                    let cView = parentChildVC?.view
-                    viewControllers.insert(parentChildVC!, at: viewControllers.count-1)
-                    viewControllers.insert(parentRootVC!, at: viewControllers.count-2)
-                    navigationController?.viewControllers = viewControllers
-                    
-                    parentRootVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
-                    
-                    apiClient.commentGet(a: "c", b: topCardComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                        if task.error != nil {
-                            DispatchQueue.main.async {
-                                print(task.error!)
-                            }
-                        }
-                        else {
-                            if let commentResult = task.result { //this parent (child) of the clicked comment (grandchild), for the top card
-                                
-                                self.parentChildVC?.setUpChildPage(post: self.currentPost, comment: VSComment(itemSource: commentResult.source!, id: commentResult.id!), userAction: self.currentUserAction, parentPage: self.parentRootVC)
-                            }
-                        }
-                        return nil
-                    }
-                    
-                }
-            }
-        }
-        
     }
     
     func setUpGrandchildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController?){
@@ -262,37 +264,6 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         print("setup grandchild page query called")
         setMedals() //this function will call commentsQuery() upon completion
         
-        if var viewControllers = navigationController?.viewControllers {
-            if parentRootVC == nil && parentChildVC == nil {
-                if viewControllers.count > 1 {
-                    parentRootVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
-                    let rView = parentRootVC?.view
-                    parentChildVC = storyboard!.instantiateViewController(withIdentifier: "childPage") as? ChildPageViewController
-                    let cView = parentChildVC?.view
-                    viewControllers.insert(parentChildVC!, at: viewControllers.count-1)
-                    viewControllers.insert(parentRootVC!, at: viewControllers.count-2)
-                    navigationController?.viewControllers = viewControllers
-                    
-                    parentRootVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
-                    
-                    apiClient.commentGet(a: "c", b: topCardComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                        if task.error != nil {
-                            DispatchQueue.main.async {
-                                print(task.error!)
-                            }
-                        }
-                        else {
-                            if let commentResult = task.result { //this parent (child) of the clicked comment (grandchild), for the top card
-                                
-                                self.parentChildVC?.setUpChildPage(post: self.currentPost, comment: VSComment(itemSource: commentResult.source!, id: commentResult.id!), userAction: self.currentUserAction, parentPage: self.parentRootVC)
-                            }
-                        }
-                        return nil
-                    }
-                    
-                }
-            }
-        }
     }
     
     func getNestedLevel(commentModel : VSCommentsListModel_hits_hits_item__source) -> Int {

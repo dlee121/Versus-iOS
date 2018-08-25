@@ -97,7 +97,19 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                                name: NSNotification.Name.UIKeyboardWillHide,
                                                object: nil)
         
-        
+        if let vcCount = navigationController?.viewControllers.count {
+            if parentVC == nil {
+                if vcCount > 0 {
+                    parentVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
+                    let rView = parentVC?.view
+                    navigationController?.viewControllers.insert(parentVC!, at: vcCount-1)
+                    
+                    parentVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
+                    
+                }
+            }
+            
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -186,19 +198,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         medalistCQPayloadPostID = post.post_id
         setMedals() //this function will call commentsQuery() upon completion
         
-        if let vcCount = navigationController?.viewControllers.count {
-            if parentVC == nil {
-                if vcCount > 1 {
-                    parentVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
-                    let rView = parentVC?.view
-                    navigationController?.viewControllers.insert(parentVC!, at: vcCount-1)
-                    
-                    parentVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
-                    
-                }
-            }
-            
-        }
     }
     
     func setUpChildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController?){
@@ -221,19 +220,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         nodeMap[comment.comment_id] = VSCNode(comment: comment)
         setMedals() //this function will call commentsQuery() upon completion
         
-        if let vcCount = navigationController?.viewControllers.count {
-            if parentVC == nil {
-                if vcCount > 1 {
-                    parentVC = storyboard!.instantiateViewController(withIdentifier: "rootPage") as? RootPageViewController
-                    let rView = parentVC?.view
-                    navigationController?.viewControllers.insert(parentVC!, at: vcCount-1)
-                    
-                    parentVC?.setUpRootPage(post: currentPost, userAction: currentUserAction, fromCreatePost: false)
-                    
-                }
-            }
-            
-        }
     }
     
     func getNestedLevel(commentModel : VSCommentsListModel_hits_hits_item__source) -> Int {

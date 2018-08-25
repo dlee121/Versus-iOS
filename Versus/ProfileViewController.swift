@@ -48,7 +48,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     let grandchildSegue = 3
     let followerSegue = 4
     
-    var segueComment, segueTopComment : VSComment?
+    var segueComment, segueTopCardComment : VSComment?
     var clickedPost, seguePost : PostObject?
     var segueUserAction : UserAction?
     
@@ -380,7 +380,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                                                 }
                                                 else {
                                                     if let result = task.result {
-                                                        self.segueTopComment = VSComment(itemSource: result.source!, id: result.id!)
+                                                        self.segueTopCardComment = VSComment(itemSource: result.source!, id: result.id!)
                                                         DispatchQueue.main.async {
                                                             self.performSegue(withIdentifier: "profileToChild", sender: self)
                                                         }
@@ -401,7 +401,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                                             }
                                             else {
                                                 if let result = task.result {
-                                                    self.segueTopComment = VSComment(itemSource: result.source!, id: result.id!)
+                                                    self.segueTopCardComment = VSComment(itemSource: result.source!, id: result.id!)
                                                     DispatchQueue.main.async {
                                                         self.performSegue(withIdentifier: "profileToGrandchild", sender: self)
                                                     }
@@ -466,12 +466,12 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
             case childSegue:
                 guard let childVC = segue.destination as? ChildPageViewController else {return}
                 let view = childVC.view //necessary for loading the view
-                childVC.commentClickSetUpChildPage(post: seguePost!, comment: segueTopComment!, userAction: segueUserAction!, topicComment: segueComment!)
+                childVC.commentClickSetUpChildPage(post: seguePost!, comment: segueTopCardComment!, userAction: segueUserAction!, topicComment: segueComment!)
                 
             case grandchildSegue:
                 guard let gcVC = segue.destination as? GrandchildPageViewController else {return}
                 let view = gcVC.view //necessary for loading the view
-                gcVC.commentClickSetUpGrandchildPage(post: seguePost!, comment: segueTopComment!, userAction: segueUserAction!, topicComment: segueComment!)
+                gcVC.commentClickSetUpGrandchildPage(post: seguePost!, comment: segueTopCardComment!, userAction: segueUserAction!, topicComment: segueComment!)
             default:
                 break
             }

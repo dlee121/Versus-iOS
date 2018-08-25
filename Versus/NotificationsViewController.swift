@@ -41,7 +41,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     let emailSegue = 5
     
     var seguePostID : String?
-    var segueComment, segueTopComment : VSComment?
+    var segueComment, segueTopCardComment : VSComment?
     var seguePost : PostObject?
     var segueUserAction : UserAction?
     
@@ -539,7 +539,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                                 }
                                                 else {
                                                     if let result = task.result {
-                                                        self.segueTopComment = VSComment(itemSource: result.source!, id: result.id!)
+                                                        self.segueTopCardComment = VSComment(itemSource: result.source!, id: result.id!)
                                                         DispatchQueue.main.async {
                                                             self.performSegue(withIdentifier: "notificationsToChild", sender: self)
                                                         }
@@ -560,7 +560,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                             }
                                             else {
                                                 if let result = task.result {
-                                                    self.segueTopComment = VSComment(itemSource: result.source!, id: result.id!)
+                                                    self.segueTopCardComment = VSComment(itemSource: result.source!, id: result.id!)
                                                     DispatchQueue.main.async {
                                                         self.performSegue(withIdentifier: "notificationsToGrandchild", sender: self)
                                                     }
@@ -649,12 +649,12 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         case childSegue:
             guard let childVC = segue.destination as? ChildPageViewController else {return}
             let view = childVC.view //necessary for loading the view
-            childVC.commentClickSetUpChildPage(post: seguePost!, comment: segueTopComment!, userAction: segueUserAction!, topicComment: segueComment!)
+            childVC.commentClickSetUpChildPage(post: seguePost!, comment: segueTopCardComment!, userAction: segueUserAction!, topicComment: segueComment!)
             
         case grandchildSegue:
             guard let gcVC = segue.destination as? GrandchildPageViewController else {return}
             let view = gcVC.view //necessary for loading the view
-            gcVC.commentClickSetUpGrandchildPage(post: seguePost!, comment: segueTopComment!, userAction: segueUserAction!, topicComment: segueComment!)
+            gcVC.commentClickSetUpGrandchildPage(post: seguePost!, comment: segueTopCardComment!, userAction: segueUserAction!, topicComment: segueComment!)
             
         case followerSegue:
             /*
