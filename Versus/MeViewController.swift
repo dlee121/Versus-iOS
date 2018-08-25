@@ -54,6 +54,7 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         
         super.viewDidLoad()
         ref = Database.database().reference()
+        currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         DispatchQueue.main.async {
             self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
             self.profileImage.clipsToBounds = true
@@ -73,7 +74,6 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
-        currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         let pi = UserDefaults.standard.integer(forKey: "KEY_PI")
         //profileUsername.text = currentUsername
         navigationItem.title = currentUsername
