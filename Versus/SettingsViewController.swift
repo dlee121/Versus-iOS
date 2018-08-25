@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseMessaging
+import PopupDialog
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -96,18 +97,59 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         case 1:
             if isNative {
                 //Set Up Email. later, let's have it so that the name changes to "Edit Email" when email is already added
+                showStandardDialog()
+                
+            }
+            else {
+                //About
                 
             }
             
             
             break
         case 2:
-            //
+            //About
+            
             break
         default:
             break
         }
     }
+    
+    func showStandardDialog(animated: Bool = true) {
+        
+        // Prepare the popup
+        let title = "THIS IS A DIALOG WITHOUT IMAGE"
+        let message = "If you don't pass an image to the default dialog, it will display just as a regular dialog. Moreover, this features the zoom transition"
+        
+        // Create the dialog
+        let popup = PopupDialog(title: title,
+                                message: message,
+                                buttonAlignment: .horizontal,
+                                transitionStyle: .zoomIn,
+                                tapGestureDismissal: true,
+                                panGestureDismissal: true,
+                                hideStatusBar: true) {
+                                    print("Completed")
+        }
+        
+        // Create first button
+        let buttonOne = CancelButton(title: "CANCEL") {
+            print("Cancel clicked")
+        }
+        
+        // Create second button
+        let buttonTwo = DefaultButton(title: "OK") {
+            print("OK clicked")
+        }
+        
+        // Add buttons to dialog
+        popup.addButtons([buttonOne, buttonTwo])
+        
+        // Present dialog
+        self.present(popup, animated: animated, completion: nil)
+    }
+
     
 
     @IBAction func closeButtonTapped(_ sender: UIButton) {

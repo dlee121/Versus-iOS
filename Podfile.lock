@@ -4,6 +4,7 @@ PODS:
   - AWSCore (2.6.22)
   - AWSS3 (2.6.22):
     - AWSCore (= 2.6.22)
+  - DynamicBlurView (2.0.2)
   - Firebase/Auth (5.3.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.1)
@@ -51,6 +52,8 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Nuke (7.2.1)
+  - PopupDialog (0.8.1):
+    - DynamicBlurView (~> 2.0)
   - Protobuf (3.6.0)
   - XLPagerTabStrip (8.0.1)
 
@@ -62,6 +65,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Messaging
   - Nuke
+  - PopupDialog (~> 0.8)
   - XLPagerTabStrip (~> 8.0)
 
 SPEC REPOS:
@@ -69,6 +73,7 @@ SPEC REPOS:
     - AWSAPIGateway
     - AWSCore
     - AWSS3
+    - DynamicBlurView
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -81,6 +86,7 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - Nuke
+    - PopupDialog
     - Protobuf
     - XLPagerTabStrip
 
@@ -88,6 +94,7 @@ SPEC CHECKSUMS:
   AWSAPIGateway: 7dad85e97b4431a78639bc8d47c8aba2bc4f3dd0
   AWSCore: faae134779f0f6e46a8d426c0ccc02e34466b785
   AWSS3: 2b70463225a455ba26494f06346bddb74dedf73d
+  DynamicBlurView: aa6db4defc6e537eb86fc5e58dd3991666178399
   Firebase: 68afeeb05461db02d7c9e3215cda28068670f4aa
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
   FirebaseAuth: 463b8ce33bd5d05f706dcd4615499e3212b4132b
@@ -100,9 +107,10 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Nuke: a4a20e945a32a8da57830628ff1e0ea2a1904d0a
+  PopupDialog: 3d4e8e0795c3a614f407d730986c9b9af9781123
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 0158bb0ec3f99770276e83d8ef9d8c31785dd889
+PODFILE CHECKSUM: b909e1b0adf2e8fa50303ec73c6e0f78f6226609
 
 COCOAPODS: 1.5.3

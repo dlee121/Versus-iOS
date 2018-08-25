@@ -15,5 +15,6 @@ target 'Versus' do
   pod 'AWSS3'
   pod 'Nuke'
   pod 'XLPagerTabStrip', '~> 8.0'
+  pod 'PopupDialog', '~> 0.8'
 
 end
