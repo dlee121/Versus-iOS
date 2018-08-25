@@ -15,7 +15,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
     var settingsItems = [String]()
     var isNative = false
-    var currentUsername : String!
+    var emailIsSetup = false
+    var currentUsername, currentEmail : String!
     var segueType = 0
     let logoutSegue = 1
     
@@ -28,10 +29,14 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         isNative = UserDefaults.standard.bool(forKey: "KEY_IS_NATIVE")
         if isNative {
             if let email = UserDefaults.standard.string(forKey: "KEY_EMAIL") {
+                
                 if email == "0" {
+                    emailIsSetup = false
                     settingsItems = ["Log Out", "Set Up Email for Account Recovery", "About"]
                 }
                 else {
+                    emailIsSetup = true
+                    currentEmail = email
                     settingsItems = ["Log Out", "Edit Email for Account Recovery", "About"]
                 }
             }
@@ -136,7 +141,52 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Create second button
         let buttonTwo = DefaultButton(title: "OK", height: 30) {
-            print("OK with \(emailSetupVC.textField.text!)")
+            let user = Auth.auth().currentUser
+            var userEmail: String!
+            let emailInput = emailSetupVC.textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            if emailSetupVC.asswordpay.text?.count == 0 {
+                //pop a toast "Please enter your password."
+                self.showToast(message: "Please enter your password.", length: 27)
+            }
+            else {
+                if self.isEmail(email: emailInput){
+                    if self.emailIsSetup {
+                        userEmail = self.currentEmail
+                    }
+                    else {
+                        userEmail = self.currentUsername + "@versusbcd.com"
+                    }
+                    var credential = EmailAuthProvider.credential(withEmail: userEmail, password: emailSetupVC.asswordpay.text!)
+                    
+                    user?.reauthenticate(with: credential) { error in
+                        if let error = error {
+                            // pop a toast "Something went wrong. Please check your network connection and try again."
+                            self.showMultilineToast(message: "Something went wrong. Please check your network connection and try again.", length: 40, lines: 2)
+                            
+                        }
+                        else {
+                            // User re-authenticated.
+                            
+                            //pop a toast "Setting up account recovery"
+                            self.showToast(message: "Setting up account recovery", length: 27)
+                            Auth.auth().currentUser?.updateEmail(to: emailInput) { (error) in
+                                // pop a toast "Account recovery was set up successfully!"
+                                self.showToast(message: "Account recovery was set up successfully!", length: 41)
+                                
+                                UserDefaults.standard.set(emailInput, forKey: "KEY_EMAIL")
+                            }
+                        }
+                    }
+                    
+                    
+                }
+                else {
+                    
+                    //pop a toast "please enter a valid email"
+                    self.showToast(message: "please enter a valid email", length: 26)
+                }
+            }
         }
         
         // Add buttons to dialog
@@ -146,6 +196,12 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         present(popup, animated: animated, completion: nil)
     }
     
+    func isEmail(email : String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return email.count > 0 && emailTest.evaluate(with: email)
+    }
 
     @IBAction func closeButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
