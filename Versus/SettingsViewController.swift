@@ -63,6 +63,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 0:
             //Log Out
@@ -97,7 +98,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         case 1:
             if isNative {
                 //Set Up Email. later, let's have it so that the name changes to "Edit Email" when email is already added
-                showStandardDialog()
+                showCustomDialog()
                 
             }
             else {
@@ -116,40 +117,34 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func showStandardDialog(animated: Bool = true) {
+    func showCustomDialog(animated: Bool = true) {
         
-        // Prepare the popup
-        let title = "THIS IS A DIALOG WITHOUT IMAGE"
-        let message = "If you don't pass an image to the default dialog, it will display just as a regular dialog. Moreover, this features the zoom transition"
-        
+        // Create a custom view controller
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let emailSetupVC : EmailSetupVC = storyboard.instantiateViewController(withIdentifier: "emailSetupVC") as! EmailSetupVC
         // Create the dialog
-        let popup = PopupDialog(title: title,
-                                message: message,
+        let popup = PopupDialog(viewController: emailSetupVC,
                                 buttonAlignment: .horizontal,
-                                transitionStyle: .zoomIn,
+                                transitionStyle: .bounceDown,
                                 tapGestureDismissal: true,
-                                panGestureDismissal: true,
-                                hideStatusBar: true) {
-                                    print("Completed")
-        }
+                                panGestureDismissal: false)
         
         // Create first button
-        let buttonOne = CancelButton(title: "CANCEL") {
-            print("Cancel clicked")
+        let buttonOne = CancelButton(title: "CANCEL", height: 30) {
+           print("cancel")
         }
         
         // Create second button
-        let buttonTwo = DefaultButton(title: "OK") {
-            print("OK clicked")
+        let buttonTwo = DefaultButton(title: "OK", height: 30) {
+            print("OK with \(emailSetupVC.textField.text!)")
         }
         
         // Add buttons to dialog
         popup.addButtons([buttonOne, buttonTwo])
         
         // Present dialog
-        self.present(popup, animated: animated, completion: nil)
+        present(popup, animated: animated, completion: nil)
     }
-
     
 
     @IBAction func closeButtonTapped(_ sender: UIButton) {

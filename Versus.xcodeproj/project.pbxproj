@@ -11,6 +11,7 @@
 		70036ED0210A79C1000BE8E9 /* PostsHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70036ECF210A79C1000BE8E9 /* PostsHistoryTableViewCell.swift */; };
 		70036ED2210ABA96000BE8E9 /* FGHViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70036ED1210ABA96000BE8E9 /* FGHViewController.swift */; };
 		70036ED4210ABBCF000BE8E9 /* FGHTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70036ED3210ABBCF000BE8E9 /* FGHTableViewCell.swift */; };
+		70086D542131FDD000B20989 /* EmailSetpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70086D532131FDD000B20989 /* EmailSetpVC.swift */; };
 		700DB5CB21081CF5008E546A /* PostInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700DB5CA21081CF5008E546A /* PostInfo.swift */; };
 		701B9BA520E3FB20003C9E7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B9BA420E3FB20003C9E7E /* AppDelegate.swift */; };
 		701B9BA720E3FB20003C9E7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B9BA620E3FB20003C9E7E /* ViewController.swift */; };
@@ -142,6 +143,7 @@
 		70036ECF210A79C1000BE8E9 /* PostsHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		70036ED1210ABA96000BE8E9 /* FGHViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FGHViewController.swift; sourceTree = "<group>"; };
 		70036ED3210ABBCF000BE8E9 /* FGHTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FGHTableViewCell.swift; sourceTree = "<group>"; };
+		70086D532131FDD000B20989 /* EmailSetpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSetpVC.swift; sourceTree = "<group>"; };
 		700DB5CA21081CF5008E546A /* PostInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfo.swift; sourceTree = "<group>"; };
 		701B9BA120E3FB20003C9E7E /* Versus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Versus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		701B9BA420E3FB20003C9E7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				70CB9E542116976100D86E37 /* UserAction.swift */,
 				70D17FF021278A4E00A0C9D6 /* NotificationItem.swift */,
 				70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */,
+				70086D532131FDD000B20989 /* EmailSetpVC.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 				70E80CD720E6DB570067DF08 /* VSCGCModel.swift in Sources */,
 				700DB5CB21081CF5008E546A /* PostInfo.swift in Sources */,
 				70CB9E4F211551BC00D86E37 /* PostCardTableViewCell.swift in Sources */,
+				70086D542131FDD000B20989 /* EmailSetpVC.swift in Sources */,
 				70E80CCA20E6DB570067DF08 /* VSPostsListModel_hits_hits_item__source.swift in Sources */,
 				706F89E62106E38800A78EFB /* VSPostQMultiModel_docs_item.swift in Sources */,
 				70A7ED49211FBFB90059507A /* ChildPageViewController.swift in Sources */,

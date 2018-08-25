@@ -2823,6 +2823,57 @@
             </objects>
             <point key="canvasLocation" x="5648.8000000000002" y="2236.7316341829087"/>
         </scene>
+        <!--Email SetupVC-->
+        <scene sceneID="1Pz-Uj-RDQ">
+            <objects>
+                <viewController storyboardIdentifier="emailSetupVC" id="huO-pX-KSQ" customClass="EmailSetupVC" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hVn-ih-KSa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GRs-HX-ezQ">
+                                <rect key="frame" x="8" y="57" width="359" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KRC-i8-Kjd">
+                                <rect key="frame" x="8" y="95" width="359" height="564"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Up Email for Account Recovery" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdf-G0-94q">
+                                <rect key="frame" x="8" y="28" width="359" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="KRC-i8-Kjd" firstAttribute="top" secondItem="GRs-HX-ezQ" secondAttribute="bottom" constant="8" id="3tU-pH-Pqa"/>
+                            <constraint firstItem="xqy-1q-m2t" firstAttribute="trailing" secondItem="GRs-HX-ezQ" secondAttribute="trailing" constant="8" id="IJ9-UN-nNN"/>
+                            <constraint firstItem="xqy-1q-m2t" firstAttribute="trailing" secondItem="KRC-i8-Kjd" secondAttribute="trailing" constant="8" id="Sis-uq-nyZ"/>
+                            <constraint firstItem="cdf-G0-94q" firstAttribute="leading" secondItem="xqy-1q-m2t" secondAttribute="leading" constant="8" id="XHW-be-g3U"/>
+                            <constraint firstItem="GRs-HX-ezQ" firstAttribute="leading" secondItem="xqy-1q-m2t" secondAttribute="leading" constant="8" id="dJ1-3f-0V5"/>
+                            <constraint firstItem="xqy-1q-m2t" firstAttribute="trailing" secondItem="cdf-G0-94q" secondAttribute="trailing" constant="8" id="lMP-aF-TlU"/>
+                            <constraint firstItem="GRs-HX-ezQ" firstAttribute="top" secondItem="cdf-G0-94q" secondAttribute="bottom" constant="8" id="pnN-vy-4c0"/>
+                            <constraint firstItem="KRC-i8-Kjd" firstAttribute="leading" secondItem="xqy-1q-m2t" secondAttribute="leading" constant="8" id="vdH-z4-lqN"/>
+                            <constraint firstItem="cdf-G0-94q" firstAttribute="top" secondItem="xqy-1q-m2t" secondAttribute="top" constant="8" id="yHG-RS-30n"/>
+                            <constraint firstItem="xqy-1q-m2t" firstAttribute="bottom" secondItem="KRC-i8-Kjd" secondAttribute="bottom" constant="8" id="ys4-mk-Meb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="xqy-1q-m2t"/>
+                    </view>
+                    <connections>
+                        <outlet property="asswordpay" destination="KRC-i8-Kjd" id="cX3-14-bJ5"/>
+                        <outlet property="textField" destination="GRs-HX-ezQ" id="q2B-Wd-pLu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pI6-92-rY7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7234" y="2573"/>
+        </scene>
         <!--Comments History View Controller-->
         <scene sceneID="iAg-Gb-hvH">
             <objects>
