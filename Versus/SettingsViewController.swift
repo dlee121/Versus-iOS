@@ -73,10 +73,6 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             UserDefaults.standard.removeObject(forKey: "KEY_PI")
             UserDefaults.standard.removeObject(forKey: "KEY_IS_NATIVE")
             try! Auth.auth().signOut()
-            segueType = logoutSegue
-            //performSegue(withIdentifier: "logOutToStart", sender: self)
-            //self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
-            
             
             guard let window = UIApplication.shared.keyWindow else {
                 return
@@ -96,8 +92,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             }, completion: { completed in
                 // maybe do something here
             })
-
-            break
+            
         case 1:
             if isNative {
                 //Set Up Email. later, let's have it so that the name changes to "Edit Email" when email is already added

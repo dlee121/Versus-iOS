@@ -2817,7 +2817,6 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="HT0-vt-JYy" id="afN-iG-ClA"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="logOutToStart" id="NHX-io-XVR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="35U-ji-qqs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4180,6 +4179,6 @@
         <segue reference="47a-tk-DFo"/>
         <segue reference="1o0-2n-eSQ"/>
         <segue reference="CBT-JG-zYd"/>
-        <segue reference="NHX-io-XVR"/>
+        <segue reference="5jD-8Y-GNx"/>
     </inferredMetricsTieBreakers>
 </document>

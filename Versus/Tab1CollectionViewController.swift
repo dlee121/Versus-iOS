@@ -393,16 +393,6 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func logOutTapped(_ sender: UIButton) {
-        //remove session data, log out firebase user, then segue back to start screen
-        UserDefaults.standard.removeObject(forKey: "KEY_BDAY")
-        UserDefaults.standard.removeObject(forKey: "KEY_EMAIL")
-        UserDefaults.standard.removeObject(forKey: "KEY_USERNAME")
-        UserDefaults.standard.removeObject(forKey: "KEY_PI")
-        UserDefaults.standard.removeObject(forKey: "KEY_IS_NATIVE")
-        try! Auth.auth().signOut()
-        performSegue(withIdentifier: "logOutToStart", sender: self)
-    }
     
     /*
      // MARK: - Navigation
