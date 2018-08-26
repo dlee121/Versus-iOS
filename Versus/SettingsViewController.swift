@@ -98,7 +98,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
                 window.rootViewController = vc
             }, completion: { completed in
-                // maybe do something here
+                let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "us-east-1:88614505-c8df-4dce-abd8-79a0543852ff")
+                credentialsProvider.clearCredentials()
             })
             
         case 1:
