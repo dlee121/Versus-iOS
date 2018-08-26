@@ -192,7 +192,6 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.emailSetUpButtonLock = false
                                         }
                                         
-                                        
                                     }
                                     else {
                                         // pop a toast "Account recovery was set up successfully!"
@@ -200,6 +199,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.showToast(message: "Account recovery was set up successfully!", length: 41)
                                             self.emailSetUpButtonLock = false
                                             self.settingsItems[1] = "Edit Email for Account Recovery"
+                                            self.tableView.reloadData()
                                         }
                                         UserDefaults.standard.set(emailInput, forKey: "KEY_EMAIL")
                                         self.currentEmail = emailInput

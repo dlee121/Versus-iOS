@@ -131,7 +131,8 @@ class ViewController: UIViewController {
         passwordIn.resignFirstResponder()
     }
     
-    @IBAction func pwtoggle(_ sender: Any) {
+    @objc
+    func pwtoggle(_ sender: Any) {
         passwordIn.isSecureTextEntry = !passwordIn.isSecureTextEntry
         if let existingText = passwordIn.text, passwordIn.isSecureTextEntry {
             /* When toggling to secure text, all text will be purged if the user

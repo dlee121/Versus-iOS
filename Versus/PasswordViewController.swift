@@ -33,6 +33,14 @@ class PasswordViewController: UIViewController {
         
 
         // Do any additional setup after loading the view.
+        
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "eye.png"), for: .normal)
+        //button.imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0)
+        button.frame = CGRect(x: CGFloat(passwordIn.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
+        button.addTarget(self, action: #selector(self.pwtoggle), for: .touchUpInside)
+        passwordIn.rightView = button
+        passwordIn.rightViewMode = .always
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,6 +65,25 @@ class PasswordViewController: UIViewController {
         }
     }
  
+    @objc
+    func pwtoggle(_ sender: Any) {
+        passwordIn.isSecureTextEntry = !passwordIn.isSecureTextEntry
+        if let existingText = passwordIn.text, passwordIn.isSecureTextEntry {
+            /* When toggling to secure text, all text will be purged if the user
+             * continues typing unless we intervene. This is prevented by first
+             * deleting the existing text and then recovering the original text. */
+            passwordIn.deleteBackward()
+            
+            if let textRange = passwordIn.textRange(from: passwordIn.beginningOfDocument, to: passwordIn.endOfDocument) {
+                passwordIn.replace(textRange, withText: existingText)
+            }
+        }
+        else if let textRange = passwordIn.textRange(from: passwordIn.beginningOfDocument, to: passwordIn.endOfDocument) {
+            //we still do this to get rid of extra spacing that happens when toggling secure text
+            passwordIn.replace(textRange, withText: passwordIn.text!)
+        }
+        
+    }
     
     @IBAction func textChangeListener(_ sender: UITextField) {
         confirmedPW = nil

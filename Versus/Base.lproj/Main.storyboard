@@ -263,7 +263,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <action selector="textChangeListener:" destination="8I4-jw-PhO" eventType="editingChanged" id="oxf-jE-Nge"/>
                                 </connections>
@@ -2841,7 +2841,7 @@
                                 <rect key="frame" x="8" y="95" width="359" height="564"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Up Email for Account Recovery" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdf-G0-94q">
                                 <rect key="frame" x="8" y="28" width="359" height="21"/>
@@ -4220,7 +4220,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kmh-ur-Uym"/>
+        <segue reference="56c-MF-6Qw"/>
         <segue reference="iVN-9A-tOw"/>
         <segue reference="YuF-tM-5cL"/>
         <segue reference="qbd-PO-7a5"/>
