@@ -93,12 +93,12 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                     var i = dataSnapshot.childrenCount
                                     var timeValue = Int(NSDate().timeIntervalSince1970)
                                     
-                                    let grandchildren = dataSnapshot.value as? [String : Int]
-                                    for grandchild in grandchildren! {
+                                    let enumerator = dataSnapshot.children
+                                    while let grandchild = enumerator.nextObject() as? DataSnapshot {
                                         usernames.append(grandchild.key + ", ")
                                         i -= 1
                                         if i == 0 {
-                                            timeValue = grandchild.value
+                                            timeValue = grandchild.value as! Int
                                         }
                                     }
                                     
@@ -240,12 +240,12 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                     var i = dataSnapshot.childrenCount
                                     var timeValue = Int(NSDate().timeIntervalSince1970)
                                     
-                                    let grandchildren = dataSnapshot.value as? [String : Int]
-                                    for grandchild in grandchildren! {
+                                    let enumerator = dataSnapshot.children
+                                    while let grandchild = enumerator.nextObject() as? DataSnapshot {
                                         usernames.append(grandchild.key + ", ")
                                         i -= 1
                                         if i == 0 {
-                                            timeValue = grandchild.value
+                                            timeValue = grandchild.value as! Int
                                         }
                                     }
                                     
