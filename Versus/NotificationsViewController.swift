@@ -46,6 +46,8 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     var seguePost : PostObject?
     var segueUserAction : UserAction?
     
+    var notificationClickLock = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         notificationItems = [NotificationItem]()
@@ -56,6 +58,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        notificationClickLock = false
         notificationItems.removeAll()
         initialLoadLock = false
         ref = Database.database().reference()
@@ -411,6 +414,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        notificationClickLock = false
         ref.child(userNotificationsPath).removeObserver(withHandle: initialLoaderHandle)
     }
 
@@ -453,34 +457,35 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = notificationItems[indexPath.row]
-        
-        switch item.type {
-        case TYPE_C:
-            goToComment(commentID: item.payload!)
-        case TYPE_F:
-            segueType = followerSegue
-            goToFollowersPage()
-        case TYPE_M:
-            goToComment(commentID: item.payload!)
-        case TYPE_R:
-            segueType = postSegue
-            seguePostID = item.payload!
-            performSegue(withIdentifier: "notificationsToRoot", sender: self)
-        case TYPE_U:
-            goToComment(commentID: item.payload!)
-        case TYPE_V:
-            segueType = postSegue
-            seguePostID = item.payload!
-            performSegue(withIdentifier: "notificationsToRoot", sender: self)
-        case TYPE_EM:
-            CFRunLoopWakeUp(CFRunLoopGetCurrent())
-            showCustomDialog()
-            break
-        default:
-            break
+        if !notificationClickLock {
+            let item = notificationItems[indexPath.row]
+            notificationClickLock = true
+            switch item.type {
+            case TYPE_C:
+                goToComment(commentID: item.payload!)
+            case TYPE_F:
+                segueType = followerSegue
+                goToFollowersPage()
+            case TYPE_M:
+                goToComment(commentID: item.payload!)
+            case TYPE_R:
+                segueType = postSegue
+                seguePostID = item.payload!
+                performSegue(withIdentifier: "notificationsToRoot", sender: self)
+            case TYPE_U:
+                goToComment(commentID: item.payload!)
+            case TYPE_V:
+                segueType = postSegue
+                seguePostID = item.payload!
+                performSegue(withIdentifier: "notificationsToRoot", sender: self)
+            case TYPE_EM:
+                CFRunLoopWakeUp(CFRunLoopGetCurrent())
+                showCustomDialog()
+                break
+            default:
+                break
+            }
         }
-        
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
