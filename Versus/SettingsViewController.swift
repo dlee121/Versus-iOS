@@ -19,6 +19,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     var currentUsername, currentEmail : String!
     var segueType = 0
     let logoutSegue = 1
+    var emailSetUpButtonLock = false
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -140,53 +141,86 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         // Create second button
-        let buttonTwo = DefaultButton(title: "OK", height: 30) {
-            let user = Auth.auth().currentUser
-            var userEmail: String!
-            let emailInput = emailSetupVC.textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            
-            if emailSetupVC.asswordpay.text?.count == 0 {
-                //pop a toast "Please enter your password."
-                self.showToast(message: "Please enter your password.", length: 27)
-            }
-            else {
-                if self.isEmail(email: emailInput){
-                    if self.emailIsSetup {
-                        userEmail = self.currentEmail
-                    }
-                    else {
-                        userEmail = self.currentUsername + "@versusbcd.com"
-                    }
-                    var credential = EmailAuthProvider.credential(withEmail: userEmail, password: emailSetupVC.asswordpay.text!)
-                    
-                    user?.reauthenticate(with: credential) { error in
-                        if let error = error {
-                            // pop a toast "Something went wrong. Please check your network connection and try again."
-                            self.showMultilineToast(message: "Something went wrong. Please check your network connection and try again.", length: 40, lines: 2)
-                            
-                        }
-                        else {
-                            // User re-authenticated.
-                            
-                            //pop a toast "Setting up account recovery"
-                            self.showToast(message: "Setting up account recovery", length: 27)
-                            Auth.auth().currentUser?.updateEmail(to: emailInput) { (error) in
-                                // pop a toast "Account recovery was set up successfully!"
-                                self.showToast(message: "Account recovery was set up successfully!", length: 41)
-                                
-                                UserDefaults.standard.set(emailInput, forKey: "KEY_EMAIL")
-                            }
-                        }
-                    }
-                    
-                    
+        let buttonTwo = DefaultButton(title: "OK", height: 30, dismissOnTap: false) {
+            if !self.emailSetUpButtonLock {
+                self.emailSetUpButtonLock = true
+                print("OK clicked")
+                let user = Auth.auth().currentUser
+                var userEmail: String!
+                let emailInput = emailSetupVC.textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+                
+                if emailSetupVC.asswordpay.text?.count == 0 {
+                    //pop a toast "Please enter your password."
+                    self.showToast(message: "Please enter your password.", length: 27)
+                    self.emailSetUpButtonLock = false
                 }
                 else {
-                    
-                    //pop a toast "please enter a valid email"
-                    self.showToast(message: "please enter a valid email", length: 26)
+                    if self.isEmail(email: emailInput){
+                        if self.emailIsSetup {
+                            userEmail = self.currentEmail
+                        }
+                        else {
+                            userEmail = self.currentUsername + "@versusbcd.com"
+                        }
+                        
+                        
+                        var credential = EmailAuthProvider.credential(withEmail: userEmail, password: emailSetupVC.asswordpay.text!)
+                        
+                        user?.reauthenticate(with: credential) { error in
+                            if let error = error {
+                                DispatchQueue.main.async {
+                                    // pop a toast "Something went wrong. Please check your network connection and try again."
+                                    self.showToast(message: "Please check your password", length: 26)
+                                    self.emailSetUpButtonLock = false
+                                }
+                                
+                            }
+                            else {
+                                // User re-authenticated.
+                                DispatchQueue.main.async {
+                                    //close popup
+                                    self.dismiss(animated: true, completion: nil)
+                                    //pop a toast "Setting up account recovery"
+                                    self.showToast(message: "Setting up account recovery", length: 27)
+                                }
+                                
+                                Auth.auth().currentUser?.updateEmail(to: emailInput) { (error) in
+                                    
+                                    if let error = error {
+                                        DispatchQueue.main.async {
+                                            self.showToastLongTime(message: "This email address is already in use", length: 36)
+                                            self.emailSetUpButtonLock = false
+                                        }
+                                        
+                                        
+                                    }
+                                    else {
+                                        // pop a toast "Account recovery was set up successfully!"
+                                        DispatchQueue.main.async {
+                                            self.showToast(message: "Account recovery was set up successfully!", length: 41)
+                                            self.emailSetUpButtonLock = false
+                                            self.settingsItems[1] = "Edit Email for Account Recovery"
+                                        }
+                                        UserDefaults.standard.set(emailInput, forKey: "KEY_EMAIL")
+                                        self.currentEmail = emailInput
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        
+                        
+                    }
+                    else {
+                        
+                        //pop a toast "please enter a valid email"
+                        self.showToast(message: "please enter a valid email", length: 26)
+                        self.emailSetUpButtonLock = false
+                    }
                 }
+                
             }
+            
         }
         
         // Add buttons to dialog
