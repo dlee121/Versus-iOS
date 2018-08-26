@@ -201,13 +201,13 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 
                                 switch medalType {
                                 case "g":
-                                    header = "Congratulations! You won a Gold Medal for,"
+                                    header = "Congratulations!\nYou won a Gold Medal for,"
                                 case "s":
-                                    header = "Congratulations! You won a Silver Medal for,"
+                                    header = "Congratulations!\nYou won a Silver Medal for,"
                                 case "b":
-                                    header = "Congratulations! You won a Bronze Medal for,"
+                                    header = "Congratulations!\nYou won a Bronze Medal for,"
                                 default:
-                                    header = "Congratulations! You won a medal for,"
+                                    header = "Congratulations!\nYou won a medal for,"
                                 }
                                 
                                 let body = header + "\n\""+commentContent+"\""
