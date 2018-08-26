@@ -200,6 +200,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                                         }
                                         UserDefaults.standard.set(emailInput, forKey: "KEY_EMAIL")
                                         self.currentEmail = emailInput
+                                        //write the new email address to user's em field in ES
+                                        VSVersusAPIClient.default().setemailGet(c: emailInput, a: "sem", b: self.currentUsername)
+                                        
                                     }
                                     
                                 }

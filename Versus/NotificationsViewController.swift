@@ -51,6 +51,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         notificationItems = [NotificationItem]()
         navigationItem.title = "Notifications"
         tableView.separatorStyle = .none
+        currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +59,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         notificationItems.removeAll()
         initialLoadLock = false
         ref = Database.database().reference()
-        currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
+        
         userNotificationsPath = getUsernameHash(username: currentUsername!)+"/"+currentUsername!+"/n/"
         nrtPath = getUsernameHash(username: currentUsername!)+"/"+currentUsername!+"/nrt/"
         initialLoaderHandle = ref.child(userNotificationsPath).observe(DataEventType.value, with: { (snapshot) in
@@ -804,8 +805,14 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                             self.showToast(message: "Account recovery was set up successfully!", length: 41)
                                             self.emailSetUpButtonLock = false
                                             //remove the Type_EM item from local list and firebase
+                                            self.notificationItems.remove(at: 0)
+                                            self.tableView.reloadData()
                                         }
                                         UserDefaults.standard.set(emailInput, forKey: "KEY_EMAIL")
+                                        self.ref.child(self.userNotificationsPath+"em").removeValue() //remove the email setup notification in firebase
+                                        //write the new email address to user's em field in ES
+                                        VSVersusAPIClient.default().setemailGet(c: emailInput, a: "sem", b: self.currentUsername)
+                                        
                                     }
                                     
                                 }
