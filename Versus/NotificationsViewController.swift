@@ -392,7 +392,6 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                         }
                         
                         
-                        
                     }
                 }
                 
