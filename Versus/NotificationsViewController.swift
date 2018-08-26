@@ -7,12 +7,13 @@
 //
 
 import UIKit
-import FirebaseDatabase
+import Firebase
+import PopupDialog
 
 class NotificationsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
-    
+    var emailSetUpButtonLock = false
     
     var notificationItems : [NotificationItem]!
     let apiClient = VSVersusAPIClient.default()
@@ -404,6 +405,8 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         }) { (error) in
             print(error.localizedDescription)
         }
+        
+        emailSetUpButtonLock = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -470,7 +473,8 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
             seguePostID = item.payload!
             performSegue(withIdentifier: "notificationsToRoot", sender: self)
         case TYPE_EM:
-            //TODO: implement email reset and handle this click
+            CFRunLoopWakeUp(CFRunLoopGetCurrent())
+            showCustomDialog()
             break
         default:
             break
@@ -729,6 +733,111 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         }
         
         return "\(usernameHash)"
+    }
+    
+    func showCustomDialog(animated: Bool = true) {
+        
+        // Create a custom view controller
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let emailSetupVC : EmailSetupVC = storyboard.instantiateViewController(withIdentifier: "emailSetupVC") as! EmailSetupVC
+        // Create the dialog
+        let popup = PopupDialog(viewController: emailSetupVC,
+                                buttonAlignment: .horizontal,
+                                transitionStyle: .bounceDown,
+                                tapGestureDismissal: true,
+                                panGestureDismissal: false)
+        
+        // Create first button
+        let buttonOne = CancelButton(title: "CANCEL", height: 30) {
+            print("cancel")
+        }
+        
+        // Create second button
+        let buttonTwo = DefaultButton(title: "OK", height: 30, dismissOnTap: false) {
+            if !self.emailSetUpButtonLock {
+                self.emailSetUpButtonLock = true
+                print("OK clicked")
+                let user = Auth.auth().currentUser
+                var userEmail: String!
+                let emailInput = emailSetupVC.textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+                
+                if emailSetupVC.asswordpay.text?.count == 0 {
+                    //pop a toast "Please enter your password."
+                    self.showToast(message: "Please enter your password.", length: 27)
+                    self.emailSetUpButtonLock = false
+                }
+                else {
+                    if self.isEmail(email: emailInput){
+                        
+                        var credential = EmailAuthProvider.credential(withEmail: self.currentUsername + "@versusbcd.com", password: emailSetupVC.asswordpay.text!)
+                        
+                        user?.reauthenticate(with: credential) { error in
+                            if let error = error {
+                                DispatchQueue.main.async {
+                                    // pop a toast "Something went wrong. Please check your network connection and try again."
+                                    self.showToast(message: "Please check your password", length: 26)
+                                    self.emailSetUpButtonLock = false
+                                }
+                                
+                            }
+                            else {
+                                // User re-authenticated.
+                                DispatchQueue.main.async {
+                                    //close popup
+                                    self.dismiss(animated: true, completion: nil)
+                                    //pop a toast "Setting up account recovery"
+                                    self.showToast(message: "Setting up account recovery", length: 27)
+                                }
+                                
+                                Auth.auth().currentUser?.updateEmail(to: emailInput) { (error) in
+                                    
+                                    if let error = error {
+                                        DispatchQueue.main.async {
+                                            self.showToastLongTime(message: "This email address is already in use", length: 36)
+                                            self.emailSetUpButtonLock = false
+                                        }
+                                        
+                                    }
+                                    else {
+                                        // pop a toast "Account recovery was set up successfully!"
+                                        DispatchQueue.main.async {
+                                            self.showToast(message: "Account recovery was set up successfully!", length: 41)
+                                            self.emailSetUpButtonLock = false
+                                            //remove the Type_EM item from local list and firebase
+                                        }
+                                        UserDefaults.standard.set(emailInput, forKey: "KEY_EMAIL")
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        
+                        
+                    }
+                    else {
+                        
+                        //pop a toast "please enter a valid email"
+                        self.showToast(message: "please enter a valid email", length: 26)
+                        self.emailSetUpButtonLock = false
+                    }
+                }
+                
+            }
+            
+        }
+        
+        // Add buttons to dialog
+        popup.addButtons([buttonOne, buttonTwo])
+        
+        // Present dialog
+        present(popup, animated: animated, completion: nil)
+    }
+    
+    func isEmail(email : String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return email.count > 0 && emailTest.evaluate(with: email)
     }
 
     

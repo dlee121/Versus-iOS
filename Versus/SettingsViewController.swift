@@ -97,16 +97,12 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: {
                 window.rootViewController = vc
-            }, completion: { completed in
-                let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "us-east-1:88614505-c8df-4dce-abd8-79a0543852ff")
-                credentialsProvider.clearCredentials()
-            })
+            }, completion: nil)
             
         case 1:
             if isNative {
                 //Set Up Email. later, let's have it so that the name changes to "Edit Email" when email is already added
                 showCustomDialog()
-                
             }
             else {
                 //About
