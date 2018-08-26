@@ -28,33 +28,44 @@ class NotificationsTableViewCell: UITableViewCell {
     let TYPE_M = 5 //new medal notification
     let TYPE_EM = 6 //for password reset email setup notification
     
-    func setCell(item : NotificationItem){
+    var delegate : NotificationsDelegator!
+    var subpath : String!
+    var rowNumber : Int!
+    
+    func setCell(item : NotificationItem, row : Int){
+        rowNumber = row
+        
         switch item.type! {
         case TYPE_U:
             secondImage.image = #imageLiteral(resourceName: "heart_red")
             showSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
+            subpath = "u/\(item.key!)"
             
         case TYPE_C:
             hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
+            subpath = "c/\(item.key!)"
             
         case TYPE_V:
             hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
+            subpath = "v/\(item.key!)"
             
         case TYPE_R:
             hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
+            subpath = "r/\(item.key!)"
             
         case TYPE_F:
             hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
+            subpath = "f"
             
         case TYPE_M:
             switch item.medalType {
@@ -72,11 +83,13 @@ class NotificationsTableViewCell: UITableViewCell {
             }
             body.text = item.body
             time.text = item.getTimeString()
+            subpath = "m/\(item.key!)"
             
         case TYPE_EM:
             hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
+            subpath = "em"
             break
             
         default:
@@ -101,6 +114,11 @@ class NotificationsTableViewCell: UITableViewCell {
         
     }
 
+    @IBAction func closeButtonTapped(_ sender: UIButton) {
+        if subpath != nil && subpath.count > 0 {
+            delegate.closeNotification(subpath: subpath, row: rowNumber)
+        }
+    }
     
     
 }

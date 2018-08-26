@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import PopupDialog
 
-class NotificationsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class NotificationsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NotificationsDelegator {
 
     @IBOutlet weak var tableView: UITableView!
     var emailSetUpButtonLock = false
@@ -447,7 +447,8 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "notificationItem", for: indexPath) as? NotificationsTableViewCell
-        cell!.setCell(item: notificationItems[indexPath.row])
+        cell!.setCell(item: notificationItems[indexPath.row], row: indexPath.row)
+        cell!.delegate = self
         return cell!
     }
     
@@ -845,7 +846,12 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return email.count > 0 && emailTest.evaluate(with: email)
     }
-
     
+    func closeNotification(subpath: String, row: Int) {
+        print(subpath)
+        ref.child(userNotificationsPath+subpath).removeValue()
+        notificationItems.remove(at: row)
+        tableView.reloadData() //gotta reload to update rowNumber on all cells
+    }
 
 }

@@ -56,6 +56,7 @@
 		70B9A7E920EEDACB00C06709 /* PostObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E820EEDACB00C06709 /* PostObject.swift */; };
 		70B9A7ED20EEE33800C06709 /* PostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7EC20EEE33800C06709 /* PostImageCollectionViewCell.swift */; };
 		70B9A7EF20EF12E100C06709 /* PostTextCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7EE20EF12E100C06709 /* PostTextCollectionViewCell.swift */; };
+		70BEBDCA21326204008791DD /* NotificationsDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BEBDC921326204008791DD /* NotificationsDelegator.swift */; };
 		70CB9E45210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E44210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift */; };
 		70CB9E47210FE4D800D86E37 /* Array+Shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */; };
 		70CB9E492110020500D86E37 /* MyCircleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */; };
@@ -191,6 +192,7 @@
 		70B9A7E820EEDACB00C06709 /* PostObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostObject.swift; sourceTree = "<group>"; };
 		70B9A7EC20EEE33800C06709 /* PostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		70B9A7EE20EF12E100C06709 /* PostTextCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTextCollectionViewCell.swift; sourceTree = "<group>"; };
+		70BEBDC921326204008791DD /* NotificationsDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsDelegator.swift; sourceTree = "<group>"; };
 		70CB9E44210FDFAF00D86E37 /* MyCircleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleCollectionViewCell.swift; sourceTree = "<group>"; };
 		70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Shuffle.swift"; sourceTree = "<group>"; };
 		70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleTableViewCell.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				70A7ED4A211FC3410059507A /* PostPageDelegator.swift */,
 				70D17FEC2126613000A0C9D6 /* UIImage+resize.swift */,
 				70D17FF22127B88900A0C9D6 /* AtomicInteger.swift */,
+				70BEBDC921326204008791DD /* NotificationsDelegator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -684,6 +687,7 @@
 				70E80CCE20E6DB570067DF08 /* VSCommentPutModel.swift in Sources */,
 				70036ED0210A79C1000BE8E9 /* PostsHistoryTableViewCell.swift in Sources */,
 				70E80CD320E6DB570067DF08 /* VSCommentModel__source.swift in Sources */,
+				70BEBDCA21326204008791DD /* NotificationsDelegator.swift in Sources */,
 				706F89E72106E38800A78EFB /* VSPostQMultiModel.swift in Sources */,
 				70E80CD020E6DB570067DF08 /* VSPostsListCompactModel_hits.swift in Sources */,
 				701C8CC220F8C4F00072AECD /* LeaderboardViewController.swift in Sources */,

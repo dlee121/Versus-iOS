@@ -2274,6 +2274,9 @@
                                                                 <constraint firstAttribute="height" constant="22" id="Nwe-jX-J9L"/>
                                                             </constraints>
                                                             <state key="normal" image="notification_close"/>
+                                                            <connections>
+                                                                <action selector="closeButtonTapped:" destination="rVK-mw-Q1I" eventType="touchUpInside" id="qe5-ln-luB"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.85590277777777779" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
