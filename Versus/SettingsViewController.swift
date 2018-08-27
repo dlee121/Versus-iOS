@@ -125,6 +125,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         // Create a custom view controller
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let emailSetupVC : EmailSetupVC = storyboard.instantiateViewController(withIdentifier: "emailSetupVC") as! EmailSetupVC
+        let view = emailSetupVC.view
+        emailSetupVC.setUpPWIn()
         // Create the dialog
         let popup = PopupDialog(viewController: emailSetupVC,
                                 buttonAlignment: .horizontal,
@@ -146,13 +148,15 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 var userEmail: String!
                 let emailInput = emailSetupVC.textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
                 
-                if emailSetupVC.asswordpay.text?.count == 0 {
-                    //pop a toast "Please enter your password."
-                    self.showToast(message: "Please enter your password.", length: 27)
-                    self.emailSetUpButtonLock = false
-                }
-                else {
-                    if self.isEmail(email: emailInput){
+                
+                if self.isEmail(email: emailInput){
+                    
+                    if emailSetupVC.emPwIn.text?.count == 0 {
+                        //pop a toast "Please enter your password."
+                        self.showToast(message: "Please enter your password.", length: 27)
+                        self.emailSetUpButtonLock = false
+                    }
+                    else {
                         if self.emailIsSetup {
                             userEmail = self.currentEmail
                         }
@@ -161,7 +165,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                         }
                         
                         
-                        var credential = EmailAuthProvider.credential(withEmail: userEmail, password: emailSetupVC.asswordpay.text!)
+                        var credential = EmailAuthProvider.credential(withEmail: userEmail, password: emailSetupVC.emPwIn.text!)
                         
                         user?.reauthenticate(with: credential) { error in
                             if let error = error {
@@ -208,16 +212,17 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                                 }
                             }
                         }
-                        
-                        
                     }
-                    else {
-                        
-                        //pop a toast "please enter a valid email"
-                        self.showToast(message: "please enter a valid email", length: 26)
-                        self.emailSetUpButtonLock = false
-                    }
+                    
                 }
+                else {
+                    //pop a toast "please enter a valid email"
+                    self.showToast(message: "please enter a valid email", length: 26)
+                    self.emailSetUpButtonLock = false
+                }
+                
+                
+                
                 
             }
             

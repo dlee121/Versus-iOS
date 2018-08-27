@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import PopupDialog
 
 class ViewController: UIViewController {
     @IBOutlet weak var usernameIn: UITextField!
@@ -16,6 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     var handle: AuthStateDidChangeListenerHandle!
     var unauthClient : VSVersusAPIClient!
+    var emailSetUpButtonLock = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +33,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
-        
+        emailSetUpButtonLock = false
         
         //remove session data, log out firebase user, then segue back to start screen
         UserDefaults.standard.removeObject(forKey: "KEY_BDAY")
@@ -179,10 +181,72 @@ class ViewController: UIViewController {
         
     }
     
-    @IBAction func tabViewTestTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "showTabViewTest", sender: self)
-        
+    
+    @IBAction func passwordRecoveryTapped(_ sender: UIButton) {
+        showCustomDialog()
     }
+    
+    func showCustomDialog(animated: Bool = true) {
+        
+        // Create a custom view controller
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let emailSetupVC : EmailSetupVC = storyboard.instantiateViewController(withIdentifier: "emailSetupVC") as! EmailSetupVC
+        // Create the dialog
+        let popup = PopupDialog(viewController: emailSetupVC,
+                                buttonAlignment: .horizontal,
+                                transitionStyle: .bounceDown,
+                                tapGestureDismissal: true,
+                                panGestureDismissal: false)
+        
+        // Create first button
+        let buttonOne = CancelButton(title: "CANCEL", height: 30) {
+            print("cancel")
+        }
+        
+        // Create second button
+        let buttonTwo = DefaultButton(title: "OK", height: 30, dismissOnTap: false) {
+            if !self.emailSetUpButtonLock {
+                self.emailSetUpButtonLock = true
+                let user = Auth.auth().currentUser
+                var userEmail: String!
+                let emailInput = emailSetupVC.textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+                
+                
+                if self.isEmail(email: emailInput){
+                    if emailSetupVC.emPwIn.text?.count == 0 {
+                        //pop a toast "Please enter your username."
+                        self.showToast(message: "Please enter your username.", length: 27)
+                        self.emailSetUpButtonLock = false
+                    }
+                    else {
+                        
+                    }
+                }
+                else {
+                    //pop a toast "please enter a valid email"
+                    self.showToast(message: "please enter a valid email", length: 26)
+                    self.emailSetUpButtonLock = false
+                }
+                
+                
+            }
+            
+        }
+        
+        // Add buttons to dialog
+        popup.addButtons([buttonOne, buttonTwo])
+        
+        // Present dialog
+        present(popup, animated: animated, completion: nil)
+    }
+    
+    func isEmail(email : String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return email.count > 0 && emailTest.evaluate(with: email)
+    }
+    
     
 }
 

@@ -12,22 +12,28 @@ class EmailSetupVC: UIViewController {
     
     
     @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var asswordpay: UITextField!
+    @IBOutlet weak var emPwIn: UITextField!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         textField.delegate = self
-        asswordpay.delegate = self
+        emPwIn.delegate = self
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
         
+        
+    }
+    
+    func setUpPWIn(){
+        emPwIn.isSecureTextEntry = true
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "eye.png"), for: .normal)
         //button.imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0)
-        button.frame = CGRect(x: CGFloat(asswordpay.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
+        button.frame = CGRect(x: CGFloat(emPwIn.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
         button.addTarget(self, action: #selector(self.pwtoggle), for: .touchUpInside)
-        asswordpay.rightView = button
-        asswordpay.rightViewMode = .always
+        emPwIn.rightView = button
+        emPwIn.rightViewMode = .always
+        emPwIn.placeholder = "Enter your password"
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,20 +47,20 @@ class EmailSetupVC: UIViewController {
     
     @objc
     func pwtoggle(_ sender: Any) {
-        asswordpay.isSecureTextEntry = !asswordpay.isSecureTextEntry
-        if let existingText = asswordpay.text, asswordpay.isSecureTextEntry {
+        emPwIn.isSecureTextEntry = !emPwIn.isSecureTextEntry
+        if let existingText = emPwIn.text, emPwIn.isSecureTextEntry {
             /* When toggling to secure text, all text will be purged if the user
              * continues typing unless we intervene. This is prevented by first
              * deleting the existing text and then recovering the original text. */
-            asswordpay.deleteBackward()
+            emPwIn.deleteBackward()
             
-            if let textRange = asswordpay.textRange(from: asswordpay.beginningOfDocument, to: asswordpay.endOfDocument) {
-                asswordpay.replace(textRange, withText: existingText)
+            if let textRange = emPwIn.textRange(from: emPwIn.beginningOfDocument, to: emPwIn.endOfDocument) {
+                emPwIn.replace(textRange, withText: existingText)
             }
         }
-        else if let textRange = asswordpay.textRange(from: asswordpay.beginningOfDocument, to: asswordpay.endOfDocument) {
+        else if let textRange = emPwIn.textRange(from: emPwIn.beginningOfDocument, to: emPwIn.endOfDocument) {
             //we still do this to get rid of extra spacing that happens when toggling secure text
-            asswordpay.replace(textRange, withText: asswordpay.text!)
+            emPwIn.replace(textRange, withText: emPwIn.text!)
         }
         
     }
