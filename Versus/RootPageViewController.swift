@@ -104,8 +104,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     if let result = task.result {
                         self.setUpRootPage(post: PostObject(itemSource: result.source!, id: result.id!), userAction: self.currentUserAction, fromCreatePost: false)
                     }
-                    
-                    
                 }
                 return nil
             }
@@ -715,6 +713,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     func setComments(){
+        
         for i in fromIndex!...rootComments.count-1{
             let currentRootNode = nodeMap[rootComments[i].comment_id]
             comments.append(currentRootNode!.nodeContent)
@@ -746,7 +745,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         fromIndex! += fromIndexIncrement!
         DispatchQueue.main.async {
+            if self.refreshControl.isRefreshing {
+                self.refreshControl.endRefreshing()
+            }
+            
             self.tableView.reloadData()
+            
             if self.reactivateLoadMore {
                 self.nowLoading = false
             }
