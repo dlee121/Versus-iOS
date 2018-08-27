@@ -63,7 +63,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
      */
     var postVoteUpdate : String!
     
-    
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         print("gc loaded")
@@ -71,6 +71,31 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         //tableView.allowsSelection = false
         ref = Database.database().reference()
         
+        // Add Refresh Control to Table View
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        
+        // Configure Refresh Control
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refreshList(_ sender: Any) {
+        if currentPost != nil && currentUserAction != nil && topCardComment != nil{
+            comments.removeAll()
+            tableView.reloadData()
+            if fromRoot {
+                setUpGrandchildPage(post: currentPost, comment: topCardComment, userAction: currentUserAction, parentPage: parentRootVC)
+            }
+            else {
+                setUpGrandchildPage(post: currentPost, comment: topCardComment, userAction: currentUserAction, parentPage: parentChildVC, grandparentPage: parentRootVC)
+            }
+        }
+        else {
+            refreshControl.endRefreshing()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -207,10 +232,12 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
             self.tableView.reloadData()
         }
         currentPost = post
+        fromIndex = 0
+        nowLoading = false
         topCardComment = comment
         comments.append(topCardComment)
-        self.comments.append(topicComment)
-        self.nodeMap[topicComment.comment_id] = VSCNode(comment: topicComment)
+        comments.append(topicComment)
+        nodeMap[topicComment.comment_id] = VSCNode(comment: topicComment)
         currentUserAction = userAction
         nodeMap[comment.comment_id] = VSCNode(comment: comment)
         print("setup grandchild page query called")
@@ -257,6 +284,8 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
             self.tableView.reloadData()
         }
         currentPost = post
+        fromIndex = 0
+        nowLoading = false
         topCardComment = comment
         comments.append(topCardComment)
         currentUserAction = userAction
@@ -418,7 +447,12 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                     }
                     
                     DispatchQueue.main.async {
+                        if self.refreshControl.isRefreshing {
+                            self.refreshControl.endRefreshing()
+                        }
+                        
                         self.tableView.reloadData()
+                        
                         self.fromIndex! += rootQueryResults.count
                         if rootQueryResults.count == self.retrievalSize {
                             self.nowLoading = false

@@ -24,7 +24,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     let apiClient = VSVersusAPIClient.default()
     var rootComments = [VSComment]()
     var childComments = [VSComment]()
-    var grandchildComments = [VSComment]()
     var nodeMap = [String : VSCNode]()
     var currentUserAction : UserAction!
     var tappedUsername : String?
@@ -68,12 +67,37 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
      */
     var postVoteUpdate : String!
     
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //tableView.allowsSelection = false
         ref = Database.database().reference()
         
+        // Add Refresh Control to Table View
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        
+        // Configure Refresh Control
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+        
+    }
+    
+    @objc private func refreshList(_ sender: Any) {
+        if currentPost != nil && currentUserAction != nil && topCardComment != nil{
+            rootComments.removeAll()
+            childComments.removeAll()
+            comments.removeAll()
+            tableView.reloadData()
+            
+            setUpChildPage(post: currentPost, comment: topCardComment, userAction: currentUserAction, parentPage: parentVC)
+        }
+        else {
+            refreshControl.endRefreshing()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -602,7 +626,12 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
         fromIndex! += fromIndexIncrement!
         DispatchQueue.main.async {
+            if self.refreshControl.isRefreshing {
+                self.refreshControl.endRefreshing()
+            }
+            
             self.tableView.reloadData()
+            
             if self.reactivateLoadMore {
                 self.nowLoading = false
             }

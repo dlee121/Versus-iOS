@@ -91,6 +91,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @objc private func refreshList(_ sender: Any) {
         if currentPost != nil && currentUserAction != nil {
+            rootComments.removeAll()
+            childComments.removeAll()
+            grandchildComments.removeAll()
             comments.removeAll()
             tableView.reloadData()
             
