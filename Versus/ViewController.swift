@@ -219,6 +219,44 @@ class ViewController: UIViewController {
                         self.emailSetUpButtonLock = false
                     }
                     else {
+                        let username = emailSetupVC.emPwIn.text
+                        self.unauthClient.getemailGet(a: "gem", b: username).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            if task.error != nil {
+                                DispatchQueue.main.async {
+                                    self.showToast(message: "Username or email is invalid.", length: 29)
+                                    self.emailSetUpButtonLock = false
+                                }
+                            }
+                            else {
+                                if emailInput == task.result?.em {
+                                    Auth.auth().sendPasswordReset(withEmail: emailInput) { (error) in
+                                        if error != nil {
+                                            DispatchQueue.main.async {
+                                                self.showToast(message: "Username or email is invalid.", length: 29)
+                                                self.emailSetUpButtonLock = false
+                                            }
+                                        }
+                                        else {
+                                            DispatchQueue.main.async {
+                                                self.showToast(message: "Password reset link sent!", length: 25)
+                                                self.emailSetUpButtonLock = false
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    DispatchQueue.main.async {
+                                        self.showToast(message: "Username or email is invalid.", length: 29)
+                                        self.emailSetUpButtonLock = false
+                                    }
+                                }
+                            }
+                            return nil
+                        }
+                        
+                        
+                        
+                        
                         
                     }
                 }

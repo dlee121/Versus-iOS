@@ -14,6 +14,7 @@ class EmailSetupVC: UIViewController {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var emPwIn: UITextField!
     
+    @IBOutlet weak var titleLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,7 @@ class EmailSetupVC: UIViewController {
     }
     
     func setUpPWIn(){
+        titleLabel.text = "Set Up Email for Account Recovery"
         emPwIn.isSecureTextEntry = true
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "eye.png"), for: .normal)

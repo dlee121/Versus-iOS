@@ -2891,7 +2891,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Up Email for Account Recovery" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdf-G0-94q">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send a Password Reset Email" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdf-G0-94q">
                                 <rect key="frame" x="8" y="28" width="359" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -2916,6 +2916,7 @@
                     <connections>
                         <outlet property="emPwIn" destination="KRC-i8-Kjd" id="cX3-14-bJ5"/>
                         <outlet property="textField" destination="GRs-HX-ezQ" id="q2B-Wd-pLu"/>
+                        <outlet property="titleLabel" destination="cdf-G0-94q" id="WDc-rr-uW7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pI6-92-rY7" userLabel="First Responder" sceneMemberID="firstResponder"/>
