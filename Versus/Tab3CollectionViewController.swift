@@ -39,7 +39,7 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
     var loadThreshold = 8
     var retrievalSize = 16
     
-    
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +60,19 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
             newQuery()
         }
         
-        // Do any additional setup after loading the view.
+        // Add Refresh Control to Table View
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = refreshControl
+        } else {
+            collectionView.addSubview(refreshControl)
+        }
+        
+        // Configure Refresh Control
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refreshList(_ sender: Any) {
+        refresh()
     }
     
     func refresh(){
@@ -74,7 +86,9 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
     func newQuery(){
         //print("new query started")
         DispatchQueue.main.async {
-            self.indicator.startAnimating()
+            if !self.indicator.isAnimating && !self.refreshControl.isRefreshing {
+                self.indicator.startAnimating()
+            }
         }
         
         self.apiClient.postslistGet(c: categorySelection, d: nil, a: "nw", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -119,7 +133,12 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
                             if self.fromIndex == 0 {
                                 DispatchQueue.main.async {
                                     self.collectionView.reloadData()
-                                    self.indicator.stopAnimating()
+                                    if self.refreshControl.isRefreshing {
+                                        self.refreshControl.endRefreshing()
+                                    }
+                                    else {
+                                        self.indicator.stopAnimating()
+                                    }
                                 }
                             }
                             else {
@@ -131,7 +150,12 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
                                     
                                     self.collectionView.insertItems(at: indexPaths)
                                     
-                                    self.indicator.stopAnimating()
+                                    if self.refreshControl.isRefreshing {
+                                        self.refreshControl.endRefreshing()
+                                    }
+                                    else {
+                                        self.indicator.stopAnimating()
+                                    }
                                 }
                             }
                             if queryResults!.count < self.retrievalSize {
@@ -150,7 +174,12 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
                     if self.fromIndex == 0 {
                         DispatchQueue.main.async {
                             self.collectionView.reloadData()
-                            self.indicator.stopAnimating()
+                            if self.refreshControl.isRefreshing {
+                                self.refreshControl.endRefreshing()
+                            }
+                            else {
+                                self.indicator.stopAnimating()
+                            }
                         }
                     }
                     else {
@@ -162,7 +191,12 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
                             
                             self.collectionView.insertItems(at: indexPaths)
                             
-                            self.indicator.stopAnimating()
+                            if self.refreshControl.isRefreshing {
+                                self.refreshControl.endRefreshing()
+                            }
+                            else {
+                                self.indicator.stopAnimating()
+                            }
                         }
                     }
                     if queryResults!.count < self.retrievalSize {
