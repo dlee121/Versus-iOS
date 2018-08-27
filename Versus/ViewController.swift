@@ -219,7 +219,11 @@ class ViewController: UIViewController {
                         self.emailSetUpButtonLock = false
                     }
                     else {
-                        let username = emailSetupVC.emPwIn.text
+                        let username = emailSetupVC.emPwIn.text?.lowercased()
+                        DispatchQueue.main.async {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                        
                         self.unauthClient.getemailGet(a: "gem", b: username).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
                                 DispatchQueue.main.async {
@@ -238,8 +242,8 @@ class ViewController: UIViewController {
                                         }
                                         else {
                                             DispatchQueue.main.async {
-                                                self.showToast(message: "Password reset link sent!", length: 25)
                                                 self.emailSetUpButtonLock = false
+                                                self.showToastLongTime(message: "Password reset link sent!", length: 25)
                                             }
                                         }
                                     }
@@ -283,6 +287,10 @@ class ViewController: UIViewController {
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return email.count > 0 && emailTest.evaluate(with: email)
+    }
+    
+    func showEmailSentToast(){
+        
     }
     
     
