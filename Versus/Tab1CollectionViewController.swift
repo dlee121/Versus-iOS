@@ -61,12 +61,17 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     @objc private func refreshList(_ sender: Any) {
         //refresh the list
-        
-        print("refresh called")
+        //refreshControl.endRefreshing()
+        comments.removeAll()
+        tableView.reloadData()
+        myCircleInitialSetup()
     }
     
     func myCircleInitialSetup(){
-        indicator.startAnimating()
+        if !refreshControl.isRefreshing {
+            indicator.startAnimating()
+        }
+        
         fromIndex = 0
         var usernameHash : Int32
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
@@ -126,7 +131,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     func myCircleQuery(){
         
         DispatchQueue.main.async {
-            if !self.indicator.isAnimating {
+            if !self.indicator.isAnimating && !self.refreshControl.isRefreshing {
                 self.indicator.startAnimating()
             }
         }
@@ -181,7 +186,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                 if loadedItemsCount == 0 { //meaning no more items to load
                     self.nowLoading = true //this stops further loads
                     DispatchQueue.main.async {
-                        self.indicator.stopAnimating()
+                        if self.refreshControl.isRefreshing {
+                            self.refreshControl.endRefreshing()
+                        }
+                        else {
+                            self.indicator.stopAnimating()
+                        }
                     }
                 }
                 else {
@@ -254,7 +264,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                             if self.fromIndex == 0 {
                                                 DispatchQueue.main.async {
                                                     self.tableView.reloadData()
-                                                    self.indicator.stopAnimating()
+                                                    if self.refreshControl.isRefreshing {
+                                                        self.refreshControl.endRefreshing()
+                                                    }
+                                                    else {
+                                                        self.indicator.stopAnimating()
+                                                    }
                                                 }
                                             }
                                             else {
@@ -266,7 +281,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                                     
                                                     self.tableView.insertRows(at: indexPaths, with: .fade)
                                                     
-                                                    self.indicator.stopAnimating()
+                                                    if self.refreshControl.isRefreshing {
+                                                        self.refreshControl.endRefreshing()
+                                                    }
+                                                    else {
+                                                        self.indicator.stopAnimating()
+                                                    }
                                                 }
                                             }
                                             if loadedItemsCount! < self.retrievalSize {
@@ -284,7 +304,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                     if self.fromIndex == 0 {
                                         DispatchQueue.main.async {
                                             self.tableView.reloadData()
-                                            self.indicator.stopAnimating()
+                                            if self.refreshControl.isRefreshing {
+                                                self.refreshControl.endRefreshing()
+                                            }
+                                            else {
+                                                self.indicator.stopAnimating()
+                                            }
                                         }
                                     }
                                     else {
@@ -296,7 +321,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                             
                                             self.tableView.insertRows(at: indexPaths, with: .fade)
                                             
-                                            self.indicator.stopAnimating()
+                                            if self.refreshControl.isRefreshing {
+                                                self.refreshControl.endRefreshing()
+                                            }
+                                            else {
+                                                self.indicator.stopAnimating()
+                                            }
                                         }
                                     }
                                     if loadedItemsCount! < self.retrievalSize {
@@ -314,7 +344,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                         if self.fromIndex == 0 {
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
-                                self.indicator.stopAnimating()
+                                if self.refreshControl.isRefreshing {
+                                    self.refreshControl.endRefreshing()
+                                }
+                                else {
+                                    self.indicator.stopAnimating()
+                                }
                             }
                         }
                         else {
@@ -326,7 +361,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                 
                                 self.tableView.insertRows(at: indexPaths, with: .fade)
                                 
-                                self.indicator.stopAnimating()
+                                if self.refreshControl.isRefreshing {
+                                    self.refreshControl.endRefreshing()
+                                }
+                                else {
+                                    self.indicator.stopAnimating()
+                                }
                             }
                         }
                         if loadedItemsCount! < self.retrievalSize {
