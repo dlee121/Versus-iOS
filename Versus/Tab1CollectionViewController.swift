@@ -35,6 +35,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     var nowLoading = false
     var loadThreshold = 8
     
+    private let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
@@ -46,8 +48,21 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             myCircleInitialSetup()
         }
         
+        // Add Refresh Control to Table View
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
         
-        // Do any additional setup after loading the view.
+        // Configure Refresh Control
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refreshList(_ sender: Any) {
+        //refresh the list
+        
+        print("refresh called")
     }
     
     func myCircleInitialSetup(){
