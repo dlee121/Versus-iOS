@@ -289,10 +289,5 @@ class ViewController: UIViewController {
         return email.count > 0 && emailTest.evaluate(with: email)
     }
     
-    func showEmailSentToast(){
-        
-    }
-    
-    
 }
 
