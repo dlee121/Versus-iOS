@@ -71,12 +71,48 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     */
     var postVoteUpdate : String!
     
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //tableView.allowsSelection = false
         ref = Database.database().reference()
         
+        // Add Refresh Control to Table View
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        
+        // Configure Refresh Control
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refreshList(_ sender: Any) {
+        if currentPost != nil && currentUserAction != nil {
+            comments.removeAll()
+            tableView.reloadData()
+            
+            apiClient.postGet(a: "p", b: currentPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                if task.error != nil {
+                    DispatchQueue.main.async {
+                        print(task.error!)
+                    }
+                }
+                else {
+                    if let result = task.result {
+                        self.setUpRootPage(post: PostObject(itemSource: result.source!, id: result.id!), userAction: self.currentUserAction, fromCreatePost: false)
+                    }
+                    
+                    
+                }
+                return nil
+            }
+        }
+        else {
+            refreshControl.endRefreshing()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
