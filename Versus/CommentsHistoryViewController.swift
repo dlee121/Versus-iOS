@@ -25,10 +25,30 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     var retrievalSize = 20
     var isMe : Bool!
     
+    private let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.tableFooterView = UIView()
 
-        // Do any additional setup after loading the view.
+        // Add Refresh Control to Table View
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        
+        // Configure Refresh Control
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refreshList(_ sender: Any) {
+        //refresh the list
+        //refreshControl.endRefreshing()
+        fromIndex = 0
+        comments.removeAll()
+        tableView.reloadData()
+        commentsHistoryQuery(username: currentUsername)
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,13 +61,16 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
         fromIndex = 0
         currentUsername = username
         comments.removeAll()
+        //tableView.reloadData()
         commentsHistoryQuery(username: username)
     }
     
     func commentsHistoryQuery(username : String){
         
         DispatchQueue.main.async {
-            self.indicator.startAnimating()
+            if !self.indicator.isAnimating && !self.refreshControl.isRefreshing {
+                self.indicator.startAnimating()
+            }
         }
         
         apiClient.commentslistGet(c: username, d: nil, a: "pc", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -92,7 +115,12 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                             if self.comments.count < self.retrievalSize {
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
-                                    self.indicator.stopAnimating()
+                                    if self.refreshControl.isRefreshing {
+                                        self.refreshControl.endRefreshing()
+                                    }
+                                    else {
+                                        self.indicator.stopAnimating()
+                                    }
                                 }
                             }
                             else {
@@ -102,7 +130,12 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                                 }
                                 DispatchQueue.main.async {
                                     self.tableView.insertRows(at: indexPaths, with: .fade)
-                                    self.indicator.stopAnimating()
+                                    if self.refreshControl.isRefreshing {
+                                        self.refreshControl.endRefreshing()
+                                    }
+                                    else {
+                                        self.indicator.stopAnimating()
+                                    }
                                 }
                             }
                             
@@ -129,7 +162,12 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                             if self.comments.count < self.retrievalSize {
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
-                                    self.indicator.stopAnimating()
+                                    if self.refreshControl.isRefreshing {
+                                        self.refreshControl.endRefreshing()
+                                    }
+                                    else {
+                                        self.indicator.stopAnimating()
+                                    }
                                 }
                             }
                             else {
@@ -139,7 +177,12 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                                 }
                                 DispatchQueue.main.async {
                                     self.tableView.insertRows(at: indexPaths, with: .fade)
-                                    self.indicator.stopAnimating()
+                                    if self.refreshControl.isRefreshing {
+                                        self.refreshControl.endRefreshing()
+                                    }
+                                    else {
+                                        self.indicator.stopAnimating()
+                                    }
                                 }
                             }
                             
@@ -156,7 +199,12 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                     else {
                         DispatchQueue.main.async {
                             self.nowLoading = true
-                            self.indicator.stopAnimating()
+                            if self.refreshControl.isRefreshing {
+                                self.refreshControl.endRefreshing()
+                            }
+                            else {
+                                self.indicator.stopAnimating()
+                            }
                         }
                     }
                 }

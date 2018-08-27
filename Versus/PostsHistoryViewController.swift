@@ -23,10 +23,30 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     var currentUsername : String!
     var isMe : Bool!
     
+    private let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
-        // Do any additional setup after loading the view.
+        
+        // Add Refresh Control to Table View
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        
+        // Configure Refresh Control
+        refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refreshList(_ sender: Any) {
+        //refresh the list
+        //refreshControl.endRefreshing()
+        fromIndex = 0
+        posts.removeAll()
+        tableView.reloadData()
+        postsHistoryQuery(username: currentUsername)
     }
     
     override func didReceiveMemoryWarning() {
@@ -37,16 +57,18 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     func setUpPostsHistory(username : String, thisIsMe : Bool) {
         isMe = thisIsMe
         fromIndex = 0
-        posts.removeAll()
         currentUsername = username
+        posts.removeAll()
+        //tableView.reloadData()
         postsHistoryQuery(username: username)
     }
     
     func postsHistoryQuery(username : String){
-        print("post history query called for \(fromIndex)")
         
         DispatchQueue.main.async {
-            self.indicator.startAnimating()
+            if !self.indicator.isAnimating && !self.refreshControl.isRefreshing {
+                self.indicator.startAnimating()
+            }
         }
         
         apiClient.postslistcompactGet(c: username, a: "pp", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -65,7 +87,12 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
                         if self.fromIndex == 0 {
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
-                                self.indicator.stopAnimating()
+                                if self.refreshControl.isRefreshing {
+                                    self.refreshControl.endRefreshing()
+                                }
+                                else {
+                                    self.indicator.stopAnimating()
+                                }
                             }
                         }
                         else {
@@ -75,7 +102,12 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
                             }
                             DispatchQueue.main.async {
                                 self.tableView.insertRows(at: indexPaths, with: .fade)
-                                self.indicator.stopAnimating()
+                                if self.refreshControl.isRefreshing {
+                                    self.refreshControl.endRefreshing()
+                                }
+                                else {
+                                    self.indicator.stopAnimating()
+                                }
                             }
                         }
                         if results.count < self.retrievalSize {
@@ -89,7 +121,12 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
                     else {
                         DispatchQueue.main.async {
                             self.nowLoading = true
-                            self.indicator.stopAnimating()
+                            if self.refreshControl.isRefreshing {
+                                self.refreshControl.endRefreshing()
+                            }
+                            else {
+                                self.indicator.stopAnimating()
+                            }
                         }
                     }
                     
@@ -97,7 +134,12 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
                 else {
                     DispatchQueue.main.async {
                         self.nowLoading = true
-                        self.indicator.stopAnimating()
+                        if self.refreshControl.isRefreshing {
+                            self.refreshControl.endRefreshing()
+                        }
+                        else {
+                            self.indicator.stopAnimating()
+                        }
                     }
                 }
             }
