@@ -77,6 +77,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
         }
         
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        
         //clear any push notification displayed on the phone
         
     }
