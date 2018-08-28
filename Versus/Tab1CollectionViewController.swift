@@ -35,6 +35,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     var nowLoading = false
     var loadThreshold = 8
     
+    var clickLock = false
+    
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -65,6 +67,16 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         comments.removeAll()
         tableView.reloadData()
         myCircleInitialSetup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        clickLock = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        clickLock = false
     }
     
     func myCircleInitialSetup(){
@@ -420,23 +432,26 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let mainVC = parent as! MCViewController
-        let clickedComment = comments[indexPath.row]
-        var piv : Int!
-        if let postInfo = postInfos[clickedComment.post_id] {
-            if let imageVersion = profileImageVersions[postInfo.a!.lowercased()] {
-                piv = imageVersion
+        if !clickLock {
+            clickLock = true
+            
+            let mainVC = parent as! MCViewController
+            let clickedComment = comments[indexPath.row]
+            var piv : Int!
+            if let postInfo = postInfos[clickedComment.post_id] {
+                if let imageVersion = profileImageVersions[postInfo.a!.lowercased()] {
+                    piv = imageVersion
+                }
+                else {
+                    piv = 0
+                }
             }
             else {
                 piv = 0
             }
+            
+            mainVC.myCircleItemClick(comment: clickedComment, postProfileImage: piv)
         }
-        else {
-            piv = 0
-        }
-        
-        mainVC.myCircleItemClick(comment: clickedComment, postProfileImage: piv)
         
         tableView.deselectRow(at: indexPath, animated: true)
     }

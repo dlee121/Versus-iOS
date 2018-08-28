@@ -458,8 +458,8 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !notificationClickLock {
-            let item = notificationItems[indexPath.row]
             notificationClickLock = true
+            let item = notificationItems[indexPath.row]
             switch item.type {
             case TYPE_C:
                 goToComment(commentID: item.payload!)
