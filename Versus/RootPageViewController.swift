@@ -97,19 +97,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             comments.removeAll()
             tableView.reloadData()
             
-            apiClient.postGet(a: "p", b: currentPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                if task.error != nil {
-                    DispatchQueue.main.async {
-                        print(task.error!)
-                    }
-                }
-                else {
-                    if let result = task.result {
-                        self.setUpRootPage(post: PostObject(itemSource: result.source!, id: result.id!), userAction: self.currentUserAction, fromCreatePost: false)
-                    }
-                }
-                return nil
-            }
+            self.setUpRootPage(post: currentPost, userAction: self.currentUserAction, fromCreatePost: false)
         }
         else {
             refreshControl.endRefreshing()
