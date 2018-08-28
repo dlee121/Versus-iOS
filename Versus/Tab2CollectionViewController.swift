@@ -37,6 +37,8 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     var loadThreshold = 8
     var retrievalSize = 16
     
+    var clickLock = false
+    
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -79,6 +81,16 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
         posts.removeAll()
         collectionView.reloadData()
         trendingQuery()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        clickLock = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        clickLock = false
     }
     
     func trendingQuery(){
@@ -268,8 +280,11 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let mainVC = parent as! MCViewController
-        mainVC.goToPostPageRoot(post: posts[indexPath.row])
+        if !clickLock {
+            clickLock = true
+            let mainVC = parent as! MCViewController
+            mainVC.goToPostPageRoot(post: posts[indexPath.row])
+        }
     }
     
     

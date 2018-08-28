@@ -432,6 +432,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         if !clickLock {
             clickLock = true
             
@@ -453,7 +455,6 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             mainVC.myCircleItemClick(comment: clickedComment, postProfileImage: piv)
         }
         
-        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     
