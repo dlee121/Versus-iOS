@@ -25,6 +25,8 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     
     private let refreshControl = UIRefreshControl()
     
+    var clickLock = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
@@ -52,6 +54,16 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        clickLock = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        clickLock = false
     }
     
     func setUpPostsHistory(username : String, thisIsMe : Bool) {
@@ -151,17 +163,20 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if isMe {
-            let meVC = parent as! MeViewController
-            meVC.handlePostsHistoryClick(post: posts[indexPath.row])
-        }
-        else {
-            let profileVC = parent as! ProfileViewController
-            profileVC.handlePostsHistoryClick(post: posts[indexPath.row])
-        }
-        
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if !clickLock {
+            clickLock = true
+            if isMe {
+                let meVC = parent as! MeViewController
+                meVC.handlePostsHistoryClick(post: posts[indexPath.row])
+            }
+            else {
+                let profileVC = parent as! ProfileViewController
+                profileVC.handlePostsHistoryClick(post: posts[indexPath.row])
+            }
+            
+        }
     }
     
     /*

@@ -27,6 +27,8 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     
     private let refreshControl = UIRefreshControl()
     
+    var clickLock = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
@@ -54,6 +56,16 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        clickLock = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        clickLock = false
     }
     
     func setUpCommentsHistory(username : String, thisIsMe : Bool) {
@@ -240,17 +252,19 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if isMe {
-            let meVC = parent as! MeViewController
-            meVC.handleCommentsHistoryClick(commentID: comments[indexPath.row].comment_id)
-        }
-        else {
-            let profileVC = parent as! ProfileViewController
-            profileVC.handleCommentsHistoryClick(commentID: comments[indexPath.row].comment_id)
-        }
-        
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if !clickLock {
+            clickLock = true
+            if isMe {
+                let meVC = parent as! MeViewController
+                meVC.handleCommentsHistoryClick(commentID: comments[indexPath.row].comment_id)
+            }
+            else {
+                let profileVC = parent as! ProfileViewController
+                profileVC.handleCommentsHistoryClick(commentID: comments[indexPath.row].comment_id)
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -26,6 +26,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     var mainContainer : MCViewController!
     var currentSearchTerm = ""
     
+    var clickLock = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,21 +171,25 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        apiClient.postGet(a: "p", b: posts[indexPath.row].post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-            if task.error != nil {
-                DispatchQueue.main.async {
-                    print(task.error!)
-                }
-            }
-            else {
-                if let postResult = task.result {
-                    var clickedPost = PostObject(itemSource: postResult.source!, id: postResult.id!)
+        
+        if !clickLock {
+            clickLock = true
+            apiClient.postGet(a: "p", b: posts[indexPath.row].post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                if task.error != nil {
                     DispatchQueue.main.async {
-                        self.mainContainer.goToPostPageRoot(post: clickedPost)
+                        print(task.error!)
                     }
                 }
+                else {
+                    if let postResult = task.result {
+                        var clickedPost = PostObject(itemSource: postResult.source!, id: postResult.id!)
+                        DispatchQueue.main.async {
+                            self.mainContainer.goToPostPageRoot(post: clickedPost)
+                        }
+                    }
+                }
+                return nil
             }
-            return nil
         }
     }
     
@@ -195,6 +200,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             searchThis(input: searchText)
         }
         currentSearchTerm = searchText
+        
+        clickLock = false
     }
 
     /*
