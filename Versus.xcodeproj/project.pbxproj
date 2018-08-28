@@ -28,6 +28,11 @@
 		701C8CD120F978E20072AECD /* PlainLeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CD020F978E20072AECD /* PlainLeaderTableViewCell.swift */; };
 		701C8CD320FAF4B90072AECD /* UILabel+addImage+isTruncated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701C8CD220FAF4B90072AECD /* UILabel+addImage+isTruncated.swift */; };
 		702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702499A120E57F050024E871 /* UIViewController+Toast.swift */; };
+		702518CE21350826008B8E65 /* VSCommentsListModel_hits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702518C921350824008B8E65 /* VSCommentsListModel_hits.swift */; };
+		702518CF21350826008B8E65 /* VSCommentsListModel_hits_hits_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702518CA21350825008B8E65 /* VSCommentsListModel_hits_hits_item__source.swift */; };
+		702518D021350826008B8E65 /* VSCommentsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702518CB21350825008B8E65 /* VSCommentsListModel.swift */; };
+		702518D121350826008B8E65 /* VSCommentsListModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702518CC21350825008B8E65 /* VSCommentsListModel__shards.swift */; };
+		702518D221350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702518CD21350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift */; };
 		70484B82212A56D000E198F9 /* MedalUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */; };
 		7056672920FD62A400CB87AD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672820FD62A400CB87AD /* SearchViewController.swift */; };
 		7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */; };
@@ -88,12 +93,10 @@
 		70E80CB520E6DB570067DF08 /* VSProfileInfoModel__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7A20E6DB4F0067DF08 /* VSProfileInfoModel__source.swift */; };
 		70E80CB620E6DB570067DF08 /* VSProfileInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7B20E6DB4F0067DF08 /* VSProfileInfoModel.swift */; };
 		70E80CB720E6DB570067DF08 /* VSUserGetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7C20E6DB4F0067DF08 /* VSUserGetModel.swift */; };
-		70E80CB820E6DB570067DF08 /* VSCommentsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7D20E6DB4F0067DF08 /* VSCommentsListModel.swift */; };
 		70E80CB920E6DB570067DF08 /* VSLeaderboardModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7E20E6DB4F0067DF08 /* VSLeaderboardModel__shards.swift */; };
 		70E80CBA20E6DB570067DF08 /* VSAIModel_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7F20E6DB500067DF08 /* VSAIModel_hits_hits_item.swift */; };
 		70E80CBB20E6DB570067DF08 /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8020E6DB500067DF08 /* Empty.swift */; };
 		70E80CBC20E6DB570067DF08 /* VSAIModel_hits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8120E6DB500067DF08 /* VSAIModel_hits.swift */; };
-		70E80CBD20E6DB570067DF08 /* VSCommentsListModel_hits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8220E6DB500067DF08 /* VSCommentsListModel_hits.swift */; };
 		70E80CBE20E6DB570067DF08 /* VSAIModel_hits_hits_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8320E6DB500067DF08 /* VSAIModel_hits_hits_item__source.swift */; };
 		70E80CBF20E6DB570067DF08 /* VSCGCModel_responses_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8420E6DB500067DF08 /* VSCGCModel_responses_item.swift */; };
 		70E80CC020E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C8520E6DB510067DF08 /* VSCGCModel_responses_item_hits_hits_item__source.swift */; };
@@ -120,10 +123,7 @@
 		70E80CD520E6DB570067DF08 /* VSAIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9B20E6DB540067DF08 /* VSAIModel.swift */; };
 		70E80CD620E6DB570067DF08 /* VSPostsListModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9C20E6DB540067DF08 /* VSPostsListModel__shards.swift */; };
 		70E80CD720E6DB570067DF08 /* VSCGCModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9D20E6DB550067DF08 /* VSCGCModel.swift */; };
-		70E80CD820E6DB570067DF08 /* VSCommentsListModel_hits_hits_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C9F20E6DB550067DF08 /* VSCommentsListModel_hits_hits_item__source.swift */; };
 		70E80CD920E6DB570067DF08 /* VSPostsListCompactModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA020E6DB550067DF08 /* VSPostsListCompactModel__shards.swift */; };
-		70E80CDA20E6DB570067DF08 /* VSCommentsListModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA120E6DB550067DF08 /* VSCommentsListModel__shards.swift */; };
-		70E80CDB20E6DB570067DF08 /* VSCommentsListModel_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA220E6DB550067DF08 /* VSCommentsListModel_hits_hits_item.swift */; };
 		70E80CDC20E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA320E6DB560067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift */; };
 		70E80CDD20E6DB570067DF08 /* VSPostEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA420E6DB560067DF08 /* VSPostEditModel.swift */; };
 		70E80CDE20E6DB570067DF08 /* VSPostPutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80CA520E6DB560067DF08 /* VSPostPutModel.swift */; };
@@ -163,6 +163,11 @@
 		701C8CD020F978E20072AECD /* PlainLeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainLeaderTableViewCell.swift; sourceTree = "<group>"; };
 		701C8CD220FAF4B90072AECD /* UILabel+addImage+isTruncated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+addImage+isTruncated.swift"; sourceTree = "<group>"; };
 		702499A120E57F050024E871 /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
+		702518C921350824008B8E65 /* VSCommentsListModel_hits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits.swift; sourceTree = "<group>"; };
+		702518CA21350825008B8E65 /* VSCommentsListModel_hits_hits_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits_hits_item__source.swift; sourceTree = "<group>"; };
+		702518CB21350825008B8E65 /* VSCommentsListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel.swift; sourceTree = "<group>"; };
+		702518CC21350825008B8E65 /* VSCommentsListModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel__shards.swift; sourceTree = "<group>"; };
+		702518CD21350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits_hits_item.swift; sourceTree = "<group>"; };
 		70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedalUpdateRequest.swift; sourceTree = "<group>"; };
 		7056672820FD62A400CB87AD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostTableViewCell.swift; sourceTree = "<group>"; };
@@ -224,12 +229,10 @@
 		70E80C7A20E6DB4F0067DF08 /* VSProfileInfoModel__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSProfileInfoModel__source.swift; sourceTree = "<group>"; };
 		70E80C7B20E6DB4F0067DF08 /* VSProfileInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSProfileInfoModel.swift; sourceTree = "<group>"; };
 		70E80C7C20E6DB4F0067DF08 /* VSUserGetModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSUserGetModel.swift; sourceTree = "<group>"; };
-		70E80C7D20E6DB4F0067DF08 /* VSCommentsListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel.swift; sourceTree = "<group>"; };
 		70E80C7E20E6DB4F0067DF08 /* VSLeaderboardModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSLeaderboardModel__shards.swift; sourceTree = "<group>"; };
 		70E80C7F20E6DB500067DF08 /* VSAIModel_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSAIModel_hits_hits_item.swift; sourceTree = "<group>"; };
 		70E80C8020E6DB500067DF08 /* Empty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Empty.swift; sourceTree = "<group>"; };
 		70E80C8120E6DB500067DF08 /* VSAIModel_hits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSAIModel_hits.swift; sourceTree = "<group>"; };
-		70E80C8220E6DB500067DF08 /* VSCommentsListModel_hits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits.swift; sourceTree = "<group>"; };
 		70E80C8320E6DB500067DF08 /* VSAIModel_hits_hits_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSAIModel_hits_hits_item__source.swift; sourceTree = "<group>"; };
 		70E80C8420E6DB500067DF08 /* VSCGCModel_responses_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCGCModel_responses_item.swift; sourceTree = "<group>"; };
 		70E80C8520E6DB510067DF08 /* VSCGCModel_responses_item_hits_hits_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCGCModel_responses_item_hits_hits_item__source.swift; sourceTree = "<group>"; };
@@ -258,10 +261,7 @@
 		70E80C9C20E6DB540067DF08 /* VSPostsListModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListModel__shards.swift; sourceTree = "<group>"; };
 		70E80C9D20E6DB550067DF08 /* VSCGCModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCGCModel.swift; sourceTree = "<group>"; };
 		70E80C9E20E6DB550067DF08 /* Bridging_Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bridging_Header.h; sourceTree = "<group>"; };
-		70E80C9F20E6DB550067DF08 /* VSCommentsListModel_hits_hits_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits_hits_item__source.swift; sourceTree = "<group>"; };
 		70E80CA020E6DB550067DF08 /* VSPostsListCompactModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostsListCompactModel__shards.swift; sourceTree = "<group>"; };
-		70E80CA120E6DB550067DF08 /* VSCommentsListModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel__shards.swift; sourceTree = "<group>"; };
-		70E80CA220E6DB550067DF08 /* VSCommentsListModel_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits_hits_item.swift; sourceTree = "<group>"; };
 		70E80CA320E6DB560067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCGCModel_responses_item_hits_hits_item.swift; sourceTree = "<group>"; };
 		70E80CA420E6DB560067DF08 /* VSPostEditModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostEditModel.swift; sourceTree = "<group>"; };
 		70E80CA520E6DB560067DF08 /* VSPostPutModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostPutModel.swift; sourceTree = "<group>"; };
@@ -438,11 +438,11 @@
 				70E80C9920E6DB540067DF08 /* VSCommentModel__source.swift */,
 				70E80CA920E6DB570067DF08 /* VSCommentModel.swift */,
 				70E80C9420E6DB530067DF08 /* VSCommentPutModel.swift */,
-				70E80CA120E6DB550067DF08 /* VSCommentsListModel__shards.swift */,
-				70E80C9F20E6DB550067DF08 /* VSCommentsListModel_hits_hits_item__source.swift */,
-				70E80CA220E6DB550067DF08 /* VSCommentsListModel_hits_hits_item.swift */,
-				70E80C8220E6DB500067DF08 /* VSCommentsListModel_hits.swift */,
-				70E80C7D20E6DB4F0067DF08 /* VSCommentsListModel.swift */,
+				702518CC21350825008B8E65 /* VSCommentsListModel__shards.swift */,
+				702518CA21350825008B8E65 /* VSCommentsListModel_hits_hits_item__source.swift */,
+				702518CD21350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift */,
+				702518C921350824008B8E65 /* VSCommentsListModel_hits.swift */,
+				702518CB21350825008B8E65 /* VSCommentsListModel.swift */,
 				70E80C9A20E6DB540067DF08 /* VSEmailGetModel.swift */,
 				70E80C7E20E6DB4F0067DF08 /* VSLeaderboardModel__shards.swift */,
 				70E80C9120E6DB530067DF08 /* VSLeaderboardModel_hits_hits_item__source.swift */,
@@ -637,7 +637,6 @@
 			files = (
 				701C8CC620F8C5510072AECD /* MeViewController.swift in Sources */,
 				70E80CD520E6DB570067DF08 /* VSAIModel.swift in Sources */,
-				70E80CB820E6DB570067DF08 /* VSCommentsListModel.swift in Sources */,
 				70E80CB220E6DB570067DF08 /* VSCGCModel_responses_item__shards.swift in Sources */,
 				70E80CE320E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift in Sources */,
 				706F89ED2107EF1A00A78EFB /* PostsHistoryViewController.swift in Sources */,
@@ -654,8 +653,8 @@
 				706F89E92107EAB300A78EFB /* ProfileViewController.swift in Sources */,
 				70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */,
 				70E80CD920E6DB570067DF08 /* VSPostsListCompactModel__shards.swift in Sources */,
+				702518D021350826008B8E65 /* VSCommentsListModel.swift in Sources */,
 				70B9A7E320ED650A00C06709 /* String+HashCode.swift in Sources */,
-				70E80CD820E6DB570067DF08 /* VSCommentsListModel_hits_hits_item__source.swift in Sources */,
 				70E80CC620E6DB570067DF08 /* VSPostInfoMultiModel.swift in Sources */,
 				70E80CDF20E6DB570067DF08 /* VSPostsListCompactModel.swift in Sources */,
 				7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */,
@@ -672,6 +671,7 @@
 				701C8CC420F8C51F0072AECD /* NotificationsViewController.swift in Sources */,
 				70E80CBC20E6DB570067DF08 /* VSAIModel_hits.swift in Sources */,
 				70B9A7ED20EEE33800C06709 /* PostImageCollectionViewCell.swift in Sources */,
+				702518CF21350826008B8E65 /* VSCommentsListModel_hits_hits_item__source.swift in Sources */,
 				70E80CC120E6DB570067DF08 /* VSUserPutModel.swift in Sources */,
 				70E80CC920E6DB570067DF08 /* VSCommentEditModel.swift in Sources */,
 				70E80CB020E6DB570067DF08 /* VSPIVModel.swift in Sources */,
@@ -679,9 +679,9 @@
 				70E80CAD20E6DB570067DF08 /* VSCGCModel_responses_item_hits.swift in Sources */,
 				70FC662B2124D77900783FD5 /* CustomTabBar.swift in Sources */,
 				70E80CC520E6DB570067DF08 /* VSPIVSingle.swift in Sources */,
-				70E80CDB20E6DB570067DF08 /* VSCommentsListModel_hits_hits_item.swift in Sources */,
 				70E80CCF20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item.swift in Sources */,
 				70036ED2210ABA96000BE8E9 /* FGHViewController.swift in Sources */,
+				702518CE21350826008B8E65 /* VSCommentsListModel_hits.swift in Sources */,
 				70E80CBA20E6DB570067DF08 /* VSAIModel_hits_hits_item.swift in Sources */,
 				70B9A7E920EEDACB00C06709 /* PostObject.swift in Sources */,
 				70E80CCE20E6DB570067DF08 /* VSCommentPutModel.swift in Sources */,
@@ -723,13 +723,13 @@
 				706F89F121080D8F00A78EFB /* VSComment.swift in Sources */,
 				70E80CC820E6DB570067DF08 /* VSPostEditModel_doc.swift in Sources */,
 				70A7ED4B211FC3410059507A /* PostPageDelegator.swift in Sources */,
-				70E80CDA20E6DB570067DF08 /* VSCommentsListModel__shards.swift in Sources */,
 				70E80CB520E6DB570067DF08 /* VSProfileInfoModel__source.swift in Sources */,
 				70E80CB120E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item.swift in Sources */,
 				70E80CB620E6DB570067DF08 /* VSProfileInfoModel.swift in Sources */,
 				70B1705120F2F97800459ACE /* ButtonBarView.swift in Sources */,
 				70E80BF620E6944B0067DF08 /* UsernameViewController.swift in Sources */,
 				70E80CDE20E6DB570067DF08 /* VSPostPutModel.swift in Sources */,
+				702518D121350826008B8E65 /* VSCommentsListModel__shards.swift in Sources */,
 				701C8CCB20F978350072AECD /* GoldLeaderTableViewCell.swift in Sources */,
 				70E80CCD20E6DB570067DF08 /* VSVersusAPIClient.swift in Sources */,
 				70E80CDD20E6DB570067DF08 /* VSPostEditModel.swift in Sources */,
@@ -750,8 +750,8 @@
 				70E80CD420E6DB570067DF08 /* VSEmailGetModel.swift in Sources */,
 				701B9BA520E3FB20003C9E7E /* AppDelegate.swift in Sources */,
 				706F89E52106E38800A78EFB /* VSPostQModel.swift in Sources */,
+				702518D221350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift in Sources */,
 				70D17FF121278A4E00A0C9D6 /* NotificationItem.swift in Sources */,
-				70E80CBD20E6DB570067DF08 /* VSCommentsListModel_hits.swift in Sources */,
 				70E80CCC20E6DB570067DF08 /* VSRecordPutModel.swift in Sources */,
 				70E80CC320E6DB570067DF08 /* VSLeaderboardModel_hits.swift in Sources */,
 				70E80CAE20E6DB570067DF08 /* VSPostInfoModel.swift in Sources */,
