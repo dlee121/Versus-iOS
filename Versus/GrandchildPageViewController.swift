@@ -754,7 +754,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                                 self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
                             }
                             
-                            self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
+                            self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: self.topCardComment.comment_id, a: "v", b: "cm") //ps increment for comment submission
                             
                             if self.fromRoot {
                                 if self.parentRootVC != nil {
@@ -847,7 +847,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                                 self.tableView.insertRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
                             }
                             
-                            self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
+                            self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: self.topCardComment.comment_id, a: "v", b: "cm") //ps increment for comment submission
                             
                             if self.fromRoot {
                                 if self.parentRootVC != nil {

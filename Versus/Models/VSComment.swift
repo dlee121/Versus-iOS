@@ -14,6 +14,7 @@ class VSComment {
     var topmedal, upvotes, downvotes, comment_influence : Int
     var uservote, currentMedal, child_count : Int?
     var nestedLevel : CGFloat?
+    var replyCount : Int?
     
     let NOVOTE = 0
     let UPVOTE = 1
@@ -123,6 +124,7 @@ class VSComment {
         putModel!.pr = parent_id
         putModel!.pt = post_id
         putModel!.r = root
+        putModel!.rc = NSNumber(value: 0)
         putModel!.t = time
         putModel!.u = NSNumber(value: upvotes)
         
