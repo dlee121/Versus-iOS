@@ -194,6 +194,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             else {
                 let results = task.result?.hits?.hits
                 let loadedItemsCount = results?.count
+                var commentAuthors = ""
                 
                 if loadedItemsCount == 0 { //meaning no more items to load
                     self.nowLoading = true //this stops further loads
@@ -210,8 +211,16 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                     
                     var postInfoPayload = "{\"ids\":["
                     var index = 0
+                    var duplicateUsernamePreventionMap = NSMutableSet()
+                    
                     for item in results! {
-                        self.comments.append(VSComment(itemSource: item.source!, id: item.id!))
+                        let comment = VSComment(itemSource: item.source!, id: item.id!)
+                        self.comments.append(comment)
+                        
+                        if !duplicateUsernamePreventionMap.contains(comment.author) {
+                            commentAuthors.append("\"" + comment.author + "\",")
+                            duplicateUsernamePreventionMap.add(comment.author)
+                        }
                         
                         if self.postInfos[item.source!.pt!] == nil {
                             if index == 0 {
@@ -247,6 +256,9 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                 
                                 var pivPayload = "{\"ids\":["
                                 var pivIndex = 0
+                                if commentAuthors.count > 0 {
+                                    pivPayload.append(commentAuthors)
+                                }
                                 for username in postAuthors {
                                     if username != "deleted" {
                                         if pivIndex == 0 {
