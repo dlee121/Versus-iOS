@@ -16,6 +16,7 @@ class MyCircleTableViewCell: UITableViewCell {
     @IBOutlet weak var postAuthor: UILabel!
     @IBOutlet weak var postVotes: UILabel!
     @IBOutlet weak var question: UILabel!
+    @IBOutlet weak var commentProfile: UIImageView!
     @IBOutlet weak var commentAuthor: UILabel!
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var content: UILabel!
@@ -24,13 +25,13 @@ class MyCircleTableViewCell: UITableViewCell {
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var replyCount: UILabel!
     
+    
     func setCell(comment : VSComment, postInfo : VSPostQMultiModel_docs_item__source){
         if postInfo != nil {
             postAuthor.text = postInfo.a
             postVotes.text = "\(postInfo.rc!.intValue + postInfo.bc!.intValue) votes"
             question.text = postInfo.q
         }
-        
         
         commentAuthor.text = comment.author
         time.text = getTimeString(time: comment.time)
@@ -165,6 +166,39 @@ class MyCircleTableViewCell: UITableViewCell {
                     Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.postProfile)
                     self.postProfile.layer.cornerRadius = self.postProfile.frame.size.height / 2
                     self.postProfile.clipsToBounds = true
+                }
+                
+                return nil
+            }
+        }
+    }
+    
+    func setCommentProfileImage(username : String, profileImageVersion : Int){
+        if profileImageVersion == 0 {
+            DispatchQueue.main.async {
+                self.commentProfile.image = #imageLiteral(resourceName: "default_profile")
+                self.commentProfile.layer.cornerRadius = self.commentProfile.frame.size.height / 2
+                self.commentProfile.clipsToBounds = true
+            }
+        }
+        else {
+            let request = AWSS3GetPreSignedURLRequest()
+            request.expires = Date().addingTimeInterval(86400)
+            request.bucket = "versus.profile-pictures"
+            request.httpMethod = .GET
+            request.key = username + "-\(profileImageVersion).jpeg"
+            
+            AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+                if let error = task.error {
+                    print("Error: \(error)")
+                    return nil
+                }
+                
+                let presignedURL = task.result
+                DispatchQueue.main.async {
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.commentProfile)
+                    self.commentProfile.layer.cornerRadius = self.commentProfile.frame.size.height / 2
+                    self.commentProfile.clipsToBounds = true
                 }
                 
                 return nil

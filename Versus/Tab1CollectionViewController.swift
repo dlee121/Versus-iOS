@@ -423,9 +423,17 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             else {
                 cell.setProfileImage(username: postInfo.a!, profileImageVersion: 0)
             }
+            
         }
         else {
             cell.setCell(comment: currentComment)
+        }
+        
+        if let commentProfilePIV = profileImageVersions[currentComment.author.lowercased()] {
+            cell.setCommentProfileImage(username: currentComment.author, profileImageVersion: commentProfilePIV)
+        }
+        else {
+            cell.setCommentProfileImage(username: currentComment.author, profileImageVersion: 0)
         }
         
         return cell
