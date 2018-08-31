@@ -22,7 +22,8 @@ class MyCircleTableViewCell: UITableViewCell {
     @IBOutlet weak var hearts: UILabel!
     @IBOutlet weak var brokenhearts: UILabel!
     @IBOutlet weak var replyButton: UIButton!
-
+    @IBOutlet weak var replyCount: UILabel!
+    
     func setCell(comment : VSComment, postInfo : VSPostQMultiModel_docs_item__source){
         if postInfo != nil {
             postAuthor.text = postInfo.a
@@ -38,7 +39,8 @@ class MyCircleTableViewCell: UITableViewCell {
         hearts.addImage(imageName: "heart_red", imageHeight: 18)
         brokenhearts.text = "\(comment.downvotes) "
         brokenhearts.addImage(imageName: "brokenheart_blue", imageHeight: 18)
-        
+        replyCount.text = "\(comment.replyCount!) "
+        replyCount.addImage(imageName: "ic_reply_count", imageHeight: 18)
         
     }
     
@@ -51,7 +53,8 @@ class MyCircleTableViewCell: UITableViewCell {
         hearts.addImage(imageName: "heart_red", imageHeight: 18)
         brokenhearts.text = "\(comment.downvotes) "
         brokenhearts.addImage(imageName: "brokenheart_blue", imageHeight: 18)
-        
+        replyCount.text = "\(comment.replyCount!) "
+        replyCount.addImage(imageName: "ic_reply_count", imageHeight: 18)
         
     }
     

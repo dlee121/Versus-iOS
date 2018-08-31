@@ -37,6 +37,7 @@ class VSComment {
         upvotes = itemSource.u!.intValue
         downvotes = itemSource.d!.intValue
         comment_influence = itemSource.ci!.intValue
+        replyCount = itemSource.rc!.intValue
         
     }
     

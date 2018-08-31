@@ -3240,7 +3240,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="SQt-Fb-sKr">
-                                                    <rect key="frame" x="15" y="147" width="46" height="30"/>
+                                                    <rect key="frame" x="15" y="147" width="78.5" height="30"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="H" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8YC-0r-quR">
                                                             <rect key="frame" x="0.0" y="0.0" width="12.5" height="30"/>
@@ -3254,17 +3254,16 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5s-pz-ENV">
+                                                            <rect key="frame" x="56" y="0.0" width="22.5" height="30"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="8YC-0r-quR" secondAttribute="bottom" id="BlF-M8-8sr"/>
-                                                        <constraint firstItem="8YC-0r-quR" firstAttribute="top" secondItem="SQt-Fb-sKr" secondAttribute="top" id="FZi-kN-x2b"/>
-                                                        <constraint firstAttribute="bottom" secondItem="Dig-pF-A8z" secondAttribute="bottom" id="FvU-qE-APr"/>
-                                                        <constraint firstItem="Dig-pF-A8z" firstAttribute="top" secondItem="SQt-Fb-sKr" secondAttribute="top" id="HDj-JX-XI1"/>
-                                                        <constraint firstItem="8YC-0r-quR" firstAttribute="leading" secondItem="SQt-Fb-sKr" secondAttribute="leading" id="ZaO-fc-M3P"/>
-                                                        <constraint firstItem="Dig-pF-A8z" firstAttribute="leading" secondItem="8YC-0r-quR" secondAttribute="trailing" constant="10" id="Zdu-0I-yig"/>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20.5" id="nCh-Q0-E4u"/>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="46" id="r2j-2q-0EL"/>
-                                                        <constraint firstAttribute="trailing" secondItem="Dig-pF-A8z" secondAttribute="trailing" id="zeT-xK-AMr"/>
                                                     </constraints>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NPR-Ca-u7Q">
@@ -3312,6 +3311,7 @@
                                             <outlet property="postVotes" destination="oEp-vU-U6F" id="S1k-N9-Na3"/>
                                             <outlet property="question" destination="axL-h2-Gmx" id="yqm-lM-jVK"/>
                                             <outlet property="replyButton" destination="NPR-Ca-u7Q" id="oyh-n0-tws"/>
+                                            <outlet property="replyCount" destination="P5s-pz-ENV" id="8bu-jo-ZEw"/>
                                             <outlet property="time" destination="15m-LI-pBF" id="mhb-el-u2Y"/>
                                         </connections>
                                     </tableViewCell>
@@ -4283,6 +4283,6 @@
         <segue reference="Zrk-uo-HWn"/>
         <segue reference="onp-lO-nwi"/>
         <segue reference="CBT-JG-zYd"/>
-        <segue reference="Lbc-3X-Z2H"/>
+        <segue reference="5jD-8Y-GNx"/>
     </inferredMetricsTieBreakers>
 </document>
