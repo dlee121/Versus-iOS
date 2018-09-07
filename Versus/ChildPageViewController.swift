@@ -691,7 +691,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             let comment = comments[indexPath.row]
             
             let indent : CGFloat!
-            print("nested level = \(comment.nestedLevel) for \(comment.content)")
+            //print("nested level = \(comment.nestedLevel) for \(comment.content)")
             switch comment.nestedLevel {
             case 3:
                 indent = 0

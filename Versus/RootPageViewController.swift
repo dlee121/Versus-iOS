@@ -559,6 +559,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                     }
                     
+                    if rootQueryResults.count == 0 {
+                        DispatchQueue.main.async {
+                            self.refreshControl.endRefreshing()
+                        }
+                    }
+                    
                     self.fromIndexIncrement = rootIndex
                     if rootIndex == self.retrievalSize {
                         self.reactivateLoadMore = true
@@ -571,6 +577,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     if cqPayload.count > 9 && cqPayload[cqPayload.count-1] == "," {
                         cqPayload = String(cqPayload[0 ... cqPayload.count-2])
                     }
+                    
                     
                     if cqPayload.count > 0 {
                         print("cqpayload was \(cqPayload)")
