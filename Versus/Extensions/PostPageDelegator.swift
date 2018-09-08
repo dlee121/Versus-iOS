@@ -1,5 +1,5 @@
 protocol PostPageDelegator {
-    func callSegueFromCell(profileUsername: String)
+    func goToProfile(profileUsername: String)
     func resizePostCardOnVote(red : Bool)
     func commentHearted(commentID : String)
     func commentBrokenhearted(commentID : String)

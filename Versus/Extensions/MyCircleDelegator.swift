@@ -5,5 +5,5 @@ protocol MyCircleDelegator {
     func endUpdates()
     func endUpdatesForSeeLess(row : Int)
     func replyButtonTapped(row : Int)
-    
+    func goToProfile(username : String)
 }

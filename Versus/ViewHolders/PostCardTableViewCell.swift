@@ -287,7 +287,7 @@ class PostCardTableViewCell: UITableViewCell {
     
     
     @IBAction func profileTapped(_ sender: UIButton) {
-        delegate.callSegueFromCell(profileUsername: currentPost.author)
+        delegate.goToProfile(profileUsername: currentPost.author)
     }
     
     @IBAction func leftTapped(_ sender: UIButton) {

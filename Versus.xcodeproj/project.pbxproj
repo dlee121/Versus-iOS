@@ -35,6 +35,7 @@
 		702518D221350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702518CD21350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift */; };
 		70484B82212A56D000E198F9 /* MedalUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */; };
 		704E57CA2143F39E000F4109 /* MyCircleDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704E57C92143F39E000F4109 /* MyCircleDelegator.swift */; };
+		704E57CC2143F980000F4109 /* ProfileDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704E57CB2143F980000F4109 /* ProfileDelegator.swift */; };
 		7056672920FD62A400CB87AD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672820FD62A400CB87AD /* SearchViewController.swift */; };
 		7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */; };
 		7056672F2101564D00CB87AD /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */; };
@@ -171,6 +172,7 @@
 		702518CD21350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits_hits_item.swift; sourceTree = "<group>"; };
 		70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedalUpdateRequest.swift; sourceTree = "<group>"; };
 		704E57C92143F39E000F4109 /* MyCircleDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleDelegator.swift; sourceTree = "<group>"; };
+		704E57CB2143F980000F4109 /* ProfileDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDelegator.swift; sourceTree = "<group>"; };
 		7056672820FD62A400CB87AD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostTableViewCell.swift; sourceTree = "<group>"; };
 		7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewCell.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				70D17FF22127B88900A0C9D6 /* AtomicInteger.swift */,
 				70BEBDC921326204008791DD /* NotificationsDelegator.swift */,
 				704E57C92143F39E000F4109 /* MyCircleDelegator.swift */,
+				704E57CB2143F980000F4109 /* ProfileDelegator.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 				701C8CC620F8C5510072AECD /* MeViewController.swift in Sources */,
 				70E80CD520E6DB570067DF08 /* VSAIModel.swift in Sources */,
 				70E80CB220E6DB570067DF08 /* VSCGCModel_responses_item__shards.swift in Sources */,
+				704E57CC2143F980000F4109 /* ProfileDelegator.swift in Sources */,
 				70E80CE320E6DB570067DF08 /* VSPostInfoMultiModel_docs_item__source.swift in Sources */,
 				706F89ED2107EF1A00A78EFB /* PostsHistoryViewController.swift in Sources */,
 				70E80CE020E6DB570067DF08 /* VSPostModel.swift in Sources */,

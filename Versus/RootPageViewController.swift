@@ -896,7 +896,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
-    func callSegueFromCell(profileUsername: String) {
+    func goToProfile(profileUsername: String) {
         profileTap = true
         vmrTap = false
         tappedUsername = profileUsername

@@ -31,6 +31,9 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     let childSegue = 2
     let grandchildSegue = 3
     let followerSegue = 4
+    let profileSegue = 5
+    
+    var tappedUsername : String!
     
     var segueComment, segueTopCardComment : VSComment?
     var clickedPost, seguePost : PostObject?
@@ -246,6 +249,13 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         
     }
     
+    func goToProfile(username : String) {
+        mainSegueType = profileSegue
+        tappedUsername = username
+        
+        performSegue(withIdentifier: "mainToProfile", sender: self)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch mainSegueType {
         case mainSeguePostSegue:
@@ -267,6 +277,11 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
                 }
                 return nil
             }
+            
+        case profileSegue:
+            guard let profileVC = segue.destination as? ProfileViewController else {return}
+            profileVC.fromPostPage = false
+            profileVC.currentUsername = tappedUsername!
             
         case myCircleSegue:
             switch segueType {

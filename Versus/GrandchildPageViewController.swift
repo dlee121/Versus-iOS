@@ -555,7 +555,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         
     }
     
-    func callSegueFromCell(profileUsername: String) {
+    func goToProfile(profileUsername: String) {
         tappedUsername = profileUsername
         //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
         performSegue(withIdentifier: "grandchildToProfile", sender: self)

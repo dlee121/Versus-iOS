@@ -34,6 +34,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     let retrievalSize = 16
     var nowLoading = false
     var loadThreshold = 8
+    var tappedUsername : String!
     
     var clickLock = false
     
@@ -541,6 +542,22 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             
             mainVC.myCircleItemClick(comment: clickedComment, postProfileImage: piv)
         }
+    }
+    
+    func goToProfile(username: String) {
+        if !clickLock {
+            clickLock = true
+            
+            let mainVC = parent as! MCViewController
+            
+            mainVC.goToProfile(username: username)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let profileVC = segue.destination as? ProfileViewController else {return}
+        profileVC.fromPostPage = true
+        profileVC.currentUsername = tappedUsername!
     }
     
     func prefetchProfileImage(indexPaths: [IndexPath]){

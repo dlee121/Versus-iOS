@@ -331,7 +331,7 @@ class CommentCardTableViewCell: UITableViewCell {
     }
     
     @IBAction func profileTapped(_ sender: UIButton) {
-        delegate.callSegueFromCell(profileUsername: currentComment.author)
+        delegate.goToProfile(profileUsername: currentComment.author)
     }
     
     func showSeeMore() {

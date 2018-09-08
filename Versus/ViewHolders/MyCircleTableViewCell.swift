@@ -266,6 +266,20 @@ class MyCircleTableViewCell: UITableViewCell {
         delegate.replyButtonTapped(row: rowNumber)
     }
     
+    @IBAction func postProfileTapped(_ sender: UIButton) {
+        delegate.goToProfile(username: postAuthor.text!)
+    }
+    
+    @IBAction func commentProfileImgTapped(_ sender: UIButton) {
+        delegate.goToProfile(username: commentAuthor.text!)
+    }
+    
+    @IBAction func commentUsernameTapped(_ sender: UIButton) {
+        delegate.goToProfile(username: commentAuthor.text!)
+    }
+    
+    
+    
     
     
 
