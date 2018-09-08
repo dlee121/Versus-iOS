@@ -24,6 +24,11 @@ class MyCircleTableViewCell: UITableViewCell {
     @IBOutlet weak var brokenhearts: UILabel!
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var replyCount: UILabel!
+    @IBOutlet weak var seeMoreButton: UIButton!
+    
+    @IBOutlet weak var seeMoreWidth: NSLayoutConstraint!
+    @IBOutlet weak var replyButtonTrailing: NSLayoutConstraint!
+    
     
     
     func setCell(comment : VSComment, postInfo : VSPostQMultiModel_docs_item__source){
@@ -36,6 +41,16 @@ class MyCircleTableViewCell: UITableViewCell {
         commentAuthor.text = comment.author
         time.text = getTimeString(time: comment.time)
         content.text = comment.content
+        
+        DispatchQueue.main.async {
+            if self.content.isTruncated || self.content.numberOfLines == 0{ //if content is truncated, or if numberOfLines == 0 which See More was tapped
+                self.showSeeMore()
+            }
+            else {
+                self.hideSeeMore()
+            }
+        }
+        
         hearts.text = "\(comment.upvotes) "
         hearts.addImage(imageName: "heart_red", imageHeight: 18)
         brokenhearts.text = "\(comment.downvotes) "
@@ -50,6 +65,16 @@ class MyCircleTableViewCell: UITableViewCell {
         commentAuthor.text = comment.author
         time.text = getTimeString(time: comment.time)
         content.text = comment.content
+        
+        DispatchQueue.main.async {
+            if self.content.isTruncated || self.content.numberOfLines == 0{ //if content is truncated, or if numberOfLines == 0 which See More was tapped
+                self.showSeeMore()
+            }
+            else {
+                self.hideSeeMore()
+            }
+        }
+        
         hearts.text = "\(comment.upvotes) "
         hearts.addImage(imageName: "heart_red", imageHeight: 18)
         brokenhearts.text = "\(comment.downvotes) "
@@ -205,5 +230,24 @@ class MyCircleTableViewCell: UITableViewCell {
             }
         }
     }
+    
+    func showSeeMore() {
+        replyButtonTrailing.constant = 16
+        seeMoreWidth.constant = 66
+    }
+    
+    func hideSeeMore(){
+        replyButtonTrailing.constant = 0
+        seeMoreWidth.constant = 0
+    }
+    
+    @IBAction func seeMoreTapped(_ sender: UIButton) {
+        
+        
+        
+        
+        
+    }
+    
 
 }
