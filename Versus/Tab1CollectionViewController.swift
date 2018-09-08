@@ -13,7 +13,7 @@ import AWSS3
 import XLPagerTabStrip
 import FirebaseDatabase
 
-class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
@@ -36,6 +36,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     var loadThreshold = 8
     
     var clickLock = false
+    
+    var expandedCells = NSMutableSet()
     
     private let refreshControl = UIRefreshControl()
     
@@ -80,6 +82,9 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func myCircleInitialSetup(){
+        
+        expandedCells.removeAllObjects()
+        
         if !refreshControl.isRefreshing {
             indicator.startAnimating()
         }
@@ -422,12 +427,23 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    /*
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if expandedCells.contains(indexPath.row) {
+            return 409
+        }
+        else {
+            return 196
+        }
+    }
+    */
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentComment = comments[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_mycircle", for: indexPath) as! MyCircleTableViewCell
         
         if let postInfo = postInfos[currentComment.post_id] {
-            cell.setCell(comment: currentComment, postInfo: postInfo)
+            cell.setCell(comment: currentComment, postInfo: postInfo, row: indexPath.row)
             
             if let piv = profileImageVersions[postInfo.a!.lowercased()] {
                 cell.setProfileImage(username: postInfo.a!, profileImageVersion: piv)
@@ -438,7 +454,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             
         }
         else {
-            cell.setCell(comment: currentComment)
+            cell.setCell(comment: currentComment, row: indexPath.row)
         }
         
         if let commentProfilePIV = profileImageVersions[currentComment.author.lowercased()] {
@@ -447,6 +463,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         else {
             cell.setCommentProfileImage(username: currentComment.author, profileImageVersion: 0)
         }
+        
+        cell.delegate = self
         
         return cell
     }
@@ -485,17 +503,49 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func callSegueFromCell(profileUsername: String) {
+        //for segue when reply button is clicked
+    }
     
+    func resizePostCardOnVote(red : Bool) {
+        //just for the protocol
+    }
     
+    func commentHearted(commentID : String) {
+        //just for the protocol
+    }
+    
+    func commentBrokenhearted(commentID : String) {
+        //just for the protocol
+    }
+    
+    func beginUpdatesForSeeMore(row : Int) {
+        expandedCells.add(row)
+        tableView.beginUpdates()
+    }
+    
+    func beginUpdates() {
+        tableView.beginUpdates()
+    }
+    
+    func endUpdates() {
+        tableView.endUpdates()
+    }
+    
+    func endUpdatesForSeeLess(row : Int) {
+        tableView.endUpdates()
+        expandedCells.remove(row)
+    }
+    
+    func replyButtonTapped(replyTarget : VSComment, cell : CommentCardTableViewCell) {
+        //gotta implement this
+        
+        
+    }
+    
+    func viewMoreRepliesTapped(topCardComment : VSComment) {
+        //just for the protocol
+    }
     
     func prefetchProfileImage(indexPaths: [IndexPath]){
         print("hiho let's see if it's async")
@@ -531,7 +581,6 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         preheater.startPreheating(with: imageRequests)
-        print("hiho executed prefetch")
         
     }
     

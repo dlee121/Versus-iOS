@@ -29,9 +29,11 @@ class MyCircleTableViewCell: UITableViewCell {
     @IBOutlet weak var seeMoreWidth: NSLayoutConstraint!
     @IBOutlet weak var replyButtonTrailing: NSLayoutConstraint!
     
+    var delegate:PostPageDelegator!
+    var rowNumber : Int!
     
     
-    func setCell(comment : VSComment, postInfo : VSPostQMultiModel_docs_item__source){
+    func setCell(comment : VSComment, postInfo : VSPostQMultiModel_docs_item__source, row : Int){
         if postInfo != nil {
             postAuthor.text = postInfo.a
             postVotes.text = "\(postInfo.rc!.intValue + postInfo.bc!.intValue) votes"
@@ -58,9 +60,10 @@ class MyCircleTableViewCell: UITableViewCell {
         replyCount.text = "\(comment.replyCount!) "
         replyCount.addImage(imageName: "ic_reply_count", imageHeight: 18)
         
+        rowNumber = row
     }
     
-    func setCell(comment : VSComment){
+    func setCell(comment : VSComment, row : Int){
         
         commentAuthor.text = comment.author
         time.text = getTimeString(time: comment.time)
@@ -82,6 +85,7 @@ class MyCircleTableViewCell: UITableViewCell {
         replyCount.text = "\(comment.replyCount!) "
         replyCount.addImage(imageName: "ic_reply_count", imageHeight: 18)
         
+        rowNumber = row
     }
     
     func getTimeString(time : String) -> String {
@@ -242,11 +246,20 @@ class MyCircleTableViewCell: UITableViewCell {
     }
     
     @IBAction func seeMoreTapped(_ sender: UIButton) {
-        
-        
-        
-        
-        
+        if content.numberOfLines == 0 {
+            delegate.beginUpdates()
+            content.numberOfLines = 2
+            seeMoreButton.setTitle("See More", for: .normal)
+            delegate.endUpdatesForSeeLess(row: rowNumber)
+            
+        }
+        else {
+            delegate.beginUpdatesForSeeMore(row: rowNumber)
+            content.numberOfLines = 0
+            seeMoreButton.setTitle("See Less", for: .normal)
+            delegate.endUpdates()
+            
+        }
     }
     
 
