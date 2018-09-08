@@ -3230,6 +3230,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NPR-Ca-u7Q">
                                                     <rect key="frame" x="316" y="147" width="39" height="30"/>
                                                     <state key="normal" title="Reply"/>
+                                                    <connections>
+                                                        <action selector="replyButtonTapped:" destination="QgD-8c-EVE" eventType="touchUpInside" id="LBg-f8-Te7"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Te-24-KJd">
                                                     <rect key="frame" x="355" y="147" width="0.0" height="30"/>
@@ -3340,7 +3343,6 @@
                                             <outlet property="postProfile" destination="lQd-gE-qhA" id="CM3-MI-Rih"/>
                                             <outlet property="postVotes" destination="oEp-vU-U6F" id="S1k-N9-Na3"/>
                                             <outlet property="question" destination="axL-h2-Gmx" id="yqm-lM-jVK"/>
-                                            <outlet property="replyButton" destination="NPR-Ca-u7Q" id="oyh-n0-tws"/>
                                             <outlet property="replyButtonTrailing" destination="jXo-M7-yJn" id="bu1-Aq-mKC"/>
                                             <outlet property="replyCount" destination="P5s-pz-ENV" id="8bu-jo-ZEw"/>
                                             <outlet property="seeMoreButton" destination="5Te-24-KJd" id="swX-Wx-hnp"/>
@@ -4297,9 +4299,6 @@
         <image name="profile_icon_f" width="32" height="32"/>
         <namedColor name="VS_Blue">
             <color red="0.36899998784065247" green="0.82700002193450928" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="VS_Red">
-            <color red="1" green="0.125" blue="0.125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="VS_Red">
             <color red="1" green="0.125" blue="0.125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

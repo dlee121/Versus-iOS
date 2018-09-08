@@ -13,7 +13,7 @@ import AWSS3
 import XLPagerTabStrip
 import FirebaseDatabase
 
-class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator {
+class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MyCircleDelegator {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
@@ -502,23 +502,6 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         // Dispose of any resources that can be recreated.
     }
     
-    
-    func callSegueFromCell(profileUsername: String) {
-        //for segue when reply button is clicked
-    }
-    
-    func resizePostCardOnVote(red : Bool) {
-        //just for the protocol
-    }
-    
-    func commentHearted(commentID : String) {
-        //just for the protocol
-    }
-    
-    func commentBrokenhearted(commentID : String) {
-        //just for the protocol
-    }
-    
     func beginUpdatesForSeeMore(row : Int) {
         expandedCells.add(row)
         tableView.beginUpdates()
@@ -537,14 +520,27 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         expandedCells.remove(row)
     }
     
-    func replyButtonTapped(replyTarget : VSComment, cell : CommentCardTableViewCell) {
-        //gotta implement this
-        
-        
-    }
-    
-    func viewMoreRepliesTapped(topCardComment : VSComment) {
-        //just for the protocol
+    func replyButtonTapped(row: Int) {
+        if !clickLock {
+            clickLock = true
+            
+            let mainVC = parent as! MCViewController
+            let clickedComment = comments[row]
+            var piv : Int!
+            if let postInfo = postInfos[clickedComment.post_id] {
+                if let imageVersion = profileImageVersions[postInfo.a!.lowercased()] {
+                    piv = imageVersion
+                }
+                else {
+                    piv = 0
+                }
+            }
+            else {
+                piv = 0
+            }
+            
+            mainVC.myCircleItemClick(comment: clickedComment, postProfileImage: piv)
+        }
     }
     
     func prefetchProfileImage(indexPaths: [IndexPath]){

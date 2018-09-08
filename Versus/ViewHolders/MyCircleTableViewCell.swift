@@ -22,14 +22,13 @@ class MyCircleTableViewCell: UITableViewCell {
     @IBOutlet weak var content: UILabel!
     @IBOutlet weak var hearts: UILabel!
     @IBOutlet weak var brokenhearts: UILabel!
-    @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var replyCount: UILabel!
     @IBOutlet weak var seeMoreButton: UIButton!
     
     @IBOutlet weak var seeMoreWidth: NSLayoutConstraint!
     @IBOutlet weak var replyButtonTrailing: NSLayoutConstraint!
     
-    var delegate:PostPageDelegator!
+    var delegate:MyCircleDelegator!
     var rowNumber : Int!
     
     
@@ -261,6 +260,13 @@ class MyCircleTableViewCell: UITableViewCell {
             
         }
     }
+    
+    
+    @IBAction func replyButtonTapped(_ sender: UIButton) {
+        delegate.replyButtonTapped(row: rowNumber)
+    }
+    
+    
     
 
 }
