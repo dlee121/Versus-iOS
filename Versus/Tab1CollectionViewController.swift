@@ -40,6 +40,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     var expandedCells = NSMutableSet()
     
+    let cellSpacingHeight: CGFloat = 16
+    
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -304,12 +306,9 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                             }
                                             else {
                                                 DispatchQueue.main.async {
-                                                    var indexPaths = [IndexPath]()
-                                                    for i in 0...loadedItemsCount!-1 {
-                                                        indexPaths.append(IndexPath(row: self.fromIndex+i, section: 0))
-                                                    }
                                                     
-                                                    self.tableView.insertRows(at: indexPaths, with: .fade)
+                                                    let indexSet = IndexSet(self.fromIndex...self.fromIndex+loadedItemsCount!-1)
+                                                    self.tableView.insertSections(indexSet, with: .fade)
                                                     
                                                     if self.refreshControl.isRefreshing {
                                                         self.refreshControl.endRefreshing()
@@ -344,12 +343,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                     }
                                     else {
                                         DispatchQueue.main.async {
-                                            var indexPaths = [IndexPath]()
-                                            for i in 0...loadedItemsCount!-1 {
-                                                indexPaths.append(IndexPath(row: self.fromIndex+i, section: 0))
-                                            }
-                                            
-                                            self.tableView.insertRows(at: indexPaths, with: .fade)
+                                            let indexSet = IndexSet(self.fromIndex...self.fromIndex+loadedItemsCount!-1)
+                                            self.tableView.insertSections(indexSet, with: .fade)
                                             
                                             if self.refreshControl.isRefreshing {
                                                 self.refreshControl.endRefreshing()
@@ -384,12 +379,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                         }
                         else {
                             DispatchQueue.main.async {
-                                var indexPaths = [IndexPath]()
-                                for i in 0...loadedItemsCount!-1 {
-                                    indexPaths.append(IndexPath(row: self.fromIndex+i, section: 0))
-                                }
-                                
-                                self.tableView.insertRows(at: indexPaths, with: .fade)
+                                let indexSet = IndexSet(self.fromIndex...self.fromIndex+loadedItemsCount!-1)
+                                self.tableView.insertSections(indexSet, with: .fade)
                                 
                                 if self.refreshControl.isRefreshing {
                                     self.refreshControl.endRefreshing()
@@ -414,14 +405,27 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
  
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return comments.count
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return comments.count
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return cellSpacingHeight
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastElement = comments.count - 1 - loadThreshold
-        if !nowLoading && indexPath.row == lastElement {
+        if !nowLoading && indexPath.section == lastElement {
             nowLoading = true
             fromIndex = comments.count
             myCircleQuery()
@@ -430,7 +434,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     /*
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        if expandedCells.contains(indexPath.row) {
+        if expandedCells.contains(indexPath.section) {
             return 409
         }
         else {
@@ -440,11 +444,11 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     */
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let currentComment = comments[indexPath.row]
+        let currentComment = comments[indexPath.section]
         let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_mycircle", for: indexPath) as! MyCircleTableViewCell
         
         if let postInfo = postInfos[currentComment.post_id] {
-            cell.setCell(comment: currentComment, postInfo: postInfo, row: indexPath.row)
+            cell.setCell(comment: currentComment, postInfo: postInfo, row: indexPath.section)
             
             if let piv = profileImageVersions[postInfo.a!.lowercased()] {
                 cell.setProfileImage(username: postInfo.a!, profileImageVersion: piv)
@@ -455,7 +459,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             
         }
         else {
-            cell.setCell(comment: currentComment, row: indexPath.row)
+            cell.setCell(comment: currentComment, row: indexPath.section)
         }
         
         if let commentProfilePIV = profileImageVersions[currentComment.author.lowercased()] {
@@ -477,7 +481,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             clickLock = true
             
             let mainVC = parent as! MCViewController
-            let clickedComment = comments[indexPath.row]
+            let clickedComment = comments[indexPath.section]
             var piv : Int!
             if let postInfo = postInfos[clickedComment.post_id] {
                 if let imageVersion = profileImageVersions[postInfo.a!.lowercased()] {
@@ -565,7 +569,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         var imageRequests = [ImageRequest]()
         var index = 0
         for indexPath in indexPaths {
-            let username = comments[indexPath.row].author
+            let username = comments[indexPath.section].author
             if let piv = profileImageVersions[username] {
                 let request = AWSS3GetPreSignedURLRequest()
                 request.expires = Date().addingTimeInterval(86400)

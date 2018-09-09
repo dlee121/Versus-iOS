@@ -28,6 +28,7 @@ class MyCircleTableViewCell: UITableViewCell {
     @IBOutlet weak var seeMoreWidth: NSLayoutConstraint!
     @IBOutlet weak var replyButtonTrailing: NSLayoutConstraint!
     
+    
     var delegate:MyCircleDelegator!
     var rowNumber : Int!
     
