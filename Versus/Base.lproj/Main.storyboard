@@ -1423,14 +1423,23 @@
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Pw-Pd-w5F">
+                                                    <rect key="frame" x="16" y="77.5" width="0.0" height="29.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" id="z4g-9g-KV3"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="4Pw-Pd-w5F" firstAttribute="leading" secondItem="e1D-Ay-zPc" secondAttribute="leading" constant="1" id="3Av-Ed-Zzz"/>
                                                 <constraint firstItem="E0a-bW-8dq" firstAttribute="top" secondItem="k7Y-pr-dMV" secondAttribute="top" id="6LO-O8-iw3"/>
                                                 <constraint firstItem="wbY-Nr-DAK" firstAttribute="leading" secondItem="NlB-HL-Wp4" secondAttribute="trailing" constant="4" id="6a6-T1-vV7"/>
                                                 <constraint firstItem="sJ8-II-zdi" firstAttribute="top" secondItem="Sux-JT-nJN" secondAttribute="topMargin" id="6iM-Yo-pA2"/>
                                                 <constraint firstItem="E0a-bW-8dq" firstAttribute="trailing" secondItem="k7Y-pr-dMV" secondAttribute="trailing" id="7WO-oB-k6U"/>
                                                 <constraint firstItem="cin-eG-Eky" firstAttribute="leading" secondItem="Sux-JT-nJN" secondAttribute="leading" id="9fD-q1-kam"/>
-                                                <constraint firstItem="WWV-Wh-7df" firstAttribute="leading" secondItem="k7Y-pr-dMV" secondAttribute="leading" constant="1" id="A1I-DS-UXa"/>
                                                 <constraint firstItem="mnT-fg-CdS" firstAttribute="leading" secondItem="k7Y-pr-dMV" secondAttribute="trailing" constant="8" id="Bvu-V5-PJf"/>
                                                 <constraint firstItem="lzR-xJ-3O4" firstAttribute="bottom" secondItem="wbY-Nr-DAK" secondAttribute="bottom" id="E0S-T5-3NC"/>
                                                 <constraint firstItem="UuQ-iv-Bow" firstAttribute="top" secondItem="lzR-xJ-3O4" secondAttribute="top" id="IY4-P1-a7O"/>
@@ -1442,6 +1451,7 @@
                                                 <constraint firstItem="V9w-Db-cNW" firstAttribute="leading" secondItem="WWV-Wh-7df" secondAttribute="trailing" constant="4" id="O8M-Z9-pop"/>
                                                 <constraint firstItem="wbY-Nr-DAK" firstAttribute="top" secondItem="NlB-HL-Wp4" secondAttribute="top" id="OGi-WG-V6T"/>
                                                 <constraint firstItem="lzR-xJ-3O4" firstAttribute="top" secondItem="wbY-Nr-DAK" secondAttribute="top" id="TWu-42-ej8"/>
+                                                <constraint firstItem="WWV-Wh-7df" firstAttribute="top" secondItem="4Pw-Pd-w5F" secondAttribute="top" id="Tei-fa-BHD"/>
                                                 <constraint firstItem="mnT-fg-CdS" firstAttribute="bottom" secondItem="E0a-bW-8dq" secondAttribute="bottom" id="Vz6-PX-uKb"/>
                                                 <constraint firstAttribute="bottom" secondItem="cin-eG-Eky" secondAttribute="bottom" id="akn-kp-YTl"/>
                                                 <constraint firstItem="NlB-HL-Wp4" firstAttribute="leading" secondItem="V9w-Db-cNW" secondAttribute="trailing" constant="8" id="cFl-4G-neJ"/>
@@ -1454,6 +1464,8 @@
                                                 <constraint firstItem="mnT-fg-CdS" firstAttribute="top" secondItem="E0a-bW-8dq" secondAttribute="top" id="j26-ow-spB"/>
                                                 <constraint firstItem="cin-eG-Eky" firstAttribute="top" secondItem="V9w-Db-cNW" secondAttribute="bottom" constant="8" id="jjc-NI-sG1"/>
                                                 <constraint firstItem="NlB-HL-Wp4" firstAttribute="bottom" secondItem="V9w-Db-cNW" secondAttribute="bottom" id="oZE-PH-uTY"/>
+                                                <constraint firstItem="WWV-Wh-7df" firstAttribute="bottom" secondItem="4Pw-Pd-w5F" secondAttribute="bottom" id="oxc-LU-hO0"/>
+                                                <constraint firstItem="WWV-Wh-7df" firstAttribute="leading" secondItem="4Pw-Pd-w5F" secondAttribute="trailing" id="qdk-zN-klf"/>
                                                 <constraint firstAttribute="trailing" secondItem="cin-eG-Eky" secondAttribute="trailing" id="qoB-2S-sgE"/>
                                                 <constraint firstItem="UuQ-iv-Bow" firstAttribute="leading" secondItem="lzR-xJ-3O4" secondAttribute="trailing" id="vNP-Q6-NtK"/>
                                                 <constraint firstItem="V9w-Db-cNW" firstAttribute="bottom" secondItem="WWV-Wh-7df" secondAttribute="bottom" id="vta-sd-fdd"/>
@@ -1471,6 +1483,9 @@
                                             <outlet property="heartButton" destination="WWV-Wh-7df" id="tRL-57-4An"/>
                                             <outlet property="hearts" destination="V9w-Db-cNW" id="u8W-A9-XzO"/>
                                             <outlet property="leftMargin" destination="gKW-tX-NSG" id="n8q-tW-jQQ"/>
+                                            <outlet property="medalTrailing" destination="qdk-zN-klf" id="DjH-ia-9R9"/>
+                                            <outlet property="medalView" destination="4Pw-Pd-w5F" id="CJW-cN-jLn"/>
+                                            <outlet property="medalViewWidth" destination="z4g-9g-KV3" id="tQQ-4c-y40"/>
                                             <outlet property="replyButtonTrailing" destination="vNP-Q6-NtK" id="f6L-eJ-wtn"/>
                                             <outlet property="seeMoreButton" destination="UuQ-iv-Bow" id="H0P-Lm-KoZ"/>
                                             <outlet property="seeMoreWidth" destination="iKS-Pb-8Tu" id="Jrt-zB-HbW"/>
@@ -4553,7 +4568,7 @@
         <segue reference="kmh-ur-Uym"/>
         <segue reference="nft-7p-rrg"/>
         <segue reference="sD2-CK-5N3"/>
-        <segue reference="K6P-9d-yI2"/>
+        <segue reference="ndU-Xn-ImY"/>
         <segue reference="uAF-H9-Oin"/>
         <segue reference="fc6-RI-lzA"/>
         <segue reference="tN5-20-0qe"/>
