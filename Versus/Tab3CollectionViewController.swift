@@ -12,7 +12,7 @@ import Nuke
 import AWSS3
 import XLPagerTabStrip
 
-class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ProfileDelegator {
     
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -258,6 +258,7 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_images", for: indexPath) as! PostImageCollectionViewCell
             cell.setCell(post: currentPost, vIsRed: vIsRed)
             vIsRed = !vIsRed
+            cell.delegate = self
             
             return cell
         }
@@ -265,6 +266,7 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_texts", for: indexPath) as! PostTextCollectionViewCell
             cell.setCell(post: currentPost, vIsRed: vIsRed)
             vIsRed = !vIsRed
+            cell.delegate = self
             
             return cell
         }
@@ -438,6 +440,16 @@ class Tab3CollectionViewController: UIViewController, UICollectionViewDataSource
         categorySelection = nil
         categorySelectionLabel.text = ""
         refresh()
+    }
+    
+    func goToProfile(username: String) {
+        if !clickLock {
+            clickLock = true
+            
+            let mainVC = parent as! MCViewController
+            
+            mainVC.goToProfile(username: username)
+        }
     }
     
     
