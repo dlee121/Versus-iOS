@@ -21,6 +21,7 @@ class CommentCardTableViewCell: UITableViewCell {
     @IBOutlet weak var viewMoreReplies: UIButton!
     @IBOutlet weak var sortButton: UILabel!
     
+    @IBOutlet weak var medalView: UILabel!
     
     @IBOutlet weak var leftMargin: NSLayoutConstraint!
     
@@ -28,6 +29,9 @@ class CommentCardTableViewCell: UITableViewCell {
     @IBOutlet weak var viewMoreRepliesCenter: NSLayoutConstraint!
     @IBOutlet weak var replyButtonTrailing: NSLayoutConstraint! //0 or 16
     @IBOutlet weak var seeMoreWidth: NSLayoutConstraint! //0 or 66
+    
+    @IBOutlet weak var medalViewWidth: NSLayoutConstraint!
+    @IBOutlet weak var medalTrailing: NSLayoutConstraint!
     
     
     let none = 0
@@ -86,6 +90,12 @@ class CommentCardTableViewCell: UITableViewCell {
             viewMoreReplies.isHidden = true
             viewMoreHeight.constant = 0
         }
+        
+        if comment.topmedal == 0 {
+            medalViewWidth.constant = 0
+            medalTrailing.constant = 0
+        }
+        
     }
     
     func setCellWithSelection(comment : VSComment, indent : CGFloat, hearted : Bool, row : Int){
@@ -141,6 +151,11 @@ class CommentCardTableViewCell: UITableViewCell {
             viewMoreReplies.isHidden = true
             viewMoreHeight.constant = 0
         }
+        
+        if comment.topmedal == 0 {
+            medalViewWidth.constant = 0
+            medalTrailing.constant = 0
+        }
     }
     
     func setTopCardCell(comment : VSComment, row : Int, sortType : String){
@@ -167,6 +182,11 @@ class CommentCardTableViewCell: UITableViewCell {
         commentVote = none
         
         rowNumber = row
+        
+        if comment.topmedal == 0 {
+            medalViewWidth.constant = 0
+            medalTrailing.constant = 0
+        }
     }
     
     func setTopCardCellWithSelection(comment : VSComment, hearted : Bool, row : Int, sortType : String){
@@ -199,6 +219,11 @@ class CommentCardTableViewCell: UITableViewCell {
         }
         
         rowNumber = row
+        
+        if comment.topmedal == 0 {
+            medalViewWidth.constant = 0
+            medalTrailing.constant = 0
+        }
     }
 
     
@@ -347,23 +372,26 @@ class CommentCardTableViewCell: UITableViewCell {
     func setCommentMedal(medalType : String) {
         switch medalType {
         case "g":
-            time.addImage(imageName: "medalGold", imageHeight: 24)
+            medalView.addImage(imageName: "medalGold", imageHeight: 24)
             if currentComment.topmedal < 3 {
                 currentComment.topmedal = 3
             }
         case "s":
-            time.addImage(imageName: "medalSilver", imageHeight: 24)
+            medalView.addImage(imageName: "medalSilver", imageHeight: 24)
             if currentComment.topmedal < 2 {
                 currentComment.topmedal = 2
             }
         case "b":
-            time.addImage(imageName: "medalBronze", imageHeight: 24)
+            medalView.addImage(imageName: "medalBronze", imageHeight: 24)
             if currentComment.topmedal < 1 {
                 currentComment.topmedal = 1
             }
         default:
             break
         }
+        
+        medalViewWidth.constant = 24
+        medalTrailing.constant = 8
         
     }
     
