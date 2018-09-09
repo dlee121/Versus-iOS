@@ -3318,16 +3318,26 @@
                                                         <action selector="commentUsernameTapped:" destination="QgD-8c-EVE" eventType="touchUpInside" id="FsN-wK-scU"/>
                                                     </connections>
                                                 </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WK6-MW-IBc">
+                                                    <rect key="frame" x="73" y="147" width="0.0" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" id="OWu-dS-eOU"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="yuu-DM-wwy" firstAttribute="leading" secondItem="sJN-ao-HP0" secondAttribute="leading" id="01u-JB-6R9"/>
                                                 <constraint firstItem="6fJ-PL-mbA" firstAttribute="trailing" secondItem="eCD-N5-nuO" secondAttribute="trailing" id="1gI-tF-D1g"/>
                                                 <constraint firstItem="7NC-3m-LQk" firstAttribute="trailing" secondItem="sBY-4f-oub" secondAttribute="trailingMargin" id="2Pa-hz-oWe"/>
                                                 <constraint firstItem="eCD-N5-nuO" firstAttribute="top" secondItem="axL-h2-Gmx" secondAttribute="bottom" constant="10" id="3Hp-ea-UYG"/>
+                                                <constraint firstItem="WK6-MW-IBc" firstAttribute="leading" secondItem="yuu-DM-wwy" secondAttribute="leading" id="4Ea-ZU-Nx2"/>
                                                 <constraint firstItem="6fJ-PL-mbA" firstAttribute="leading" secondItem="eCD-N5-nuO" secondAttribute="leading" id="5rq-wl-xIV"/>
+                                                <constraint firstItem="SQt-Fb-sKr" firstAttribute="bottom" secondItem="WK6-MW-IBc" secondAttribute="bottom" id="6Og-t5-yLP"/>
                                                 <constraint firstItem="ndN-o1-9BY" firstAttribute="leading" secondItem="lQd-gE-qhA" secondAttribute="leading" id="Adn-se-NLr"/>
                                                 <constraint firstItem="4mb-Pv-yNU" firstAttribute="top" secondItem="lQd-gE-qhA" secondAttribute="top" id="AsU-lh-e9B"/>
-                                                <constraint firstItem="SQt-Fb-sKr" firstAttribute="leading" secondItem="sJN-ao-HP0" secondAttribute="leading" id="DDh-xX-kDp"/>
                                                 <constraint firstItem="yuu-DM-wwy" firstAttribute="top" secondItem="sJN-ao-HP0" secondAttribute="top" id="DIz-XG-dlE"/>
                                                 <constraint firstItem="yuu-DM-wwy" firstAttribute="trailing" secondItem="sJN-ao-HP0" secondAttribute="trailing" id="Frg-Z4-m0Z"/>
                                                 <constraint firstItem="6fJ-PL-mbA" firstAttribute="top" secondItem="eCD-N5-nuO" secondAttribute="top" id="GIk-ge-4Y3"/>
@@ -3346,6 +3356,7 @@
                                                 <constraint firstItem="7NC-3m-LQk" firstAttribute="top" secondItem="axL-h2-Gmx" secondAttribute="bottom" constant="12" id="eNV-qM-x4Q"/>
                                                 <constraint firstItem="sJN-ao-HP0" firstAttribute="leading" secondItem="eCD-N5-nuO" secondAttribute="trailing" constant="8" id="eTM-tr-eaf"/>
                                                 <constraint firstAttribute="trailing" secondItem="5Te-24-KJd" secondAttribute="trailing" constant="20" id="fAf-tb-PPl"/>
+                                                <constraint firstItem="SQt-Fb-sKr" firstAttribute="top" secondItem="WK6-MW-IBc" secondAttribute="top" id="fNU-Wd-xW1"/>
                                                 <constraint firstItem="ndN-o1-9BY" firstAttribute="bottom" secondItem="lQd-gE-qhA" secondAttribute="bottom" id="gmf-B4-rxf"/>
                                                 <constraint firstItem="axL-h2-Gmx" firstAttribute="top" secondItem="oEp-vU-U6F" secondAttribute="bottom" constant="8" id="jHc-9t-3JE"/>
                                                 <constraint firstItem="5Te-24-KJd" firstAttribute="leading" secondItem="NPR-Ca-u7Q" secondAttribute="trailing" id="jXo-M7-yJn"/>
@@ -3356,6 +3367,7 @@
                                                 <constraint firstItem="5Te-24-KJd" firstAttribute="bottom" secondItem="NPR-Ca-u7Q" secondAttribute="bottom" id="n4i-fU-RAh"/>
                                                 <constraint firstItem="15m-LI-pBF" firstAttribute="bottom" secondItem="sJN-ao-HP0" secondAttribute="bottom" id="nYM-dM-9Bw"/>
                                                 <constraint firstItem="4mb-Pv-yNU" firstAttribute="bottom" secondItem="lQd-gE-qhA" secondAttribute="bottom" id="oe5-ZA-BbP"/>
+                                                <constraint firstItem="SQt-Fb-sKr" firstAttribute="leading" secondItem="WK6-MW-IBc" secondAttribute="trailing" id="pMd-cu-Piw"/>
                                                 <constraint firstItem="15m-LI-pBF" firstAttribute="top" secondItem="sJN-ao-HP0" secondAttribute="top" id="r2d-Ls-9rY"/>
                                                 <constraint firstItem="7NC-3m-LQk" firstAttribute="leading" secondItem="eCD-N5-nuO" secondAttribute="trailing" constant="8" id="ruY-kJ-7XS"/>
                                                 <constraint firstItem="oEp-vU-U6F" firstAttribute="trailing" secondItem="sBY-4f-oub" secondAttribute="trailingMargin" id="sJm-y1-iPr"/>
@@ -3374,6 +3386,9 @@
                                             <outlet property="commentProfile" destination="eCD-N5-nuO" id="bl6-RV-ZCa"/>
                                             <outlet property="content" destination="7NC-3m-LQk" id="e4e-lj-07F"/>
                                             <outlet property="hearts" destination="8YC-0r-quR" id="LOu-EA-92k"/>
+                                            <outlet property="medalTrailing" destination="pMd-cu-Piw" id="iIy-Fp-vsH"/>
+                                            <outlet property="medalView" destination="WK6-MW-IBc" id="wgR-vl-44I"/>
+                                            <outlet property="medalWidth" destination="OWu-dS-eOU" id="OT7-N9-an9"/>
                                             <outlet property="postAuthor" destination="4mb-Pv-yNU" id="hOD-EA-xrc"/>
                                             <outlet property="postProfile" destination="lQd-gE-qhA" id="CM3-MI-Rih"/>
                                             <outlet property="postVotes" destination="oEp-vU-U6F" id="S1k-N9-Na3"/>

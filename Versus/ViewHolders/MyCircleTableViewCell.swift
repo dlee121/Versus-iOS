@@ -24,9 +24,14 @@ class MyCircleTableViewCell: UITableViewCell {
     @IBOutlet weak var brokenhearts: UILabel!
     @IBOutlet weak var replyCount: UILabel!
     @IBOutlet weak var seeMoreButton: UIButton!
+    @IBOutlet weak var medalView: UILabel!
     
     @IBOutlet weak var seeMoreWidth: NSLayoutConstraint!
     @IBOutlet weak var replyButtonTrailing: NSLayoutConstraint!
+    
+    @IBOutlet weak var medalTrailing: NSLayoutConstraint!
+    @IBOutlet weak var medalWidth: NSLayoutConstraint!
+    
     
     
     var delegate:MyCircleDelegator!
@@ -53,6 +58,13 @@ class MyCircleTableViewCell: UITableViewCell {
             }
         }
         
+        if comment.topmedal > 0 {
+            showMedal(medalType: comment.topmedal)
+        }
+        else {
+            hideMedal()
+        }
+        
         hearts.text = "\(comment.upvotes) "
         hearts.addImage(imageName: "heart_red", imageHeight: 18)
         brokenhearts.text = "\(comment.downvotes) "
@@ -76,6 +88,13 @@ class MyCircleTableViewCell: UITableViewCell {
             else {
                 self.hideSeeMore()
             }
+        }
+        
+        if comment.topmedal > 0 {
+            showMedal(medalType: comment.topmedal)
+        }
+        else {
+            hideMedal()
         }
         
         hearts.text = "\(comment.upvotes) "
@@ -277,6 +296,28 @@ class MyCircleTableViewCell: UITableViewCell {
     
     @IBAction func commentUsernameTapped(_ sender: UIButton) {
         delegate.goToProfile(username: commentAuthor.text!)
+    }
+    
+    func showMedal(medalType : Int){
+        
+        switch medalType {
+        case 3:
+            medalView.addImage(imageName: "medalGold", imageHeight: 18)
+        case 2:
+            medalView.addImage(imageName: "medalSilver", imageHeight: 18)
+        case 1:
+            medalView.addImage(imageName: "medalBronze", imageHeight: 18)
+        default:
+            break
+        }
+        
+        medalTrailing.constant = 10
+        medalWidth.constant = 18
+    }
+    
+    func hideMedal(){
+        medalTrailing.constant = 0
+        medalWidth.constant = 0
     }
     
     
