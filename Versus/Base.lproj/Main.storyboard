@@ -1583,14 +1583,24 @@
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VbT-G9-KSY">
+                                                    <rect key="frame" x="16" y="69.5" width="0.0" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" id="PHZ-hh-9Ss"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="90P-aH-fl7" firstAttribute="leading" secondItem="97a-Lj-GMd" secondAttribute="leading" constant="1" id="18D-wc-1Qc"/>
                                                 <constraint firstItem="mbS-az-bD1" firstAttribute="centerX" secondItem="7XE-6u-ncV" secondAttribute="centerX" id="2M7-3P-nhS"/>
                                                 <constraint firstItem="Nv0-sO-R9d" firstAttribute="leading" secondItem="0qB-AW-p7f" secondAttribute="trailing" constant="8" id="2ib-3b-8ea"/>
+                                                <constraint firstItem="90P-aH-fl7" firstAttribute="top" secondItem="VbT-G9-KSY" secondAttribute="top" id="3lD-YP-7Zu"/>
                                                 <constraint firstItem="Iks-vB-bI3" firstAttribute="trailing" secondItem="7XE-6u-ncV" secondAttribute="trailingMargin" id="40c-Yj-ZNz"/>
                                                 <constraint firstItem="zEd-FW-BRz" firstAttribute="top" secondItem="1ap-NP-9Jd" secondAttribute="top" id="5r0-9H-dCC"/>
                                                 <constraint firstItem="sAF-n9-nTa" firstAttribute="bottom" secondItem="97a-Lj-GMd" secondAttribute="bottom" id="7rS-FA-xiU"/>
+                                                <constraint firstItem="VbT-G9-KSY" firstAttribute="leading" secondItem="Iks-vB-bI3" secondAttribute="leading" constant="1" id="8mq-yw-qug"/>
                                                 <constraint firstItem="Ds9-Gi-dYe" firstAttribute="trailing" secondItem="97a-Lj-GMd" secondAttribute="trailing" id="GSj-wg-P6Q"/>
                                                 <constraint firstItem="mbS-az-bD1" firstAttribute="top" secondItem="1ap-NP-9Jd" secondAttribute="bottom" constant="4" id="Hfa-en-1gh"/>
                                                 <constraint firstItem="97a-Lj-GMd" firstAttribute="leading" secondItem="7XE-6u-ncV" secondAttribute="leadingMargin" id="KLR-eA-bRa"/>
@@ -1615,7 +1625,9 @@
                                                 <constraint firstItem="Iks-vB-bI3" firstAttribute="leading" secondItem="97a-Lj-GMd" secondAttribute="leading" id="ng2-Ie-FeJ"/>
                                                 <constraint firstItem="h0h-F8-l7o" firstAttribute="bottom" secondItem="zEd-FW-BRz" secondAttribute="bottom" id="qJ0-Fo-DMn"/>
                                                 <constraint firstItem="sAF-n9-nTa" firstAttribute="top" secondItem="7XE-6u-ncV" secondAttribute="topMargin" id="qPc-uT-WNH"/>
+                                                <constraint firstItem="90P-aH-fl7" firstAttribute="leading" secondItem="VbT-G9-KSY" secondAttribute="trailing" id="sGt-oG-bs9"/>
                                                 <constraint firstItem="h0h-F8-l7o" firstAttribute="top" secondItem="zEd-FW-BRz" secondAttribute="top" id="tF8-hU-wzt"/>
+                                                <constraint firstItem="90P-aH-fl7" firstAttribute="bottom" secondItem="VbT-G9-KSY" secondAttribute="bottom" id="vOL-xw-G4i"/>
                                                 <constraint firstItem="0qB-AW-p7f" firstAttribute="leading" secondItem="90P-aH-fl7" secondAttribute="trailing" constant="4" id="wB1-R8-pBf"/>
                                                 <constraint firstItem="Nv0-sO-R9d" firstAttribute="bottom" secondItem="0qB-AW-p7f" secondAttribute="bottom" id="wRm-XD-PGZ"/>
                                                 <constraint firstItem="97a-Lj-GMd" firstAttribute="top" secondItem="7XE-6u-ncV" secondAttribute="topMargin" id="x9B-Q2-San"/>
@@ -1630,6 +1642,9 @@
                                             <outlet property="heartButton" destination="90P-aH-fl7" id="DjH-A9-lgC"/>
                                             <outlet property="hearts" destination="0qB-AW-p7f" id="mKc-6i-rXt"/>
                                             <outlet property="leftMargin" destination="KLR-eA-bRa" id="1ZT-pD-4v7"/>
+                                            <outlet property="medalTrailing" destination="sGt-oG-bs9" id="4Z5-2q-eoy"/>
+                                            <outlet property="medalView" destination="VbT-G9-KSY" id="U6x-om-hQo"/>
+                                            <outlet property="medalViewWidth" destination="PHZ-hh-9Ss" id="63w-ds-7tc"/>
                                             <outlet property="replyButtonTrailing" destination="xGm-w8-k9l" id="yBi-Nr-MbN"/>
                                             <outlet property="seeMoreButton" destination="h0h-F8-l7o" id="rGf-xh-KUF"/>
                                             <outlet property="seeMoreWidth" destination="ORa-Wo-ngN" id="BTm-dH-7FG"/>
