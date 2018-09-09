@@ -23,6 +23,8 @@ class PostTextCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var vLabel: UILabel!
     @IBOutlet weak var sLabel: UILabel!
     
+    var delegate : ProfileDelegator!
+    
     func setCell(post : PostObject, vIsRed : Bool){
         authorLabel.text = post.author
         votecountLabel.text = "\(post.redcount.intValue + post.blackcount.intValue) votes"
@@ -215,4 +217,9 @@ class PostTextCollectionViewCell: UICollectionViewCell {
             return nil
         }
     }
+    
+    @IBAction func profileTapped(_ sender: UIButton) {
+        delegate.goToProfile(username: authorLabel.text!)
+    }
+    
 }

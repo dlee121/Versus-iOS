@@ -264,6 +264,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_texts", for: indexPath) as! PostTextCollectionViewCell
             cell.setCell(post: currentPost, vIsRed: vIsRed)
             vIsRed = !vIsRed
+            cell.delegate = self
             
             return cell
         }
