@@ -25,6 +25,8 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var vLabel: UILabel!
     @IBOutlet weak var sLabel: UILabel!
     
+    var delegate : ProfileDelegator!
+    
     let DEFAULT = 0
     let S3 = 1
     
@@ -291,6 +293,11 @@ class PostImageCollectionViewCell: UICollectionViewCell {
         
     }
     
+    
+    @IBAction func profileTapped(_ sender: UIButton) {
+        delegate.goToProfile(username: authorLabel.text!)
+        
+    }
     
     
     

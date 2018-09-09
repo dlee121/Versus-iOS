@@ -558,11 +558,6 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let profileVC = segue.destination as? ProfileViewController else {return}
-        profileVC.fromPostPage = true
-        profileVC.currentUsername = tappedUsername!
-    }
     
     func prefetchProfileImage(indexPaths: [IndexPath]){
         print("hiho let's see if it's async")

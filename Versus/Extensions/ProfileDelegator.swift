@@ -1,3 +1,3 @@
 protocol ProfileDelegator {
-    func profileTapped(username : String)
+    func goToProfile(username : String)
 }
