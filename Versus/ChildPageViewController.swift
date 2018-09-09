@@ -87,6 +87,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @objc private func refreshList(_ sender: Any) {
+        
         if currentPost != nil && currentUserAction != nil && topCardComment != nil{
             rootComments.removeAll()
             childComments.removeAll()
@@ -483,7 +484,11 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                     var cqPayload = ""
                     var cqPayloadIndex = 0
                     
-                    if self.medalistCQPayload.count > 0 && self.medalistCQPayloadPostID == self.currentPost.post_id {
+                    if self.medalistCQPayload.count > 0 && self.medalistCQPayload[0] == "," {
+                        self.medalistCQPayload = String(self.medalistCQPayload[1 ... self.medalistCQPayload.count-1])
+                    }
+                    
+                    if self.medalistCQPayload.count > 5 && self.medalistCQPayloadPostID == self.currentPost.post_id {
                         cqPayload.append(self.medalistCQPayload+",")
                     }
                     
@@ -545,11 +550,13 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                 }
                             }
                             else {
+                                print("root comments has cqPayload: " + cqPayload)
                                 if let cqResponses = cqTask.result?.responses {
                                     var rIndex = 0
-                                    
+                                    print("cqResponses has \(cqResponses.count) items   root comments has")
                                     for cqResponseItem in cqResponses {
                                         let cqHitsObject = cqResponseItem.hits
+                                        print("root comments has \(self.rootComments.count) items, and rIndex == \(rIndex)")
                                         let currentRoot = self.rootComments[rIndex]
                                         currentRoot.child_count = cqHitsObject?.total!.intValue //set child count for parent root comment
                                         let rootNode = self.nodeMap[currentRoot.comment_id]
@@ -718,6 +725,11 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             else {
                 cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
             }
+            
+            if let medalType = medalWinnersList[comment.comment_id] {
+                cell!.setCommentMedal(medalType: medalType)
+            }
+            
             cell!.delegate = self
             
             return cell!

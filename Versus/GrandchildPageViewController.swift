@@ -541,6 +541,11 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
             else {
                 cell!.setCell(comment: comment, indent: 0, row: indexPath.row)
             }
+            
+            if let medalType = medalWinnersList[comment.comment_id] {
+                cell!.setCommentMedal(medalType: medalType)
+            }
+            
             cell!.delegate = self
             
             return cell!
