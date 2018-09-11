@@ -809,7 +809,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 321
+            return 372
         }
         else if expandedCells.contains(indexPath.row) {
             return 321
