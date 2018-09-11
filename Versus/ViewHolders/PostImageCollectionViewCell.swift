@@ -22,8 +22,6 @@ class PostImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var blackImage: UIImageView!
     @IBOutlet weak var rednameLabel: UILabel!
     @IBOutlet weak var blacknameLabel: UILabel!
-    @IBOutlet weak var vLabel: UILabel!
-    @IBOutlet weak var sLabel: UILabel!
     
     var delegate : ProfileDelegator!
     
@@ -55,16 +53,6 @@ class PostImageCollectionViewCell: UICollectionViewCell {
         
         rednameLabel.text = post.redname
         blacknameLabel.text = post.blackname
-        
-        
-        if vIsRed {
-            vLabel.textColor = UIColor(named: "VS_Red")
-            sLabel.textColor = UIColor(named: "VS_Blue")
-        }
-        else {
-            vLabel.textColor = UIColor(named: "VS_Blue")
-            sLabel.textColor = UIColor(named: "VS_Red")
-        }
         
         if post.profileImageVersion > 0 {
             setProfileImage(username: post.author, profileImageVersion: post.profileImageVersion)
