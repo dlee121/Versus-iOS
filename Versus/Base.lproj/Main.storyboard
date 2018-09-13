@@ -484,16 +484,26 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mzK-EK-OQi">
+                                                            <rect key="frame" x="308" y="8" width="59" height="20"/>
+                                                            <connections>
+                                                                <action selector="sortButtonTapped:" destination="NEV-S1-gNk" eventType="touchUpInside" id="5LJ-Qj-jOX"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
+                                                        <constraint firstItem="P1J-wp-x5x" firstAttribute="bottom" secondItem="mzK-EK-OQi" secondAttribute="bottom" id="2Eu-rI-H3C"/>
                                                         <constraint firstAttribute="bottom" secondItem="IQ2-cD-jsY" secondAttribute="bottom" constant="8" id="BHR-er-b2A"/>
                                                         <constraint firstAttribute="bottom" secondItem="P1J-wp-x5x" secondAttribute="bottom" constant="8" id="Fe6-al-BWQ"/>
                                                         <constraint firstItem="IQ2-cD-jsY" firstAttribute="top" secondItem="4gU-0r-18R" secondAttribute="top" constant="8" id="Fwe-4i-xT3"/>
                                                         <constraint firstAttribute="height" constant="36" id="OC6-Gy-BAK"/>
+                                                        <constraint firstItem="P1J-wp-x5x" firstAttribute="leading" secondItem="mzK-EK-OQi" secondAttribute="leading" id="WXQ-ba-qPh"/>
                                                         <constraint firstItem="P1J-wp-x5x" firstAttribute="top" secondItem="4gU-0r-18R" secondAttribute="top" constant="8" id="XiS-7C-Cwy"/>
                                                         <constraint firstItem="IQ2-cD-jsY" firstAttribute="leading" secondItem="4gU-0r-18R" secondAttribute="leading" constant="8" id="ay5-1R-Y84"/>
+                                                        <constraint firstItem="P1J-wp-x5x" firstAttribute="top" secondItem="mzK-EK-OQi" secondAttribute="top" id="g57-n8-0hQ"/>
                                                         <constraint firstAttribute="trailing" secondItem="P1J-wp-x5x" secondAttribute="trailing" constant="8" id="lWa-2F-i63"/>
+                                                        <constraint firstItem="P1J-wp-x5x" firstAttribute="trailing" secondItem="mzK-EK-OQi" secondAttribute="trailing" id="sSb-Nn-sLo"/>
                                                     </constraints>
                                                 </view>
                                                 <view opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MYL-zh-NqH">
@@ -970,12 +980,22 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QSQ-Tk-qlY">
+                                                            <rect key="frame" x="311.5" y="0.0" width="55.5" height="36"/>
+                                                            <connections>
+                                                                <action selector="sortButtonTapped:" destination="Gwa-5V-6Gg" eventType="touchUpInside" id="HMh-gP-oZr"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="36" id="Coi-FY-D7z"/>
                                                         <constraint firstItem="H7J-iJ-Rfp" firstAttribute="leading" secondItem="DO7-eT-fAc" secondAttribute="leading" constant="8" id="Fmk-t0-o1b"/>
+                                                        <constraint firstItem="Gf0-DC-AMi" firstAttribute="leading" secondItem="QSQ-Tk-qlY" secondAttribute="leading" id="UdI-Bv-Vw9"/>
+                                                        <constraint firstItem="Gf0-DC-AMi" firstAttribute="bottom" secondItem="QSQ-Tk-qlY" secondAttribute="bottom" id="Uvd-Gp-yNu"/>
+                                                        <constraint firstItem="Gf0-DC-AMi" firstAttribute="trailing" secondItem="QSQ-Tk-qlY" secondAttribute="trailing" id="VQG-NX-fu5"/>
                                                         <constraint firstItem="H7J-iJ-Rfp" firstAttribute="top" secondItem="DO7-eT-fAc" secondAttribute="top" constant="8" id="bvo-TJ-SFT"/>
+                                                        <constraint firstItem="Gf0-DC-AMi" firstAttribute="top" secondItem="QSQ-Tk-qlY" secondAttribute="top" id="gAJ-Xs-cW7"/>
                                                         <constraint firstAttribute="trailing" secondItem="Gf0-DC-AMi" secondAttribute="trailing" constant="8" id="iKI-CU-ejS"/>
                                                         <constraint firstAttribute="bottom" secondItem="Gf0-DC-AMi" secondAttribute="bottom" id="iWu-Mi-Tnk"/>
                                                         <constraint firstAttribute="bottom" secondItem="H7J-iJ-Rfp" secondAttribute="bottom" constant="8" id="jBr-Y2-9gq"/>
@@ -1376,6 +1396,7 @@
                                                     <rect key="frame" x="15" y="11" width="70.5" height="30"/>
                                                     <connections>
                                                         <action selector="profileTapped:" destination="yGK-5f-cdE" eventType="touchUpInside" id="9OV-OR-YhG"/>
+                                                        <action selector="sortButtonTapped:" destination="yGK-5f-cdE" eventType="touchUpInside" id="W7l-Kz-l6q"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UuQ-iv-Bow">
@@ -1403,12 +1424,19 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AuJ-Yf-SDU">
+                                                            <rect key="frame" x="311.5" y="0.0" width="55.5" height="36"/>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
+                                                        <constraint firstItem="UPh-2n-q1f" firstAttribute="top" secondItem="AuJ-Yf-SDU" secondAttribute="top" id="1vR-Lb-Wgw"/>
+                                                        <constraint firstItem="UPh-2n-q1f" firstAttribute="bottom" secondItem="AuJ-Yf-SDU" secondAttribute="bottom" id="2Bn-JK-tTS"/>
                                                         <constraint firstAttribute="bottom" secondItem="ZUH-JW-mBB" secondAttribute="bottom" constant="8" id="Br6-h1-7dp"/>
                                                         <constraint firstAttribute="height" constant="36" id="DiA-Jd-tIh"/>
+                                                        <constraint firstItem="UPh-2n-q1f" firstAttribute="leading" secondItem="AuJ-Yf-SDU" secondAttribute="leading" id="Sc0-be-0eQ"/>
                                                         <constraint firstItem="ZUH-JW-mBB" firstAttribute="leading" secondItem="cin-eG-Eky" secondAttribute="leading" constant="8" id="bX0-aA-dPJ"/>
+                                                        <constraint firstItem="UPh-2n-q1f" firstAttribute="trailing" secondItem="AuJ-Yf-SDU" secondAttribute="trailing" id="dgn-rz-XGn"/>
                                                         <constraint firstItem="UPh-2n-q1f" firstAttribute="top" secondItem="cin-eG-Eky" secondAttribute="top" id="gqU-q9-4Az"/>
                                                         <constraint firstAttribute="trailing" secondItem="UPh-2n-q1f" secondAttribute="trailing" constant="8" id="pYM-tD-5K7"/>
                                                         <constraint firstItem="ZUH-JW-mBB" firstAttribute="top" secondItem="cin-eG-Eky" secondAttribute="top" constant="8" id="rsF-4y-hE0"/>
@@ -3041,7 +3069,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pI6-92-rY7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7234" y="2573"/>
+            <point key="canvasLocation" x="6454" y="2237"/>
         </scene>
         <!--Comments History View Controller-->
         <scene sceneID="iAg-Gb-hvH">
@@ -4603,12 +4631,9 @@
         <namedColor name="VS_Red">
             <color red="1" green="0.125" blue="0.125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="VS_Red">
-            <color red="1" green="0.125" blue="0.125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kmh-ur-Uym"/>
+        <segue reference="kMN-CP-0NP"/>
         <segue reference="kUu-8a-Bhy"/>
         <segue reference="sD2-CK-5N3"/>
         <segue reference="qbd-PO-7a5"/>
@@ -4618,6 +4643,6 @@
         <segue reference="QIQ-jM-7ZR"/>
         <segue reference="onp-lO-nwi"/>
         <segue reference="CBT-JG-zYd"/>
-        <segue reference="5jD-8Y-GNx"/>
+        <segue reference="Lbc-3X-Z2H"/>
     </inferredMetricsTieBreakers>
 </document>

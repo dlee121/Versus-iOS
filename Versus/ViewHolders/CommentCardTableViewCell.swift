@@ -421,4 +421,10 @@ class CommentCardTableViewCell: UITableViewCell {
         delegate.viewMoreRepliesTapped(topCardComment: currentComment)
     }
     
+    @IBAction func sortButtonTapped(_ sender: UIButton) {
+        delegate.presentSortMenu()
+    }
+    
+    
+    
 }

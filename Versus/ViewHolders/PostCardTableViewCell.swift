@@ -298,6 +298,11 @@ class PostCardTableViewCell: UITableViewCell {
         delegate.resizePostCardOnVote(red: false)
     }
     
+    @IBAction func sortButtonTapped(_ sender: UIButton) {
+        delegate.presentSortMenu()
+    }
+    
+    
     
     
     

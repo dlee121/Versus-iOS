@@ -1047,4 +1047,35 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         return true
     }
     
+    func presentSortMenu(){
+        let alertController = UIAlertController(title: "SORT BY", message: nil, preferredStyle: .actionSheet)
+        //alertController.setValue(0, forKey: "titleTextAlignment")
+        
+        let mostRecent = UIAlertAction(title: "Most Recent", style: .default) { (_) in }
+        let icon_mostRecent = UIImage(named: "sort_Most Recent")
+        mostRecent.setValue(icon_mostRecent, forKey: "image")
+        mostRecent.setValue(0, forKey: "titleTextAlignment")
+        
+        let popular = UIAlertAction(title: "Popular", style: .default) { (_) in }
+        let icon_popular = UIImage(named: "sort_Popular")
+        popular.setValue(icon_popular, forKey: "image")
+        popular.setValue(0, forKey: "titleTextAlignment")
+        
+        let chronological = UIAlertAction(title: "Chronological", style: .default) { (_) in }
+        let icon_chronological = UIImage(named: "sort_Chronological")
+        chronological.setValue(icon_chronological, forKey: "image")
+        chronological.setValue(0, forKey: "titleTextAlignment")
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        
+        alertController.addAction(mostRecent)
+        alertController.addAction(popular)
+        alertController.addAction(chronological)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true) {
+            // ...
+        }
+    }
+    
 }
