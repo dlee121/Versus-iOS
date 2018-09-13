@@ -422,7 +422,7 @@ class CommentCardTableViewCell: UITableViewCell {
     }
     
     @IBAction func sortButtonTapped(_ sender: UIButton) {
-        delegate.presentSortMenu()
+        delegate.presentSortMenu(sortButtonLabel: sortButton)
     }
     
     

@@ -1367,21 +1367,27 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         return true
     }
     
-    func presentSortMenu(){
+    func presentSortMenu(sortButtonLabel: UILabel){
         let alertController = UIAlertController(title: "SORT BY", message: nil, preferredStyle: .actionSheet)
         //alertController.setValue(0, forKey: "titleTextAlignment")
         
-        let mostRecent = UIAlertAction(title: "Most Recent", style: .default) { (_) in }
+        let mostRecent = UIAlertAction(title: "Most Recent", style: .default) { (_) in
+            sortButtonLabel.setPostPageSortLabel(imageName: "sort_Most Recent", suffix: " Most Recent")
+        }
         let icon_mostRecent = UIImage(named: "sort_Most Recent")
         mostRecent.setValue(icon_mostRecent, forKey: "image")
         mostRecent.setValue(0, forKey: "titleTextAlignment")
         
-        let popular = UIAlertAction(title: "Popular", style: .default) { (_) in }
+        let popular = UIAlertAction(title: "Popular", style: .default) { (_) in
+            sortButtonLabel.setPostPageSortLabel(imageName: "sort_Popular", suffix: " Popular")
+        }
         let icon_popular = UIImage(named: "sort_Popular")
         popular.setValue(icon_popular, forKey: "image")
         popular.setValue(0, forKey: "titleTextAlignment")
         
-        let chronological = UIAlertAction(title: "Chronological", style: .default) { (_) in }
+        let chronological = UIAlertAction(title: "Chronological", style: .default) { (_) in
+            sortButtonLabel.setPostPageSortLabel(imageName: "sort_Chronological", suffix: " Chronological")
+        }
         let icon_chronological = UIImage(named: "sort_Chronological")
         chronological.setValue(icon_chronological, forKey: "image")
         chronological.setValue(0, forKey: "titleTextAlignment")

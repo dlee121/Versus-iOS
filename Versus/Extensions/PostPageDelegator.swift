@@ -9,5 +9,5 @@ protocol PostPageDelegator {
     func endUpdatesForSeeLess(row : Int)
     func replyButtonTapped(replyTarget : VSComment, cell : CommentCardTableViewCell)
     func viewMoreRepliesTapped(topCardComment : VSComment)
-    func presentSortMenu()
+    func presentSortMenu(sortButtonLabel : UILabel)
 }
