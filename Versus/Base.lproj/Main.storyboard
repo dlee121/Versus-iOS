@@ -1396,7 +1396,6 @@
                                                     <rect key="frame" x="15" y="11" width="70.5" height="30"/>
                                                     <connections>
                                                         <action selector="profileTapped:" destination="yGK-5f-cdE" eventType="touchUpInside" id="9OV-OR-YhG"/>
-                                                        <action selector="sortButtonTapped:" destination="yGK-5f-cdE" eventType="touchUpInside" id="W7l-Kz-l6q"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UuQ-iv-Bow">
@@ -1426,6 +1425,9 @@
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AuJ-Yf-SDU">
                                                             <rect key="frame" x="311.5" y="0.0" width="55.5" height="36"/>
+                                                            <connections>
+                                                                <action selector="sortButtonTapped:" destination="yGK-5f-cdE" eventType="touchUpInside" id="XxF-SF-3nU"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
