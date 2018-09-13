@@ -55,6 +55,12 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     let silverPoints = 15
     let bronzePoints = 5
     
+    var sortType = 0
+    let POPULAR = 0
+    let MOST_RECENT = 1
+    let CHRONOLOGICAL = 2
+    var sortTypeString = "Popular"
+    
     /*
      updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
      ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -98,6 +104,31 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         }
         else {
             refreshControl.endRefreshing()
+        }
+    }
+    
+    func sortRefresh(_ sender: Any){
+        fromIndex = 0
+        
+        rootComments.removeAll()
+        childComments.removeAll()
+        comments.removeAll()
+        tableView.reloadData()
+        
+        winnerTreeRoots.removeAllObjects()
+        medalistCQPayload = ""
+        
+        topicComment = nil
+        expandedCells.removeAllObjects()
+        nowLoading = false
+        
+        comments.append(topCardComment)
+        
+        if sortType == POPULAR {
+            setMedals()
+        }
+        else {
+            commentsQuery()
         }
     }
     
@@ -200,6 +231,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func commentClickSetUpChildPage (post : PostObject, comment : VSComment, userAction : UserAction, topicComment : VSComment) {
+        sortType = POPULAR
+        sortTypeString = "Popular"
         parentVC = nil
         self.topicComment = topicComment
         comments.removeAll()
@@ -226,6 +259,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func setUpChildPage(post : PostObject, comment : VSComment, userAction : UserAction, parentPage : RootPageViewController?){
+        sortType = POPULAR
+        sortTypeString = "Popular"
         parentVC = parentPage
         topicComment = nil
         comments.removeAll()
@@ -453,7 +488,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                     if mcq2 != nil {
                         self.medalistCQPayload.append(","+mcq2!)
                     }
-                    self.commentsQuery(queryType: "rci")
+                    self.commentsQuery()
                 }
                 
                 
@@ -464,13 +499,30 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
     }
     
-    func commentsQuery(queryType : String){
+    func commentsQuery(){
         if fromIndex == nil {
             fromIndex = 0
         }
         
+        var queryType, ascORdesc : String!
+        
+        switch sortType {
+        case POPULAR:
+            queryType = "rci"
+            ascORdesc = nil
+        case MOST_RECENT:
+            queryType = "rct"
+            ascORdesc = "desc"
+        case CHRONOLOGICAL:
+            queryType = "rct"
+            ascORdesc = "asc"
+        default:
+            queryType = "rci"
+            ascORdesc = nil
+        }
+        
         //get the root comments, children, and grandchildren
-        apiClient.commentslistGet(c: topCardComment.comment_id, d: nil, a: queryType, b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        apiClient.commentslistGet(c: topCardComment.comment_id, d: ascORdesc, a: queryType, b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             print("child commentQuery with fromIndex == \(self.fromIndex!)")
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -607,7 +659,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         if !nowLoading && indexPath.row == lastElement {
             nowLoading = true
             //fromIndex already set in commenteQuery, after getting root comments
-            commentsQuery(queryType: "rci")
+            commentsQuery()
         }
     }
     
@@ -672,17 +724,17 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             if let selection = currentUserAction.actionRecord[comment.comment_id] {
                 switch selection {
                 case "N":
-                    cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: "Popular")
+                    cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: sortTypeString)
                 case "U":
-                    cell!.setTopCardCellWithSelection(comment: comment, hearted: true, row: indexPath.row, sortType: "Popular")
+                    cell!.setTopCardCellWithSelection(comment: comment, hearted: true, row: indexPath.row, sortType: sortTypeString)
                 case "D":
-                    cell!.setTopCardCellWithSelection(comment: comment, hearted: false, row: indexPath.row, sortType: "Popular")
+                    cell!.setTopCardCellWithSelection(comment: comment, hearted: false, row: indexPath.row, sortType: sortTypeString)
                 default:
-                    cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: "Popular")
+                    cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: sortTypeString)
                 }
             }
             else {
-                cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: "Popular")
+                cell!.setTopCardCell(comment: comment, row: indexPath.row, sortType: sortTypeString)
             }
             
             if let medalType = medalWinnersList[comment.comment_id] {
@@ -1250,6 +1302,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
         let mostRecent = UIAlertAction(title: "Most Recent", style: .default) { (_) in
             sortButtonLabel.setPostPageSortLabel(imageName: "sort_Most Recent", suffix: " Most Recent")
+            self.sortType = self.MOST_RECENT
+            self.sortTypeString = "Most Recent"
+            self.sortRefresh(8)
         }
         let icon_mostRecent = UIImage(named: "sort_Most Recent")
         mostRecent.setValue(icon_mostRecent, forKey: "image")
@@ -1257,6 +1312,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
         let popular = UIAlertAction(title: "Popular", style: .default) { (_) in
             sortButtonLabel.setPostPageSortLabel(imageName: "sort_Popular", suffix: " Popular")
+            self.sortType = self.POPULAR
+            self.sortTypeString = "Popular"
+            self.sortRefresh(8)
         }
         let icon_popular = UIImage(named: "sort_Popular")
         popular.setValue(icon_popular, forKey: "image")
@@ -1264,6 +1322,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
         let chronological = UIAlertAction(title: "Chronological", style: .default) { (_) in
             sortButtonLabel.setPostPageSortLabel(imageName: "sort_Chronological", suffix: " Chronological")
+            self.sortType = self.CHRONOLOGICAL
+            self.sortTypeString = "Chronological"
+            self.sortRefresh(8)
         }
         let icon_chronological = UIImage(named: "sort_Chronological")
         chronological.setValue(icon_chronological, forKey: "image")

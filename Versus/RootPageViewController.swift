@@ -59,6 +59,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     let silverPoints = 15
     let bronzePoints = 5
     
+    var sortType = 0
+    let POPULAR = 0
+    let MOST_RECENT = 1
+    let CHRONOLOGICAL = 2
+    var sortTypeString = "Popular"
+    
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
             ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -102,6 +108,33 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         else {
             refreshControl.endRefreshing()
         }
+    }
+    
+    func sortRefresh(_ sender: Any){
+        fromIndex = 0
+        
+        rootComments.removeAll()
+        childComments.removeAll()
+        grandchildComments.removeAll()
+        comments.removeAll()
+        tableView.reloadData()
+        
+        winnerTreeRoots.removeAllObjects()
+        medalistCQPayload = ""
+        
+        topicComment = nil
+        expandedCells.removeAllObjects()
+        nowLoading = false
+        
+        comments.append(VSComment()) //placeholder for post object
+        
+        if sortType == POPULAR {
+            setMedals()
+        }
+        else {
+            commentsQuery()
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -191,6 +224,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func commentClickSetUpRootPage (post : PostObject, userAction : UserAction, topicComment : VSComment) {
+        sortType = POPULAR
+        sortTypeString = "Popular"
         fromCreatePost = false
         self.topicComment = topicComment
         comments.removeAll()
@@ -215,6 +250,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func setUpRootPage(post : PostObject, userAction : UserAction, fromCreatePost : Bool){
+        sortType = POPULAR
+        sortTypeString = "Popular"
         self.fromCreatePost = fromCreatePost
         topicComment = nil
         comments.removeAll()
@@ -489,7 +526,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.medalistCQPayload.append(","+mcq2!)
                     }
                     print("mcq: "+self.medalistCQPayload)
-                    self.commentsQuery(queryType: "rci")
+                    self.commentsQuery()
                 }
                 
                 
@@ -500,13 +537,30 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
-    func commentsQuery(queryType : String){
+    func commentsQuery(){
         if fromIndex == nil {
             fromIndex = 0
         }
         
+        var queryType, ascORdesc : String!
+        
+        switch sortType {
+        case POPULAR:
+            queryType = "rci"
+            ascORdesc = nil
+        case MOST_RECENT:
+            queryType = "rct"
+            ascORdesc = "desc"
+        case CHRONOLOGICAL:
+            queryType = "rct"
+            ascORdesc = "asc"
+        default:
+            queryType = "rci"
+            ascORdesc = nil
+        }
+        
         //get the root comments, children, and grandchildren
-        apiClient.commentslistGet(c: currentPost.post_id, d: nil, a: queryType, b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        apiClient.commentslistGet(c: currentPost.post_id, d: ascORdesc, a: queryType, b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             print("commentQuery with fromIndex == \(self.fromIndex!)")
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -704,7 +758,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         if !nowLoading && indexPath.row == lastElement {
             nowLoading = true
             //fromIndex already set in commenteQuery, after getting root comments
-            commentsQuery(queryType: "rci")
+            commentsQuery()
         }
     }
     
@@ -822,7 +876,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 { //for RootPage, first item of the comments list is a placeholder for the post object
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCard", for: indexPath) as? PostCardTableViewCell
-            cell!.setCell(post: currentPost, votedSide: currentUserAction.votedSide, sortType: "Popular")
+            cell!.setCell(post: currentPost, votedSide: currentUserAction.votedSide, sortType: sortTypeString)
             cell!.delegate = self
             return cell!
         }
@@ -1373,6 +1427,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let mostRecent = UIAlertAction(title: "Most Recent", style: .default) { (_) in
             sortButtonLabel.setPostPageSortLabel(imageName: "sort_Most Recent", suffix: " Most Recent")
+            self.sortType = self.MOST_RECENT
+            self.sortTypeString = "Most Recent"
+            self.sortRefresh(8)
         }
         let icon_mostRecent = UIImage(named: "sort_Most Recent")
         mostRecent.setValue(icon_mostRecent, forKey: "image")
@@ -1380,6 +1437,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let popular = UIAlertAction(title: "Popular", style: .default) { (_) in
             sortButtonLabel.setPostPageSortLabel(imageName: "sort_Popular", suffix: " Popular")
+            self.sortType = self.POPULAR
+            self.sortTypeString = "Popular"
+            self.sortRefresh(8)
         }
         let icon_popular = UIImage(named: "sort_Popular")
         popular.setValue(icon_popular, forKey: "image")
@@ -1387,6 +1447,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let chronological = UIAlertAction(title: "Chronological", style: .default) { (_) in
             sortButtonLabel.setPostPageSortLabel(imageName: "sort_Chronological", suffix: " Chronological")
+            self.sortType = self.CHRONOLOGICAL
+            self.sortTypeString = "Chronological"
+            self.sortRefresh(8)
         }
         let icon_chronological = UIImage(named: "sort_Chronological")
         chronological.setValue(icon_chronological, forKey: "image")
