@@ -740,6 +740,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             if let medalType = medalWinnersList[comment.comment_id] {
                 cell!.setCommentMedal(medalType: medalType)
             }
+            else {
+                cell!.removeMedalView()
+            }
             
             cell!.delegate = self
             
@@ -780,6 +783,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             
             if let medalType = medalWinnersList[comment.comment_id] {
                 cell!.setCommentMedal(medalType: medalType)
+            }
+            else {
+                cell!.removeMedalView()
             }
             
             cell!.delegate = self

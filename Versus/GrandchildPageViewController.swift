@@ -568,6 +568,9 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
             if let medalType = medalWinnersList[comment.comment_id] {
                 cell!.setCommentMedal(medalType: medalType)
             }
+            else {
+                cell!.removeMedalView()
+            }
             
             cell!.delegate = self
             
@@ -595,6 +598,9 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
             
             if let medalType = medalWinnersList[comment.comment_id] {
                 cell!.setCommentMedal(medalType: medalType)
+            }
+            else {
+                cell!.removeMedalView()
             }
             
             cell!.delegate = self

@@ -920,6 +920,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             if let medalType = medalWinnersList[comment.comment_id] {
                 cell!.setCommentMedal(medalType: medalType)
             }
+            else {
+                cell!.removeMedalView()
+            }
             
             cell!.delegate = self
             

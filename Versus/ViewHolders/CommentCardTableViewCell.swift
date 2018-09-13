@@ -395,6 +395,11 @@ class CommentCardTableViewCell: UITableViewCell {
         
     }
     
+    func removeMedalView(){
+        medalViewWidth.constant = 0
+        medalTrailing.constant = 0
+    }
+    
     @IBAction func seeMoreTapped(_ sender: Any) {
         if content.numberOfLines == 0 {
             delegate.beginUpdates()
