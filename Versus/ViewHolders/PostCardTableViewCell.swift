@@ -32,6 +32,15 @@ class PostCardTableViewCell: UITableViewCell {
     @IBOutlet weak var leftOverlay: UIView!
     @IBOutlet weak var rightOverlay: UIView!
     
+    @IBOutlet weak var redNameHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var blueNameHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var redImageTop: NSLayoutConstraint!
+    @IBOutlet weak var blueImageTop: NSLayoutConstraint!
+    
+    @IBOutlet weak var textOnlyRedName: UILabel!
+    @IBOutlet weak var textOnlyBlueName: UILabel!
     
     
     let DEFAULT = 0
@@ -41,13 +50,14 @@ class PostCardTableViewCell: UITableViewCell {
     var currentPost : PostObject!
     var delegate:PostPageDelegator!
     
+    var leftOverlayAlpha, rightOverlayAlpha : CGFloat!
+    
     func setCell(post : PostObject, votedSide : String, sortType : String){
         print("setting up post card")
         sortButton.setPostPageSortLabel(imageName: "sort_"+sortType, suffix: " "+sortType)
         currentPost = post
         question.text = post.question
-        redname.text = post.redname
-        bluename.text = post.blackname
+        
         if post.profileImageVersion > 0 {
             setProfileImage(username: post.author, profileImageVersion: post.profileImageVersion)
         }
@@ -62,12 +72,46 @@ class PostCardTableViewCell: UITableViewCell {
         
         author.text = post.author
         votecount.text = "\(post.redcount.intValue+post.blackcount.intValue) votes"
+        
+        
+        
+        
         if post.redimg.intValue % 10 == S3 {
+            textOnlyRedName.text = ""
+            redImageTop.constant = 8
+            redname.text = post.redname
+            redCheck.image = #imageLiteral(resourceName: "check_circle_white")
+            leftOverlayAlpha = 0.3
+            redNameHeight.constant = 21
             getPostImage(postID: post.post_id, lORr: 0, editVersion: post.redimg.intValue / 10)
+        }
+        else {
+            //textOnlyRedName.adjustsFontSizeToFitWidth = true
+            textOnlyRedName.text = post.redname
+            redImageTop.constant = -34
+            redNameHeight.constant = 0
+            redname.text = ""
+            redCheck.image = #imageLiteral(resourceName: "check_circle_gray")
+            leftOverlayAlpha = 0.0
         }
         
         if post.blackimg.intValue % 10 == S3 {
+            textOnlyBlueName.text = ""
+            blueImageTop.constant = 8
+            bluename.text = post.blackname
+            blueCheck.image = #imageLiteral(resourceName: "check_circle_white")
+            rightOverlayAlpha = 0.3
+            blueNameHeight.constant = 21
             getPostImage(postID: post.post_id, lORr: 1, editVersion: post.blackimg.intValue / 10)
+        }
+        else {
+            //textOnlyBlueName.adjustsFontSizeToFitWidth = true
+            textOnlyBlueName.text = post.blackname
+            blueImageTop.constant = -34
+            blueNameHeight.constant = 0
+            bluename.text = ""
+            blueCheck.image = #imageLiteral(resourceName: "check_circle_gray")
+            rightOverlayAlpha = 0.0
         }
         
         switch votedSide {
@@ -88,7 +132,7 @@ class PostCardTableViewCell: UITableViewCell {
             calculateGraph()
             redCheck.isHidden = false
             blueCheck.isHidden = true
-            leftOverlay.alpha = 0.3
+            leftOverlay.alpha = leftOverlayAlpha
             rightOverlay.alpha = 0
         case "BLK":
             sortContainerTopConstraint.constant = 32.5
@@ -99,7 +143,7 @@ class PostCardTableViewCell: UITableViewCell {
             redCheck.isHidden = true
             blueCheck.isHidden = false
             leftOverlay.alpha = 0
-            rightOverlay.alpha = 0.3
+            rightOverlay.alpha = rightOverlayAlpha
         default:
             sortContainerTopConstraint.constant = 8
             bluePercent.isHidden = true
