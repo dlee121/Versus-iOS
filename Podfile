@@ -16,5 +16,6 @@ target 'Versus' do
   pod 'Nuke'
   pod 'XLPagerTabStrip', '~> 8.0'
   pod 'PopupDialog', '~> 0.8'
+  pod 'JWTDecode', '~> 2.1'
 
 end

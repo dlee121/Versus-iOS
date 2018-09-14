@@ -18,6 +18,7 @@ class InitialViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        //the token verification and refresh here does not conflict with token verification in AppDelegate, since this one is called for fresh launch and the AppDelegate one is called for relaunch
         if let user = Auth.auth().currentUser {
             if UserDefaults.standard.string(forKey: "KEY_USERNAME") != nil {
                 //get user token, set up cognito auth credentials, then segue to MainContainer

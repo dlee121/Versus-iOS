@@ -45,6 +45,7 @@ PODS:
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - GTMSessionFetcher/Core (1.1.15)
+  - JWTDecode (2.1.1)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -64,6 +65,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Messaging
+  - JWTDecode (~> 2.1)
   - Nuke
   - PopupDialog (~> 0.8)
   - XLPagerTabStrip (~> 8.0)
@@ -83,6 +85,7 @@ SPEC REPOS:
     - FirebaseMessaging
     - GoogleToolboxForMac
     - GTMSessionFetcher
+    - JWTDecode
     - leveldb-library
     - nanopb
     - Nuke
@@ -104,6 +107,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 6894b8fe0a0cf26c3b13dad729f1131654ae0bdb
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
+  JWTDecode: 83e8b381aafe27158d9f692cbdca2b12d61d460c
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Nuke: a4a20e945a32a8da57830628ff1e0ea2a1904d0a
@@ -111,6 +115,6 @@ SPEC CHECKSUMS:
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: b909e1b0adf2e8fa50303ec73c6e0f78f6226609
+PODFILE CHECKSUM: 901ad949d1518099d1a9316d24ef2595087aab5b
 
 COCOAPODS: 1.5.3
