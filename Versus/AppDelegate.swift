@@ -77,9 +77,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
         }
         
+        //clear any push notification displayed on the phone
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         
-        //clear any push notification displayed on the phone
+        //check if auth token is still valid. If it's close to expiration or already expired, then refresh it and credentials
+        
         
     }
 

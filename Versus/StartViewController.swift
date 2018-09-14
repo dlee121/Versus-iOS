@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import PopupDialog
 
-class ViewController: UIViewController {
+class StartViewController: UIViewController {
     @IBOutlet weak var usernameIn: UITextField!
     @IBOutlet weak var passwordIn: UITextField!
     @IBOutlet weak var logInButton: UIButton!

@@ -14,7 +14,7 @@
 		70086D542131FDD000B20989 /* EmailSetpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70086D532131FDD000B20989 /* EmailSetpVC.swift */; };
 		700DB5CB21081CF5008E546A /* PostInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700DB5CA21081CF5008E546A /* PostInfo.swift */; };
 		701B9BA520E3FB20003C9E7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B9BA420E3FB20003C9E7E /* AppDelegate.swift */; };
-		701B9BA720E3FB20003C9E7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B9BA620E3FB20003C9E7E /* ViewController.swift */; };
+		701B9BA720E3FB20003C9E7E /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B9BA620E3FB20003C9E7E /* StartViewController.swift */; };
 		701B9BAA20E3FB20003C9E7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BA820E3FB20003C9E7E /* Main.storyboard */; };
 		701B9BAC20E3FB22003C9E7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BAB20E3FB22003C9E7E /* Assets.xcassets */; };
 		701B9BAF20E3FB22003C9E7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 701B9BAD20E3FB22003C9E7E /* LaunchScreen.storyboard */; };
@@ -150,7 +150,7 @@
 		700DB5CA21081CF5008E546A /* PostInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfo.swift; sourceTree = "<group>"; };
 		701B9BA120E3FB20003C9E7E /* Versus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Versus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		701B9BA420E3FB20003C9E7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		701B9BA620E3FB20003C9E7E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		701B9BA620E3FB20003C9E7E /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		701B9BA920E3FB20003C9E7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		701B9BAB20E3FB22003C9E7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		701B9BAE20E3FB22003C9E7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -328,7 +328,7 @@
 				70E80C6F20E6CD150067DF08 /* VSAPI */,
 				701B9BA420E3FB20003C9E7E /* AppDelegate.swift */,
 				70B9A7E420ED93B600C06709 /* InitialViewController.swift */,
-				701B9BA620E3FB20003C9E7E /* ViewController.swift */,
+				701B9BA620E3FB20003C9E7E /* StartViewController.swift */,
 				70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */,
 				70E80BF520E6944B0067DF08 /* UsernameViewController.swift */,
 				70E80BF720E694560067DF08 /* PasswordViewController.swift */,
@@ -666,7 +666,7 @@
 				70E80CDF20E6DB570067DF08 /* VSPostsListCompactModel.swift in Sources */,
 				7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */,
 				70FEE426212F7302000638C6 /* SettingsViewController.swift in Sources */,
-				701B9BA720E3FB20003C9E7E /* ViewController.swift in Sources */,
+				701B9BA720E3FB20003C9E7E /* StartViewController.swift in Sources */,
 				70B9A7E120ED64C200C06709 /* Character+UInt32.swift in Sources */,
 				706F89E42106E38800A78EFB /* VSPostQMultiModel_docs_item__source.swift in Sources */,
 				70E80CBB20E6DB570067DF08 /* Empty.swift in Sources */,

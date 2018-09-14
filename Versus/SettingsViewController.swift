@@ -91,7 +91,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc : ViewController = storyboard.instantiateViewController(withIdentifier: "loginPage") as! ViewController
+            let vc : StartViewController = storyboard.instantiateViewController(withIdentifier: "loginPage") as! StartViewController
             vc.view.frame = rootViewController.view.frame
             vc.view.layoutIfNeeded()
             
