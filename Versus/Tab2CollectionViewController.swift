@@ -15,7 +15,6 @@ import XLPagerTabStrip
 class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ProfileDelegator {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var categoryFilterButton: UIButton!
     @IBOutlet weak var categorySelectionLabel: UILabel!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
@@ -46,13 +45,6 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
         
         screenWidth = self.view.frame.size.width
         textsVSCHeight = screenWidth / 1.6
-        
-        DispatchQueue.main.async {
-            let labelWidth = self.categoryFilterButton.titleLabel!.frame.size.width
-            let imageWidth = self.categoryFilterButton.imageView!.frame.size.width
-            self.categoryFilterButton.titleEdgeInsets = UIEdgeInsetsMake(0.0,-imageWidth,0.0,imageWidth)
-            self.categoryFilterButton.imageEdgeInsets = UIEdgeInsetsMake(0.0,labelWidth,0.0,-labelWidth)
-        }
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(Tab2CollectionViewController.resetCategorySelection))
         categorySelectionLabel.addGestureRecognizer(tap)
