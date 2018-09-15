@@ -18,6 +18,7 @@ import JWTDecode
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow?
+    weak var timer: Timer?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -61,15 +62,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        timer?.invalidate()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
         if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
             Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
         }
         
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        timer?.invalidate()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -98,6 +102,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
                         //login session configuration is stored in the default
                         AWSServiceManager.default().defaultServiceConfiguration = configuration
+                        
+                        //set periodic task to refresh token every 58 minutes = 3480 seconds
+                        self.setPeriodicTokenRefresh(period: 3480)
+                    }
+                    else {
+                        //set periodic task to refresh token every m - 2 minutes, where m = minutes to token expiration
+                        self.setPeriodicTokenRefresh(period: jwt.expiresAt!.timeIntervalSinceNow - 120)
                     }
                     
                 } catch {
@@ -109,11 +120,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
                         //login session configuration is stored in the default
                         AWSServiceManager.default().defaultServiceConfiguration = configuration
+                        
+                        //set periodic task to refresh token every 58 minutes = 3480 seconds
+                        self.setPeriodicTokenRefresh(period: 3480)
                     }
                 }
             }
         }
     }
+    
+    func setPeriodicTokenRefresh(period : TimeInterval) {
+        timer?.invalidate()   // just in case you had existing `Timer`, `invalidate` it before we lose our reference to it
+        timer = Timer.scheduledTimer(withTimeInterval: period, repeats: false) { [weak self] _ in
+            Auth.auth().currentUser!.getIDTokenForcingRefresh(true){ (idToken, error) in
+                let oidcProvider = OIDCProvider(input: idToken! as NSString)
+                let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+                credentialsProvider.clearCredentials()
+                let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+                //login session configuration is stored in the default
+                AWSServiceManager.default().defaultServiceConfiguration = configuration
+                
+                //set periodic task to refresh token every 58 minutes = 3480 seconds.
+                self!.setPeriodicTokenRefresh(period: 3480)
+            }
+        }
+    }
+    
+    
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
@@ -121,6 +154,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        timer?.invalidate()
     }
 
     func getUsernameHash(username : String) -> String {
