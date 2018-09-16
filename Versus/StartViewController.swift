@@ -15,9 +15,14 @@ class StartViewController: UIViewController {
     @IBOutlet weak var passwordIn: UITextField!
     @IBOutlet weak var logInButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
+    
+    @IBOutlet weak var logoTopMargin: NSLayoutConstraint!
+    
     var handle: AuthStateDidChangeListenerHandle!
     var unauthClient : VSVersusAPIClient!
     var emailSetUpButtonLock = false
+    var loginButtonY : CGFloat = 0
+    var keyboardIsOpen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,11 +34,16 @@ class StartViewController: UIViewController {
         button.addTarget(self, action: #selector(self.pwtoggle), for: .touchUpInside)
         passwordIn.rightView = button
         passwordIn.rightViewMode = .always
+        
+        loginButtonY = logInButton.frame.maxY
     }
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         emailSetUpButtonLock = false
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(StartViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(StartViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         //remove session data, log out firebase user, then segue back to start screen
         UserDefaults.standard.removeObject(forKey: "KEY_BDAY")
@@ -48,11 +58,38 @@ class StartViewController: UIViewController {
         let configurationAuth = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
         //unauth config is stored in individual client instances and not in default, which is reserved for auth config
         unauthClient = VSVersusAPIClient(configuration: configurationAuth!)
+        
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if logoTopMargin.constant == 32 {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                print("loginY = \(loginButtonY) && keyboardY = \(keyboardSize.origin.y)")
+                if keyboardSize.origin.y < loginButtonY {
+                    print("changing origin")
+                    logoTopMargin.constant = 32 - (loginButtonY - keyboardSize.origin.y + 8)
+                }
+            }
+        }
+        
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if logoTopMargin.constant != 32 {
+            print("restoring origin")
+            logoTopMargin.constant = 32
+        }
     }
 
     @IBAction func logInButtonTapped(_ sender: UIButton) {

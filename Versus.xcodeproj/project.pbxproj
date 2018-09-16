@@ -331,6 +331,7 @@
 				701B9BA420E3FB20003C9E7E /* AppDelegate.swift */,
 				70B9A7E420ED93B600C06709 /* InitialViewController.swift */,
 				701B9BA620E3FB20003C9E7E /* StartViewController.swift */,
+				7027A7DC214E1D500071A939 /* SignUpViewController.swift */,
 				70E80BF320E6943F0067DF08 /* BirthdayViewController.swift */,
 				70E80BF520E6944B0067DF08 /* UsernameViewController.swift */,
 				70E80BF720E694560067DF08 /* PasswordViewController.swift */,
@@ -361,7 +362,6 @@
 				70FC66282124C97D00783FD5 /* TabBarViewController.swift */,
 				70FC662A2124D77900783FD5 /* CustomTabBar.swift */,
 				70FEE425212F7302000638C6 /* SettingsViewController.swift */,
-				7027A7DC214E1D500071A939 /* SignUpViewController.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
