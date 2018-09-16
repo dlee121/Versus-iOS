@@ -45,8 +45,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    
-    
     <key>CFBundleURLTypes</key>
     <array>
         <dict>
@@ -60,6 +58,5 @@
     <string>781801582026233</string>
     <key>FacebookDisplayName</key>
     <string>Versus</string>
-    
 </dict>
 </plist>

@@ -111,6 +111,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             else {
                 //About
                 
+                
             }
             
             

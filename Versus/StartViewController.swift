@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
 import FacebookLogin
 import PopupDialog
 
@@ -32,6 +32,10 @@ class StartViewController: UIViewController {
     var emailSetUpButtonLock = false
     var loginButtonY : CGFloat = 0
     var keyboardIsOpen = false
+    
+    var fbORgoogleSignUp : Bool!
+    var authID : String?
+    var authCredential : AuthCredential?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -171,6 +175,7 @@ class StartViewController: UIViewController {
                                                     UserDefaults.standard.set(userGetModel?.pi?.intValue, forKey: "KEY_PI")
                                                     UserDefaults.standard.set(true, forKey: "KEY_IS_NATIVE")
                                                     
+                                                    self.fbORgoogleSignUp = false
                                                     DispatchQueue.main.async {
                                                         self.performSegue(withIdentifier: "logInToMain", sender: self)
                                                     }
@@ -214,7 +219,7 @@ class StartViewController: UIViewController {
         //sign up user with Firebase
         
         //try? Auth.auth().signOut()
-        
+        fbORgoogleSignUp = false
         performSegue(withIdentifier: "startToSignUp", sender: self)
     }
     
@@ -352,6 +357,16 @@ class StartViewController: UIViewController {
         return email.count > 0 && emailTest.evaluate(with: email)
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if fbORgoogleSignUp {
+            //pass the credential and authID to SignUpVC
+            guard let signUpVC = segue.destination as? SignUpViewController else {return}
+            signUpVC.authID = authID!
+            signUpVC.authCredential = authCredential!
+        }
+    }
+    
     @IBAction func fbLoginTapped(_ sender: UIButton) {
         
         let loginManager = LoginManager()
@@ -362,9 +377,10 @@ class StartViewController: UIViewController {
             case .cancelled:
                 print("User cancelled login")
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                let authID = accessToken.userId! + "_" //we append facebook login authID with "_"
+                self.authID = accessToken.userId! + "_hi" //we append facebook login authID with "_"
+                self.authCredential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
                 
-                self.unauthClient.aiGet(a: authID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                self.unauthClient.aiGet(a: self.authID!).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                     if task.error != nil {
                         DispatchQueue.main.async {
                             self.showToast(message: "Please check your network.", length: 26)
@@ -372,20 +388,22 @@ class StartViewController: UIViewController {
                     }
                     else {
                         if let results = task.result?.hits?.hits {
+                            
                             if results.count == 0 {
                                 //New user, sign up!
                                 //sign up through firebase, put the new user's data to ES and UserDefaults, then start the session
                                 
-                                
+                                //segue to SignUpViewController, with the credential and authID
+                                self.fbORgoogleSignUp = true
+                                DispatchQueue.main.async {
+                                    self.performSegue(withIdentifier: "startToSignUp", sender: self)
+                                }
                             }
                             else {
                                 //Returning user, log in!
                                 //log in through firebase and then get user data from ES and plug 'em in to UserDefaults, then start the session
-                                let authToken = accessToken.authenticationToken
-                                let credential = FacebookAuthProvider.credential(withAccessToken: authToken)
-                                print("authToken here yo = \(authToken)")
                                 
-                                Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
+                                Auth.auth().signInAndRetrieveData(with: self.authCredential!) { (authResult, error) in
                                     if let error = error {
                                         // ...
                                         return
@@ -411,6 +429,7 @@ class StartViewController: UIViewController {
                                             UserDefaults.standard.set(userData.pi?.intValue, forKey: "KEY_PI")
                                             UserDefaults.standard.set(false, forKey: "KEY_IS_NATIVE")
                                             
+                                            self.fbORgoogleSignUp = false
                                             DispatchQueue.main.async {
                                                 self.performSegue(withIdentifier: "logInToMain", sender: self)
                                             }

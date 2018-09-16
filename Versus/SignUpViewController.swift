@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SignUpViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var array = {"SignUp"}
+    var authID : String?
+    var authCredential : AuthCredential?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -36,6 +39,16 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                                                selector: #selector(keyboardWillHide(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillHide,
                                                object: nil)
+        
+        if authID != nil {
+            print("set up for fbORgoogle signup")
+            
+        }
+        else {
+            print("set up for native signup")
+            
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {
