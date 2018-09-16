@@ -11,7 +11,7 @@ import Firebase
 import FacebookLogin
 import PopupDialog
 
-class StartViewController: UIViewController, LoginButtonDelegate {
+class StartViewController: UIViewController {
     
     
     
@@ -66,14 +66,6 @@ class StartViewController: UIViewController, LoginButtonDelegate {
         
     }
     
-    func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
-        //
-    }
-    
-    func loginButtonDidLogOut(_ loginButton: LoginButton) {
-        //
-    }
-    
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         emailSetUpButtonLock = false
@@ -88,6 +80,9 @@ class StartViewController: UIViewController, LoginButtonDelegate {
         UserDefaults.standard.removeObject(forKey: "KEY_PI")
         UserDefaults.standard.removeObject(forKey: "KEY_IS_NATIVE")
         try! Auth.auth().signOut()
+        
+        let loginManager = LoginManager()
+        loginManager.logOut()
         
         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "us-east-1:88614505-c8df-4dce-abd8-79a0543852ff")
         credentialProvider.clearCredentials()
@@ -357,6 +352,22 @@ class StartViewController: UIViewController, LoginButtonDelegate {
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return email.count > 0 && emailTest.evaluate(with: email)
     }
+    
+    @IBAction func fbLoginTapped(_ sender: UIButton) {
+        
+        let loginManager = LoginManager()
+        loginManager.logIn(readPermissions: [.publicProfile], viewController : self) { loginResult in
+            switch loginResult {
+            case .failed(let error):
+                print(error)
+            case .cancelled:
+                print("User cancelled login")
+            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+                print("Logged in")
+            }
+        }
+    }
+    
     
 }
 

@@ -9,10 +9,10 @@
 import UIKit
 import AWSCore
 import Firebase
+import FacebookCore
 import UserNotifications
 import FirebaseInstanceID
 import FirebaseMessaging
-import FacebookCore
 import JWTDecode
 
 @UIApplicationMain
@@ -43,8 +43,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         application.registerForRemoteNotifications()
         Messaging.messaging().delegate = self
         
+        
         return true
     }
+    
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         return SDKApplicationDelegate.shared.application(app, open: url, options: options)

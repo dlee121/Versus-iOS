@@ -136,6 +136,9 @@
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sf1-ZW-4XZ">
                                         <rect key="frame" x="145" y="59" width="69" height="36"/>
+                                        <connections>
+                                            <action selector="fbLoginTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P5u-Bp-Scz"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQq-Xc-zxB">
                                         <rect key="frame" x="145" y="59" width="69" height="36"/>
@@ -4718,12 +4721,8 @@
         <namedColor name="noticeGreen">
             <color red="0.093999996781349182" green="0.74900001287460327" blue="0.18400000035762787" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="noticeGreen">
-            <color red="0.093999996781349182" green="0.74900001287460327" blue="0.18400000035762787" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GMa-tb-UbF"/>
         <segue reference="kmh-ur-Uym"/>
         <segue reference="iVN-9A-tOw"/>
         <segue reference="sD2-CK-5N3"/>
