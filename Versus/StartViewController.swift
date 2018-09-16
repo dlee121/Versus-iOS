@@ -377,7 +377,7 @@ class StartViewController: UIViewController {
             case .cancelled:
                 print("User cancelled login")
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                self.authID = accessToken.userId! + "_hi" //we append facebook login authID with "_"
+                self.authID = accessToken.userId! + "_" //we append facebook login authID with "_"
                 self.authCredential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
                 
                 self.unauthClient.aiGet(a: self.authID!).continueWith(block:) {(task: AWSTask) -> AnyObject? in

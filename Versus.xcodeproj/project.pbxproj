@@ -49,6 +49,7 @@
 		706F89ED2107EF1A00A78EFB /* PostsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89EC2107EF1A00A78EFB /* PostsHistoryViewController.swift */; };
 		706F89EF21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89EE21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift */; };
 		706F89F121080D8F00A78EFB /* VSComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89F021080D8F00A78EFB /* VSComment.swift */; };
+		70908BCE214EA7C7004005C5 /* SignUpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70908BCD214EA7C7004005C5 /* SignUpTableViewCell.swift */; };
 		70A7ED49211FBFB90059507A /* ChildPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A7ED48211FBFB90059507A /* ChildPageViewController.swift */; };
 		70A7ED4B211FC3410059507A /* PostPageDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A7ED4A211FC3410059507A /* PostPageDelegator.swift */; };
 		70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */; };
@@ -187,6 +188,7 @@
 		706F89EC2107EF1A00A78EFB /* PostsHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsHistoryViewController.swift; sourceTree = "<group>"; };
 		706F89EE21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		706F89F021080D8F00A78EFB /* VSComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSComment.swift; sourceTree = "<group>"; };
+		70908BCD214EA7C7004005C5 /* SignUpTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTableViewCell.swift; sourceTree = "<group>"; };
 		70A7ED48211FBFB90059507A /* ChildPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildPageViewController.swift; sourceTree = "<group>"; };
 		70A7ED4A211FC3410059507A /* PostPageDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageDelegator.swift; sourceTree = "<group>"; };
 		70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OIDCProvider.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 				70CB9E50211552D200D86E37 /* CommentCardTableViewCell.swift */,
 				70D17FEE2127869B00A0C9D6 /* NotificationsTableViewCell.swift */,
 				70B58F452131E2BE00557661 /* SettingsItemTableViewCell.swift */,
+				70908BCD214EA7C7004005C5 /* SignUpTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -733,6 +736,7 @@
 				70CB9E47210FE4D800D86E37 /* Array+Shuffle.swift in Sources */,
 				70CB9E4D21154DD300D86E37 /* RootPageViewController.swift in Sources */,
 				70E80CB720E6DB570067DF08 /* VSUserGetModel.swift in Sources */,
+				70908BCE214EA7C7004005C5 /* SignUpTableViewCell.swift in Sources */,
 				70E80CC720E6DB570067DF08 /* VSCommentEditModel_doc.swift in Sources */,
 				70E80CC020E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item__source.swift in Sources */,
 				70E80BF820E694560067DF08 /* PasswordViewController.swift in Sources */,

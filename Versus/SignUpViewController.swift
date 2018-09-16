@@ -22,7 +22,8 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "signUpCell", for: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "signUpCell", for: indexPath) as! SignUpTableViewCell
+        cell.setCell(isNative: (authID == nil))
         return cell
     }
 
@@ -31,6 +32,12 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
 
+        
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillShow,
@@ -39,16 +46,12 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                                                selector: #selector(keyboardWillHide(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillHide,
                                                object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
         
-        if authID != nil {
-            print("set up for fbORgoogle signup")
-            
-        }
-        else {
-            print("set up for native signup")
-            
-            
-        }
+        NotificationCenter.default.removeObserver(self)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,24 +61,27 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     
     @objc func keyboardWillShow(notification: NSNotification) {
         tableView.isScrollEnabled = true
-        let userInfo: NSDictionary = notification.userInfo! as NSDictionary
-        let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue
-        let keyboardSize = keyboardInfo.cgRectValue.size
-        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-        tableView.contentInset = contentInsets
-        tableView.scrollIndicatorInsets = contentInsets
-        tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
+        if authID == nil {
+            let userInfo: NSDictionary = notification.userInfo! as NSDictionary
+            let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue
+            let keyboardSize = keyboardInfo.cgRectValue.size
+            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            tableView.contentInset = contentInsets
+            tableView.scrollIndicatorInsets = contentInsets
+            tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
+        }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         tableView.isScrollEnabled = false
-        tableView.contentInset = .zero
-        tableView.scrollIndicatorInsets = .zero
-        if let indexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: indexPath, animated: true)
-            tableView.cellForRow(at: indexPath)?.selectionStyle = UITableViewCellSelectionStyle.none
+        if authID == nil {
+            tableView.contentInset = .zero
+            tableView.scrollIndicatorInsets = .zero
+            if let indexPath = tableView.indexPathForSelectedRow {
+                tableView.deselectRow(at: indexPath, animated: true)
+                tableView.cellForRow(at: indexPath)?.selectionStyle = UITableViewCellSelectionStyle.none
+            }
         }
-        
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
