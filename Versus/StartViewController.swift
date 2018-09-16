@@ -8,14 +8,23 @@
 
 import UIKit
 import Firebase
+import FacebookLogin
 import PopupDialog
 
-class StartViewController: UIViewController {
+class StartViewController: UIViewController, LoginButtonDelegate {
+    
+    
+    
     @IBOutlet weak var usernameIn: UITextField!
     @IBOutlet weak var passwordIn: UITextField!
     @IBOutlet weak var logInButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     
+    @IBOutlet weak var googleLoginContainer: UIView!
+    @IBOutlet weak var customFBLoginButton: UIButton!
+    @IBOutlet weak var customFBButtonLabel: UILabel!
+    
+    @IBOutlet weak var customFBButtonWidth: NSLayoutConstraint!
     @IBOutlet weak var logoTopMargin: NSLayoutConstraint!
     
     var handle: AuthStateDidChangeListenerHandle!
@@ -36,6 +45,33 @@ class StartViewController: UIViewController {
         passwordIn.rightViewMode = .always
         
         loginButtonY = logInButton.frame.maxY
+        
+        
+        logInButton.layer.cornerRadius = 5.0
+        logInButton.clipsToBounds = true
+        
+        signUpButton.layer.cornerRadius = 5.0
+        signUpButton.clipsToBounds = true
+        
+        
+        customFBButtonLabel.setCustomFBButtonLogo()
+        customFBButtonLabel.sizeToFit()
+        customFBButtonWidth.constant = customFBButtonLabel.frame.width + 16
+        customFBButtonLabel.layer.cornerRadius = 5.0
+        customFBButtonLabel.clipsToBounds = true
+        
+        googleLoginContainer.layer.cornerRadius = 5.0
+        googleLoginContainer.clipsToBounds = true
+        
+        
+    }
+    
+    func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
+        //
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: LoginButton) {
+        //
     }
     
     override func viewWillAppear(_ animated: Bool){

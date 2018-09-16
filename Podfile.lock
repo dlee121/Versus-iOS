@@ -4,7 +4,25 @@ PODS:
   - AWSCore (2.6.22)
   - AWSS3 (2.6.22):
     - AWSCore (= 2.6.22)
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.9.0)
   - DynamicBlurView (2.0.2)
+  - FacebookCore (0.3.2):
+    - Bolts (~> 1.8)
+    - FBSDKCoreKit (~> 4.35)
+  - FacebookLogin (0.3.2):
+    - Bolts (~> 1.8)
+    - FacebookCore (~> 0.3.2)
+    - FBSDKCoreKit (~> 4.35)
+    - FBSDKLoginKit (~> 4.35)
+  - FBSDKCoreKit (4.35.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.35.0):
+    - FBSDKCoreKit
   - Firebase/Auth (5.3.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.1)
@@ -61,6 +79,7 @@ PODS:
 DEPENDENCIES:
   - AWSAPIGateway
   - AWSS3
+  - FacebookLogin
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -75,7 +94,12 @@ SPEC REPOS:
     - AWSAPIGateway
     - AWSCore
     - AWSS3
+    - Bolts
     - DynamicBlurView
+    - FacebookCore
+    - FacebookLogin
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -97,7 +121,12 @@ SPEC CHECKSUMS:
   AWSAPIGateway: 7dad85e97b4431a78639bc8d47c8aba2bc4f3dd0
   AWSCore: faae134779f0f6e46a8d426c0ccc02e34466b785
   AWSS3: 2b70463225a455ba26494f06346bddb74dedf73d
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   DynamicBlurView: aa6db4defc6e537eb86fc5e58dd3991666178399
+  FacebookCore: fe93222bb70346730ef33b061d493e9e7a7cb1f5
+  FacebookLogin: a4e225974791c82836765a294582b4778baffc07
+  FBSDKCoreKit: 1a5b2e3ceb5ca827a53c54aa5f4a3480efff80d2
+  FBSDKLoginKit: 00a3d65d1226852f9d76dcddff01981e5e6d9c38
   Firebase: 68afeeb05461db02d7c9e3215cda28068670f4aa
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
   FirebaseAuth: 463b8ce33bd5d05f706dcd4615499e3212b4132b
@@ -115,6 +144,6 @@ SPEC CHECKSUMS:
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 901ad949d1518099d1a9316d24ef2595087aab5b
+PODFILE CHECKSUM: 03cf19c173ac00d6cc12e421f022f1832b3e4c13
 
 COCOAPODS: 1.5.3

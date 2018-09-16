@@ -65,6 +65,9 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
+    @IBAction func backButtonTapped(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
 
     /*
