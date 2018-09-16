@@ -869,7 +869,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             return 372
         }
         else if expandedCells.contains(indexPath.row) {
-            return 321
+            return 303
         }
         else {
             return 90

@@ -74,6 +74,9 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         print("gc loaded")
         super.viewDidLoad()
+        
+        tableView.separatorStyle = .none
+        
         //tableView.allowsSelection = false
         ref = Database.database().reference()
         
@@ -534,14 +537,14 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 152
+            return 138
         }
         
         if expandedCells.contains(indexPath.row) {
-            return 321
+            return 303
         }
         else {
-            return 108
+            return 90
         }
     }
     

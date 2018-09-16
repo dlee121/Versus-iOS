@@ -712,7 +712,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         if expandedCells.contains(indexPath.row) {
-            return 321
+            return 303
         }
         else {
             return 90
