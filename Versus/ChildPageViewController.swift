@@ -77,6 +77,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.separatorStyle = .none
+        
         //tableView.allowsSelection = false
         ref = Database.database().reference()
         
@@ -705,14 +708,14 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 152
+            return 138
         }
         
         if expandedCells.contains(indexPath.row) {
             return 321
         }
         else {
-            return 108
+            return 90
         }
     }
     
