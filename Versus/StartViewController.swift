@@ -75,19 +75,15 @@ class StartViewController: UIViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         if logoTopMargin.constant == 32 {
             if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                print("loginY = \(loginButtonY) && keyboardY = \(keyboardSize.origin.y)")
                 if keyboardSize.origin.y < loginButtonY {
-                    print("changing origin")
                     logoTopMargin.constant = 32 - (loginButtonY - keyboardSize.origin.y + 8)
                 }
             }
         }
-        
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         if logoTopMargin.constant != 32 {
-            print("restoring origin")
             logoTopMargin.constant = 32
         }
     }
