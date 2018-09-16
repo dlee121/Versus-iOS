@@ -81,6 +81,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.separatorStyle = .none
+        
         //tableView.allowsSelection = false
         ref = Database.database().reference()
         

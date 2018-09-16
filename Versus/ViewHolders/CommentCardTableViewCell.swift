@@ -61,10 +61,14 @@ class CommentCardTableViewCell: UITableViewCell {
         
         hearts.text = "\(comment.upvotes)"
         brokenhearts.text = "\(comment.downvotes)"
+        
+        heartButton.imageView!.contentMode = .scaleAspectFit
+        brokenheartButton.imageView!.contentMode = .scaleAspectFit
+        
         heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
         brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
         commentVote = none
-        leftMargin.constant = indent * 48
+        leftMargin.constant = indent * 48 + 8
         
         rowNumber = row
         
@@ -114,6 +118,10 @@ class CommentCardTableViewCell: UITableViewCell {
         }
         hearts.text = "\(comment.upvotes)"
         brokenhearts.text = "\(comment.downvotes)"
+        
+        heartButton.imageView!.contentMode = .scaleAspectFit
+        brokenheartButton.imageView!.contentMode = .scaleAspectFit
+        
         if hearted {
             heartButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
             brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
@@ -177,6 +185,10 @@ class CommentCardTableViewCell: UITableViewCell {
         
         hearts.text = "\(comment.upvotes)"
         brokenhearts.text = "\(comment.downvotes)"
+        
+        heartButton.imageView!.contentMode = .scaleAspectFit
+        brokenheartButton.imageView!.contentMode = .scaleAspectFit
+        
         heartButton.setImage(#imageLiteral(resourceName: "heart_grey"), for: .normal)
         brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
         commentVote = none
@@ -207,6 +219,10 @@ class CommentCardTableViewCell: UITableViewCell {
         }
         hearts.text = "\(comment.upvotes)"
         brokenhearts.text = "\(comment.downvotes)"
+        
+        heartButton.imageView!.contentMode = .scaleAspectFit
+        brokenheartButton.imageView!.contentMode = .scaleAspectFit
+        
         if hearted {
             heartButton.setImage(#imageLiteral(resourceName: "heart_red"), for: .normal)
             brokenheartButton.setImage(#imageLiteral(resourceName: "brokenheart_grey"), for: .normal)
