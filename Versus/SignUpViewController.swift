@@ -51,6 +51,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
         tableView.contentInset = contentInsets
         tableView.scrollIndicatorInsets = contentInsets
+        tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
