@@ -152,7 +152,7 @@ class StartViewController: UIViewController {
         
         //try? Auth.auth().signOut()
         
-        performSegue(withIdentifier: "goToBirthday", sender: self)
+        performSegue(withIdentifier: "startToSignUp", sender: self)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
