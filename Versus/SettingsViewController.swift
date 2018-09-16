@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseMessaging
+import FacebookLogin
 import PopupDialog
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -81,6 +82,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             UserDefaults.standard.removeObject(forKey: "KEY_PI")
             UserDefaults.standard.removeObject(forKey: "KEY_IS_NATIVE")
             try! Auth.auth().signOut()
+            
+            let loginManager = LoginManager()
+            loginManager.logOut()
             
             guard let window = UIApplication.shared.keyWindow else {
                 return
