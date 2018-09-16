@@ -363,7 +363,33 @@ class StartViewController: UIViewController {
             case .cancelled:
                 print("User cancelled login")
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                print("Logged in")
+                let authID = accessToken.userId! + "_" //we append facebook login authID with "_"
+                
+                self.unauthClient.aiGet(a: authID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    if task.error != nil {
+                        DispatchQueue.main.async {
+                            self.showMultilineToast(message: "Something went wrong.\nPlease check your network.", length: 30, lines: 2)
+                        }
+                    }
+                    else {
+                        if let results = task.result?.hits?.hits {
+                            if results.count == 0 {
+                                DispatchQueue.main.async {
+                                    print("New User. Sign up.")
+                                }
+                            }
+                            else {
+                                print("Found user, username = \(results[0].id). Log in.")
+                            }
+                            
+                        }
+                        
+                    }
+                    return nil
+                }
+                
+                
+                
             }
         }
     }
