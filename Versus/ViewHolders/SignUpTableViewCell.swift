@@ -14,11 +14,21 @@ class SignUpTableViewCell: UITableViewCell {
     @IBOutlet weak var passwordIn: UITextField!
     @IBOutlet weak var legalText: UILabel!
     @IBOutlet weak var createAccountLabel: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!
     
     @IBOutlet weak var passwordInHeight: NSLayoutConstraint!
     @IBOutlet weak var passwordLabelHeight: NSLayoutConstraint!
+    var confirmedUsername, confirmedPW : String!
+    var usernameConfirmed : Bool!
+    var native : Bool!
     
-    func setCell(isNative : Bool) {
+    var delegate : SignUpDelegator!
+    var usernameVersion : Int = 0
+    var unauthClient : VSVersusAPIClient!
+    
+    func setCell(isNative : Bool, delegator : SignUpDelegator) {
         
         if isNative {
             passwordInHeight.constant = 38
@@ -29,19 +39,175 @@ class SignUpTableViewCell: UITableViewCell {
             passwordLabelHeight.constant = 0
         }
         
+        native = isNative
+        delegate = delegator
         
+        let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "us-east-1:88614505-c8df-4dce-abd8-79a0543852ff")
+        credentialProvider.clearCredentials()
+        let configurationAuth = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
+        //unauth config is stored in individual client instances and not in default, which is reserved for auth config
+        unauthClient = VSVersusAPIClient(configuration: configurationAuth!)
+    }
+    
+    
+    func activateSignUpButton(){
+        signUpButton.isEnabled = true
+        createAccountLabel.backgroundColor = UIColor(red: 0, green: 122, blue: 255, alpha: 255)
+    }
+    
+    func deactivateSignUpButton(){
+        signUpButton.isEnabled = false
+        createAccountLabel.backgroundColor = UIColor(red: 170, green: 170, blue: 170, alpha: 255)
+    }
+    
+    @IBAction func usernameChangeListner(_ sender: UITextField) {
+        let input = usernameIn.text
+        
+        if characterChecker(input: input!) {
+            
+            usernameVersion += 1
+            let thisVersion = usernameVersion
+            
+            usernameLabel.text = "Checking username..."
+            unauthClient.userHead(a: "uc", b: usernameIn.text?.lowercased()).continueWith(block:) {(task: AWSTask) -> Empty? in
+                if task.error != nil{
+                    DispatchQueue.main.async {
+                        if(thisVersion == self.usernameVersion){
+                            self.usernameConfirmed = true
+                            self.usernameLabel.textColor = UIColor.black
+                            self.usernameLabel.text = "Username available"
+                            self.confirmedUsername = input!
+                        }
+                    }
+                }
+                else{
+                    DispatchQueue.main.async {
+                        if(thisVersion == self.usernameVersion){
+                            self.usernameConfirmed = false
+                            self.usernameLabel.textColor = UIColor(named: "noticeRed")
+                            self.usernameLabel.text = self.usernameIn.text! + " is already taken!"
+                        }
+                    }
+                }
+                
+                return nil
+            }
+        }
+        else{
+            if input!.isEmpty{
+                usernameConfirmed = false
+                usernameLabel.text = ""
+            }
+            else{
+                usernameConfirmed = false
+                usernameLabel.textColor = UIColor(named: "noticeRed")
+                usernameLabel.text = "Can only contain letters, numbers, and the following special characters: '-', '_', '~', and '%'"
+            }
+        }
+    }
+    
+    func characterChecker(input : String) -> Bool {
+        return !input.isEmpty && input.range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil
+    }
+    
+    
+    @IBAction func pwChangeListener(_ sender: UITextField) {
+        confirmedPW = nil
+        if let input = passwordIn.text{
+            if input.count > 0{
+                if input.count >= 6{
+                    if input.prefix(1) == " "{
+                        passwordLabel.text = "Password cannot start with blank space"
+                        passwordLabel.textColor = UIColor(named: "noticeRed")
+                    }
+                    else if input.suffix(1) == " "{
+                        passwordLabel.text = "Password cannot end with blank space"
+                        passwordLabel.textColor = UIColor(named: "noticeRed")
+                    }
+                    else{
+                        passwordStrengthCheck(pw: input)
+                        confirmedPW = input
+                    }
+                }
+                else{
+                    passwordLabel.text = "Must be at least 6 characters"
+                    passwordLabel.textColor = UIColor(named: "noticeRed")
+                }
+            }
+            else{
+                passwordLabel.text = ""
+            }
+        }
+    }
+    
+    func passwordStrengthCheck(pw: String) {
+        var strength = 0
+        
+        if(pw.count >= 4){
+            strength += 1
+        }
+        if(pw.count >= 6){
+            strength += 1
+        }
+        if(pw.lowercased() != pw){
+            strength += 1
+        }
+        var digitCount = 0
+        for i in 0...pw.count-1 {
+            if "0"..."9" ~= String(pw[pw.index(pw.startIndex, offsetBy: i)]) {
+                digitCount += 1
+            }
+        }
+        if(1...pw.count ~= digitCount){
+            strength += 1
+        }
+        
+        switch (strength){
+        case 0:
+            passwordLabel.textColor = UIColor(named: "noticeRed")
+            passwordLabel.text = "Password strength: weak"
+        case 1:
+            passwordLabel.textColor = UIColor(named: "noticeRed")
+            passwordLabel.text = "Password strength: weak"
+        case 2:
+            passwordLabel.text = "Password strength: medium"
+            passwordLabel.textColor = UIColor(named: "noticeYellow")
+        case 3:
+            passwordLabel.text = "Password strength: good"
+            passwordLabel.textColor = UIColor(named: "noticeGreen")
+        case 4:
+            passwordLabel.text = "Password strength: strong"
+            passwordLabel.textColor = UIColor(named: "noticeGreen")
+        default:
+            passwordLabel.text = "Password strength: medium"
+            passwordLabel.textColor = UIColor(named: "noticeYellow")
+        }
     }
     
     
     
-    
-    
-    
-    
-    
     @IBAction func createAccountButtonTapped(_ sender: UIButton) {
-        
-        
+        if native {
+            if let username = usernameIn.text {
+                if let pw = passwordIn.text {
+                    delegate.signUpButtonTapped(username: username, pw: pw)
+                }
+                else {
+                    delegate.showSUVCToast(text: "Please enter a valid password")
+                }
+            }
+            else {
+                delegate.showSUVCToast(text: "Please enter a valid username")
+            }
+        }
+        else {
+            if let username = usernameIn.text {
+                delegate.signUpButtonTapped(username: username, pw: nil)
+            }
+            else {
+                delegate.showSUVCToast(text: "Please enter a valid username")
+            }
+        }
     }
     
 }

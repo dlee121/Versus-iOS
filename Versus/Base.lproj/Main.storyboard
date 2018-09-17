@@ -252,9 +252,15 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="usernameChangeListner:" destination="EPe-Wp-lgx" eventType="editingChanged" id="kcj-jS-fc3"/>
+                                                    </connections>
                                                 </textField>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username is available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E8L-Z0-fWc">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E8L-Z0-fWc">
                                                     <rect key="frame" x="27" y="250.5" width="325" height="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="17" id="yXF-3E-rqA"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -267,14 +273,17 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="pwChangeListener:" destination="EPe-Wp-lgx" eventType="editingChanged" id="gV9-Qp-tMK"/>
+                                                    </connections>
                                                 </textField>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password strength: strong" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Oj-iV-udy">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Oj-iV-udy">
                                                     <rect key="frame" x="27" y="315.5" width="325" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="17" id="NOI-l0-9sR"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" name="noticeGreen"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up, you agree to our Terms and Policies." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6h-vd-jNM">
@@ -288,7 +297,7 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krW-dm-e6I">
                                                     <rect key="frame" x="23" y="373.5" width="329" height="30"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal" title="Create account">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     </state>
@@ -335,8 +344,11 @@
                                             <outlet property="legalText" destination="B6h-vd-jNM" id="iPk-qC-Ica"/>
                                             <outlet property="passwordIn" destination="EcG-QE-9lH" id="UQ3-Aa-tmt"/>
                                             <outlet property="passwordInHeight" destination="Z1N-rD-HBQ" id="n1d-Pj-hWB"/>
+                                            <outlet property="passwordLabel" destination="0Oj-iV-udy" id="cpB-sU-6Te"/>
                                             <outlet property="passwordLabelHeight" destination="NOI-l0-9sR" id="FVP-PS-KcH"/>
+                                            <outlet property="signUpButton" destination="i7T-LQ-3Ee" id="dg9-zR-f6g"/>
                                             <outlet property="usernameIn" destination="lrz-91-SUD" id="AU4-Y2-7vi"/>
+                                            <outlet property="usernameLabel" destination="E8L-Z0-fWc" id="0Xf-fr-ruc"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -4744,7 +4756,6 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GMa-tb-UbF"/>
         <segue reference="kmh-ur-Uym"/>
         <segue reference="iVN-9A-tOw"/>
         <segue reference="sD2-CK-5N3"/>

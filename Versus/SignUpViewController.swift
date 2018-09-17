@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class SignUpViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class SignUpViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SignUpDelegator {
     
     var array = {"SignUp"}
     var authID : String?
@@ -24,7 +24,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "signUpCell", for: indexPath) as! SignUpTableViewCell
-        cell.setCell(isNative: (authID == nil))
+        cell.setCell(isNative: (authID == nil), delegator: self)
         return cell
     }
 
@@ -97,5 +97,23 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func signUpButtonTapped(username: String, pw: String?) {
+        //hi
+    }
+    
+    func showSUVCToast(text : String) {
+        showToast(message: text, length: text.count)
+    }
+    
 
 }
+
+protocol SignUpDelegator {
+    func signUpButtonTapped(username : String, pw : String?)
+    func showSUVCToast(text : String)
+}
+
+
+
+
