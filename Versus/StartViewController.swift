@@ -408,13 +408,75 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
             print("\(error.localizedDescription)")
         } else {
             // Perform any operations on signed in user here.
-            let userId = user.userID                  // For client-side use only!
-            let idToken = user.authentication.idToken // Safe to send to the server
-            let fullName = user.profile.name
-            let givenName = user.profile.givenName
-            let familyName = user.profile.familyName
-            let email = user.profile.email
-            // ...
+            authID = user.userID
+            guard let authentication = user.authentication else { return }
+            authCredential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+            
+            self.unauthClient.aiGet(a: self.authID!).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                if task.error != nil {
+                    DispatchQueue.main.async {
+                        self.showToast(message: "Please check your network.", length: 26)
+                    }
+                }
+                else {
+                    if let results = task.result?.hits?.hits {
+                        
+                        if results.count == 0 {
+                            //New user, sign up!
+                            //sign up through firebase, put the new user's data to ES and UserDefaults, then start the session
+                            
+                            //segue to SignUpViewController, with the credential and authID
+                            self.fbORgoogleSignUp = true
+                            DispatchQueue.main.async {
+                                self.performSegue(withIdentifier: "startToSignUp", sender: self)
+                            }
+                        }
+                        else {
+                            //Returning user, log in!
+                            //log in through firebase and then get user data from ES and plug 'em in to UserDefaults, then start the session
+                            
+                            Auth.auth().signInAndRetrieveData(with: self.authCredential!) { (authResult, error) in
+                                if let error = error {
+                                    // ...
+                                    return
+                                }
+                                
+                                if let user = authResult?.user {
+                                    
+                                    user.getIDTokenForcingRefresh(true){ (idToken, error) in
+                                        
+                                        let oidcProvider = OIDCProvider(input: idToken! as NSString)
+                                        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+                                        credentialsProvider.clearCredentials()
+                                        let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+                                        //login session configuration is stored in the default
+                                        AWSServiceManager.default().defaultServiceConfiguration = configuration
+                                        
+                                        //Firebase authentication successful
+                                        let userData = results[0].source!
+                                        //create user session and segue to MainContainer
+                                        UserDefaults.standard.set(userData.bd, forKey: "KEY_BDAY")
+                                        UserDefaults.standard.set(userData.em, forKey: "KEY_EMAIL")
+                                        UserDefaults.standard.set(userData.cs, forKey: "KEY_USERNAME")
+                                        UserDefaults.standard.set(userData.pi?.intValue, forKey: "KEY_PI")
+                                        UserDefaults.standard.set(false, forKey: "KEY_IS_NATIVE")
+                                        
+                                        self.fbORgoogleSignUp = false
+                                        DispatchQueue.main.async {
+                                            self.performSegue(withIdentifier: "logInToMain", sender: self)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    
+                }
+                return nil
+            }
+
+            
         }
     }
     
