@@ -33,8 +33,6 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         
-        authID = "hi"
-        
         screenHeight = UIScreen.main.bounds.height
     }
     
