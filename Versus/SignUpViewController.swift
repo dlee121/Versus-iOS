@@ -104,7 +104,9 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
             //native signup
             if username != nil && pw != nil {
                 let password = pw! //just so I don't fuck around and end up with "Optional("pw")"
-                print("username = \(username), password = \(pw)")
+                print("username = \(username), password = \(password)")
+                
+                
                 
                 
             }

@@ -11,7 +11,7 @@ import FirebaseAuth
 import FacebookLogin
 import PopupDialog
 
-class StartViewController: UIViewController {
+class StartViewController: UIViewController, UITextFieldDelegate {
     
     
     
@@ -76,6 +76,23 @@ class StartViewController: UIViewController {
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
         self.view.addGestureRecognizer(swipeDown)
         
+        usernameIn.delegate = self
+        passwordIn.delegate = self
+        
+        usernameIn.returnKeyType = .next
+        passwordIn.returnKeyType = .go
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == usernameIn {
+            textField.resignFirstResponder()
+            passwordIn.becomeFirstResponder()
+        } else if textField == passwordIn {
+            logInButtonTapped(logInButton)
+        }
+        return true
     }
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
