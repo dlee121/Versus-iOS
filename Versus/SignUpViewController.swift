@@ -14,7 +14,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     var array = {"SignUp"}
     var authID : String?
     var authCredential : AuthCredential?
-    
+    var screenHeight : CGFloat!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -33,6 +33,9 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         
+        authID = "hi"
+        
+        screenHeight = UIScreen.main.bounds.height
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,7 +63,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     @objc func keyboardWillShow(notification: NSNotification) {
         tableView.isScrollEnabled = true
         
-        if authID == nil {
+        if authID == nil || screenHeight < 666 {
             let userInfo: NSDictionary = notification.userInfo! as NSDictionary
             let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue
             let keyboardSize = keyboardInfo.cgRectValue.size
@@ -75,7 +78,8 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     
     @objc func keyboardWillHide(notification: NSNotification) {
         tableView.isScrollEnabled = false
-        if authID == nil {
+        
+        if authID == nil || screenHeight < 666 {
             tableView.contentInset = .zero
             tableView.scrollIndicatorInsets = .zero
         }

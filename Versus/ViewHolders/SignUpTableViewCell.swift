@@ -19,6 +19,7 @@ class SignUpTableViewCell: UITableViewCell {
     @IBOutlet weak var passwordLabelHeight: NSLayoutConstraint!
     
     func setCell(isNative : Bool) {
+        /*
         if isNative {
             passwordInHeight.constant = 38
             passwordLabelHeight.constant = 17
@@ -27,6 +28,9 @@ class SignUpTableViewCell: UITableViewCell {
             passwordInHeight.constant = 0
             passwordLabelHeight.constant = 0
         }
+        */
+        passwordInHeight.constant = 0
+        passwordLabelHeight.constant = 0
         
         
     }
