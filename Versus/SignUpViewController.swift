@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class SignUpViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SignUpDelegator {
     
@@ -105,7 +106,86 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
             if username != nil && pw != nil {
                 let password = pw! //just so I don't fuck around and end up with "Optional("pw")"
                 print("username = \(username), password = \(password)")
-                
+                Auth.auth().createUser(withEmail: username+"@versusbcd.com", password: password) { (authResult, error) in
+                    // ...
+                    if let user = authResult?.user {
+                        print("signed up as " + user.email!)
+                        user.getIDTokenForcingRefresh(true){ (idToken, error) in
+                            
+                            let oidcProvider = OIDCProvider(input: idToken! as NSString)
+                            let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+                            credentialsProvider.clearCredentials()
+                            let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+                            //login session configuration is stored in the default
+                            AWSServiceManager.default().defaultServiceConfiguration = configuration
+                            
+                            //populate a UserPutModel and put it into ElasticSearch using api client
+                            let userPutModel = VSUserPutModel()
+                            userPutModel?.ai = "0" //AuthID for fb/google signup, hence the default value of "0" for native signup
+                            userPutModel?.b = 0 //initial bronze medal count
+                            
+                            userPutModel?.bd = "0" //birthday, a legacy placeholder in this case
+                            
+                            userPutModel?.cs = username //case-sensitive username for display purposes, since user is stored with id = username.lowercased()
+                            userPutModel?.em = "0" //default value for email
+                            userPutModel?.g = 0 //initial gold medal count
+                            userPutModel?._in = 0 //initial user influence
+                            userPutModel?.pi = 0 //initial value for profile image version
+                            userPutModel?.s = 0 //initial silver medal count
+                            
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                            userPutModel?.t = formatter.string(from: Date()) //signup timestamp
+                            
+                            VSVersusAPIClient.default().userputPost(body: userPutModel!, c: username.lowercased(), a: "put", b: "user").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                if task.error != nil{
+                                    DispatchQueue.main.async {
+                                        self.showToast(message: "Something went wrong. Please try again.", length: 39)
+                                    }
+                                }
+                                else { //successfully created user
+                                    //send new user notification about account recovery setup
+                                    var usernameHash : Int32
+                                    if(username.count < 5){
+                                        usernameHash = username.hashCode()
+                                    }
+                                    else{
+                                        var hashIn = ""
+                                        
+                                        hashIn.append(username[0])
+                                        hashIn.append(username[username.count-2])
+                                        hashIn.append(username[1])
+                                        hashIn.append(username[username.count-1])
+                                        
+                                        usernameHash = hashIn.hashCode()
+                                    }
+                                    
+                                    let userNotificationPath = "\(usernameHash)/" + username + "/n/em/"
+                                    Database.database().reference().child(userNotificationPath).setValue(true)
+                                    
+                                    //create user session and segue to MainContainer
+                                    UserDefaults.standard.set("0", forKey: "KEY_BDAY")
+                                    UserDefaults.standard.set("0", forKey: "KEY_EMAIL")
+                                    UserDefaults.standard.set(username, forKey: "KEY_USERNAME")
+                                    UserDefaults.standard.set(0, forKey: "KEY_PI")
+                                    UserDefaults.standard.set(true, forKey: "KEY_IS_NATIVE")
+                                    
+                                    
+                                    DispatchQueue.main.async {
+                                        self.performSegue(withIdentifier: "signUpToMain", sender: self)
+                                    }
+                                }
+                                
+                                return nil
+                            }
+                            
+                        }
+                        
+                    }
+                    else{
+                        self.showToast(message: "Something went wrong, please try again.", length: 39)
+                    }
+                }
                 
                 
                 

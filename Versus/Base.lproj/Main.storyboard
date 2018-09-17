@@ -375,6 +375,7 @@
                     <connections>
                         <outlet property="tableView" destination="e2g-xP-KLo" id="At9-mn-Ybo"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="signUpToStart" id="MmY-zm-xEb"/>
+                        <segue destination="Npi-V0-gi3" kind="show" identifier="signUpToMain" id="H2x-dk-GMV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CXi-Nf-Baw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4748,8 +4749,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GMa-tb-UbF"/>
-        <segue reference="kmh-ur-Uym"/>
+        <segue reference="H2x-dk-GMV"/>
         <segue reference="iVN-9A-tOw"/>
         <segue reference="sD2-CK-5N3"/>
         <segue reference="ndU-Xn-ImY"/>
