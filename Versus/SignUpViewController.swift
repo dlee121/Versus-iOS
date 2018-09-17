@@ -15,6 +15,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     var authID : String?
     var authCredential : AuthCredential?
     
+    
     @IBOutlet weak var tableView: UITableView!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -31,9 +32,6 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidLoad()
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
-
-        
-        
         
     }
     
@@ -61,14 +59,17 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     
     @objc func keyboardWillShow(notification: NSNotification) {
         tableView.isScrollEnabled = true
+        
         if authID == nil {
             let userInfo: NSDictionary = notification.userInfo! as NSDictionary
             let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue
             let keyboardSize = keyboardInfo.cgRectValue.size
-            let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-            tableView.contentInset = contentInsets
-            tableView.scrollIndicatorInsets = contentInsets
-            tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
+            if keyboardSize.height > tableView.contentInset.bottom {
+                let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+                tableView.contentInset = contentInsets
+                tableView.scrollIndicatorInsets = contentInsets
+                tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
+            }
         }
     }
     
@@ -77,10 +78,6 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         if authID == nil {
             tableView.contentInset = .zero
             tableView.scrollIndicatorInsets = .zero
-            if let indexPath = tableView.indexPathForSelectedRow {
-                tableView.deselectRow(at: indexPath, animated: true)
-                tableView.cellForRow(at: indexPath)?.selectionStyle = UITableViewCellSelectionStyle.none
-            }
         }
     }
     
