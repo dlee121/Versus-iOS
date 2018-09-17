@@ -10,6 +10,7 @@ import UIKit
 import AWSCore
 import Firebase
 import FacebookCore
+import GoogleSignIn
 import UserNotifications
 import FirebaseInstanceID
 import FirebaseMessaging
@@ -43,13 +44,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         application.registerForRemoteNotifications()
         Messaging.messaging().delegate = self
         
-        
         return true
     }
     
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return SDKApplicationDelegate.shared.application(app, open: url, options: options)
+        
+        let facebookDidHandle = SDKApplicationDelegate.shared.application(app, open: url, options: options)
+        let googleDidHandle = GIDSignIn.sharedInstance().handle(url as URL?, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+        return facebookDidHandle || googleDidHandle
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {

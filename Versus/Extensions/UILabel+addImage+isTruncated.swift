@@ -27,13 +27,13 @@ extension UILabel
     func setCustomFBButtonLogo() {
         let attachment:NSTextAttachment = NSTextAttachment()
         attachment.image = UIImage(named: "fbLogo")
-        attachment.setImageHeight(height: 22)
+        attachment.setImageHeight(height: 18)
         //attachment.bounds = CGRect(x: 0.0, y: self.font.descender*2, width: 28, height: 28)
         
         let attachmentString:NSAttributedString = NSAttributedString(attachment: attachment)
         let myString:NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
         myString.append(attachmentString)
-        myString.append(NSAttributedString(string: " Continue with Facebook"))
+        myString.append(NSAttributedString(string: "  Sign in with Facebook"))
         
         self.attributedText = myString
     }

@@ -9,9 +9,11 @@
 import UIKit
 import FirebaseAuth
 import FacebookLogin
+import GoogleSignIn
 import PopupDialog
 
-class StartViewController: UIViewController, UITextFieldDelegate {
+
+class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDelegate, GIDSignInUIDelegate {
     
     
     
@@ -20,9 +22,10 @@ class StartViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var logInButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     
-    @IBOutlet weak var googleLoginContainer: UIView!
+    @IBOutlet weak var customGoogleLoginButton: GIDSignInButton!
     @IBOutlet weak var customFBLoginButton: UIButton!
     @IBOutlet weak var customFBButtonLabel: UILabel!
+    @IBOutlet weak var customFBButtonHeight: NSLayoutConstraint!
     
     @IBOutlet weak var customFBButtonWidth: NSLayoutConstraint!
     @IBOutlet weak var logoTopMargin: NSLayoutConstraint!
@@ -58,19 +61,23 @@ class StartViewController: UIViewController, UITextFieldDelegate {
         signUpButton.clipsToBounds = true
         
         
+        GIDSignIn.sharedInstance().clientID = "688623904224-h6qno61t8vd42bjo67g50qmfh9vpdltg.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().uiDelegate = self
+        
+        customGoogleLoginButton.style = .wide
+        
         customFBButtonLabel.setCustomFBButtonLogo()
         customFBButtonLabel.sizeToFit()
-        customFBButtonWidth.constant = customFBButtonLabel.frame.width + 16
-        customFBButtonLabel.layer.cornerRadius = 5.0
+        customFBButtonWidth.constant = customGoogleLoginButton.frame.width - 6
+        customFBButtonHeight.constant = customGoogleLoginButton.frame.height - 6.5
+        customFBButtonLabel.layer.cornerRadius = 3.2
         customFBButtonLabel.clipsToBounds = true
         
-        googleLoginContainer.layer.cornerRadius = 5.0
-        googleLoginContainer.clipsToBounds = true
-        
-        
+        //log out fb and google just in case
         let loginManager = LoginManager()
         loginManager.logOut()
-        
+        GIDSignIn.sharedInstance().signOut()
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeDown.direction = UISwipeGestureRecognizerDirection.down
@@ -105,6 +112,9 @@ class StartViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
+        
+        //print("fb button width = \(customFBButtonWidth.constant), google button width = \(customGoogleLoginButton.frame.width)")
+        
         emailSetUpButtonLock = false
         
         NotificationCenter.default.addObserver(self, selector: #selector(StartViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -390,6 +400,28 @@ class StartViewController: UIViewController, UITextFieldDelegate {
             signUpVC.authID = authID!
             signUpVC.authCredential = authCredential!
         }
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
+              withError error: Error!) {
+        if let error = error {
+            print("\(error.localizedDescription)")
+        } else {
+            // Perform any operations on signed in user here.
+            let userId = user.userID                  // For client-side use only!
+            let idToken = user.authentication.idToken // Safe to send to the server
+            let fullName = user.profile.name
+            let givenName = user.profile.givenName
+            let familyName = user.profile.familyName
+            let email = user.profile.email
+            // ...
+        }
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
+              withError error: Error!) {
+        // Perform any operations when the user disconnects from app here.
+        // ...
     }
     
     @IBAction func fbLoginTapped(_ sender: UIButton) {

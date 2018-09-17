@@ -127,41 +127,42 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="26O-ix-7xy">
                                 <rect key="frame" x="8" y="461" width="359" height="198"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mam-0n-Od0">
-                                        <rect key="frame" x="145" y="103" width="69" height="36"/>
-                                        <color key="backgroundColor" name="noticeGreen"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="36" id="ArF-S6-iFu"/>
-                                        </constraints>
-                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sf1-ZW-4XZ">
-                                        <rect key="frame" x="145" y="59" width="69" height="36"/>
+                                        <rect key="frame" x="145" y="57" width="69" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <connections>
                                             <action selector="fbLoginTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P5u-Bp-Scz"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQq-Xc-zxB">
-                                        <rect key="frame" x="145" y="59" width="69" height="36"/>
+                                        <rect key="frame" x="145" y="57" width="69" height="36"/>
                                         <color key="backgroundColor" red="0.2666666667" green="0.41176470590000003" blue="0.69019607839999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="69" id="BpX-W2-I6U"/>
                                             <constraint firstAttribute="height" constant="36" id="oiS-St-5HB"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b2v-92-deP" customClass="GIDSignInButton">
+                                        <rect key="frame" x="145" y="105" width="69" height="36"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="GXu-t9-fTw"/>
+                                            <constraint firstAttribute="width" constant="69" id="upN-L3-r1a"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="mam-0n-Od0" firstAttribute="leading" secondItem="HQq-Xc-zxB" secondAttribute="leading" id="1zU-3g-2HQ"/>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="trailing" secondItem="HQq-Xc-zxB" secondAttribute="trailing" id="4Is-vO-EGV"/>
-                                    <constraint firstItem="mam-0n-Od0" firstAttribute="trailing" secondItem="HQq-Xc-zxB" secondAttribute="trailing" id="6bA-b1-cJT"/>
-                                    <constraint firstItem="HQq-Xc-zxB" firstAttribute="centerY" secondItem="26O-ix-7xy" secondAttribute="centerY" constant="-22" id="7ma-Dg-1QE"/>
+                                    <constraint firstItem="HQq-Xc-zxB" firstAttribute="centerY" secondItem="26O-ix-7xy" secondAttribute="centerY" constant="-24" id="7ma-Dg-1QE"/>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="leading" secondItem="HQq-Xc-zxB" secondAttribute="leading" id="Bdc-Bq-jja"/>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="bottom" secondItem="HQq-Xc-zxB" secondAttribute="bottom" id="Fsb-Az-rYW"/>
+                                    <constraint firstItem="b2v-92-deP" firstAttribute="centerY" secondItem="26O-ix-7xy" secondAttribute="centerY" constant="24" id="afk-7d-nGn"/>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="top" secondItem="HQq-Xc-zxB" secondAttribute="top" id="cdd-9Q-wS5"/>
-                                    <constraint firstItem="mam-0n-Od0" firstAttribute="centerY" secondItem="26O-ix-7xy" secondAttribute="centerY" constant="22" id="tJs-S9-0dJ"/>
+                                    <constraint firstItem="b2v-92-deP" firstAttribute="centerX" secondItem="HQq-Xc-zxB" secondAttribute="centerX" id="qc0-mj-3aK"/>
                                     <constraint firstItem="HQq-Xc-zxB" firstAttribute="centerX" secondItem="26O-ix-7xy" secondAttribute="centerX" id="yuI-8Y-MJV"/>
                                 </constraints>
                             </view>
@@ -195,10 +196,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="customFBButtonHeight" destination="oiS-St-5HB" id="woL-GN-YtP"/>
                         <outlet property="customFBButtonLabel" destination="HQq-Xc-zxB" id="Wrd-gm-2b6"/>
                         <outlet property="customFBButtonWidth" destination="BpX-W2-I6U" id="c4H-Ig-Kn6"/>
                         <outlet property="customFBLoginButton" destination="sf1-ZW-4XZ" id="w3x-vP-Oi0"/>
-                        <outlet property="googleLoginContainer" destination="mam-0n-Od0" id="zkH-31-wWV"/>
+                        <outlet property="customGoogleLoginButton" destination="b2v-92-deP" id="iCH-Et-Zrs"/>
                         <outlet property="logInButton" destination="xPN-8j-PI5" id="r6l-sr-S7b"/>
                         <outlet property="logoTopMargin" destination="meX-Ic-CKg" id="iCg-1J-3VL"/>
                         <outlet property="passwordIn" destination="dyQ-Hr-5nQ" id="9tu-bu-jYe"/>
@@ -4744,12 +4746,10 @@
         <namedColor name="VS_Red">
             <color red="1" green="0.125" blue="0.125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="noticeGreen">
-            <color red="0.093999996781349182" green="0.74900001287460327" blue="0.18400000035762787" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="H2x-dk-GMV"/>
+        <segue reference="GMa-tb-UbF"/>
+        <segue reference="kmh-ur-Uym"/>
         <segue reference="iVN-9A-tOw"/>
         <segue reference="sD2-CK-5N3"/>
         <segue reference="ndU-Xn-ImY"/>
