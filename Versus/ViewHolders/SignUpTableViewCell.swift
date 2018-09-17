@@ -13,10 +13,9 @@ class SignUpTableViewCell: UITableViewCell {
     @IBOutlet weak var usernameIn: UITextField!
     @IBOutlet weak var passwordIn: UITextField!
     @IBOutlet weak var legalText: UILabel!
-    @IBOutlet weak var createAccountLabel: UIButton!
-    @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var passwordLabel: UILabel!
+    @IBOutlet weak var createAccountButton: UIButton!
     
     @IBOutlet weak var passwordInHeight: NSLayoutConstraint!
     @IBOutlet weak var passwordLabelHeight: NSLayoutConstraint!
@@ -47,20 +46,39 @@ class SignUpTableViewCell: UITableViewCell {
         let configurationAuth = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
         //unauth config is stored in individual client instances and not in default, which is reserved for auth config
         unauthClient = VSVersusAPIClient(configuration: configurationAuth!)
+        
+        if native {
+            if confirmedUsername != nil && confirmedPW != nil {
+                activateSignUpButton()
+            }
+            else {
+                deactivateSignUpButton()
+            }
+        }
+        else {
+            if confirmedUsername != nil {
+                activateSignUpButton()
+            }
+            else {
+                deactivateSignUpButton()
+            }
+        }
+        
     }
     
     
     func activateSignUpButton(){
-        signUpButton.isEnabled = true
-        createAccountLabel.backgroundColor = UIColor(red: 0, green: 122, blue: 255, alpha: 255)
+        createAccountButton.isEnabled = true
+        createAccountButton.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1)
     }
     
     func deactivateSignUpButton(){
-        signUpButton.isEnabled = false
-        createAccountLabel.backgroundColor = UIColor(red: 170, green: 170, blue: 170, alpha: 255)
+        createAccountButton.isEnabled = false
+        createAccountButton.backgroundColor = UIColor(red: 0.666, green: 0.666, blue: 0.666, alpha: 1)
     }
     
     @IBAction func usernameChangeListner(_ sender: UITextField) {
+        deactivateSignUpButton()
         let input = usernameIn.text
         
         if characterChecker(input: input!) {
@@ -77,6 +95,14 @@ class SignUpTableViewCell: UITableViewCell {
                             self.usernameLabel.textColor = UIColor.black
                             self.usernameLabel.text = "Username available"
                             self.confirmedUsername = input!
+                            if self.native {
+                                if self.confirmedPW != nil && self.confirmedPW.count >= 6 {
+                                    self.activateSignUpButton()
+                                }
+                            }
+                            else {
+                                self.activateSignUpButton()
+                            }
                         }
                     }
                 }
@@ -112,6 +138,7 @@ class SignUpTableViewCell: UITableViewCell {
     
     
     @IBAction func pwChangeListener(_ sender: UITextField) {
+        deactivateSignUpButton()
         confirmedPW = nil
         if let input = passwordIn.text{
             if input.count > 0{
@@ -127,6 +154,9 @@ class SignUpTableViewCell: UITableViewCell {
                     else{
                         passwordStrengthCheck(pw: input)
                         confirmedPW = input
+                        if usernameConfirmed != nil && usernameConfirmed {
+                            activateSignUpButton()
+                        }
                     }
                 }
                 else{

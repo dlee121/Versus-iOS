@@ -301,11 +301,8 @@
                                                     <state key="normal" title="Create account">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     </state>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i7T-LQ-3Ee">
-                                                    <rect key="frame" x="23" y="373.5" width="329" height="30"/>
                                                     <connections>
-                                                        <action selector="createAccountButtonTapped:" destination="EPe-Wp-lgx" eventType="touchUpInside" id="yP2-xK-Tj2"/>
+                                                        <action selector="createAccountButtonTapped:" destination="EPe-Wp-lgx" eventType="touchUpInside" id="BUj-LH-IXw"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -317,10 +314,7 @@
                                                 <constraint firstItem="0Oj-iV-udy" firstAttribute="leading" secondItem="ZO9-TO-9bs" secondAttribute="leadingMargin" constant="12" id="4M0-d2-7eE"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="0Oj-iV-udy" secondAttribute="trailing" constant="8" id="7IJ-Y1-vgs"/>
                                                 <constraint firstItem="0Oj-iV-udy" firstAttribute="top" secondItem="EcG-QE-9lH" secondAttribute="bottom" constant="2" id="8u6-bd-C57"/>
-                                                <constraint firstItem="krW-dm-e6I" firstAttribute="bottom" secondItem="i7T-LQ-3Ee" secondAttribute="bottom" id="Cbl-l8-qJE"/>
-                                                <constraint firstItem="krW-dm-e6I" firstAttribute="trailing" secondItem="i7T-LQ-3Ee" secondAttribute="trailing" id="FdS-5P-0pO"/>
                                                 <constraint firstItem="lrz-91-SUD" firstAttribute="top" secondItem="Snc-s5-Qyg" secondAttribute="bottom" constant="32" id="GHk-Ja-geB"/>
-                                                <constraint firstItem="krW-dm-e6I" firstAttribute="top" secondItem="i7T-LQ-3Ee" secondAttribute="top" id="Ig6-HL-GhC"/>
                                                 <constraint firstItem="Snc-s5-Qyg" firstAttribute="top" secondItem="Dt5-hF-r9o" secondAttribute="bottom" constant="8" id="IoS-TY-qv6"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="B6h-vd-jNM" secondAttribute="trailing" constant="8" id="JPa-ad-fJX"/>
                                                 <constraint firstItem="lrz-91-SUD" firstAttribute="leading" secondItem="ZO9-TO-9bs" secondAttribute="leadingMargin" constant="8" id="Jqh-2A-hvO"/>
@@ -336,17 +330,15 @@
                                                 <constraint firstItem="krW-dm-e6I" firstAttribute="top" secondItem="B6h-vd-jNM" secondAttribute="bottom" constant="8" id="sEQ-AI-yfI"/>
                                                 <constraint firstItem="Snc-s5-Qyg" firstAttribute="leading" secondItem="ZO9-TO-9bs" secondAttribute="leadingMargin" constant="8" id="v59-Y5-QT2"/>
                                                 <constraint firstItem="EcG-QE-9lH" firstAttribute="top" secondItem="E8L-Z0-fWc" secondAttribute="bottom" constant="8" id="wUs-Cz-FKl"/>
-                                                <constraint firstItem="krW-dm-e6I" firstAttribute="leading" secondItem="i7T-LQ-3Ee" secondAttribute="leading" id="zkj-vG-13g"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="createAccountLabel" destination="krW-dm-e6I" id="jQb-Ox-22h"/>
+                                            <outlet property="createAccountButton" destination="krW-dm-e6I" id="rG0-gi-BuD"/>
                                             <outlet property="legalText" destination="B6h-vd-jNM" id="iPk-qC-Ica"/>
                                             <outlet property="passwordIn" destination="EcG-QE-9lH" id="UQ3-Aa-tmt"/>
                                             <outlet property="passwordInHeight" destination="Z1N-rD-HBQ" id="n1d-Pj-hWB"/>
                                             <outlet property="passwordLabel" destination="0Oj-iV-udy" id="cpB-sU-6Te"/>
                                             <outlet property="passwordLabelHeight" destination="NOI-l0-9sR" id="FVP-PS-KcH"/>
-                                            <outlet property="signUpButton" destination="i7T-LQ-3Ee" id="dg9-zR-f6g"/>
                                             <outlet property="usernameIn" destination="lrz-91-SUD" id="AU4-Y2-7vi"/>
                                             <outlet property="usernameLabel" destination="E8L-Z0-fWc" id="0Xf-fr-ruc"/>
                                         </connections>

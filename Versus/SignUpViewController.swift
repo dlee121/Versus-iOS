@@ -100,6 +100,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     
     func signUpButtonTapped(username: String, pw: String?) {
         //hi
+        print("signup tapped")
     }
     
     func showSUVCToast(text : String) {
