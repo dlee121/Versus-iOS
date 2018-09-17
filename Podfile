@@ -12,6 +12,7 @@ target 'Versus' do
   pod 'Firebase/Database'
   pod 'Firebase/Messaging'
   pod 'FacebookLogin'
+  pod 'GoogleSignIn'
   pod 'AWSAPIGateway'
   pod 'AWSS3'
   pod 'Nuke'
