@@ -99,8 +99,33 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     */
     
     func signUpButtonTapped(username: String, pw: String?) {
-        //hi
-        print("signup tapped")
+        
+        if authID == nil {
+            //native signup
+            if username != nil && pw != nil {
+                let password = pw! //just so I don't fuck around and end up with "Optional("pw")"
+                print("username = \(username), password = \(pw)")
+                
+                
+            }
+            else {
+                showToast(message: "Please check your network.", length: 26)
+            }
+            
+        }
+        else {
+            //fb or google signup
+            if username != nil && pw == nil {
+                print("username = \(username)")
+                
+                
+            }
+            else {
+                showToast(message: "Please check your network.", length: 26)
+            }
+        }
+        
+        
     }
     
     func showSUVCToast(text : String) {

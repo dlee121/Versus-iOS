@@ -78,12 +78,12 @@ class SignUpTableViewCell: UITableViewCell {
     }
     
     @IBAction func usernameChangeListner(_ sender: UITextField) {
+        usernameVersion += 1
         deactivateSignUpButton()
         let input = usernameIn.text
         
         if characterChecker(input: input!) {
             
-            usernameVersion += 1
             let thisVersion = usernameVersion
             
             usernameLabel.text = "Checking username..."
@@ -218,9 +218,9 @@ class SignUpTableViewCell: UITableViewCell {
     
     @IBAction func createAccountButtonTapped(_ sender: UIButton) {
         if native {
-            if let username = usernameIn.text {
-                if let pw = passwordIn.text {
-                    delegate.signUpButtonTapped(username: username, pw: pw)
+            if confirmedUsername != nil {
+                if confirmedPW != nil {
+                    delegate.signUpButtonTapped(username: confirmedUsername, pw: confirmedPW)
                 }
                 else {
                     delegate.showSUVCToast(text: "Please enter a valid password")
@@ -231,8 +231,8 @@ class SignUpTableViewCell: UITableViewCell {
             }
         }
         else {
-            if let username = usernameIn.text {
-                delegate.signUpButtonTapped(username: username, pw: nil)
+            if confirmedUsername != nil {
+                delegate.signUpButtonTapped(username: confirmedUsername, pw: nil)
             }
             else {
                 delegate.showSUVCToast(text: "Please enter a valid username")
