@@ -70,6 +70,20 @@ class StartViewController: UIViewController {
         
         let loginManager = LoginManager()
         loginManager.logOut()
+        
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeDown.direction = UISwipeGestureRecognizerDirection.down
+        self.view.addGestureRecognizer(swipeDown)
+        
+    }
+    
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            //dismiss keyboard when user swipes down
+            usernameIn.resignFirstResponder()
+            passwordIn.resignFirstResponder()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool){
@@ -221,12 +235,6 @@ class StartViewController: UIViewController {
         //try? Auth.auth().signOut()
         fbORgoogleSignUp = false
         performSegue(withIdentifier: "startToSignUp", sender: self)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //dismiss keyboard when the view is tapped on
-        usernameIn.resignFirstResponder()
-        passwordIn.resignFirstResponder()
     }
     
     @objc
