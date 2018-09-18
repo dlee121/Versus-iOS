@@ -3742,7 +3742,7 @@
                                 <rect key="frame" x="0.0" y="34" width="375" height="633"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="vscard_images" rowHeight="339" id="YOF-ni-3hY" customClass="PostImageTableViewCell" customModule="Versus" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="vscard_images" rowHeight="339" id="YOF-ni-3hY" customClass="PostImageTableViewCell" customModule="Versus" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="339"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YOF-ni-3hY" id="6VU-sr-kpt">
@@ -3784,7 +3784,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_2_64" translatesAutoresizingMaskIntoConstraints="NO" id="kn2-yi-qgf">
-                                                    <rect key="frame" x="175" y="158" width="25" height="25"/>
+                                                    <rect key="frame" x="175" y="157.5" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="Y8S-pc-A3h"/>
                                                         <constraint firstAttribute="width" constant="25" id="YTG-uX-zOT"/>
@@ -3894,7 +3894,7 @@
                                             <outlet property="votecountLabel" destination="V0H-Tc-byV" id="WgC-TN-kqc"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="vscard_texts" rowHeight="124" id="uQz-B6-UCU" customClass="PostTextTableViewCell" customModule="Versus" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="vscard_texts" rowHeight="124" id="uQz-B6-UCU" customClass="PostTextTableViewCell" customModule="Versus" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="367" width="375" height="124"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uQz-B6-UCU" id="vdb-1X-k2O">
@@ -4471,7 +4471,7 @@
                                 <rect key="frame" x="0.0" y="34" width="375" height="633"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="vscard_images" rowHeight="339" id="Gmu-OC-m8R" customClass="PostImageTableViewCell" customModule="Versus" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="vscard_images" rowHeight="339" id="Gmu-OC-m8R" customClass="PostImageTableViewCell" customModule="Versus" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="339"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gmu-OC-m8R" id="Oye-NP-6ca">
@@ -4623,7 +4623,7 @@
                                             <outlet property="votecountLabel" destination="pXd-Dq-guA" id="6EM-6c-AUp"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="vscard_texts" rowHeight="124" id="ue5-Al-5ZT" customClass="PostTextTableViewCell" customModule="Versus" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="vscard_texts" rowHeight="124" id="ue5-Al-5ZT" customClass="PostTextTableViewCell" customModule="Versus" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="367" width="375" height="124"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ue5-Al-5ZT" id="iW7-1y-x3R">

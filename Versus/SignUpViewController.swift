@@ -236,24 +236,6 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                                     }
                                 }
                                 else { //successfully created user
-                                    //send new user notification about account recovery setup
-                                    var usernameHash : Int32
-                                    if(username.count < 5){
-                                        usernameHash = username.hashCode()
-                                    }
-                                    else{
-                                        var hashIn = ""
-                                        
-                                        hashIn.append(username[0])
-                                        hashIn.append(username[username.count-2])
-                                        hashIn.append(username[1])
-                                        hashIn.append(username[username.count-1])
-                                        
-                                        usernameHash = hashIn.hashCode()
-                                    }
-                                    
-                                    let userNotificationPath = "\(usernameHash)/" + username + "/n/em/"
-                                    Database.database().reference().child(userNotificationPath).setValue(true)
                                     
                                     //create user session and segue to MainContainer
                                     UserDefaults.standard.set("0", forKey: "KEY_BDAY")

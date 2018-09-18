@@ -99,22 +99,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //check if auth token is still valid. If it's close to expiration or already expired, then refresh it and credentials
         //this is called during relaunch, so won't conflict with token verification in InitialViewController, which only gets called for when app is freshly launched (as opposed to relaunching app that is already in the background)
         if let user = Auth.auth().currentUser {
-            user.getIDToken(){ (idToken, error) in
+            user.getIDTokenForcingRefresh(false){ (idToken, error) in
                 
                 do {
                     let jwt = try decode(jwt: idToken!)
                     
                     if jwt.expiresAt!.timeIntervalSinceNow.isLess(than: 1200) { //if token expires within 20 minutes
-                        //token successfully decoded, now determine if token is close to expiration, and if so, refresh the token and credentials
-                        let oidcProvider = OIDCProvider(input: idToken! as NSString)
-                        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
-                        credentialsProvider.clearCredentials()
-                        let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
-                        //login session configuration is stored in the default
-                        AWSServiceManager.default().defaultServiceConfiguration = configuration
-                        
-                        //set periodic task to refresh token every 58 minutes = 3480 seconds
-                        self.setPeriodicTokenRefresh(period: 3480)
+                        user.getIDTokenForcingRefresh(true){ (idToken, error) in
+                            let oidcProvider = OIDCProvider(input: idToken! as NSString)
+                            let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+                            credentialsProvider.clearCredentials()
+                            let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+                            //login session configuration is stored in the default
+                            AWSServiceManager.default().defaultServiceConfiguration = configuration
+                            
+                            //set periodic task to refresh token every 58 minutes = 3480 seconds
+                            self.setPeriodicTokenRefresh(period: 3480)
+                        }
                     }
                     else {
                         //set periodic task to refresh token every m - 2 minutes, where m = minutes to token expiration
