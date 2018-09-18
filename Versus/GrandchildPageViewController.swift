@@ -621,9 +621,23 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func goToProfile(profileUsername: String) {
-        tappedUsername = profileUsername
-        //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
-        performSegue(withIdentifier: "grandchildToProfile", sender: self)
+        if textInput.text != nil && textInput.text!.count > 0 {
+            //textInput.resignFirstResponder()
+            let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                self.textInput.text = ""
+                self.tappedUsername = profileUsername
+                //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
+                self.performSegue(withIdentifier: "grandchildToProfile", sender: self)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            tappedUsername = profileUsername
+            //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
+            performSegue(withIdentifier: "grandchildToProfile", sender: self)
+        }
     }
     
     func resizePostCardOnVote(red : Bool){
@@ -1159,6 +1173,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                self.textInput.text = ""
                 _ = self.navigationController?.popViewController(animated: true)
             }))
             self.present(alert, animated: true, completion: nil)

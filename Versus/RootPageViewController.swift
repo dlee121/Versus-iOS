@@ -957,11 +957,28 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func goToProfile(profileUsername: String) {
-        profileTap = true
-        vmrTap = false
-        tappedUsername = profileUsername
-        //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
-        performSegue(withIdentifier: "rootToProfile", sender: self)
+        if textInput.text != nil && textInput.text!.count > 0 {
+            //textInput.resignFirstResponder()
+            let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                self.textInput.text = ""
+                self.profileTap = true
+                self.vmrTap = false
+                self.tappedUsername = profileUsername
+                //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
+                self.performSegue(withIdentifier: "rootToProfile", sender: self)
+            }))
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+        else {
+            profileTap = true
+            vmrTap = false
+            tappedUsername = profileUsername
+            //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
+            performSegue(withIdentifier: "rootToProfile", sender: self)
+        }
     }
     
     func resizePostCardOnVote(red : Bool){
@@ -1406,16 +1423,38 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func viewMoreRepliesTapped(topCardComment: VSComment) {
-        vmrTap = true
-        profileTap = false
-        vmrComment = topCardComment
-        if topCardComment.nestedLevel == 0 {
-            //go to child page
-            performSegue(withIdentifier: "rootToChild", sender: self)
+        if textInput.text != nil && textInput.text!.count > 0 {
+            //textInput.resignFirstResponder()
+            let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                self.textInput.text = ""
+                self.vmrTap = true
+                self.profileTap = false
+                self.vmrComment = topCardComment
+                if topCardComment.nestedLevel == 0 {
+                    //go to child page
+                    self.performSegue(withIdentifier: "rootToChild", sender: self)
+                }
+                else {
+                    //go to grandchild page
+                    self.performSegue(withIdentifier: "rootToGrandchild", sender: self)
+                }
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
         else {
-            //go to grandchild page
-            performSegue(withIdentifier: "rootToGrandchild", sender: self)
+            vmrTap = true
+            profileTap = false
+            vmrComment = topCardComment
+            if topCardComment.nestedLevel == 0 {
+                //go to child page
+                performSegue(withIdentifier: "rootToChild", sender: self)
+            }
+            else {
+                //go to grandchild page
+                performSegue(withIdentifier: "rootToGrandchild", sender: self)
+            }
         }
         
     }
@@ -1479,6 +1518,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                self.textInput.text = ""
                 _ = self.navigationController?.popViewController(animated: true)
             }))
             self.present(alert, animated: true, completion: nil)

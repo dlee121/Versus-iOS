@@ -814,11 +814,31 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func goToProfile(profileUsername: String) {
-        profileTap = true
-        vmrTap = false
-        tappedUsername = profileUsername
-        //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
-        performSegue(withIdentifier: "childToProfile", sender: self)
+        if textInput.text != nil && textInput.text!.count > 0 {
+            //textInput.resignFirstResponder()
+            let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                self.textInput.text = ""
+                self.profileTap = true
+                self.vmrTap = false
+                self.tappedUsername = profileUsername
+                //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
+                self.performSegue(withIdentifier: "childToProfile", sender: self)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            profileTap = true
+            vmrTap = false
+            tappedUsername = profileUsername
+            //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
+            performSegue(withIdentifier: "childToProfile", sender: self)
+        }
+        
+        
+        
+        
     }
     
     func resizePostCardOnVote(red : Bool){
@@ -1289,13 +1309,27 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func viewMoreRepliesTapped(topCardComment: VSComment) {
-        vmrTap = true
-        profileTap = false
-        vmrComment = topCardComment
-        //go to grandchild page
-        performSegue(withIdentifier: "childToGrandchild", sender: self)
-        
-        
+        if textInput.text != nil && textInput.text!.count > 0 {
+            //textInput.resignFirstResponder()
+            let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                self.textInput.text = ""
+                self.vmrTap = true
+                self.profileTap = false
+                self.vmrComment = topCardComment
+                //go to grandchild page
+                self.performSegue(withIdentifier: "childToGrandchild", sender: self)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            vmrTap = true
+            profileTap = false
+            vmrComment = topCardComment
+            //go to grandchild page
+            performSegue(withIdentifier: "childToGrandchild", sender: self)
+        }
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -1357,6 +1391,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                self.textInput.text = ""
                 _ = self.navigationController?.popViewController(animated: true)
             }))
             self.present(alert, animated: true, completion: nil)
