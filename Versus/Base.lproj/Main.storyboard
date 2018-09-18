@@ -916,7 +916,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <connections>
                                             <action selector="textChangeListener:" destination="Jk1-If-Hre" eventType="editingChanged" id="Bgx-Tp-kdb"/>
                                             <outlet property="delegate" destination="Jk1-If-Hre" id="1yP-DY-gH2"/>
@@ -1373,7 +1373,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <connections>
                                             <action selector="textChangeListener:" destination="X1q-ax-jCK" eventType="editingChanged" id="NRm-Wq-pzR"/>
                                             <outlet property="delegate" destination="X1q-ax-jCK" id="fZ0-8Z-JbG"/>
@@ -1828,7 +1828,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <connections>
                                             <action selector="textChangeListener:" destination="Ef4-68-ZeO" eventType="editingChanged" id="kiI-tb-uCY"/>
                                             <outlet property="delegate" destination="Ef4-68-ZeO" id="rk6-3B-r6T"/>
@@ -4787,7 +4787,7 @@
         <segue reference="kmh-ur-Uym"/>
         <segue reference="iVN-9A-tOw"/>
         <segue reference="sD2-CK-5N3"/>
-        <segue reference="ndU-Xn-ImY"/>
+        <segue reference="K6P-9d-yI2"/>
         <segue reference="uAF-H9-Oin"/>
         <segue reference="fc6-RI-lzA"/>
         <segue reference="tN5-20-0qe"/>
