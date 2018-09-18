@@ -448,6 +448,7 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
             //google indicator here
             googleButtonCover.isHidden = false
             googleLoginIndicator.startAnimating()
+            setLoginMask()
             
             // Perform any operations on signed in user here.
             authID = user.userID
