@@ -74,7 +74,6 @@ class CommentCardTableViewCell: UITableViewCell {
         
         if let childcount = comment.child_count {
             if childcount > 2 {
-                print("vmr show")
                 viewMoreRepliesCenter.constant = indent * 24
                 viewMoreHeight.constant = 21
                 viewMoreReplies.isHidden = false
