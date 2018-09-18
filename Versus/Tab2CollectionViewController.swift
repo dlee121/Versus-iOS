@@ -12,9 +12,11 @@ import Nuke
 import AWSS3
 import XLPagerTabStrip
 
-class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ProfileDelegator {
+class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileDelegator {
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var categorySelectionLabel: UILabel!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
@@ -27,8 +29,6 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     let preheater = Nuke.ImagePreheater()
     var profileImageVersions = [String : Int]()
     
-    var screenWidth : CGFloat!
-    var textsVSCHeight : CGFloat!
     
     var prepareCategoryFilter = false
     var categorySelection : String? = nil
@@ -37,14 +37,14 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     var retrievalSize = 16
     
     var clickLock = false
+    let cellSpacingHeight: CGFloat = 16
     
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        screenWidth = self.view.frame.size.width
-        textsVSCHeight = screenWidth / 1.6
+        tableView.separatorStyle = .none
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(Tab2CollectionViewController.resetCategorySelection))
         categorySelectionLabel.addGestureRecognizer(tap)
@@ -55,9 +55,9 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
         
         // Add Refresh Control to Table View
         if #available(iOS 10.0, *) {
-            collectionView.refreshControl = refreshControl
+            tableView.refreshControl = refreshControl
         } else {
-            collectionView.addSubview(refreshControl)
+            tableView.addSubview(refreshControl)
         }
         
         // Configure Refresh Control
@@ -71,7 +71,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     func refresh(){
         fromIndex = 0
         posts.removeAll()
-        collectionView.reloadData()
+        tableView.reloadData()
         trendingQuery()
     }
     
@@ -101,6 +101,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
             }
             else {
                 let queryResults = task.result?.hits?.hits
+                let loadedItemsCount = queryResults!.count
                 var pivString = "{\"ids\":["
                 var index = 0
                 for item in queryResults! {
@@ -134,7 +135,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
                             
                             if self.fromIndex == 0 {
                                 DispatchQueue.main.async {
-                                    self.collectionView.reloadData()
+                                    self.tableView.reloadData()
                                     if self.refreshControl.isRefreshing {
                                         self.refreshControl.endRefreshing()
                                     }
@@ -145,12 +146,8 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
                             }
                             else {
                                 DispatchQueue.main.async {
-                                    var indexPaths = [IndexPath]()
-                                    for i in 0...queryResults!.count-1 {
-                                        indexPaths.append(IndexPath(row: self.fromIndex+i, section: 0))
-                                    }
-                                    
-                                    self.collectionView.insertItems(at: indexPaths)
+                                    let indexSet = IndexSet(self.fromIndex...self.fromIndex+loadedItemsCount-1)
+                                    self.tableView.insertSections(indexSet, with: .fade)
                                     
                                     if self.refreshControl.isRefreshing {
                                         self.refreshControl.endRefreshing()
@@ -175,7 +172,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
                 else {
                     if self.fromIndex == 0 {
                         DispatchQueue.main.async {
-                            self.collectionView.reloadData()
+                            self.tableView.reloadData()
                             if self.refreshControl.isRefreshing {
                                 self.refreshControl.endRefreshing()
                             }
@@ -186,12 +183,8 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
                     }
                     else {
                         DispatchQueue.main.async {
-                            var indexPaths = [IndexPath]()
-                            for i in 0...queryResults!.count-1 {
-                                indexPaths.append(IndexPath(row: self.fromIndex+i, section: 0))
-                            }
-                            
-                            self.collectionView.insertItems(at: indexPaths)
+                            let indexSet = IndexSet(self.fromIndex...self.fromIndex+loadedItemsCount-1)
+                            self.tableView.insertSections(indexSet, with: .fade)
                             
                             if self.refreshControl.isRefreshing {
                                 self.refreshControl.endRefreshing()
@@ -218,26 +211,37 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return posts.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let post = posts[indexPath.row]
-        if post.redimg.intValue % 10 == S3 || post.blackimg.intValue % 10 == S3 {
-            return CGSize(width: screenWidth, height: screenWidth)
-        }
-        else {
-            return CGSize(width: screenWidth, height: textsVSCHeight)
-        }
-        
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return cellSpacingHeight
+    }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
+    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        let post = posts[indexPath.section]
         
-        let currentPost = posts[indexPath.row]
+        if post.redimg.intValue % 10 == S3 || post.blackimg.intValue % 10 == S3 {
+            return 339
+        }
+        else {
+            return 124
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let currentPost = posts[indexPath.section]
         
         //set profile image version for the post if one exists
         if let piv = profileImageVersions[currentPost.author.lowercased()] {
@@ -245,7 +249,7 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
         }
         
         if currentPost.redimg.intValue % 10 == S3 || currentPost.blackimg.intValue % 10 == S3 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_images", for: indexPath) as! PostImageCollectionViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_images", for: indexPath) as! PostImageTableViewCell
             cell.setCell(post: currentPost, vIsRed: vIsRed)
             vIsRed = !vIsRed
             cell.delegate = self
@@ -253,18 +257,16 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
             return cell
         }
         else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "vscard_texts", for: indexPath) as! PostTextCollectionViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_texts", for: indexPath) as! PostTextTableViewCell
             cell.setCell(post: currentPost, vIsRed: vIsRed)
             vIsRed = !vIsRed
             cell.delegate = self
             
             return cell
         }
-        
-        
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastElement = posts.count - 1 - loadThreshold
         if !nowLoading && indexPath.row == lastElement {
             nowLoading = true
@@ -273,7 +275,8 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !clickLock {
             clickLock = true
             let mainVC = parent as! MCViewController
@@ -408,12 +411,15 @@ class Tab2CollectionViewController: UIViewController, UICollectionViewDataSource
         
     }
     
+    
     @IBAction func categoryFilterButtonTapped(_ sender: UIButton) {
         
         prepareCategoryFilter = true
         performSegue(withIdentifier: "presentTrendingFilter", sender: self)
         
     }
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if prepareCategoryFilter {
