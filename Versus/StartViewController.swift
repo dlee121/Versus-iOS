@@ -69,7 +69,7 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
         
         customGoogleLoginButton.style = .wide
         
-        customFBButtonLabel.setCustomFBButtonLogo()
+        customFBButtonLabel.setCustomFBButtonLogo(yesText: true)
         customFBButtonLabel.sizeToFit()
         customFBButtonWidth.constant = customGoogleLoginButton.frame.width - 6
         customFBButtonHeight.constant = customGoogleLoginButton.frame.height - 6.5
@@ -171,52 +171,35 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
         }
     }
     
-    func setNativeLoginMask() {
+    func setLoginMask() {
+        logInButton.isEnabled = false
         customFBLoginButton.isEnabled = false
         customGoogleLoginButton.isUserInteractionEnabled = false
     }
     
-    func removeNativeLoginMask() {
-        customFBLoginButton.isEnabled = true
-        customGoogleLoginButton.isUserInteractionEnabled = true
-    }
-    
-    func setFBLoginMask() {
-        logInButton.isEnabled = false
-        customGoogleLoginButton.isUserInteractionEnabled = false
-    }
-    
-    func removeFBLoginMask() {
-        logInButton.isEnabled = true
-        customGoogleLoginButton.isUserInteractionEnabled = true
-    }
-    
-    func setGoogleLoginMask() {
-        logInButton.isEnabled = false
-        customFBLoginButton.isEnabled = false
-    }
-    
-    func removeGoogleLoginMask() {
+    func removeLoginMask() {
         logInButton.isEnabled = true
         customFBLoginButton.isEnabled = true
+        customGoogleLoginButton.isUserInteractionEnabled = true
+        customFBButtonLabel.setCustomFBButtonLogo(yesText: true)
     }
 
     @IBAction func logInButtonTapped(_ sender: UIButton) {
         //log in user with Firebase
         nativeLoginIndicator.startAnimating()
-        setNativeLoginMask()
+        setLoginMask()
         
         if let username = usernameIn.text {
             if let pw = passwordIn.text{
                 if username.count == 0{
                     showToast(message: "Please enter your username", length: 26)
                     nativeLoginIndicator.stopAnimating()
-                    removeNativeLoginMask()
+                    removeLoginMask()
                 }
                 else if pw.count == 0{
                     showToast(message: "Please enter your password", length: 26)
                     nativeLoginIndicator.stopAnimating()
-                    removeNativeLoginMask()
+                    removeLoginMask()
                 }
                 else{
                     var loginEmail = username+"@versusbcd.com"
@@ -225,7 +208,7 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                             DispatchQueue.main.async {
                                 self.showToast(message: "incorrect username or password", length: 30)
                                 self.nativeLoginIndicator.stopAnimating()
-                                self.removeNativeLoginMask()
+                                self.removeLoginMask()
                             }
                         }
                         else {
@@ -252,7 +235,7 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                                                     DispatchQueue.main.async {
                                                         print(task.error!)
                                                         self.nativeLoginIndicator.stopAnimating()
-                                                        self.removeNativeLoginMask()
+                                                        self.removeLoginMask()
                                                     }
                                                 }
                                                 else {
@@ -268,7 +251,7 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                                                     DispatchQueue.main.async {
                                                         self.performSegue(withIdentifier: "logInToMain", sender: self)
                                                         self.nativeLoginIndicator.stopAnimating()
-                                                        self.removeNativeLoginMask()
+                                                        self.removeLoginMask()
                                                     }
                                                 }
                                                 return nil
@@ -283,7 +266,7 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                                     }
                                     else{
                                         self.nativeLoginIndicator.stopAnimating()
-                                        self.removeNativeLoginMask()
+                                        self.removeLoginMask()
                                         self.showToast(message: "incorrect username or password", length: 30)
                                     }
                                 }
@@ -298,21 +281,18 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
             }
             else{
                 self.nativeLoginIndicator.stopAnimating()
-                self.removeNativeLoginMask()
+                self.removeLoginMask()
                 showToast(message: "Please enter your password", length: 26)
             }
         }
         else {
             self.nativeLoginIndicator.stopAnimating()
-            self.removeNativeLoginMask()
+            self.removeLoginMask()
             showToast(message: "Please enter your username", length: 26)
         }
     }
     
     @IBAction func signUpButtonTapped(_ sender: UIButton) {
-        //sign up user with Firebase
-        
-        //try? Auth.auth().signOut()
         fbORgoogleSignUp = false
         performSegue(withIdentifier: "startToSignUp", sender: self)
     }
@@ -549,6 +529,11 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
             case .cancelled:
                 print("User cancelled login")
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+                //set the login masks and indicator here!
+                self.customFBButtonLabel.setCustomFBButtonLogo(yesText: false)
+                self.facebookLoginIndicator.startAnimating()
+                self.setLoginMask()
+                
                 self.authID = accessToken.userId! + "_" //we append facebook login authID with "_"
                 self.authCredential = FacebookAuthProvider.credential(withAccessToken: accessToken.authenticationToken)
                 

@@ -24,7 +24,9 @@ extension UILabel
         self.attributedText = myString
     }
     
-    func setCustomFBButtonLogo() {
+    func setCustomFBButtonLogo(yesText : Bool) {
+        text = ""
+        
         let attachment:NSTextAttachment = NSTextAttachment()
         attachment.image = UIImage(named: "fbLogo")
         attachment.setImageHeight(height: 18)
@@ -32,10 +34,27 @@ extension UILabel
         
         let attachmentString:NSAttributedString = NSAttributedString(attachment: attachment)
         let myString:NSMutableAttributedString = NSMutableAttributedString(string: self.text!)
+        
+        if !yesText {
+            myString.append(NSAttributedString(string: "   "))
+        }
+        
         myString.append(attachmentString)
-        myString.append(NSAttributedString(string: "  Sign in with Facebook"))
+        
+        if yesText {
+            textColor = .white
+            textAlignment = .center
+            font = font.withSize(14)
+            myString.append(NSAttributedString(string: "  Sign in with Facebook"))
+        }
+        else {
+            font = font.withSize(12.5)
+            textAlignment = .left
+        }
         
         self.attributedText = myString
+        
+        
     }
     
     func setSelectedCategoryLabel(imageName: String, imageHeight: CGFloat, suffix: String) {
