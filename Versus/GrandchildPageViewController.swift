@@ -220,7 +220,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         tableView.contentInset = .zero
         tableView.scrollIndicatorInsets = .zero
         textInputContainerBottom.constant = 0
-        textInput.text = ""
+        //textInput.text = ""
         grandchildRealTargetID = nil
         grandchildReplyTargetAuthor = nil
         replyTargetLabel.text = ""
@@ -1150,6 +1150,23 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         
         self.present(alertController, animated: true) {
             // ...
+        }
+    }
+    
+    override func shouldPopOnBackButton() -> Bool {
+        if textInput.text != nil && textInput.text!.count > 0 {
+            //textInput.resignFirstResponder()
+            let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                _ = self.navigationController?.popViewController(animated: true)
+            }))
+            self.present(alert, animated: true, completion: nil)
+            
+            return false
+        }
+        else {
+            return true
         }
     }
     

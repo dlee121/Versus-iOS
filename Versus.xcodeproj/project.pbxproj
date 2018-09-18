@@ -50,6 +50,7 @@
 		706F89EF21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89EE21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift */; };
 		706F89F121080D8F00A78EFB /* VSComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89F021080D8F00A78EFB /* VSComment.swift */; };
 		70908BCE214EA7C7004005C5 /* SignUpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70908BCD214EA7C7004005C5 /* SignUpTableViewCell.swift */; };
+		7093B21E2150F01300BCC376 /* UIViewController + BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7093B21D2150F01300BCC376 /* UIViewController + BackButton.swift */; };
 		70A7ED49211FBFB90059507A /* ChildPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A7ED48211FBFB90059507A /* ChildPageViewController.swift */; };
 		70A7ED4B211FC3410059507A /* PostPageDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A7ED4A211FC3410059507A /* PostPageDelegator.swift */; };
 		70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */; };
@@ -189,6 +190,7 @@
 		706F89EE21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		706F89F021080D8F00A78EFB /* VSComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSComment.swift; sourceTree = "<group>"; };
 		70908BCD214EA7C7004005C5 /* SignUpTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTableViewCell.swift; sourceTree = "<group>"; };
+		7093B21D2150F01300BCC376 /* UIViewController + BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + BackButton.swift"; sourceTree = "<group>"; };
 		70A7ED48211FBFB90059507A /* ChildPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildPageViewController.swift; sourceTree = "<group>"; };
 		70A7ED4A211FC3410059507A /* PostPageDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageDelegator.swift; sourceTree = "<group>"; };
 		70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OIDCProvider.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 				70BEBDC921326204008791DD /* NotificationsDelegator.swift */,
 				704E57C92143F39E000F4109 /* MyCircleDelegator.swift */,
 				704E57CB2143F980000F4109 /* ProfileDelegator.swift */,
+				7093B21D2150F01300BCC376 /* UIViewController + BackButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -688,6 +691,7 @@
 				706F89ED2107EF1A00A78EFB /* PostsHistoryViewController.swift in Sources */,
 				70E80CE020E6DB570067DF08 /* VSPostModel.swift in Sources */,
 				70E80CAC20E6DB570067DF08 /* VSPIVModel_docs_item.swift in Sources */,
+				7093B21E2150F01300BCC376 /* UIViewController + BackButton.swift in Sources */,
 				70E80CC220E6DB570067DF08 /* VSAIModel__shards.swift in Sources */,
 				70CB9E532115671700D86E37 /* VSCNode.swift in Sources */,
 				7056672F2101564D00CB87AD /* CategoriesTableViewCell.swift in Sources */,
