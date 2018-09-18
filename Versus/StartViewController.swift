@@ -541,6 +541,9 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                     if task.error != nil {
                         DispatchQueue.main.async {
                             self.showToast(message: "Please check your network.", length: 26)
+                            self.customFBButtonLabel.setCustomFBButtonLogo(yesText: true)
+                            self.facebookLoginIndicator.stopAnimating()
+                            self.removeLoginMask()
                         }
                     }
                     else {

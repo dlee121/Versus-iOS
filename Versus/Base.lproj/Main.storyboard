@@ -157,10 +157,7 @@
                                         <rect key="frame" x="145" y="57" width="69" height="36"/>
                                     </activityIndicatorView>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Iwo-mF-J46">
-                                        <rect key="frame" x="178" y="105" width="36" height="36"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="36" id="7ey-Mx-Ava"/>
-                                        </constraints>
+                                        <rect key="frame" x="145" y="105" width="69" height="36"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -174,6 +171,7 @@
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="bottom" secondItem="HQq-Xc-zxB" secondAttribute="bottom" id="Fsb-Az-rYW"/>
                                     <constraint firstItem="b2v-92-deP" firstAttribute="centerY" secondItem="26O-ix-7xy" secondAttribute="centerY" constant="24" id="afk-7d-nGn"/>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="top" secondItem="HQq-Xc-zxB" secondAttribute="top" id="cdd-9Q-wS5"/>
+                                    <constraint firstItem="Iwo-mF-J46" firstAttribute="leading" secondItem="b2v-92-deP" secondAttribute="leading" id="f3T-ak-SJ8"/>
                                     <constraint firstItem="Iwo-mF-J46" firstAttribute="bottom" secondItem="b2v-92-deP" secondAttribute="bottom" id="iEp-0Q-fJS"/>
                                     <constraint firstItem="SpV-k3-Mpm" firstAttribute="bottom" secondItem="HQq-Xc-zxB" secondAttribute="bottom" id="iNT-zd-bP7"/>
                                     <constraint firstItem="b2v-92-deP" firstAttribute="centerX" secondItem="HQq-Xc-zxB" secondAttribute="centerX" id="qc0-mj-3aK"/>
