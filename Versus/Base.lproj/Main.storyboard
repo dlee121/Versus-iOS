@@ -153,19 +153,43 @@
                                             <constraint firstAttribute="width" constant="69" id="upN-L3-r1a"/>
                                         </constraints>
                                     </view>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="SpV-k3-Mpm">
+                                        <rect key="frame" x="178" y="57" width="36" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="36" id="pDM-FG-ekR"/>
+                                        </constraints>
+                                    </activityIndicatorView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Iwo-mF-J46">
+                                        <rect key="frame" x="178" y="105" width="36" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="36" id="7ey-Mx-Ava"/>
+                                        </constraints>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="trailing" secondItem="HQq-Xc-zxB" secondAttribute="trailing" id="4Is-vO-EGV"/>
+                                    <constraint firstItem="SpV-k3-Mpm" firstAttribute="trailing" secondItem="HQq-Xc-zxB" secondAttribute="trailing" id="7c5-9q-3Q8"/>
                                     <constraint firstItem="HQq-Xc-zxB" firstAttribute="centerY" secondItem="26O-ix-7xy" secondAttribute="centerY" constant="-24" id="7ma-Dg-1QE"/>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="leading" secondItem="HQq-Xc-zxB" secondAttribute="leading" id="Bdc-Bq-jja"/>
+                                    <constraint firstItem="SpV-k3-Mpm" firstAttribute="top" secondItem="HQq-Xc-zxB" secondAttribute="top" id="Cab-28-A8M"/>
+                                    <constraint firstItem="Iwo-mF-J46" firstAttribute="top" secondItem="b2v-92-deP" secondAttribute="top" id="FIh-fV-6iG"/>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="bottom" secondItem="HQq-Xc-zxB" secondAttribute="bottom" id="Fsb-Az-rYW"/>
                                     <constraint firstItem="b2v-92-deP" firstAttribute="centerY" secondItem="26O-ix-7xy" secondAttribute="centerY" constant="24" id="afk-7d-nGn"/>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="top" secondItem="HQq-Xc-zxB" secondAttribute="top" id="cdd-9Q-wS5"/>
+                                    <constraint firstItem="Iwo-mF-J46" firstAttribute="bottom" secondItem="b2v-92-deP" secondAttribute="bottom" id="iEp-0Q-fJS"/>
+                                    <constraint firstItem="SpV-k3-Mpm" firstAttribute="bottom" secondItem="HQq-Xc-zxB" secondAttribute="bottom" id="iNT-zd-bP7"/>
                                     <constraint firstItem="b2v-92-deP" firstAttribute="centerX" secondItem="HQq-Xc-zxB" secondAttribute="centerX" id="qc0-mj-3aK"/>
+                                    <constraint firstItem="Iwo-mF-J46" firstAttribute="trailing" secondItem="b2v-92-deP" secondAttribute="trailing" id="xmR-5V-NJ3"/>
                                     <constraint firstItem="HQq-Xc-zxB" firstAttribute="centerX" secondItem="26O-ix-7xy" secondAttribute="centerX" id="yuI-8Y-MJV"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="n3M-wq-i0J">
+                                <rect key="frame" x="323" y="335.5" width="36" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="36" id="gmn-0V-d5x"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -181,11 +205,14 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Wo0-MF-Nss" secondAttribute="trailing" constant="16" id="JVn-G4-aR8"/>
                             <constraint firstItem="7XN-DL-5oE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="KXo-gw-ijO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oF5-3Q-XE2" secondAttribute="trailing" constant="8" id="OOZ-nX-Ut0"/>
+                            <constraint firstItem="n3M-wq-i0J" firstAttribute="bottom" secondItem="xPN-8j-PI5" secondAttribute="bottom" id="T00-3f-W97"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LBD-hS-d1D" secondAttribute="trailing" constant="16" id="UFU-WH-mtc"/>
+                            <constraint firstItem="n3M-wq-i0J" firstAttribute="trailing" secondItem="xPN-8j-PI5" secondAttribute="trailing" id="a76-jF-GNN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3Lv-Dh-Rfj" secondAttribute="trailing" constant="16" id="dEc-xt-qow"/>
                             <constraint firstItem="LBD-hS-d1D" firstAttribute="top" secondItem="xPN-8j-PI5" secondAttribute="bottom" constant="8" id="diQ-y3-KCS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dyQ-Hr-5nQ" secondAttribute="trailing" constant="16" id="k9q-AJ-UKe"/>
                             <constraint firstItem="Wo0-MF-Nss" firstAttribute="top" secondItem="oF5-3Q-XE2" secondAttribute="bottom" constant="32" id="ks6-nu-JkS"/>
+                            <constraint firstItem="n3M-wq-i0J" firstAttribute="top" secondItem="xPN-8j-PI5" secondAttribute="top" id="mXl-5F-M7M"/>
                             <constraint firstItem="7XN-DL-5oE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="32" id="meX-Ic-CKg"/>
                             <constraint firstItem="Wo0-MF-Nss" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="ul8-Rh-2eI"/>
                             <constraint firstItem="dyQ-Hr-5nQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="v02-T0-2aC"/>
@@ -201,8 +228,11 @@
                         <outlet property="customFBButtonWidth" destination="BpX-W2-I6U" id="c4H-Ig-Kn6"/>
                         <outlet property="customFBLoginButton" destination="sf1-ZW-4XZ" id="w3x-vP-Oi0"/>
                         <outlet property="customGoogleLoginButton" destination="b2v-92-deP" id="iCH-Et-Zrs"/>
+                        <outlet property="facebookLoginIndicator" destination="SpV-k3-Mpm" id="EAh-BC-184"/>
+                        <outlet property="googleLoginIndicator" destination="Iwo-mF-J46" id="Obt-Bf-PGE"/>
                         <outlet property="logInButton" destination="xPN-8j-PI5" id="r6l-sr-S7b"/>
                         <outlet property="logoTopMargin" destination="meX-Ic-CKg" id="iCg-1J-3VL"/>
+                        <outlet property="nativeLoginIndicator" destination="n3M-wq-i0J" id="VlQ-24-HzF"/>
                         <outlet property="passwordIn" destination="dyQ-Hr-5nQ" id="9tu-bu-jYe"/>
                         <outlet property="signUpButton" destination="LBD-hS-d1D" id="wpA-G9-8iq"/>
                         <outlet property="usernameIn" destination="Wo0-MF-Nss" id="J64-Mt-xgC"/>

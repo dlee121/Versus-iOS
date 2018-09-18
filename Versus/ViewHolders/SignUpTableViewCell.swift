@@ -64,13 +64,15 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             }
         }
         
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "eye.png"), for: .normal)
-        //button.imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0)
-        button.frame = CGRect(x: CGFloat(passwordIn.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
-        button.addTarget(self, action: #selector(self.pwtoggle), for: .touchUpInside)
-        passwordIn.rightView = button
-        passwordIn.rightViewMode = .always
+        if native {
+            let button = UIButton(type: .custom)
+            button.setImage(UIImage(named: "eye.png"), for: .normal)
+            //button.imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0)
+            button.frame = CGRect(x: CGFloat(passwordIn.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
+            button.addTarget(self, action: #selector(self.pwtoggle), for: .touchUpInside)
+            passwordIn.rightView = button
+            passwordIn.rightViewMode = .always
+        }
         
         usernameIn.delegate = self
         passwordIn.delegate = self
