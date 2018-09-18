@@ -51,6 +51,8 @@
 		706F89F121080D8F00A78EFB /* VSComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89F021080D8F00A78EFB /* VSComment.swift */; };
 		70908BCE214EA7C7004005C5 /* SignUpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70908BCD214EA7C7004005C5 /* SignUpTableViewCell.swift */; };
 		7093B21E2150F01300BCC376 /* UIViewController + BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7093B21D2150F01300BCC376 /* UIViewController + BackButton.swift */; };
+		7093B22021512DB500BCC376 /* PostImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7093B21F21512DB500BCC376 /* PostImageTableViewCell.swift */; };
+		7093B22221512F9F00BCC376 /* PostTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7093B22121512F9F00BCC376 /* PostTextTableViewCell.swift */; };
 		70A7ED49211FBFB90059507A /* ChildPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A7ED48211FBFB90059507A /* ChildPageViewController.swift */; };
 		70A7ED4B211FC3410059507A /* PostPageDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A7ED4A211FC3410059507A /* PostPageDelegator.swift */; };
 		70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */; };
@@ -191,6 +193,8 @@
 		706F89F021080D8F00A78EFB /* VSComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSComment.swift; sourceTree = "<group>"; };
 		70908BCD214EA7C7004005C5 /* SignUpTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTableViewCell.swift; sourceTree = "<group>"; };
 		7093B21D2150F01300BCC376 /* UIViewController + BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + BackButton.swift"; sourceTree = "<group>"; };
+		7093B21F21512DB500BCC376 /* PostImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageTableViewCell.swift; sourceTree = "<group>"; };
+		7093B22121512F9F00BCC376 /* PostTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTextTableViewCell.swift; sourceTree = "<group>"; };
 		70A7ED48211FBFB90059507A /* ChildPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildPageViewController.swift; sourceTree = "<group>"; };
 		70A7ED4A211FC3410059507A /* PostPageDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageDelegator.swift; sourceTree = "<group>"; };
 		70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OIDCProvider.swift; sourceTree = "<group>"; };
@@ -391,6 +395,8 @@
 				70D17FEE2127869B00A0C9D6 /* NotificationsTableViewCell.swift */,
 				70B58F452131E2BE00557661 /* SettingsItemTableViewCell.swift */,
 				70908BCD214EA7C7004005C5 /* SignUpTableViewCell.swift */,
+				7093B21F21512DB500BCC376 /* PostImageTableViewCell.swift */,
+				7093B22121512F9F00BCC376 /* PostTextTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -703,6 +709,7 @@
 				706F89E92107EAB300A78EFB /* ProfileViewController.swift in Sources */,
 				70E80BF420E6943F0067DF08 /* BirthdayViewController.swift in Sources */,
 				70E80CD920E6DB570067DF08 /* VSPostsListCompactModel__shards.swift in Sources */,
+				7093B22221512F9F00BCC376 /* PostTextTableViewCell.swift in Sources */,
 				702518D021350826008B8E65 /* VSCommentsListModel.swift in Sources */,
 				70B9A7E320ED650A00C06709 /* String+HashCode.swift in Sources */,
 				70E80CC620E6DB570067DF08 /* VSPostInfoMultiModel.swift in Sources */,
@@ -730,6 +737,7 @@
 				70FC662B2124D77900783FD5 /* CustomTabBar.swift in Sources */,
 				70E80CC520E6DB570067DF08 /* VSPIVSingle.swift in Sources */,
 				70E80CCF20E6DB570067DF08 /* VSPostInfoMultiModel_docs_item.swift in Sources */,
+				7093B22021512DB500BCC376 /* PostImageTableViewCell.swift in Sources */,
 				70036ED2210ABA96000BE8E9 /* FGHViewController.swift in Sources */,
 				702518CE21350826008B8E65 /* VSCommentsListModel_hits.swift in Sources */,
 				70E80CBA20E6DB570067DF08 /* VSAIModel_hits_hits_item.swift in Sources */,
