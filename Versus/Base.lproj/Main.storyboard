@@ -153,6 +153,10 @@
                                             <constraint firstAttribute="width" constant="69" id="upN-L3-r1a"/>
                                         </constraints>
                                     </view>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="shh-Do-HYE">
+                                        <rect key="frame" x="181" y="113" width="15" height="20"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="SpV-k3-Mpm">
                                         <rect key="frame" x="145" y="57" width="69" height="36"/>
                                     </activityIndicatorView>
@@ -167,13 +171,17 @@
                                     <constraint firstItem="HQq-Xc-zxB" firstAttribute="centerY" secondItem="26O-ix-7xy" secondAttribute="centerY" constant="-24" id="7ma-Dg-1QE"/>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="leading" secondItem="HQq-Xc-zxB" secondAttribute="leading" id="Bdc-Bq-jja"/>
                                     <constraint firstItem="SpV-k3-Mpm" firstAttribute="top" secondItem="HQq-Xc-zxB" secondAttribute="top" id="Cab-28-A8M"/>
+                                    <constraint firstItem="b2v-92-deP" firstAttribute="trailing" secondItem="shh-Do-HYE" secondAttribute="trailing" constant="18" id="Eeh-ji-MrK"/>
+                                    <constraint firstItem="b2v-92-deP" firstAttribute="top" secondItem="shh-Do-HYE" secondAttribute="top" constant="-8" id="FGT-Ck-GRf"/>
                                     <constraint firstItem="Iwo-mF-J46" firstAttribute="top" secondItem="b2v-92-deP" secondAttribute="top" id="FIh-fV-6iG"/>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="bottom" secondItem="HQq-Xc-zxB" secondAttribute="bottom" id="Fsb-Az-rYW"/>
+                                    <constraint firstItem="b2v-92-deP" firstAttribute="bottom" secondItem="shh-Do-HYE" secondAttribute="bottom" constant="8" id="OxY-Ip-jyM"/>
                                     <constraint firstItem="b2v-92-deP" firstAttribute="centerY" secondItem="26O-ix-7xy" secondAttribute="centerY" constant="24" id="afk-7d-nGn"/>
                                     <constraint firstItem="sf1-ZW-4XZ" firstAttribute="top" secondItem="HQq-Xc-zxB" secondAttribute="top" id="cdd-9Q-wS5"/>
                                     <constraint firstItem="Iwo-mF-J46" firstAttribute="leading" secondItem="b2v-92-deP" secondAttribute="leading" id="f3T-ak-SJ8"/>
                                     <constraint firstItem="Iwo-mF-J46" firstAttribute="bottom" secondItem="b2v-92-deP" secondAttribute="bottom" id="iEp-0Q-fJS"/>
                                     <constraint firstItem="SpV-k3-Mpm" firstAttribute="bottom" secondItem="HQq-Xc-zxB" secondAttribute="bottom" id="iNT-zd-bP7"/>
+                                    <constraint firstItem="b2v-92-deP" firstAttribute="leading" secondItem="shh-Do-HYE" secondAttribute="leading" constant="-36" id="iT4-ON-FCl"/>
                                     <constraint firstItem="b2v-92-deP" firstAttribute="centerX" secondItem="HQq-Xc-zxB" secondAttribute="centerX" id="qc0-mj-3aK"/>
                                     <constraint firstItem="SpV-k3-Mpm" firstAttribute="leading" secondItem="HQq-Xc-zxB" secondAttribute="leading" id="rAv-6t-VnH"/>
                                     <constraint firstItem="Iwo-mF-J46" firstAttribute="trailing" secondItem="b2v-92-deP" secondAttribute="trailing" id="xmR-5V-NJ3"/>
@@ -225,6 +233,7 @@
                         <outlet property="customFBLoginButton" destination="sf1-ZW-4XZ" id="w3x-vP-Oi0"/>
                         <outlet property="customGoogleLoginButton" destination="b2v-92-deP" id="iCH-Et-Zrs"/>
                         <outlet property="facebookLoginIndicator" destination="SpV-k3-Mpm" id="EAh-BC-184"/>
+                        <outlet property="googleButtonCover" destination="shh-Do-HYE" id="c1U-Ow-hyc"/>
                         <outlet property="googleLoginIndicator" destination="Iwo-mF-J46" id="Obt-Bf-PGE"/>
                         <outlet property="logInButton" destination="xPN-8j-PI5" id="r6l-sr-S7b"/>
                         <outlet property="logoTopMargin" destination="meX-Ic-CKg" id="iCg-1J-3VL"/>

@@ -28,6 +28,9 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
     @IBOutlet weak var facebookLoginIndicator: UIActivityIndicatorView!
     @IBOutlet weak var googleLoginIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var googleButtonCover: UIView!
+    
+    @IBOutlet weak var customGoogleButtonWidth: NSLayoutConstraint!
     @IBOutlet weak var customFBButtonHeight: NSLayoutConstraint!
     @IBOutlet weak var customFBButtonWidth: NSLayoutConstraint!
     @IBOutlet weak var logoTopMargin: NSLayoutConstraint!
@@ -66,6 +69,7 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
         GIDSignIn.sharedInstance().clientID = "688623904224-h6qno61t8vd42bjo67g50qmfh9vpdltg.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().uiDelegate = self
+        googleButtonCover.isHidden = true
         
         customGoogleLoginButton.style = .wide
         
@@ -182,6 +186,7 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
         customFBLoginButton.isEnabled = true
         customGoogleLoginButton.isUserInteractionEnabled = true
         customFBButtonLabel.setCustomFBButtonLogo(yesText: true)
+        googleButtonCover.isHidden = true
     }
 
     @IBAction func logInButtonTapped(_ sender: UIButton) {
@@ -435,11 +440,17 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
         }
     }
     
+    
+    
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
               withError error: Error!) {
         if let error = error {
             print("\(error.localizedDescription)")
         } else {
+            //google indicator here
+            googleButtonCover.isHidden = false
+            googleLoginIndicator.startAnimating()
+            
             // Perform any operations on signed in user here.
             authID = user.userID
             guard let authentication = user.authentication else { return }
@@ -449,6 +460,8 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                 if task.error != nil {
                     DispatchQueue.main.async {
                         self.showToast(message: "Please check your network.", length: 26)
+                        self.googleLoginIndicator.stopAnimating()
+                        self.removeLoginMask()
                     }
                 }
                 else {
@@ -470,7 +483,8 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                             
                             Auth.auth().signInAndRetrieveData(with: self.authCredential!) { (authResult, error) in
                                 if let error = error {
-                                    // ...
+                                    self.googleLoginIndicator.stopAnimating()
+                                    self.removeLoginMask()
                                     return
                                 }
                                 
@@ -541,7 +555,6 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                     if task.error != nil {
                         DispatchQueue.main.async {
                             self.showToast(message: "Please check your network.", length: 26)
-                            self.customFBButtonLabel.setCustomFBButtonLogo(yesText: true)
                             self.facebookLoginIndicator.stopAnimating()
                             self.removeLoginMask()
                         }
@@ -565,7 +578,9 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                                 
                                 Auth.auth().signInAndRetrieveData(with: self.authCredential!) { (authResult, error) in
                                     if let error = error {
-                                        // ...
+                                        self.showToast(message: "Please check your network.", length: 26)
+                                        self.facebookLoginIndicator.stopAnimating()
+                                        self.removeLoginMask()
                                         return
                                     }
                                     
