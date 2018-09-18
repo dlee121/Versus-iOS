@@ -654,8 +654,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                     for cqResponseItem in cqResponses {
                                         let cqHitsObject = cqResponseItem.hits
                                         let currentRoot = self.rootComments[rIndex]
-                                        currentRoot.child_count = cqHitsObject?.total!.intValue //set child count for parent root comment
                                         let rootNode = self.nodeMap[currentRoot.comment_id]
+                                        rootNode!.nodeContent.child_count = cqHitsObject!.total!.intValue //set child count for parent root comment
                                         var prevNode : VSCNode?
                                         for cqCommentItem in cqResponseItem.hits!.hits! {
                                             
@@ -706,8 +706,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                     for gcqResponseItem in gcqResponses {
                                                         let gcqHitsObject = gcqResponseItem.hits
                                                         let currentParent = self.childComments[cIndex]
-                                                        currentParent.child_count = gcqHitsObject?.total!.intValue //set child count for parent child comment
                                                         let parentNode = self.nodeMap[currentParent.comment_id]
+                                                        parentNode!.nodeContent.child_count = gcqHitsObject?.total!.intValue //set child count for parent root comment
                                                         var prevNode : VSCNode?
                                                         for gcqCommentItem in gcqResponseItem.hits!.hits! {
                                                             

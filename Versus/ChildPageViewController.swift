@@ -613,8 +613,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                         let cqHitsObject = cqResponseItem.hits
                                         print("root comments has \(self.rootComments.count) items, and rIndex == \(rIndex)")
                                         let currentRoot = self.rootComments[rIndex]
-                                        currentRoot.child_count = cqHitsObject?.total!.intValue //set child count for parent root comment
                                         let rootNode = self.nodeMap[currentRoot.comment_id]
+                                        rootNode!.nodeContent.child_count = cqHitsObject!.total!.intValue //set child count for parent root comment
                                         var prevNode : VSCNode?
                                         for cqCommentItem in cqResponseItem.hits!.hits! {
                                             
