@@ -20,6 +20,7 @@ import JWTDecode
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow?
+    var tokenExpirationTime : Date?
     weak var timer: Timer?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -79,6 +80,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
+        if let user = Auth.auth().currentUser {
+            user.getIDTokenForcingRefresh(false){ (idToken, error) in
+                do {
+                    let jwt = try decode(jwt: idToken!)
+                    self.tokenExpirationTime = jwt.expiresAt
+                }
+                catch {
+                    self.tokenExpirationTime = nil
+                }
+            }
+        }
+        
         if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
             Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
         }
@@ -87,6 +100,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        //if token has already expired or is 15 minutes from expiration
+        if tokenExpirationTime == nil  || tokenExpirationTime!.timeIntervalSinceNow.isLess(than: 900) {
+            //force a relaunch from initial VC, which will refresh the token before presenting MainVC if user is currently logged in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            self.window?.rootViewController = storyboard.instantiateInitialViewController()
+            
+            self.setTokenAutoRefresh(period: 3480) //set token to refresh in 58 minutes, so 2 minutes before new token expiration
+        }
+        else {
+            self.setTokenAutoRefresh(period: tokenExpirationTime!.timeIntervalSinceNow - 60) //set token to refresh 60 seconds before expiration
+        }
+        
+        
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
             Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
@@ -95,52 +121,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //clear any push notification displayed on the phone
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         
-        
-        //check if auth token is still valid. If it's close to expiration or already expired, then refresh it and credentials
-        //this is called during relaunch, so won't conflict with token verification in InitialViewController, which only gets called for when app is freshly launched (as opposed to relaunching app that is already in the background)
-        if let user = Auth.auth().currentUser {
-            user.getIDTokenForcingRefresh(false){ (idToken, error) in
-                
-                do {
-                    let jwt = try decode(jwt: idToken!)
-                    
-                    if jwt.expiresAt!.timeIntervalSinceNow.isLess(than: 1200) { //if token expires within 20 minutes
-                        user.getIDTokenForcingRefresh(true){ (idToken, error) in
-                            let oidcProvider = OIDCProvider(input: idToken! as NSString)
-                            let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
-                            credentialsProvider.clearCredentials()
-                            let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
-                            //login session configuration is stored in the default
-                            AWSServiceManager.default().defaultServiceConfiguration = configuration
-                            
-                            //set periodic task to refresh token every 58 minutes = 3480 seconds
-                            self.setPeriodicTokenRefresh(period: 3480)
-                        }
-                    }
-                    else {
-                        //set periodic task to refresh token every m - 2 minutes, where m = minutes to token expiration
-                        self.setPeriodicTokenRefresh(period: jwt.expiresAt!.timeIntervalSinceNow - 120)
-                    }
-                    
-                } catch {
-                    //if token decoding returns an exception, we simply refresh the token and credentials
-                    user.getIDTokenForcingRefresh(true){ (idToken, error) in
-                        let oidcProvider = OIDCProvider(input: idToken! as NSString)
-                        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
-                        credentialsProvider.clearCredentials()
-                        let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
-                        //login session configuration is stored in the default
-                        AWSServiceManager.default().defaultServiceConfiguration = configuration
-                        
-                        //set periodic task to refresh token every 58 minutes = 3480 seconds
-                        self.setPeriodicTokenRefresh(period: 3480)
-                    }
-                }
-            }
-        }
     }
     
-    func setPeriodicTokenRefresh(period : TimeInterval) {
+    func setTokenAutoRefresh(period : TimeInterval) {
         timer?.invalidate()   // just in case you had existing `Timer`, `invalidate` it before we lose our reference to it
         timer = Timer.scheduledTimer(withTimeInterval: period, repeats: false) { [weak self] _ in
             Auth.auth().currentUser!.getIDTokenForcingRefresh(true){ (idToken, error) in
@@ -151,8 +134,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 //login session configuration is stored in the default
                 AWSServiceManager.default().defaultServiceConfiguration = configuration
                 
-                //set periodic task to refresh token every 58 minutes = 3480 seconds.
-                self!.setPeriodicTokenRefresh(period: 3480)
+                //set timer task to refresh token in 58 minutes = 3480 seconds.
+                self!.setTokenAutoRefresh(period: 3480)
             }
         }
     }
