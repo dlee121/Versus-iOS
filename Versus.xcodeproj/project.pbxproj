@@ -40,6 +40,7 @@
 		7056672920FD62A400CB87AD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672820FD62A400CB87AD /* SearchViewController.swift */; };
 		7056672B20FDA82800CB87AD /* SearchPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */; };
 		7056672F2101564D00CB87AD /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */; };
+		705F140D21528240004A24CD /* NativeAdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F140C21528240004A24CD /* NativeAdTableViewCell.swift */; };
 		706F89E42106E38800A78EFB /* VSPostQMultiModel_docs_item__source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89E02106E38700A78EFB /* VSPostQMultiModel_docs_item__source.swift */; };
 		706F89E52106E38800A78EFB /* VSPostQModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89E12106E38700A78EFB /* VSPostQModel.swift */; };
 		706F89E62106E38800A78EFB /* VSPostQMultiModel_docs_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89E22106E38800A78EFB /* VSPostQMultiModel_docs_item.swift */; };
@@ -182,6 +183,7 @@
 		7056672820FD62A400CB87AD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7056672A20FDA82800CB87AD /* SearchPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostTableViewCell.swift; sourceTree = "<group>"; };
 		7056672E2101564D00CB87AD /* CategoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewCell.swift; sourceTree = "<group>"; };
+		705F140C21528240004A24CD /* NativeAdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeAdTableViewCell.swift; sourceTree = "<group>"; };
 		706F89E02106E38700A78EFB /* VSPostQMultiModel_docs_item__source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostQMultiModel_docs_item__source.swift; sourceTree = "<group>"; };
 		706F89E12106E38700A78EFB /* VSPostQModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostQModel.swift; sourceTree = "<group>"; };
 		706F89E22106E38800A78EFB /* VSPostQMultiModel_docs_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSPostQMultiModel_docs_item.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				70908BCD214EA7C7004005C5 /* SignUpTableViewCell.swift */,
 				7093B21F21512DB500BCC376 /* PostImageTableViewCell.swift */,
 				7093B22121512F9F00BCC376 /* PostTextTableViewCell.swift */,
+				705F140C21528240004A24CD /* NativeAdTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -798,6 +801,7 @@
 				70E80CBE20E6DB570067DF08 /* VSAIModel_hits_hits_item__source.swift in Sources */,
 				70CB9E51211552D200D86E37 /* CommentCardTableViewCell.swift in Sources */,
 				70E80CB920E6DB570067DF08 /* VSLeaderboardModel__shards.swift in Sources */,
+				705F140D21528240004A24CD /* NativeAdTableViewCell.swift in Sources */,
 				70036ED4210ABBCF000BE8E9 /* FGHTableViewCell.swift in Sources */,
 				70E80CD220E6DB570067DF08 /* VSPostsListModel.swift in Sources */,
 				70D17FEF2127869B00A0C9D6 /* NotificationsTableViewCell.swift in Sources */,

@@ -10,6 +10,7 @@ import UIKit
 import XLPagerTabStrip
 import Firebase
 import FirebaseMessaging
+import Appodeal
 
 class MCViewController: ButtonBarPagerTabStripViewController, UISearchControllerDelegate {
     
@@ -40,8 +41,10 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     var segueUserAction : UserAction?
     
     var currentUsername : String!
+    var availableAdCount = 0
     
-    
+    private var adQueue : APDNativeAdQueue = APDNativeAdQueue()
+    fileprivate var nativeArray : [APDNativeAd]! = Array()
     
     override func viewDidLoad() {
         self.loadDesign()
@@ -78,6 +81,16 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         self.navigationItem.titleView = searchController.searchBar
         
         self.definesPresentationContext = true
+        
+        adQueue.settings.adViewClass = NativeAdTableViewCell.self
+        adQueue.settings.autocacheMask = [.icon, .media]
+        adQueue.settings.type = .noVideo
+        
+        adQueue.delegate = self
+        self.currentAd.delegate = self
+        adQueue.setMaxAdSize(2) //deprecated
+        adQueue.loadAd()
+        
         
         
     }
@@ -311,6 +324,33 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         
         
         
+    }
+    
+}
+
+extension MCViewController : APDNativeAdPresentationDelegate {
+    
+    func nativeAdWillLogImpression(_ nativeAd: APDNativeAd!) {
+    }
+    
+    func nativeAdWillLogUserInteraction(_ nativeAd: APDNativeAd!) {
+    }
+}
+
+extension MCViewController : APDNativeAdQueueDelegate {
+    
+    func adQueue(_ adQueue: APDNativeAdQueue!, failedWithError error: Error!) {
+    }
+    
+    func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue!, ofCount count: UInt) {
+        if nativeArray.count > 0 {
+            availableAdCount = nativeArray.count + Int(count)
+        } else {
+            nativeArray.append(contentsOf:adQueue.getNativeAds(ofCount: 1))
+            let _ = nativeArray.map {( $0.delegate = self )}
+            availableAdCount = Int(count)
+        }
+        //apdNativeArray will contain all available
     }
     
 }
