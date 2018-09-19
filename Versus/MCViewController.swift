@@ -46,6 +46,8 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     private var adQueue : APDNativeAdQueue = APDNativeAdQueue()
     fileprivate var nativeArray : [APDNativeAd]! = Array()
     
+    var adIndex = 0
+    
     override func viewDidLoad() {
         self.loadDesign()
         super.viewDidLoad()
@@ -82,12 +84,14 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         
         self.definesPresentationContext = true
         
+        Appodeal.setTestingEnabled(true)
+        Appodeal.setLogLevel(.debug)
+        
         adQueue.settings.adViewClass = NativeAdTableViewCell.self
         adQueue.settings.autocacheMask = [.icon, .media]
         adQueue.settings.type = .noVideo
         
         adQueue.delegate = self
-        self.currentAd.delegate = self
         adQueue.setMaxAdSize(2) //deprecated
         adQueue.loadAd()
         
@@ -320,10 +324,18 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
             break
             
         }
-        
-        
-        
-        
+    }
+    
+    func getNextNativeAd()  -> APDNativeAd? {
+        if availableAdCount > 0 && availableAdCount > adIndex {
+            let nextNativeAd = nativeArray[adIndex]
+            adIndex += 1
+            nextNativeAd.delegate = self
+            return nextNativeAd
+        }
+        else {
+            return nil
+        }
     }
     
 }

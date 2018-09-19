@@ -8,6 +8,7 @@
 
 import UIKit
 import Appodeal
+import Nuke
 
 class NativeAdTableViewCell: UITableViewCell {
 
@@ -19,8 +20,24 @@ class NativeAdTableViewCell: UITableViewCell {
     @IBOutlet weak var mediaContainer: UIView!
     @IBOutlet weak var adChoices: UIView!
     
+    @IBOutlet weak var mediaImageView: UIImageView!
     
     
+    func setCell(nativeAd : APDNativeAd) {
+        title.text = nativeAd.title
+        callToAction.text = nativeAd.callToActionText
+        descr.text = nativeAd.descriptionText
+        
+        if let iconImage = nativeAd.iconImage {
+            Nuke.loadImage(with: iconImage.url, into: icon)
+        }
+        
+        if let mainImage = nativeAd.mainImage {
+            Nuke.loadImage(with: mainImage.url, into: mediaImageView)
+        }
+        
+        adChoices = nativeAd.adChoicesView
+    }
 
 }
 

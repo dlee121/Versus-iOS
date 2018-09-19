@@ -12,6 +12,7 @@ import Nuke
 import AWSS3
 import XLPagerTabStrip
 import FirebaseDatabase
+import Appodeal
 
 class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MyCircleDelegator {
     
@@ -42,6 +43,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     let cellSpacingHeight: CGFloat = 16
     
     private let refreshControl = UIRefreshControl()
+    
+    var adFrequency = 11
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -222,7 +225,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                     var postInfoPayload = "{\"ids\":["
                     var index = 0
                     var duplicateUsernamePreventionMap = NSMutableSet()
-                    
+                    var countToAdView = 0 //once this == adFrequency, we insert an add to the comments array
                     for item in results! {
                         let comment = VSComment(itemSource: item.source!, id: item.id!)
                         self.comments.append(comment)
@@ -242,6 +245,14 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                             index += 1
                         }
                         
+                        countToAdView += 1
+                        if countToAdView == self.adFrequency {
+                            //inserting a placeholder VSComment object for a native ad. Check for placeholder by checking if the object's commentID == "0"
+                            self.comments.append(VSComment())
+                            
+                            //should we randomize adFrequency? simply update its value here if we are.
+                            
+                        }
                         
                     }
                     postInfoPayload.append("]}")
@@ -447,33 +458,55 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentComment = comments[indexPath.section]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_mycircle", for: indexPath) as! MyCircleTableViewCell
         
-        if let postInfo = postInfos[currentComment.post_id] {
-            cell.setCell(comment: currentComment, postInfo: postInfo, row: indexPath.section)
+        if currentComment.comment_id != "0" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_mycircle", for: indexPath) as! MyCircleTableViewCell
             
-            if let piv = profileImageVersions[postInfo.a!.lowercased()] {
-                cell.setProfileImage(username: postInfo.a!, profileImageVersion: piv)
+            if let postInfo = postInfos[currentComment.post_id] {
+                cell.setCell(comment: currentComment, postInfo: postInfo, row: indexPath.section)
+                
+                if let piv = profileImageVersions[postInfo.a!.lowercased()] {
+                    cell.setProfileImage(username: postInfo.a!, profileImageVersion: piv)
+                }
+                else {
+                    cell.setProfileImage(username: postInfo.a!, profileImageVersion: 0)
+                }
+                
             }
             else {
-                cell.setProfileImage(username: postInfo.a!, profileImageVersion: 0)
+                cell.setCell(comment: currentComment, row: indexPath.section)
             }
             
+            if let commentProfilePIV = profileImageVersions[currentComment.author.lowercased()] {
+                cell.setCommentProfileImage(username: currentComment.author, profileImageVersion: commentProfilePIV)
+            }
+            else {
+                cell.setCommentProfileImage(username: currentComment.author, profileImageVersion: 0)
+            }
+            
+            cell.delegate = self
+            
+            return cell
         }
-        else {
-            cell.setCell(comment: currentComment, row: indexPath.section)
+        else { //native ad
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Native", for: indexPath) as! NativeAdTableViewCell
+            
+            let mainVC = parent as! MCViewController
+            //delegate already set in getNextNativeAd()
+            if let nextAd = mainVC.getNextNativeAd() {
+                cell.setCell(nativeAd: nextAd)
+            }
+            else {
+                //if no ad then make the cell's height 0
+                
+            }
+            
+            return cell
+            
         }
         
-        if let commentProfilePIV = profileImageVersions[currentComment.author.lowercased()] {
-            cell.setCommentProfileImage(username: currentComment.author, profileImageVersion: commentProfilePIV)
-        }
-        else {
-            cell.setCommentProfileImage(username: currentComment.author, profileImageVersion: 0)
-        }
         
-        cell.delegate = self
         
-        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
