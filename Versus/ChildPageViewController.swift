@@ -97,7 +97,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     
     @objc private func refreshList(_ sender: Any) {
         
-        if currentPost != nil && currentUserAction != nil && topCardComment != nil{
+        if comments.count > 1 && currentPost != nil && currentUserAction != nil && topCardComment != nil{
             rootComments.removeAll()
             childComments.removeAll()
             comments.removeAll()
@@ -503,6 +503,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func commentsQuery(){
+        startIndicator()
+        
         if fromIndex == nil {
             fromIndex = 0
         }
@@ -1401,6 +1403,19 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         else {
             return true
         }
+    }
+    
+    func startIndicator() {
+        if !refreshControl.isRefreshing {
+            let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
+            cell.startIndicator()
+        }
+        
+    }
+    
+    func stopIndicator() {
+        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
+        cell.stopIndicator()
     }
     
 }

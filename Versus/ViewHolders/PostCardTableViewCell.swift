@@ -42,6 +42,8 @@ class PostCardTableViewCell: UITableViewCell {
     @IBOutlet weak var textOnlyRedName: UILabel!
     @IBOutlet weak var textOnlyBlueName: UILabel!
     
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
     
     let DEFAULT = 0
     let S3 = 1
@@ -346,7 +348,12 @@ class PostCardTableViewCell: UITableViewCell {
         delegate.presentSortMenu(sortButtonLabel: sortButton)
     }
     
-    
+    func startIndicator() {
+        indicator.startAnimating()
+    }
+    func stopIndicator() {
+        indicator.stopAnimating()
+    }
     
     
     

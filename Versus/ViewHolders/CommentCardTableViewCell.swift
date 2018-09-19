@@ -33,6 +33,8 @@ class CommentCardTableViewCell: UITableViewCell {
     @IBOutlet weak var medalViewWidth: NSLayoutConstraint!
     @IBOutlet weak var medalTrailing: NSLayoutConstraint!
     
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
     
     let none = 0
     let upvoted = 1
@@ -446,6 +448,11 @@ class CommentCardTableViewCell: UITableViewCell {
         delegate.presentSortMenu(sortButtonLabel: sortButton)
     }
     
-    
+    func startIndicator() {
+        indicator.startAnimating()
+    }
+    func stopIndicator() {
+        indicator.stopAnimating()
+    }
     
 }

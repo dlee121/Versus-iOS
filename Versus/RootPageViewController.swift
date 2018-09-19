@@ -99,7 +99,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @objc private func refreshList(_ sender: Any) {
-        if currentPost != nil && currentUserAction != nil {
+        if comments.count > 1 && currentPost != nil && currentUserAction != nil {
             rootComments.removeAll()
             childComments.removeAll()
             grandchildComments.removeAll()
@@ -120,7 +120,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         childComments.removeAll()
         grandchildComments.removeAll()
         comments.removeAll()
-        tableView.reloadData()
+        
         
         winnerTreeRoots.removeAllObjects()
         medalistCQPayload = ""
@@ -130,6 +130,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         nowLoading = false
         
         comments.append(VSComment()) //placeholder for post object
+        tableView.reloadData()
+        
         
         if sortType == POPULAR {
             setMedals()
@@ -237,13 +239,16 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         nodeMap.removeAll()
         expandedCells.removeAllObjects()
         postVoteUpdate = "none"
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        
         currentPost = post
         fromIndex = 0
         nowLoading = false
         comments.append(VSComment()) //placeholder for post object
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
+        
         self.rootComments.append(topicComment)
         self.nodeMap[topicComment.comment_id] = VSCNode(comment: topicComment)
         currentUserAction = userAction
@@ -263,13 +268,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         nodeMap.removeAll()
         expandedCells.removeAllObjects()
         postVoteUpdate = "none"
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        
         currentPost = post
         fromIndex = 0
         nowLoading = false
         comments.append(VSComment()) //placeholder for post object
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
         currentUserAction = userAction
         setMedals() //this function will call commentsQuery() upon completion
         
@@ -541,6 +548,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func commentsQuery(){
+        startIndicator()
+        
         if fromIndex == nil {
             fromIndex = 0
         }
@@ -1528,6 +1537,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         else {
             return true
         }
+    }
+    
+    func startIndicator() {
+        if !refreshControl.isRefreshing {
+            let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! PostCardTableViewCell
+            cell.startIndicator()
+        }
+    }
+    
+    func stopIndicator() {
+        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! PostCardTableViewCell
+        cell.stopIndicator()
     }
 
 }
