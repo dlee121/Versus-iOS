@@ -282,7 +282,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         if !clickLock {
             clickLock = true
             let mainVC = parent as! MCViewController
-            mainVC.goToPostPageRoot(post: posts[indexPath.row])
+            mainVC.goToPostPageRoot(post: posts[indexPath.section])
         }
     }
     
