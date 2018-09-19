@@ -12,7 +12,7 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
 
     var usernames = [String]()
     var profileImageVersions = [String : Int]()
-    var apiClient = VSVersusAPIClient.default()
+    
     var fromIndex : Int!
     var tappedUsername : String!
     var fORg : Int!
@@ -65,7 +65,7 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
             }
             payload.append("]}")
             
-            self.apiClient.pivGet(a: "pis", b: payload.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            VSVersusAPIClient.default().pivGet(a: "pis", b: payload.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                 if task.error != nil {
                     DispatchQueue.main.async {
                         print(task.error!)
@@ -114,7 +114,7 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
             payload.append("]}")
             
             
-            self.apiClient.pivGet(a: "pis", b: payload.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            VSVersusAPIClient.default().pivGet(a: "pis", b: payload.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                 if task.error != nil {
                     DispatchQueue.main.async {
                         print(task.error!)

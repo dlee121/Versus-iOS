@@ -3802,7 +3802,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_2_64" translatesAutoresizingMaskIntoConstraints="NO" id="kn2-yi-qgf">
-                                                    <rect key="frame" x="175" y="158" width="25" height="25"/>
+                                                    <rect key="frame" x="175" y="157.5" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="Y8S-pc-A3h"/>
                                                         <constraint firstAttribute="width" constant="25" id="YTG-uX-zOT"/>

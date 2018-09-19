@@ -16,7 +16,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     var searchController : UISearchController!
     var searchViewController : SearchViewController!
     var selectedPost : PostObject!
-    let apiClient = VSVersusAPIClient.default()
+    
     var mainSegueType : Int!
     let myCircleSegue = 0
     let mainSeguePostSegue = 1
@@ -133,7 +133,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     }
     
     func goToComment(commentID : String) {
-        self.apiClient.commentGet(a: "c", b: commentID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        VSVersusAPIClient.default().commentGet(a: "c", b: commentID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
             
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -143,7 +143,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
             else {
                 if let result = task.result {
                     self.segueComment = VSComment(itemSource: result.source!, id: result.id!)
-                    self.apiClient.postGet(a: "p", b: self.segueComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    VSVersusAPIClient.default().postGet(a: "p", b: self.segueComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                         
                         if task.error != nil {
                             DispatchQueue.main.async {
@@ -157,7 +157,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
                                 
                                 let userActionID = self.currentUsername + self.seguePost!.post_id
                                 
-                                self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                     
                                     if task.error != nil {
                                         self.segueUserAction = UserAction(idIn: userActionID)
@@ -184,7 +184,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
                                             //child comment
                                             self.segueComment!.nestedLevel = 3
                                             self.segueType = self.childSegue
-                                            self.apiClient.commentGet(a: "c", b: self.segueComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                            VSVersusAPIClient.default().commentGet(a: "c", b: self.segueComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                                 
                                                 if task.error != nil {
                                                     self.segueUserAction = UserAction(idIn: userActionID)
@@ -205,7 +205,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
                                         //grandchild comment
                                         self.segueComment!.nestedLevel = 5
                                         self.segueType = self.grandchildSegue
-                                        self.apiClient.commentGet(a: "c", b: self.segueComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                        VSVersusAPIClient.default().commentGet(a: "c", b: self.segueComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                             
                                             if task.error != nil {
                                                 self.segueUserAction = UserAction(idIn: userActionID)
@@ -263,7 +263,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
             let rootView = rootVC.view //load the view before segue
             
             let userActionId = currentUsername + selectedPost.post_id
-            apiClient.recordGet(a: "rcg", b: userActionId).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionId).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                 if task.error != nil {
                     rootVC.setUpRootPage(post: self.selectedPost, userAction: UserAction(idIn: userActionId), fromCreatePost: false)
                 }

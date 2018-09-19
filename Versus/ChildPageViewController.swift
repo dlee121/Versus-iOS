@@ -21,7 +21,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     
     var currentPost : PostObject!
     var comments = [VSComment]()
-    let apiClient = VSVersusAPIClient.default()
+    
     var rootComments = [VSComment]()
     var childComments = [VSComment]()
     var nodeMap = [String : VSCNode]()
@@ -180,7 +180,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 parentVC!.tableView.reloadData()
             }
             
-            apiClient.recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
+            VSVersusAPIClient.default().recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
         }
         
         NotificationCenter.default.removeObserver(self)
@@ -355,7 +355,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     func setMedals(){
         medalWinnersList.removeAll()
         winnerTreeRoots.removeAllObjects()
-        apiClient.commentslistGet(c: nil, d: nil, a: "m", b: currentPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        VSVersusAPIClient.default().commentslistGet(c: nil, d: nil, a: "m", b: currentPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -431,7 +431,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                             if !self.winnerTreeRoots.contains(item.source?.pr) {
                                 self.winnerTreeRoots.add(item.source!.pr)
                                 group.enter()
-                                self.apiClient.commentGet(a: "c", b: item.source!.pr).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                VSVersusAPIClient.default().commentGet(a: "c", b: item.source!.pr).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                     
                                     if task.error != nil {
                                         DispatchQueue.main.async {
@@ -527,7 +527,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         //get the root comments, children, and grandchildren
-        apiClient.commentslistGet(c: topCardComment.comment_id, d: ascORdesc, a: queryType, b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        VSVersusAPIClient.default().commentslistGet(c: topCardComment.comment_id, d: ascORdesc, a: queryType, b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             print("child commentQuery with fromIndex == \(self.fromIndex!)")
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -600,7 +600,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                     if cqPayload.count > 0 {
                         
                         //child comments query
-                        self.apiClient.cgcGet(a: "cgc", b: cqPayload).continueWith(block:) {(cqTask: AWSTask) -> AnyObject? in
+                        VSVersusAPIClient.default().cgcGet(a: "cgc", b: cqPayload).continueWith(block:) {(cqTask: AWSTask) -> AnyObject? in
                             if cqTask.error != nil {
                                 DispatchQueue.main.async {
                                     print(cqTask.error!)
@@ -854,16 +854,16 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             if let prevAction = currentUserAction.actionRecord[commentID] {
                 switch prevAction {
                 case "U":
-                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "un")
+                    VSVersusAPIClient.default().vGet(e: nil, c: commentID, d: nil, a: "v", b: "un")
                     currentUserAction.actionRecord[commentID] = "N"
                     thisComment.upvotes -= 1
                 case "D":
-                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "du")
+                    VSVersusAPIClient.default().vGet(e: nil, c: commentID, d: nil, a: "v", b: "du")
                     currentUserAction.actionRecord[commentID] = "U"
                     thisComment.downvotes -= 1
                     thisComment.upvotes += 1
                 default:
-                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "u")
+                    VSVersusAPIClient.default().vGet(e: nil, c: commentID, d: nil, a: "v", b: "u")
                     currentUserAction.actionRecord[commentID] = "U"
                     thisComment.upvotes += 1
                 }
@@ -872,8 +872,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 //a new vote; send notification to author and increase their influence accordingly
                 sendCommentUpvoteNotification(upvotedComment: nodeMap[commentID]!.nodeContent)
                 
-                apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "u")
-                apiClient.vGet(e: nil, c: thisComment.author, d: nil, a: "ui", b: "1")
+                VSVersusAPIClient.default().vGet(e: nil, c: commentID, d: nil, a: "v", b: "u")
+                VSVersusAPIClient.default().vGet(e: nil, c: thisComment.author, d: nil, a: "ui", b: "1")
                 currentUserAction.actionRecord[commentID] = "U"
                 thisComment.upvotes += 1
             }
@@ -893,20 +893,20 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             if let prevAction = currentUserAction.actionRecord[commentID] {
                 switch prevAction {
                 case "D":
-                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "dn")
+                    VSVersusAPIClient.default().vGet(e: nil, c: commentID, d: nil, a: "v", b: "dn")
                     currentUserAction.actionRecord[commentID] = "N"
                     thisComment.downvotes -= 1
                 case "U":
-                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "ud")
+                    VSVersusAPIClient.default().vGet(e: nil, c: commentID, d: nil, a: "v", b: "ud")
                     currentUserAction.actionRecord[commentID] = "D"
                     thisComment.upvotes -= 1
                     thisComment.downvotes += 1
                 default:
                     if (thisComment.upvotes == 0 && thisComment.downvotes + 1 <= 10) || (thisComment.upvotes * 10 >= thisComment.downvotes + 1) {
-                        apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "dci")
+                        VSVersusAPIClient.default().vGet(e: nil, c: commentID, d: nil, a: "v", b: "dci")
                     }
                     else {
-                        apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "d")
+                        VSVersusAPIClient.default().vGet(e: nil, c: commentID, d: nil, a: "v", b: "d")
                     }
                     currentUserAction.actionRecord[commentID] = "D"
                     thisComment.downvotes += 1
@@ -917,10 +917,10 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                 sendCommentUpvoteNotification(upvotedComment: nodeMap[commentID]!.nodeContent)
                 
                 if (thisComment.upvotes == 0 && thisComment.downvotes + 1 <= 10) || (thisComment.upvotes * 10 >= thisComment.downvotes + 1) {
-                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "dci")
+                    VSVersusAPIClient.default().vGet(e: nil, c: commentID, d: nil, a: "v", b: "dci")
                 }
                 else {
-                    apiClient.vGet(e: nil, c: commentID, d: nil, a: "v", b: "d")
+                    VSVersusAPIClient.default().vGet(e: nil, c: commentID, d: nil, a: "v", b: "d")
                 }
                 currentUserAction.actionRecord[commentID] = "D"
                 thisComment.downvotes += 1
@@ -973,7 +973,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                         
                         newComment.nestedLevel = 4
                         
-                        apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
                                 DispatchQueue.main.async {
                                     print(task.error!)
@@ -1007,7 +1007,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                     self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
                                 }
                                 
-                                self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: currentReplyTargetID!, a: "v", b: "cm") //ps increment for comment submission
+                                VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: currentReplyTargetID!, a: "v", b: "cm") //ps increment for comment submission
                                 if self.parentVC != nil {
                                     if let node = self.parentVC!.nodeMap[currentReplyTargetID!] {
                                         if let prevFirstChild = node.firstChild {
@@ -1044,7 +1044,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                         newComment.nestedLevel = 4
                         print("new comment nested at 4")
                         
-                        apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
                                 DispatchQueue.main.async {
                                     print(task.error!)
@@ -1079,7 +1079,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                     self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
                                 }
                                 
-                                self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: currentReplyTargetID!, a: "v", b: "cm") //ps increment for comment submission
+                                VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: currentReplyTargetID!, a: "v", b: "cm") //ps increment for comment submission
                                 if self.parentVC != nil {
                                     if let node = self.parentVC!.nodeMap[currentReplyTargetID!] {
                                         if let prevFirstChild = node.firstChild {
@@ -1112,7 +1112,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                     let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: topCardComment.comment_id, postID: topCardComment.post_id, newContent: text, rootID: "0")
                     newComment.nestedLevel = 3 //root comment in child page has nested level of 3 (which is 0 in root page)
                     print("new comment nested at 3")
-                    apiClient.commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
                         if task.error != nil {
                             DispatchQueue.main.async {
                                 print(task.error!)
@@ -1138,7 +1138,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                                 self.tableView.insertRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
                             }
                             
-                            self.apiClient.vGet(e: nil, c: self.currentPost.post_id, d: self.topCardComment.comment_id, a: "v", b: "cm") //ps increment for comment submission
+                            VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: self.topCardComment.comment_id, a: "v", b: "cm") //ps increment for comment submission
                             if self.parentVC != nil {
                                 if let node = self.parentVC!.nodeMap[self.topCardComment.comment_id] {
                                     if let prevFirstChild = node.firstChild {

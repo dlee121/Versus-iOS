@@ -16,7 +16,6 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     var emailSetUpButtonLock = false
     
     var notificationItems : [NotificationItem]!
-    let apiClient = VSVersusAPIClient.default()
     var userNotificationsPath, nrtPath : String!
     var ref : DatabaseReference!
     var initialLoadLock = false
@@ -491,7 +490,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func goToComment(commentID : String) {
-        self.apiClient.commentGet(a: "c", b: commentID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        VSVersusAPIClient.default().commentGet(a: "c", b: commentID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
             
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -501,7 +500,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
             else {
                 if let result = task.result {
                     self.segueComment = VSComment(itemSource: result.source!, id: result.id!)
-                    self.apiClient.postGet(a: "p", b: self.segueComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    VSVersusAPIClient.default().postGet(a: "p", b: self.segueComment!.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                         
                         if task.error != nil {
                             DispatchQueue.main.async {
@@ -515,7 +514,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                 
                                 let userActionID = self.currentUsername + self.seguePost!.post_id
                                 
-                                self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                     
                                     if task.error != nil {
                                         self.segueUserAction = UserAction(idIn: userActionID)
@@ -542,7 +541,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                             //child comment
                                             self.segueComment!.nestedLevel = 3
                                             self.segueType = self.childSegue
-                                            self.apiClient.commentGet(a: "c", b: self.segueComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                            VSVersusAPIClient.default().commentGet(a: "c", b: self.segueComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                                 
                                                 if task.error != nil {
                                                     self.segueUserAction = UserAction(idIn: userActionID)
@@ -563,7 +562,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                                         //grandchild comment
                                         self.segueComment!.nestedLevel = 5
                                         self.segueType = self.grandchildSegue
-                                        self.apiClient.commentGet(a: "c", b: self.segueComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                        VSVersusAPIClient.default().commentGet(a: "c", b: self.segueComment!.parent_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                             
                                             if task.error != nil {
                                                 self.segueUserAction = UserAction(idIn: userActionID)
@@ -605,7 +604,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
             let view = rootVC.view //necessary for loading the view
             let userActionID = currentUsername+seguePostID!
             
-            apiClient.postGet(a: "p", b: seguePostID!).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            VSVersusAPIClient.default().postGet(a: "p", b: seguePostID!).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                 if task.error != nil {
                     DispatchQueue.main.async {
                         print(task.error!)
@@ -616,7 +615,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                         
                         let postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
                         
-                        self.apiClient.pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        VSVersusAPIClient.default().pivsingleGet(a: "pi", b: postObject.author).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             
                             if task.error != nil {
                                 DispatchQueue.main.async {
@@ -631,7 +630,7 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
                             return nil
                         }
                         
-                        self.apiClient.recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             
                             if task.error != nil {
                                 rootVC.setUpRootPage(post: postObject, userAction: UserAction(idIn: userActionID), fromCreatePost: false)

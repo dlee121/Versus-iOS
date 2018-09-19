@@ -15,7 +15,7 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
     var posts = [PostObject]()
-    var apiClient = VSVersusAPIClient.default()
+    
     var fromIndex : Int!
     var nowLoading = false
     var loadThreshold = 2
@@ -29,6 +29,7 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.tableFooterView = UIView()
         
         // Add Refresh Control to Table View
@@ -86,7 +87,7 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
             }
         }
         
-        apiClient.postslistcompactGet(c: username, a: "pp", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        VSVersusAPIClient.default().postslistcompactGet(c: username, a: "pp", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)

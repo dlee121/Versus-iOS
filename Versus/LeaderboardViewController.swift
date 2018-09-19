@@ -12,13 +12,12 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
 
     @IBOutlet weak var tableView: UITableView!
     var leaders = [LeaderboardEntry]()
-    var apiClient = VSVersusAPIClient.default()
     var tappedUsername = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Leaderboard"
-
+        tableView.separatorStyle = .none
         // Do any additional setup after loading the view.
     }
     
@@ -29,7 +28,7 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
-        apiClient.leaderboardGet(a: "lb").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        VSVersusAPIClient.default().leaderboardGet(a: "lb").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -45,6 +44,7 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.tableView.separatorStyle = .singleLine
                 }
                 
             }

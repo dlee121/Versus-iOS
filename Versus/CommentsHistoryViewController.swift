@@ -17,7 +17,6 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     
     var comments = [VSComment]()
     var postInfoMap = [String : PostInfo]()
-    var apiClient = VSVersusAPIClient.default()
     var fromIndex : Int!
     var nowLoading = false
     var loadThreshold = 2
@@ -88,7 +87,7 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
             }
         }
         
-        apiClient.commentslistGet(c: username, d: nil, a: "pc", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        VSVersusAPIClient.default().commentslistGet(c: username, d: nil, a: "pc", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -117,7 +116,7 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                         }
                         payload.append("]}")
                         
-                        self.apiClient.postinfomultiGet(a: "mpinf", b: payload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        VSVersusAPIClient.default().postinfomultiGet(a: "mpinf", b: payload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             
                             if let pinfResults = task.result?.docs {
                                 for pinfItem in pinfResults {
@@ -170,7 +169,7 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                         self.comments.append(VSComment(itemSource: source, id: queryResults[0].id!))
                         self.fromIndex = self.comments.count
                         
-                        self.apiClient.postinfoGet(a: "pinf", b: source.pt).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        VSVersusAPIClient.default().postinfoGet(a: "pinf", b: source.pt).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if let pinfResult = task.result {
                                 self.postInfoMap[queryResults[0].id!] = PostInfo(itemSource: pinfResult)
                             }

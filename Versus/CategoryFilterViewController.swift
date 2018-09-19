@@ -35,7 +35,7 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
         "Technology",
         "Weapons"
     ]
-    var apiClient = VSVersusAPIClient.default()
+    
     var selectedCategory : Int!
     var tab2Or3OrCP : Int! //2 = tab 2, 3 = tab 3, 4 = CreatePost
     var originVC : UIViewController!

@@ -20,7 +20,6 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     var fromIndex : Int!
     let DEFAULT = 0
     let S3 = 1
-    let apiClient = VSVersusAPIClient.default()
     var comments = [VSComment]()
     var postInfos = [String : VSPostQMultiModel_docs_item__source]()
     var vIsRed = true
@@ -196,7 +195,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     func executeQuery(payload : String){
         
-        self.apiClient.commentslistGet(c: payload, d: nil, a: "nwv2", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        VSVersusAPIClient.default().commentslistGet(c: payload, d: nil, a: "nwv2", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -248,7 +247,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                     postInfoPayload.append("]}")
                     
                     if index > 0 {
-                        self.apiClient.postqmultiGet(a: "mpinfq", b: postInfoPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        VSVersusAPIClient.default().postqmultiGet(a: "mpinfq", b: postInfoPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
                                 DispatchQueue.main.async {
                                     print(task.error!)
@@ -285,7 +284,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                                 pivPayload.append("]}")
                                 
                                 if pivIndex > 0 {
-                                    self.apiClient.pivGet(a: "pis", b: pivPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                    VSVersusAPIClient.default().pivGet(a: "pis", b: pivPayload).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                         if task.error != nil {
                                             DispatchQueue.main.async {
                                                 print(task.error!)

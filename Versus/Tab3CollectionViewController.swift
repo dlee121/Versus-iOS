@@ -25,7 +25,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     var fromIndex = 0
     let DEFAULT = 0
     let S3 = 1
-    let apiClient = VSVersusAPIClient.default()
+    
     var posts = [PostObject]()
     var vIsRed = true
     let preheater = Nuke.ImagePreheater()
@@ -45,7 +45,6 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.separatorStyle = .none
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(Tab3CollectionViewController.resetCategorySelection))
@@ -100,7 +99,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
             }
         }
         
-        self.apiClient.postslistGet(c: categorySelection, d: nil, a: "nw", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        VSVersusAPIClient.default().postslistGet(c: categorySelection, d: nil, a: "nw", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -128,7 +127,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
                 
                 print(pivString)
                 if index > 0 {
-                    self.apiClient.pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    VSVersusAPIClient.default().pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                         if task.error != nil {
                             DispatchQueue.main.async {
                                 print(task.error!)

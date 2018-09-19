@@ -16,7 +16,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     var fromIndex = 0
     let DEFAULT = 0
     let S3 = 1
-    let apiClient = VSVersusAPIClient.default()
     var posts = [PostObject]()
     var profileImageVersions = [String : Int]()
     var nowLoading = false
@@ -30,7 +29,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.separatorStyle = .none
         // Do any additional setup after loading the view.
     }
 
@@ -55,7 +54,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         DispatchQueue.main.async {
             self.indicator.startAnimating()
         }
-        self.apiClient.postslistcompactGet(c: input, a: "sp", b: "\(index)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        VSVersusAPIClient.default().postslistcompactGet(c: input, a: "sp", b: "\(index)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -83,7 +82,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                     pivString += "]}"
                     
                     if index > 0 {
-                        self.apiClient.pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        VSVersusAPIClient.default().pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
                                 DispatchQueue.main.async {
                                     print(task.error!)
@@ -174,7 +173,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         
         if !clickLock {
             clickLock = true
-            apiClient.postGet(a: "p", b: posts[indexPath.row].post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            VSVersusAPIClient.default().postGet(a: "p", b: posts[indexPath.row].post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                 if task.error != nil {
                     DispatchQueue.main.async {
                         print(task.error!)
