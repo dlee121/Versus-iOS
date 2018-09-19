@@ -43,12 +43,15 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     @objc private func refreshList(_ sender: Any) {
-        //refresh the list
-        //refreshControl.endRefreshing()
-        fromIndex = 0
-        posts.removeAll()
-        tableView.reloadData()
-        postsHistoryQuery(username: currentUsername)
+        if !indicator.isAnimating {
+            fromIndex = 0
+            posts.removeAll()
+            tableView.reloadData()
+            postsHistoryQuery(username: currentUsername)
+        }
+        else {
+            refreshControl.endRefreshing()
+        }
     }
     
     override func didReceiveMemoryWarning() {

@@ -67,11 +67,14 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @objc private func refreshList(_ sender: Any) {
-        //refresh the list
-        //refreshControl.endRefreshing()
-        comments.removeAll()
-        tableView.reloadData()
-        myCircleInitialSetup()
+        if !indicator.isAnimating {
+            comments.removeAll()
+            tableView.reloadData()
+            myCircleInitialSetup()
+        }
+        else {
+            refreshControl.endRefreshing()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

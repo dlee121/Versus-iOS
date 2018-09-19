@@ -71,10 +71,15 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func refresh(){
-        fromIndex = 0
-        posts.removeAll()
-        tableView.reloadData()
-        newQuery()
+        if !indicator.isAnimating {
+            fromIndex = 0
+            posts.removeAll()
+            tableView.reloadData()
+            newQuery()
+        }
+        else {
+            refreshControl.endRefreshing()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

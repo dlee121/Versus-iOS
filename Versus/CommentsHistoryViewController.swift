@@ -45,12 +45,15 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     }
     
     @objc private func refreshList(_ sender: Any) {
-        //refresh the list
-        //refreshControl.endRefreshing()
-        fromIndex = 0
-        comments.removeAll()
-        tableView.reloadData()
-        commentsHistoryQuery(username: currentUsername)
+        if !indicator.isAnimating {
+            fromIndex = 0
+            comments.removeAll()
+            tableView.reloadData()
+            commentsHistoryQuery(username: currentUsername)
+        }
+        else {
+            refreshControl.endRefreshing()
+        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -69,10 +69,15 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func refresh(){
-        fromIndex = 0
-        posts.removeAll()
-        tableView.reloadData()
-        trendingQuery()
+        if !indicator.isAnimating {
+            fromIndex = 0
+            posts.removeAll()
+            tableView.reloadData()
+            trendingQuery()
+        }
+        else {
+            refreshControl.endRefreshing()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
