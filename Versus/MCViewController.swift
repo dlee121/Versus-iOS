@@ -91,7 +91,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         adQueue.settings.type = .noVideo
         
         adQueue.delegate = self
-        adQueue.setMaxAdSize(2) //deprecated
+        adQueue.setMaxAdSize(3) //deprecated
         adQueue.loadAd()
         
         
@@ -327,16 +327,25 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     
     func getNextNativeAd()  -> APDNativeAd? {
         print("nativeArray.count == \(nativeArray.count), adIndex == \(adIndex)")
+        print("current ad count == \(adQueue.currentAdCount)")
         
-        if nativeArray.count > adIndex {
-            let nextNativeAd = nativeArray[adIndex]
-            adIndex += 1
+        if nativeArray.count == 0 {
+            nativeArray.append(contentsOf:adQueue.getNativeAds(ofCount: 1))
+        }
+        
+        if nativeArray.count > 0 {
+            let nextNativeAd = nativeArray[0]
+            nativeArray.remove(at: 0)
             nextNativeAd.delegate = self
+            
             return nextNativeAd
         }
         else {
             return nil
         }
+        
+        
+        
     }
     
 }
@@ -359,13 +368,11 @@ extension MCViewController : APDNativeAdQueueDelegate {
     }
     
     func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue!, ofCount count: UInt) {
-        if nativeArray.count > 0 {
-            //setAvailableAdCount(apdNativeArray.count + count)
-        } else {
+        print("adQueueIsAvailable is called")
+        if nativeArray.count == 0 {
             nativeArray.append(contentsOf:adQueue.getNativeAds(ofCount: 1))
-            let _ = nativeArray.map {( $0.delegate = self )}
-            //setAvailableAdCount(count)
         }
+ 
         //apdNativeArray will contain all available
     }
     
