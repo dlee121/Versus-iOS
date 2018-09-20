@@ -3738,7 +3738,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sld-n9-8go">
                                                     <rect key="frame" x="8" y="8" width="21" height="21"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ad" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZ9-c1-XWt">
+                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ad" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZ9-c1-XWt">
                                                             <rect key="frame" x="0.0" y="0.0" width="21" height="21"/>
                                                             <color key="backgroundColor" red="0.27058823529411763" green="0.27058823529411763" blue="0.27058823529411763" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -3776,6 +3776,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="adChoices" destination="sld-n9-8go" id="dYJ-da-fHV"/>
+                                            <outlet property="adChoicesBackupLabel" destination="gZ9-c1-XWt" id="ygI-gv-wDU"/>
                                             <outlet property="callToAction" destination="IuM-zz-VF0" id="oEv-r6-NWq"/>
                                             <outlet property="descr" destination="Jei-Ox-9mT" id="dWW-Xu-tcp"/>
                                             <outlet property="icon" destination="RJt-KS-Ier" id="iO3-DR-NLw"/>

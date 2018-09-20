@@ -22,6 +22,7 @@ class NativeAdTableViewCell: UITableViewCell {
     
     @IBOutlet weak var mediaImageView: UIImageView!
     
+    @IBOutlet weak var adChoicesBackupLabel: UILabel!
     
     func setCell(nativeAd : APDNativeAd, displayMainIMage : Bool) {
         title.text = nativeAd.title
@@ -41,10 +42,11 @@ class NativeAdTableViewCell: UITableViewCell {
         }
         
         if let adChoicesView = nativeAd.adChoicesView {
+            adChoicesBackupLabel.isHidden = true
             adChoices = adChoicesView
         }
         else {
-            print("adChoicesView is nil")
+            adChoicesBackupLabel.isHidden = false
         }
         
     }

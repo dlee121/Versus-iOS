@@ -84,7 +84,6 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         
         self.definesPresentationContext = true
         
-        //Appodeal.setTestingEnabled(true)
         Appodeal.setLogLevel(.debug)
         
         adQueue.settings.adViewClass = NativeAdTableViewCell.self
@@ -358,8 +357,13 @@ extension MCViewController : APDNativeAdQueueDelegate {
     }
     
     func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue!, ofCount count: UInt) {
-        print("anything?")
-        nativeArray.append(contentsOf:adQueue.getNativeAds(ofCount: 5))
+        if nativeArray.count > 0 {
+            //setAvailableAdCount(apdNativeArray.count + count)
+        } else {
+            nativeArray.append(contentsOf:adQueue.getNativeAds(ofCount: 1))
+            let _ = nativeArray.map {( $0.delegate = self )}
+            //setAvailableAdCount(count)
+        }
         //apdNativeArray will contain all available
     }
     
