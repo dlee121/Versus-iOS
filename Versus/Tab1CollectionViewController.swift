@@ -206,7 +206,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             }
             else {
                 let results = task.result?.hits?.hits
-                let loadedItemsCount = results?.count
+                var loadedItemsCount = results?.count
                 var commentAuthors = ""
                 
                 if loadedItemsCount == 0 { //meaning no more items to load
@@ -249,7 +249,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
                         if countToAdView == self.adFrequency {
                             //inserting a placeholder VSComment object for a native ad. Check for placeholder by checking if the object's commentID == "0"
                             self.comments.append(VSComment())
-                            
+                            loadedItemsCount = loadedItemsCount! + 1
                             //should we randomize adFrequency? simply update its value here if we are.
                             
                         }
@@ -445,16 +445,23 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
-    /*
+    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if expandedCells.contains(indexPath.section) {
             return 409
         }
         else {
-            return 196
+            if comments[indexPath.section].comment_id != "0" {
+                return 175
+            }
+            else {
+                return 124
+            }
+            
+            
         }
     }
-    */
+ 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentComment = comments[indexPath.section]
@@ -494,11 +501,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             let mainVC = parent as! MCViewController
             //delegate already set in getNextNativeAd()
             if let nextAd = mainVC.getNextNativeAd() {
-                cell.setCell(nativeAd: nextAd)
+                cell.setCell(nativeAd: nextAd, displayMainIMage: false)
+                print("appodeal got an ad")
             }
             else {
                 //if no ad then make the cell's height 0
-                
+                print("appodeal ad is nil")
             }
             
             return cell

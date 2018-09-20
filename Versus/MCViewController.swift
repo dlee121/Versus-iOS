@@ -84,7 +84,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         
         self.definesPresentationContext = true
         
-        Appodeal.setTestingEnabled(true)
+        //Appodeal.setTestingEnabled(true)
         Appodeal.setLogLevel(.debug)
         
         adQueue.settings.adViewClass = NativeAdTableViewCell.self
@@ -327,7 +327,9 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     }
     
     func getNextNativeAd()  -> APDNativeAd? {
-        if availableAdCount > 0 && availableAdCount > adIndex {
+        print("nativeArray.count == \(nativeArray.count), adIndex == \(adIndex)")
+        
+        if nativeArray.count > adIndex {
             let nextNativeAd = nativeArray[adIndex]
             adIndex += 1
             nextNativeAd.delegate = self
@@ -352,16 +354,12 @@ extension MCViewController : APDNativeAdPresentationDelegate {
 extension MCViewController : APDNativeAdQueueDelegate {
     
     func adQueue(_ adQueue: APDNativeAdQueue!, failedWithError error: Error!) {
+        print("appodeal error debug \(error.localizedDescription)")
     }
     
     func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue!, ofCount count: UInt) {
-        if nativeArray.count > 0 {
-            availableAdCount = nativeArray.count + Int(count)
-        } else {
-            nativeArray.append(contentsOf:adQueue.getNativeAds(ofCount: 1))
-            let _ = nativeArray.map {( $0.delegate = self )}
-            availableAdCount = Int(count)
-        }
+        print("anything?")
+        nativeArray.append(contentsOf:adQueue.getNativeAds(ofCount: 5))
         //apdNativeArray will contain all available
     }
     

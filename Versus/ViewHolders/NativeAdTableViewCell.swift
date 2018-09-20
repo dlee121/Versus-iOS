@@ -23,20 +23,30 @@ class NativeAdTableViewCell: UITableViewCell {
     @IBOutlet weak var mediaImageView: UIImageView!
     
     
-    func setCell(nativeAd : APDNativeAd) {
+    func setCell(nativeAd : APDNativeAd, displayMainIMage : Bool) {
         title.text = nativeAd.title
         callToAction.text = nativeAd.callToActionText
         descr.text = nativeAd.descriptionText
+        
+        print("ad description = \(descr.text!)")
         
         if let iconImage = nativeAd.iconImage {
             Nuke.loadImage(with: iconImage.url, into: icon)
         }
         
-        if let mainImage = nativeAd.mainImage {
-            Nuke.loadImage(with: mainImage.url, into: mediaImageView)
+        if displayMainIMage {
+            if let mainImage = nativeAd.mainImage {
+                Nuke.loadImage(with: mainImage.url, into: mediaImageView)
+            }
         }
         
-        adChoices = nativeAd.adChoicesView
+        if let adChoicesView = nativeAd.adChoicesView {
+            adChoices = adChoicesView
+        }
+        else {
+            print("adChoicesView is nil")
+        }
+        
     }
 
 }
