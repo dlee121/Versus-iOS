@@ -49,6 +49,7 @@ class NativeAdTableViewCell: UITableViewCell {
             adChoicesBackupLabel.isHidden = false
         }
         
+        
     }
 
 }

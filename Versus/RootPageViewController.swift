@@ -368,6 +368,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
                 self.medalistCQPayloadPostID = self.currentPost.post_id
                 var mcq0, mcq1, mcq2 : String?
+                var r0, r1, r2 : VSComment?
                 var prevNode : VSCNode?
                 if let results = task.result?.hits?.hits {
                     
@@ -408,15 +409,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                 newComment.nestedLevel = 0
                                 
                                 if self.topicComment == nil || self.topicComment?.comment_id != item.id! {
-                                    self.rootComments.append(newComment)
+                                    
                                     self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
                                     switch li {
                                     case 0:
                                         mcq0 = newComment.comment_id
+                                        r0 = newComment
                                     case 1:
                                         mcq1 = newComment.comment_id
+                                        r1 = newComment
                                     case 2:
                                         mcq2 = newComment.comment_id
+                                        r2 = newComment
                                     default:
                                         break
                                     }
@@ -438,19 +442,22 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                     }
                                     else {
                                         let getCommentResult = task.result
-                                        
+                                        print("good so far, rootcomments")
                                         let newComment = VSComment(itemSource: getCommentResult!.source!, id: getCommentResult!.id!)
                                         newComment.nestedLevel = 0
                                         if self.topicComment == nil || self.topicComment?.comment_id != item.id! {
-                                            self.rootComments.append(newComment)
+                                            
                                             self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
                                             switch li {
                                             case 0:
                                                 mcq0 = newComment.comment_id
+                                                r0 = newComment
                                             case 1:
                                                 mcq1 = newComment.comment_id
+                                                r1 = newComment
                                             case 2:
                                                 mcq2 = newComment.comment_id
+                                                r2 = newComment
                                             default:
                                                 break
                                             }
@@ -473,7 +480,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                 group.enter()
                                 VSVersusAPIClient.default().commentGet(a: "c", b: item.source?.r).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                     
-                                    
                                     if task.error != nil {
                                         DispatchQueue.main.async {
                                             print(task.error!)
@@ -485,15 +491,18 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                         let newComment = VSComment(itemSource: getCommentResult!.source!, id: getCommentResult!.id!)
                                         newComment.nestedLevel = 0
                                         if self.topicComment == nil || self.topicComment?.comment_id != item.id! {
-                                            self.rootComments.append(newComment)
+                                            
                                             self.nodeMap[newComment.comment_id] = VSCNode(comment: newComment)
                                             switch li {
                                             case 0:
                                                 mcq0 = newComment.comment_id
+                                                r0 = newComment
                                             case 1:
                                                 mcq1 = newComment.comment_id
+                                                r1 = newComment
                                             case 2:
                                                 mcq2 = newComment.comment_id
+                                                r2 = newComment
                                             default:
                                                 break
                                             }
@@ -528,20 +537,28 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         else {
                             self.medalistCQPayload.append(mcq0!)
                         }
+                        self.rootComments.append(r0!)
                     }
                     if mcq1 != nil {
                         self.medalistCQPayload.append(","+mcq1!)
+                        self.rootComments.append(r1!)
                     }
                     if mcq2 != nil {
                         self.medalistCQPayload.append(","+mcq2!)
+                        self.rootComments.append(r2!)
                     }
-                    print("mcq: "+self.medalistCQPayload)
+                    
+                    //print("mcq: "+self.medalistCQPayload)                    
+                    
                     self.commentsQuery()
                 }
                 
                 
                 
             }
+            
+            
+            
             return nil
         }
         

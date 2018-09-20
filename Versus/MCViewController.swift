@@ -343,10 +343,12 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
 
 extension MCViewController : APDNativeAdPresentationDelegate {
     
-    func nativeAdWillLogImpression(_ nativeAd: APDNativeAd!) {
+    
+    
+    func nativeAdWillLogImpression(_ nativeAd: APDNativeAd) {
     }
     
-    func nativeAdWillLogUserInteraction(_ nativeAd: APDNativeAd!) {
+    func nativeAdWillLogUserInteraction(_ nativeAd: APDNativeAd) {
     }
 }
 
