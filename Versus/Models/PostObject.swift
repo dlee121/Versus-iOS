@@ -44,6 +44,27 @@ class PostObject {
         profileImageVersion = 0
     }
     
+    //for placeholders
+    init () {
+        question = "0"
+        author = "0"
+        time = "0"
+        redname = "0"
+        redcount = 0
+        blackname = "0"
+        blackcount = 0
+        category = 0
+        post_id = "0"
+        redimg = 0
+        blackimg = 0
+        pt = 0
+        ps = 0
+        
+        profileImageVersion = 0
+        
+        
+    }
+    
     
     //for initializing from compact source for Search and Posts history
     init(compactSource : VSPostsListCompactModel_hits_hits_item__source, id : String){

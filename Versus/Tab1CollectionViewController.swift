@@ -519,26 +519,29 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let clickedComment = comments[indexPath.section]
         
-        if !clickLock {
-            clickLock = true
-            
-            let mainVC = parent as! MCViewController
-            let clickedComment = comments[indexPath.section]
-            var piv : Int!
-            if let postInfo = postInfos[clickedComment.post_id] {
-                if let imageVersion = profileImageVersions[postInfo.a!.lowercased()] {
-                    piv = imageVersion
+        if clickedComment.comment_id != "0" {
+            if !clickLock {
+                clickLock = true
+                
+                let mainVC = parent as! MCViewController
+                
+                var piv : Int!
+                if let postInfo = postInfos[clickedComment.post_id] {
+                    if let imageVersion = profileImageVersions[postInfo.a!.lowercased()] {
+                        piv = imageVersion
+                    }
+                    else {
+                        piv = 0
+                    }
                 }
                 else {
                     piv = 0
                 }
+                
+                mainVC.myCircleItemClick(comment: clickedComment, postProfileImage: piv)
             }
-            else {
-                piv = 0
-            }
-            
-            mainVC.myCircleItemClick(comment: clickedComment, postProfileImage: piv)
         }
         
     }

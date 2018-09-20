@@ -442,7 +442,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                     }
                                     else {
                                         let getCommentResult = task.result
-                                        print("good so far, rootcomments")
+                                        
                                         let newComment = VSComment(itemSource: getCommentResult!.source!, id: getCommentResult!.id!)
                                         newComment.nestedLevel = 0
                                         if self.topicComment == nil || self.topicComment?.comment_id != item.id! {
@@ -548,7 +548,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.rootComments.append(r2!)
                     }
                     
-                    //print("mcq: "+self.medalistCQPayload)                    
+                    //print("mcq: "+self.medalistCQPayload)
                     
                     self.commentsQuery()
                 }

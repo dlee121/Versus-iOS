@@ -38,6 +38,8 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
     var clickLock = false
     let cellSpacingHeight: CGFloat = 16
     
+    var adFrequency = 7
+    
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -104,9 +106,10 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
             }
             else {
                 let queryResults = task.result?.hits?.hits
-                let loadedItemsCount = queryResults!.count
+                var loadedItemsCount = queryResults!.count
                 var pivString = "{\"ids\":["
                 var index = 0
+                var indexToAd = 0
                 for item in queryResults! {
                     self.posts.append(PostObject(itemSource: item.source!, id: item.id!))
                     
@@ -119,6 +122,13 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
                         }
                         index += 1
                     }
+                    
+                    if indexToAd == self.adFrequency {
+                        self.posts.append(PostObject())
+                        loadedItemsCount += 1
+                    }
+                    
+                    indexToAd += 1
                 }
                 pivString += "]}"
                 
@@ -235,43 +245,70 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         let post = posts[indexPath.section]
         
-        if post.redimg.intValue % 10 == S3 || post.blackimg.intValue % 10 == S3 {
-            return 339
+        if post.post_id != "0" {
+            if post.redimg.intValue % 10 == S3 || post.blackimg.intValue % 10 == S3 {
+                return 339
+            }
+            else {
+                return 124
+            }
         }
         else {
-            return 124
+            return 339
         }
+        
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentPost = posts[indexPath.section]
         
-        //set profile image version for the post if one exists
-        if let piv = profileImageVersions[currentPost.author.lowercased()] {
-            currentPost.setProfileImageVersion(piv: piv)
+        
+        if currentPost.post_id != "0" {
+            //set profile image version for the post if one exists
+            if let piv = profileImageVersions[currentPost.author.lowercased()] {
+                currentPost.setProfileImageVersion(piv: piv)
+            }
+            
+            if currentPost.redimg.intValue % 10 == S3 || currentPost.blackimg.intValue % 10 == S3 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_images", for: indexPath) as! PostImageTableViewCell
+                cell.setCell(post: currentPost, vIsRed: vIsRed)
+                vIsRed = !vIsRed
+                cell.delegate = self
+                
+                return cell
+            }
+            else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_texts", for: indexPath) as! PostTextTableViewCell
+                cell.setCell(post: currentPost, vIsRed: vIsRed)
+                vIsRed = !vIsRed
+                cell.delegate = self
+                
+                return cell
+            }
+        }
+        else { //nativeAd
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Native", for: indexPath) as! NativeAdTableViewCell
+            
+            let mainVC = parent as! MCViewController
+            //delegate already set in getNextNativeAd()
+            if let nextAd = mainVC.getNextNativeAd() {
+                cell.setCell(nativeAd: nextAd, displayMainIMage: true)
+                print("appodeal got an ad")
+            }
+            else {
+                //if no ad then make the cell's height 0
+                print("appodeal ad is nil")
+            }
+            
+            return cell
         }
         
-        if currentPost.redimg.intValue % 10 == S3 || currentPost.blackimg.intValue % 10 == S3 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_images", for: indexPath) as! PostImageTableViewCell
-            cell.setCell(post: currentPost, vIsRed: vIsRed)
-            vIsRed = !vIsRed
-            cell.delegate = self
-            
-            return cell
-        }
-        else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_texts", for: indexPath) as! PostTextTableViewCell
-            cell.setCell(post: currentPost, vIsRed: vIsRed)
-            vIsRed = !vIsRed
-            cell.delegate = self
-            
-            return cell
-        }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastElement = posts.count - 1 - loadThreshold
-        if !nowLoading && indexPath.row == lastElement {
+        if !nowLoading && indexPath.section == lastElement {
             nowLoading = true
             fromIndex = posts.count
             trendingQuery()
@@ -280,10 +317,14 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !clickLock {
-            clickLock = true
-            let mainVC = parent as! MCViewController
-            mainVC.goToPostPageRoot(post: posts[indexPath.section])
+        let currentPost = posts[indexPath.section]
+        
+        if currentPost.post_id != "0" {
+            if !clickLock {
+                clickLock = true
+                let mainVC = parent as! MCViewController
+                mainVC.goToPostPageRoot(post: currentPost)
+            }
         }
     }
     
