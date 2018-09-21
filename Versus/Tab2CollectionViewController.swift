@@ -49,8 +49,18 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
         let tap = UITapGestureRecognizer(target: self, action: #selector(Tab2CollectionViewController.resetCategorySelection))
         categorySelectionLabel.addGestureRecognizer(tap)
         
-        if posts.count == 0 {
-            trendingQuery()
+        if let tokenDateObject = (UserDefaults.standard.object(forKey: "KEY_Token") as? Date) {
+            if tokenDateObject.timeIntervalSinceNow.isLess(than: 900) {
+                if posts.count == 0 {
+                    trendingQuery()
+                }
+            }
+            else {
+                validateTokenAndInit()
+            }
+        }
+        else {
+            validateTokenAndInit()
         }
         
         // Add Refresh Control to Table View
@@ -62,6 +72,21 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
         
         // Configure Refresh Control
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+    }
+    
+    func validateTokenAndInit () {
+        Auth.auth().currentUser!.getIDTokenForcingRefresh(true){ (idToken, error) in
+            let oidcProvider = OIDCProvider(input: idToken! as NSString)
+            let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+            credentialsProvider.clearCredentials()
+            let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+            //login session configuration is stored in the default
+            AWSServiceManager.default().defaultServiceConfiguration = configuration
+            
+            if self.posts.count == 0 {
+                self.trendingQuery()
+            }
+        }
     }
     
     @objc private func refreshList(_ sender: Any) {
