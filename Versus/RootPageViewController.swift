@@ -1492,7 +1492,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         return true
     }
     
-    func presentSortMenu(sortButtonLabel: UILabel, sender : UIButton){
+    func presentSortMenu(sortButtonLabel: UILabel){
         let alertController = UIAlertController(title: "SORT BY", message: nil, preferredStyle: .actionSheet)
         //alertController.setValue(0, forKey: "titleTextAlignment")
         alertController.popoverPresentationController?.sourceView = sortButtonLabel
