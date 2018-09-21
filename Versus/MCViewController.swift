@@ -91,7 +91,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         adQueue.settings.type = .noVideo
         
         adQueue.delegate = self
-        adQueue.setMaxAdSize(3) //deprecated
+        adQueue.setMaxAdSize(2) //deprecated
         adQueue.loadAd()
         
         
@@ -352,12 +352,12 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
 
 extension MCViewController : APDNativeAdPresentationDelegate {
     
-    
-    
     func nativeAdWillLogImpression(_ nativeAd: APDNativeAd) {
+        print("impression for \(nativeAd.title)")
     }
     
     func nativeAdWillLogUserInteraction(_ nativeAd: APDNativeAd) {
+        print("appodeal nativeAdWillLogUserInteraction")
     }
 }
 
@@ -370,7 +370,7 @@ extension MCViewController : APDNativeAdQueueDelegate {
     func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue!, ofCount count: UInt) {
         print("adQueueIsAvailable is called")
         if nativeArray.count == 0 {
-            nativeArray.append(contentsOf:adQueue.getNativeAds(ofCount: 1))
+            nativeArray.append(contentsOf:adQueue.getNativeAds(ofCount: 2))
         }
  
         //apdNativeArray will contain all available

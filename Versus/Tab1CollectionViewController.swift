@@ -16,6 +16,7 @@ import Appodeal
 
 class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MyCircleDelegator {
     
+    @IBOutlet weak var debugLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     var fromIndex : Int!
@@ -53,9 +54,21 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         screenWidth = self.view.frame.size.width
         textsVSCHeight = screenWidth / 1.6
         tableView.separatorStyle = .none
-        if comments.count == 0 {
-            myCircleInitialSetup()
+        
+        if let tokenDateObject = (UserDefaults.standard.object(forKey: "KEY_Token") as? Date) {
+            if tokenDateObject.timeIntervalSinceNow.isLess(than: 900) {
+                if comments.count == 0 {
+                    myCircleInitialSetup()
+                }
+            }
+            else {
+                validateTokenAndInit()
+            }
         }
+        else {
+            validateTokenAndInit()
+        }
+        
         
         // Add Refresh Control to Table View
         if #available(iOS 10.0, *) {
@@ -66,6 +79,21 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         
         // Configure Refresh Control
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+    }
+    
+    func validateTokenAndInit () {
+        Auth.auth().currentUser!.getIDTokenForcingRefresh(true){ (idToken, error) in
+            let oidcProvider = OIDCProvider(input: idToken! as NSString)
+            let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+            credentialsProvider.clearCredentials()
+            let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+            //login session configuration is stored in the default
+            AWSServiceManager.default().defaultServiceConfiguration = configuration
+            
+            if self.comments.count == 0 {
+                self.myCircleInitialSetup()
+            }
+        }
     }
     
     @objc private func refreshList(_ sender: Any) {
@@ -197,14 +225,19 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func executeQuery(payload : String){
-        
+        debugLabel.text = "executing query"
         VSVersusAPIClient.default().commentslistGet(c: payload, d: nil, a: "nwv2", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
+                    self.debugLabel.text = "debugDesc=\(task.error.debugDescription)\ndebugLocDesc=\(task.error?.localizedDescription)"
                 }
             }
             else {
+                DispatchQueue.main.async {
+                    self.debugLabel.text = "api no error"
+                }
+                
                 let results = task.result?.hits?.hits
                 var loadedItemsCount = results?.count
                 var commentAuthors = ""

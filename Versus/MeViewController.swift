@@ -12,7 +12,7 @@ import AWSS3
 import Nuke
 import FirebaseDatabase
 
-class MeViewController: ButtonBarPagerTabStripViewController {
+class MeViewController: ButtonBarPagerTabStripViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     @IBOutlet weak var followers: UIButton!
     @IBOutlet weak var followings: UIButton!
@@ -21,6 +21,7 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     @IBOutlet weak var goldMedals: UILabel!
     @IBOutlet weak var silverMedals: UILabel!
     @IBOutlet weak var bronzeMedals: UILabel!
+    
     
     var currentUsername : String!
     var fList = [String]()
@@ -46,6 +47,8 @@ class MeViewController: ButtonBarPagerTabStripViewController {
     var clickedPost, seguePost : PostObject?
     var segueUserAction : UserAction?
     
+    var imagePicker : UIImagePickerController!
+    
     override func viewDidLoad() {
         print("viewDidLoad called")
         self.loadDesign()
@@ -61,7 +64,8 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .done, target: self, action: #selector(settingsButtonTapped))
-
+        imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
         // Do any additional setup after loading the view.
     }
 
@@ -514,6 +518,100 @@ class MeViewController: ButtonBarPagerTabStripViewController {
         return combinedList
         
     }
+    
+    @IBAction func profileImageTapped(_ sender: UIButton) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        //alertController.setValue(0, forKey: "titleTextAlignment")
+        
+        let changeProfile = UIAlertAction(title: "Change profile image", style: .default) { (_) in
+            self.changeProfileImageTapped()
+        }
+        //changeProfile.setValue(0, forKey: "titleTextAlignment")
+        
+        let resetProfile = UIAlertAction(title: "Reset profile image", style: .destructive) { (_) in
+            
+        }
+        //resetProfile.setValue(0, forKey: "titleTextAlignment")
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        
+        alertController.addAction(changeProfile)
+        alertController.addAction(resetProfile)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true) {
+            // ...
+        }
+    }
+    
+    func changeProfileImageTapped() {
+        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+            self.openCamera()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
+            self.openGallary()
+        }))
+        
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        /*If you want work actionsheet on ipad
+         then you have to use popoverPresentationController to present the actionsheet,
+         otherwise app will crash on iPad */
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            alert.popoverPresentationController?.sourceView = profileImage
+            alert.popoverPresentationController?.sourceRect = profileImage.bounds
+            alert.popoverPresentationController?.permittedArrowDirections = .up
+        default:
+            break
+        }
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func openCamera()
+    {
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
+        {
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            imagePicker.allowsEditing = true
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        else
+        {
+            let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    func openGallary()
+    {
+        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        imagePicker.allowsEditing = true
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerEditedImage] as?  UIImage {
+            DispatchQueue.main.async {
+                self.profileImage.image = image
+            }
+        }
+        else if let image = info[UIImagePickerControllerOriginalImage] as?  UIImage {
+            DispatchQueue.main.async {
+                self.profileImage.image = image
+            }
+        }
+        else {
+            showToast(message: "Couldn't load the image", length: 23)
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     
 
 }

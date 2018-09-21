@@ -89,6 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 do {
                     let jwt = try decode(jwt: idToken!)
                     self.tokenExpirationTime = jwt.expiresAt
+                    UserDefaults.standard.set(self.tokenExpirationTime, forKey: "KEY_Token")
                 }
                 catch {
                     self.tokenExpirationTime = nil
