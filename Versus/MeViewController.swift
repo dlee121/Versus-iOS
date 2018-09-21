@@ -529,12 +529,10 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
         let changeProfile = UIAlertAction(title: "Change profile image", style: .default) { (_) in
             self.changeProfileImageTapped()
         }
-        //changeProfile.setValue(0, forKey: "titleTextAlignment")
         
         let resetProfile = UIAlertAction(title: "Reset profile image", style: .destructive) { (_) in
-            
+            self.resetProfileImageTapped()
         }
-        //resetProfile.setValue(0, forKey: "titleTextAlignment")
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
         
@@ -545,6 +543,35 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
         self.present(alertController, animated: true) {
             // ...
         }
+    }
+    
+    func resetProfileImageTapped() {
+        //delete current profile image in S3
+        //api "resetprof"
+        //set profileImage.image = default
+        
+        let s3 = AWSS3.default()
+        let deleteObjectRequest = AWSS3DeleteObjectRequest()
+        let profileImageVersion = UserDefaults.standard.integer(forKey: "KEY_PI")
+        deleteObjectRequest!.bucket = "versus.profile-pictures"
+        deleteObjectRequest!.key = "\(currentUsername!)-\(profileImageVersion).jpeg"
+        s3.deleteObject(deleteObjectRequest!).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            if task.error != nil {
+                DispatchQueue.main.async {
+                    print(task.error!)
+                }
+            }
+            else {
+                VSVersusAPIClient.default().userputGet(a: "resetprof", b: self.currentUsername!)
+                UserDefaults.standard.set(0, forKey: "KEY_PI")
+                DispatchQueue.main.async {
+                    self.profileImage.image = #imageLiteral(resourceName: "default_profile")
+                }
+            }
+            return nil
+        }
+        
+        
     }
     
     func changeProfileImageTapped() {
