@@ -255,6 +255,7 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
             
             DispatchQueue.main.async {
                 Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+                
             }
             
             return nil

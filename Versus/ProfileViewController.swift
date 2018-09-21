@@ -291,6 +291,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
             let presignedURL = task.result
             DispatchQueue.main.async {
                 Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.profileImage)
+                //self.profileImage.backgroundColor = .black
             }
             
             return nil
