@@ -549,7 +549,7 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
         //delete current profile image in S3
         //api "resetprof"
         //set profileImage.image = default
-        
+        profileImage.image = nil
         let s3 = AWSS3.default()
         let deleteObjectRequest = AWSS3DeleteObjectRequest()
         let profileImageVersion = UserDefaults.standard.integer(forKey: "KEY_PI")
@@ -646,6 +646,7 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
     }
     
     func uploadImage(rawImage : UIImage) {
+        profileImage.image = nil
         let newProfileImageVersion = UserDefaults.standard.integer(forKey: "KEY_PI") + 1
         var image : UIImage!
         let imageKey = "\(currentUsername!)-\(newProfileImageVersion).jpeg"

@@ -2765,6 +2765,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oep-lH-iyh" userLabel="leftHalf">
                                 <rect key="frame" x="0.0" y="28" width="187.5" height="122"/>
                                 <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="diK-LD-IdD">
+                                        <rect key="frame" x="84" y="51" width="20" height="20"/>
+                                    </activityIndicatorView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_profile" translatesAutoresizingMaskIntoConstraints="NO" id="FhX-oz-DSV">
                                         <rect key="frame" x="33" y="0.0" width="122" height="122"/>
                                         <constraints>
@@ -2780,7 +2783,9 @@
                                     </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="diK-LD-IdD" firstAttribute="centerY" secondItem="FhX-oz-DSV" secondAttribute="centerY" id="1fU-Pv-NPR"/>
                                     <constraint firstItem="QPX-2a-C2w" firstAttribute="trailing" secondItem="FhX-oz-DSV" secondAttribute="trailing" id="BWw-cg-55K"/>
+                                    <constraint firstItem="diK-LD-IdD" firstAttribute="centerX" secondItem="FhX-oz-DSV" secondAttribute="centerX" id="DZ9-qY-cCY"/>
                                     <constraint firstAttribute="height" constant="122" id="ETT-q6-xEU"/>
                                     <constraint firstItem="FhX-oz-DSV" firstAttribute="centerY" secondItem="Oep-lH-iyh" secondAttribute="centerY" id="Gqt-Ub-V18"/>
                                     <constraint firstItem="QPX-2a-C2w" firstAttribute="top" secondItem="FhX-oz-DSV" secondAttribute="top" id="Hn7-RE-4Re"/>
@@ -2952,6 +2957,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f1c-7V-Act" userLabel="leftHalf">
                                 <rect key="frame" x="0.0" y="28" width="187.5" height="122"/>
                                 <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ed6-K3-uAs">
+                                        <rect key="frame" x="84" y="51" width="20" height="20"/>
+                                    </activityIndicatorView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_profile" translatesAutoresizingMaskIntoConstraints="NO" id="Tv7-pf-Myz">
                                         <rect key="frame" x="33" y="0.0" width="122" height="122"/>
                                         <constraints>
@@ -2961,8 +2969,10 @@
                                     </imageView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="ed6-K3-uAs" firstAttribute="centerY" secondItem="Tv7-pf-Myz" secondAttribute="centerY" id="9bt-P3-kj4"/>
                                     <constraint firstItem="Tv7-pf-Myz" firstAttribute="centerX" secondItem="f1c-7V-Act" secondAttribute="centerX" id="BGU-in-VN5"/>
                                     <constraint firstAttribute="height" constant="122" id="I1C-8l-kFM"/>
+                                    <constraint firstItem="ed6-K3-uAs" firstAttribute="centerX" secondItem="Tv7-pf-Myz" secondAttribute="centerX" id="sON-8w-5HU"/>
                                     <constraint firstItem="Tv7-pf-Myz" firstAttribute="centerY" secondItem="f1c-7V-Act" secondAttribute="centerY" id="ssz-2Z-oVE"/>
                                 </constraints>
                             </view>
@@ -5167,12 +5177,12 @@
     <inferredMetricsTieBreakers>
         <segue reference="kMN-CP-0NP"/>
         <segue reference="kUu-8a-Bhy"/>
-        <segue reference="XJc-pI-oXd"/>
+        <segue reference="YuF-tM-5cL"/>
         <segue reference="qbd-PO-7a5"/>
         <segue reference="uAF-H9-Oin"/>
-        <segue reference="pLb-S7-nGp"/>
-        <segue reference="tN5-20-0qe"/>
-        <segue reference="gSn-Xx-xNp"/>
+        <segue reference="eXY-0P-CUx"/>
+        <segue reference="Z4A-4J-KyV"/>
+        <segue reference="Ugw-90-kaO"/>
         <segue reference="Lbc-3X-Z2H"/>
     </inferredMetricsTieBreakers>
 </document>
