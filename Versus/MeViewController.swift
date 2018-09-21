@@ -604,12 +604,12 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
         print("profileImageSize = \(profileImage.frame.width)")
         if let image = info[UIImagePickerControllerEditedImage] as?  UIImage {
             DispatchQueue.main.async {
-                self.profileImage.image = image
+                self.uploadImage(rawImage: image)
             }
         }
         else if let image = info[UIImagePickerControllerOriginalImage] as?  UIImage {
             DispatchQueue.main.async {
-                self.profileImage.image = image
+                self.uploadImage(rawImage: image)
             }
         }
         else {
@@ -621,13 +621,13 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
     func uploadImage(rawImage : UIImage) {
         let newProfileImageVersion = UserDefaults.standard.integer(forKey: "KEY_PI") + 1
         var image : UIImage!
-        let imageKey = "\(currentUsername)-\(newProfileImageVersion).jpeg"
+        let imageKey = "\(currentUsername!)-\(newProfileImageVersion).jpeg"
         
         if rawImage.size.width >= rawImage.size.height {
-            image = rawImage.resized(toWidth: 304)
+            image = rawImage.resized(toWidth: 294)
         }
         else {
-            image = rawImage.resized(toHeight: 304)
+            image = rawImage.resized(toHeight: 294)
         }
         
         let fileManager = FileManager.default
@@ -659,7 +659,21 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
                 return nil
             }
             else {
-                //for now we don't handle additional code for image upload success
+                //image upload success, set profileImage in the UI
+                DispatchQueue.main.async {
+                    self.profileImage.image = image
+                }
+                VSVersusAPIClient.default().userputGet(a: "prof", b: self.currentUsername!).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    if task.error != nil {
+                        DispatchQueue.main.async {
+                            print(task.error!)
+                        }
+                    }
+                    else {
+                        UserDefaults.standard.set(newProfileImageVersion, forKey: "KEY_PI")
+                    }
+                    return nil
+                }
             }
             
             return nil
