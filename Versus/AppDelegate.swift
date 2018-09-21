@@ -105,6 +105,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        
+        /*
         //if token has already expired or is 15 minutes from expiration
         if tokenExpirationTime == nil  || tokenExpirationTime!.timeIntervalSinceNow.isLess(than: 900) {
             //force a relaunch from initial VC, which will refresh the token before presenting MainVC if user is currently logged in
@@ -116,6 +118,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         else {
             self.setTokenAutoRefresh(period: tokenExpirationTime!.timeIntervalSinceNow - 60) //set token to refresh 60 seconds before expiration
         }
+        */
+        
         
         
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
@@ -128,6 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
     }
     
+    /*
     func setTokenAutoRefresh(period : TimeInterval) {
         timer?.invalidate()   // just in case you had existing `Timer`, `invalidate` it before we lose our reference to it
         timer = Timer.scheduledTimer(withTimeInterval: period, repeats: false) { [weak self] _ in
@@ -144,7 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
     }
-    
+    */
     
 
     func applicationDidBecomeActive(_ application: UIApplication) {

@@ -55,20 +55,9 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         textsVSCHeight = screenWidth / 1.6
         tableView.separatorStyle = .none
         
-        if let tokenDateObject = (UserDefaults.standard.object(forKey: "KEY_Token") as? Date) {
-            if tokenDateObject.timeIntervalSinceNow.isLess(than: 900) {
-                if comments.count == 0 {
-                    myCircleInitialSetup()
-                }
-            }
-            else {
-                validateTokenAndInit()
-            }
+        if comments.count == 0 {
+            myCircleInitialSetup()
         }
-        else {
-            validateTokenAndInit()
-        }
-        
         
         // Add Refresh Control to Table View
         if #available(iOS 10.0, *) {
@@ -79,21 +68,6 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         
         // Configure Refresh Control
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
-    }
-    
-    func validateTokenAndInit () {
-        Auth.auth().currentUser!.getIDTokenForcingRefresh(true){ (idToken, error) in
-            let oidcProvider = OIDCProvider(input: idToken! as NSString)
-            let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
-            credentialsProvider.clearCredentials()
-            let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
-            //login session configuration is stored in the default
-            AWSServiceManager.default().defaultServiceConfiguration = configuration
-            
-            if self.comments.count == 0 {
-                self.myCircleInitialSetup()
-            }
-        }
     }
     
     @objc private func refreshList(_ sender: Any) {
