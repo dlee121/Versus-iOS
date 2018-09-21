@@ -1123,9 +1123,11 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         return true
     }
     
-    func presentSortMenu(sortButtonLabel: UILabel){
+    func presentSortMenu(sortButtonLabel: UILabel, sender : UIButton){
         let alertController = UIAlertController(title: "SORT BY", message: nil, preferredStyle: .actionSheet)
         //alertController.setValue(0, forKey: "titleTextAlignment")
+        alertController.popoverPresentationController?.sourceView = sortButtonLabel
+        alertController.popoverPresentationController?.sourceRect = sortButtonLabel.bounds
         
         let mostRecent = UIAlertAction(title: "Most Recent", style: .default) { (_) in
             sortButtonLabel.setPostPageSortLabel(imageName: "sort_Most Recent", suffix: " Most Recent")

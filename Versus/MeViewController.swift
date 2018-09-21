@@ -523,6 +523,8 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
     @IBAction func profileImageTapped(_ sender: UIButton) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         //alertController.setValue(0, forKey: "titleTextAlignment")
+        alertController.popoverPresentationController?.sourceView = profileImage
+        alertController.popoverPresentationController?.sourceRect = profileImage.bounds //gotta move it to the center of these bounds
         
         let changeProfile = UIAlertAction(title: "Change profile image", style: .default) { (_) in
             self.changeProfileImageTapped()
@@ -547,6 +549,9 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
     
     func changeProfileImageTapped() {
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+        alert.popoverPresentationController?.sourceView = profileImage
+        alert.popoverPresentationController?.sourceRect = profileImage.bounds
+        
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
             self.openCamera()
         }))
@@ -596,6 +601,7 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        print("profileImageSize = \(profileImage.frame.width)")
         if let image = info[UIImagePickerControllerEditedImage] as?  UIImage {
             DispatchQueue.main.async {
                 self.profileImage.image = image
@@ -610,6 +616,54 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
             showToast(message: "Couldn't load the image", length: 23)
         }
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func uploadImage(rawImage : UIImage) {
+        let newProfileImageVersion = UserDefaults.standard.integer(forKey: "KEY_PI") + 1
+        var image : UIImage!
+        let imageKey = "\(currentUsername)-\(newProfileImageVersion).jpeg"
+        
+        if rawImage.size.width >= rawImage.size.height {
+            image = rawImage.resized(toWidth: 304)
+        }
+        else {
+            image = rawImage.resized(toHeight: 304)
+        }
+        
+        let fileManager = FileManager.default
+        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
+        let imageData = UIImageJPEGRepresentation(image, 0.5)
+        fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
+        
+        let fileUrl = NSURL(fileURLWithPath: path)
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest?.bucket = "versus.profile-pictures"
+        uploadRequest?.key = imageKey
+        uploadRequest?.contentType = "image/jpeg"
+        uploadRequest?.body = fileUrl as URL
+        
+        let transferManager = AWSS3TransferManager.default()
+        transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
+            
+            if let error = task.error as? NSError {
+                if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
+                    switch code {
+                    case .cancelled, .paused:
+                        break
+                    default:
+                        print("Error uploading: \(uploadRequest!.key) Error: \(error)")
+                    }
+                } else {
+                    print("Error uploading: \(uploadRequest!.key) Error: \(error)")
+                }
+                return nil
+            }
+            else {
+                //for now we don't handle additional code for image upload success
+            }
+            
+            return nil
+        })
     }
     
     

@@ -191,6 +191,10 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         leftClick = true
         
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+        
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = sender.bounds
+        
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
             self.openCamera()
         }))
@@ -221,6 +225,10 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         leftClick = false
         
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+        
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = sender.bounds
+        
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
             self.openCamera()
         }))

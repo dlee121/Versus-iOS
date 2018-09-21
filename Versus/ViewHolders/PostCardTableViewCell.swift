@@ -345,7 +345,7 @@ class PostCardTableViewCell: UITableViewCell {
     }
     
     @IBAction func sortButtonTapped(_ sender: UIButton) {
-        delegate.presentSortMenu(sortButtonLabel: sortButton)
+        delegate.presentSortMenu(sortButtonLabel: sortButton, sender: sender)
     }
     
     func startIndicator() {
