@@ -95,7 +95,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if prepareCategoryPage {
             guard let categoriesVC = segue.destination as? CategoryFilterViewController else {return}
-            categoriesVC.tab2Or3OrCP = 4
+            categoriesVC.sourceType = 4
             categoriesVC.originVC = self
         }
         else { //this is for segue to PostPage. Be sure to set prepareCategoryFilter = false to access this block

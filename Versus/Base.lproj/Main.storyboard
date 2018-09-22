@@ -5170,7 +5170,6 @@
         <!--Edit Post View Controller-->
         <scene sceneID="oIi-Yq-2ZN">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dvl-sM-nsu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController extendedLayoutIncludesOpaqueBars="YES" id="Fh3-yj-VOS" customClass="EditPostViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Cad-Xr-O3h">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -5361,6 +5360,7 @@
                         <segue destination="Daz-4Z-Xec" kind="presentation" identifier="editPostToCategories" id="8lW-z2-B4d"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dvl-sM-nsu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4710" y="-918"/>
         </scene>

@@ -117,6 +117,13 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let categoriesVC = segue.destination as? CategoryFilterViewController else {return}
+        categoriesVC.sourceType = 5
+        categoriesVC.originVC = self
+    }
+    
     @IBAction func closeButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
@@ -217,6 +224,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         if let image = info[UIImagePickerControllerEditedImage] as?  UIImage {
             
             if leftClick {
+                initialIVLeft.image = nil
                 leftImage.backgroundColor = .black
                 leftImage.setImage(image, for: .normal)
                 leftOptionalLabel.isHidden = true
@@ -224,6 +232,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                 leftImageSet = S3
             }
             else {
+                initialIVRight.image = nil
                 rightImage.backgroundColor = .black
                 rightImage.setImage(image, for: .normal)
                 rightOptionalLabel.isHidden = true
@@ -235,6 +244,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         else if let image = info[UIImagePickerControllerOriginalImage] as?  UIImage {
             
             if leftClick {
+                initialIVLeft.image = nil
                 leftImage.backgroundColor = .black
                 leftImage.setImage(image, for: .normal)
                 leftOptionalLabel.isHidden = true
@@ -242,6 +252,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                 leftImageSet = S3
             }
             else {
+                initialIVRight.image = nil
                 rightImage.backgroundColor = .black
                 rightImage.setImage(image, for: .normal)
                 rightOptionalLabel.isHidden = true

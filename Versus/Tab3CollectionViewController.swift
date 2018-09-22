@@ -470,7 +470,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if prepareCategoryFilter {
             guard let categoriesVC = segue.destination as? CategoryFilterViewController else {return}
-            categoriesVC.tab2Or3OrCP = 3
+            categoriesVC.sourceType = 3
             categoriesVC.originVC = self
         }
         else { //this is for segue to PostPage. Be sure to set prepareCategoryFilter = false to access this block
