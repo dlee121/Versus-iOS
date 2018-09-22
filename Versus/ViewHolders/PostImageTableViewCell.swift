@@ -206,6 +206,7 @@ class PostImageTableViewCell: UITableViewCell {
     }
     
     func getPostImage(postID : String, lORr : Int, editVersion : Int){
+        
         let request = AWSS3GetPreSignedURLRequest()
         request.expires = Date().addingTimeInterval(86400)
         request.bucket = "versus.pictures"

@@ -130,7 +130,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         timer?.invalidate()   // just in case you had existing `Timer`, `invalidate` it before we lose our reference to it
         timer = Timer.scheduledTimer(withTimeInterval: period, repeats: false) { [weak self] _ in
             Auth.auth().currentUser!.getIDTokenForcingRefresh(true){ (idToken, error) in
-                
                 //store the fresh token in UserDefaults
                 UserDefaults.standard.set(idToken, forKey: "KEY_TOKEN")
                 
@@ -141,8 +140,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 //login session configuration is stored in the default
                 AWSServiceManager.default().defaultServiceConfiguration = configuration
                 
-                //set timer task to refresh token in 58 minutes = 3480 seconds.
-                self!.setTokenAutoRefresh(period: 3480)
+                AWSServiceManager.default().defaultServiceConfiguration.credentialsProvider.invalidateCachedTemporaryCredentials()
+                AWSServiceManager.default().defaultServiceConfiguration.credentialsProvider.credentials()
             }
         }
     }

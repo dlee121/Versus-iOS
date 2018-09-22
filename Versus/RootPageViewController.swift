@@ -65,6 +65,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     let CHRONOLOGICAL = 2
     var sortTypeString = "Popular"
     
+    var editSegue = false
+    
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
             ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -82,6 +84,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "overflowVertical"), style: .done, target: self, action: #selector(postPageOverflowMenuTapped))
+        
         tableView.separatorStyle = .none
         
         //tableView.allowsSelection = false
@@ -96,6 +100,46 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Configure Refresh Control
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+    }
+    
+    @objc
+    func postPageOverflowMenuTapped() {
+        print("overflow my friends")
+        if currentPost != nil {
+            if currentPost.author == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                
+                alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+                
+                alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
+                    self.editSegue = true
+                    self.performSegue(withIdentifier: "rootToEditPost", sender: self)
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+                    //self.openGallary()
+                }))
+                
+                alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            }
+            else {
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                
+                alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+                
+                alert.addAction(UIAlertAction(title: "Report", style: .default, handler: { _ in
+                    //self.openGallary()
+                }))
+                
+                alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+                
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        
     }
     
     @objc private func refreshList(_ sender: Any) {
@@ -153,7 +197,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewWillAppear(animated)
         keyboardIsShowing = false
         self.tabBarController?.tabBar.isHidden = true
-        
+        editSegue = false
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillShow,
@@ -169,7 +213,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         textInput.resignFirstResponder()
-        
+        editSegue = false
         if currentUserAction.changed {
             VSVersusAPIClient.default().recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
         }
@@ -961,23 +1005,26 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if profileTap {
-            guard let profileVC = segue.destination as? ProfileViewController else {return}
-            profileVC.fromPostPage = true
-            profileVC.currentUsername = tappedUsername!
-        }
-        else if vmrComment != nil{
-            if vmrComment!.nestedLevel == 0 {
-                guard let childPageVC = segue.destination as? ChildPageViewController else {return}
-                let view = childPageVC.view //to load the view
-                childPageVC.setUpChildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction, parentPage: self)
+        if !editSegue {
+            if profileTap {
+                guard let profileVC = segue.destination as? ProfileViewController else {return}
+                profileVC.fromPostPage = true
+                profileVC.currentUsername = tappedUsername!
             }
-            else {
-                guard let grandchildPageVC = segue.destination as? GrandchildPageViewController else {return}
-                let view = grandchildPageVC.view //to load the view
-                //grandchildPageVC.fromRoot = true
-                grandchildPageVC.setUpGrandchildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction, parentPage: self)
+            else if vmrComment != nil{
+                if vmrComment!.nestedLevel == 0 {
+                    guard let childPageVC = segue.destination as? ChildPageViewController else {return}
+                    let view = childPageVC.view //to load the view
+                    childPageVC.setUpChildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction, parentPage: self)
+                }
+                else {
+                    guard let grandchildPageVC = segue.destination as? GrandchildPageViewController else {return}
+                    let view = grandchildPageVC.view //to load the view
+                    //grandchildPageVC.fromRoot = true
+                    grandchildPageVC.setUpGrandchildPage(post: currentPost, comment: vmrComment!, userAction: currentUserAction, parentPage: self)
+                }
             }
+            
         }
         
     }

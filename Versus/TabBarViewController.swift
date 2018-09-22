@@ -22,6 +22,7 @@ class TabBarViewController: UITabBarController {
     var notificationsTab : NotificationsViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("did view not load?")
         // Do any additional setup after loading the view, typically from a nib.
         addCenterButton(withImage: #imageLiteral(resourceName: "main_fab"), highlightImage: #imageLiteral(resourceName: "main_fab"))
         addNotificationObserver()
