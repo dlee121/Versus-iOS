@@ -24,7 +24,13 @@ public class VSVersusAPIClient: AWSAPIGatewayClient {
 
 	private static let _serviceClients = AWSSynchronizedMutableDictionary()
 	private static let _defaultClient:VSVersusAPIClient = {
-		var serviceConfiguration: AWSServiceConfiguration? = nil
+		//var serviceConfiguration: AWSServiceConfiguration? = nil
+        
+        let oidcProvider = OIDCProvider(input: UserDefaults.standard.object(forKey: "KEY_TOKEN") as! NSString)
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+        let serviceConfiguration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+        
+        /*
         let serviceInfo = AWSInfo.default().defaultServiceInfo(AWSInfoClientKey)
         if let serviceInfo = serviceInfo {
             serviceConfiguration = AWSServiceConfiguration(region: serviceInfo.region, credentialsProvider: serviceInfo.cognitoCredentialsProvider)
@@ -33,6 +39,7 @@ public class VSVersusAPIClient: AWSAPIGatewayClient {
         } else {
             serviceConfiguration = AWSServiceConfiguration(region: .Unknown, credentialsProvider: nil)
         }
+         */
         
         return VSVersusAPIClient(configuration: serviceConfiguration!)
 	}()

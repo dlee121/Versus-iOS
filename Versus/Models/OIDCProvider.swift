@@ -19,7 +19,7 @@ class OIDCProvider: NSObject, AWSIdentityProviderManager {
     func logins() -> AWSTask<NSDictionary> {
         print("logins() called")
         
-        return AWSTask(result:["securetoken.google.com/bcd-versus":UserDefaults.standard.object(forKey: "KEY_TOKEN") as! NSString])
+        return AWSTask(result:["securetoken.google.com/bcd-versus":tokenIn])
     }
     
     
