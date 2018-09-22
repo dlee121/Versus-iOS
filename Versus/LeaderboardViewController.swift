@@ -10,6 +10,7 @@ import UIKit
 
 class LeaderboardViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     var leaders = [LeaderboardEntry]()
     var tappedUsername = ""
@@ -28,6 +29,7 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
+        indicator.startAnimating()
         VSVersusAPIClient.default().leaderboardGet(a: "lb").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
@@ -43,6 +45,7 @@ class LeaderboardViewController: UIViewController, UITableViewDataSource, UITabl
                 }
                 
                 DispatchQueue.main.async {
+                    self.indicator.stopAnimating()
                     self.tableView.reloadData()
                     self.tableView.separatorStyle = .singleLine
                 }
