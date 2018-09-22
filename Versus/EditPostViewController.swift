@@ -64,7 +64,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     }
     
     func setEditPage(postToEdit : PostObject, redImg : UIImage?, blueImg : UIImage?) {
-        print("set up though")
+        
         editTargetPost = postToEdit
         questionLabel.text = postToEdit.question
         rednameLabel.text = postToEdit.redname
@@ -476,7 +476,6 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                 
                 let presignedURL = task.result
                 DispatchQueue.main.async {
-                    print("interessant")
                     Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.initialIVRight)
                 }
                 
