@@ -9,7 +9,7 @@
 import UIKit
 import AWSS3
 
-class EditPostViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class EditPostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     
     @IBOutlet weak var questionLabel: UILabel!
@@ -79,55 +79,7 @@ class EditPostViewController: UIViewController, UITextFieldDelegate, UINavigatio
         
     }
     
-    func getCategoryName(categoryInt : Int) -> String{
-        switch categoryInt {
-        case 0:
-            return " Automobiles  "
-        case 1:
-            return " Cartoon/Anime/Fiction  "
-        case 2:
-            return " Celebrity/Gossip  "
-        case 3:
-            return " Culture  "
-        case 4:
-            return " Education  "
-        case 5:
-            return " Electronics  "
-        case 6:
-            return " Fashion  "
-        case 7:
-            return " Finance  "
-        case 8:
-            return " Food/Restaurant  "
-        case 9:
-            return " Game/Entertainment  "
-        case 10:
-            return " Morality/Ethics/Law  "
-        case 11:
-            return " Movies/TV  "
-        case 12:
-            return " Music/Artists  "
-        case 13:
-            return " Politics  "
-        case 14:
-            return " Random  "
-        case 15:
-            return " Religion  "
-        case 16:
-            return " Science  "
-        case 17:
-            return " Social Issues  "
-        case 18:
-            return " Sports  "
-        case 19:
-            return " Technology  "
-        case 20:
-            return " Weapons  "
-        default:
-            return " Random  "
-        }
-        
-    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -144,64 +96,9 @@ class EditPostViewController: UIViewController, UITextFieldDelegate, UINavigatio
         // Dispose of any resources that can be recreated.
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
-        switch textField.returnKeyType {
-        case UIReturnKeyType.next:
-            // Try to find next responder
-            if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
-                nextField.becomeFirstResponder()
-            } else {
-                // Not found, so remove keyboard.
-                textField.resignFirstResponder()
-            }
-            
-        default:
-            textField.resignFirstResponder()
-        }
-        
-        return true
-    }
-    
-    
     @IBAction func categoryButtonTapped(_ sender: UIButton) {
-        
         prepareCategoryPage = true
         performSegue(withIdentifier: "editPostToCategories", sender: self)
-        
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if prepareCategoryPage {
-            guard let categoriesVC = segue.destination as? CategoryFilterViewController else {return}
-            categoriesVC.tab2Or3OrCP = 4
-            categoriesVC.originVC = self
-        }
-        else { //this is for segue to PostPage. Be sure to set prepareCategoryFilter = false to access this block
-            guard let rootVC = segue.destination as? RootPageViewController else {return}
-            //rootVC.createPostVC = self
-            let backItem = UIBarButtonItem()
-            backItem.title = "Back"
-            navigationItem.backBarButtonItem = backItem
-            rootVC.setUpRootPage(post: createdPost!, userAction: UserAction(idIn: UserDefaults.standard.string(forKey: "KEY_USERNAME")!+createdPost!.post_id), fromCreatePost: false)
-            
-            /*
-            question.text = ""
-            categoryButton.setTitle("Select a Category", for: .normal)
-            redName.text = ""
-            blueName.text = ""
-            leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
-            leftImage.backgroundColor = .white
-            rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
-            rightImage.backgroundColor = .white
-            leftOptionalLabel.isHidden = false
-            rightOptionalLabel.isHidden = false
-            selectedCategory = ""
-            leftImageSet = DEFAULT
-            rightImageSet = DEFAULT
-            */
-            
-            
-        }
     }
     
     @objc
@@ -212,25 +109,7 @@ class EditPostViewController: UIViewController, UITextFieldDelegate, UINavigatio
     }
     
     @IBAction func closeButtonTapped(_ sender: UIButton) {
-        /*
-         (tabBarController as! TabBarViewController).createPostBack()
-         question.text = ""
-         categoryButton.setTitle("Select a Category", for: .normal)
-         redName.text = ""
-         blueName.text = ""
-         leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
-         leftImage.backgroundColor = .white
-         rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
-         rightImage.backgroundColor = .white
-         leftOptionalLabel.isHidden = false
-         rightOptionalLabel.isHidden = false
-         selectedCategory = ""
-         leftImageSet = DEFAULT
-         rightImageSet = DEFAULT
-         */
-        
         dismiss(animated: true, completion: nil)
-        
     }
     
     
@@ -487,6 +366,58 @@ class EditPostViewController: UIViewController, UITextFieldDelegate, UINavigatio
             }
         }
         
+        
+    }
+    
+    
+    
+    func getCategoryName(categoryInt : Int) -> String{
+        switch categoryInt {
+        case 0:
+            return " Automobiles  "
+        case 1:
+            return " Cartoon/Anime/Fiction  "
+        case 2:
+            return " Celebrity/Gossip  "
+        case 3:
+            return " Culture  "
+        case 4:
+            return " Education  "
+        case 5:
+            return " Electronics  "
+        case 6:
+            return " Fashion  "
+        case 7:
+            return " Finance  "
+        case 8:
+            return " Food/Restaurant  "
+        case 9:
+            return " Game/Entertainment  "
+        case 10:
+            return " Morality/Ethics/Law  "
+        case 11:
+            return " Movies/TV  "
+        case 12:
+            return " Music/Artists  "
+        case 13:
+            return " Politics  "
+        case 14:
+            return " Random  "
+        case 15:
+            return " Religion  "
+        case 16:
+            return " Science  "
+        case 17:
+            return " Social Issues  "
+        case 18:
+            return " Sports  "
+        case 19:
+            return " Technology  "
+        case 20:
+            return " Weapons  "
+        default:
+            return " Random  "
+        }
         
     }
     

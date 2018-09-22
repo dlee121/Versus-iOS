@@ -158,8 +158,8 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             let thisVersion = usernameVersion
             
             usernameLabel.text = "Checking username..."
-            unauthClient.userHead(a: "uc", b: usernameIn.text?.lowercased()).continueWith(block:) {(task: AWSTask) -> Empty? in
-                if task.error != nil{
+            unauthClient.userHead(a: "uc", b: input!).continueWith(block:) {(task: AWSTask) -> Empty? in
+                if task.error != nil && input!.lowercased() != "deleted" {
                     DispatchQueue.main.async {
                         if(thisVersion == self.usernameVersion){
                             self.usernameConfirmed = true
@@ -182,7 +182,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
                         if(thisVersion == self.usernameVersion){
                             self.usernameConfirmed = false
                             self.usernameLabel.textColor = UIColor(named: "noticeRed")
-                            self.usernameLabel.text = self.usernameIn.text! + " is already taken!"
+                            self.usernameLabel.text = input! + " is already taken!"
                         }
                     }
                 }
