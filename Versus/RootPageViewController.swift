@@ -1026,6 +1026,11 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
         }
+        else {
+            guard let editPostVC = segue.destination as? EditPostViewController else {return}
+            let view = editPostVC.view
+            editPostVC.setEditPage(postToEdit: currentPost, redImg: nil, blueImg: nil)
+        }
         
     }
     

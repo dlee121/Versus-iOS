@@ -11,10 +11,12 @@ import AWSS3
 
 class EditPostViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    @IBOutlet weak var question: UITextField!
+    
+    @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet weak var rednameLabel: UILabel!
+    @IBOutlet weak var bluenameLabel: UILabel!
+    
     @IBOutlet weak var categoryButton: UIButton!
-    @IBOutlet weak var redName: UITextField!
-    @IBOutlet weak var blueName: UITextField!
     @IBOutlet weak var leftImage: UIButton!
     @IBOutlet weak var rightImage: UIButton!
     @IBOutlet weak var leftOptionalLabel: UILabel!
@@ -34,11 +36,13 @@ class EditPostViewController: UIViewController, UITextFieldDelegate, UINavigatio
     let DEFAULT : NSNumber = 0
     let S3 : NSNumber = 1
     
+    var editTargetPost : PostObject!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("setting up though")
         navigationItem.title = "Create a Post"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "POST", style: .done, target: self, action: #selector(postButtonTapped))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "close"), style: .done, target: self, action: #selector(backButtonTapped))
+        
         imagePicker.delegate = self
         leftImage.imageView!.contentMode = .scaleAspectFill
         rightImage.imageView!.contentMode = .scaleAspectFill
@@ -48,6 +52,80 @@ class EditPostViewController: UIViewController, UITextFieldDelegate, UINavigatio
         
         // Do any additional setup after loading the view.
         
+        
+    }
+    
+    func setEditPage(postToEdit : PostObject, redImg : UIImage?, blueImg : UIImage?) {
+        editTargetPost = postToEdit
+        questionLabel.text = postToEdit.question
+        rednameLabel.text = postToEdit.redname
+        bluenameLabel.text = postToEdit.blackname
+        selectedCategory = getCategoryName(categoryInt: postToEdit.category.intValue)
+        categoryButton.setTitle(selectedCategory, for: .normal)
+        selectedCategoryNum = postToEdit.category
+        
+        if redImg != nil {
+            leftImage.setImage(redImg, for: .normal)
+            leftOptionalLabel.isHidden = true
+            leftImageCancelButton.isHidden = false
+        }
+        
+        if blueImg != nil {
+            rightImage.setImage(blueImg, for: .normal)
+            rightOptionalLabel.isHidden = true
+            rightImageCancelButton.isHidden = false
+        }
+        
+        
+    }
+    
+    func getCategoryName(categoryInt : Int) -> String{
+        switch categoryInt {
+        case 0:
+            return " Automobiles  "
+        case 1:
+            return " Cartoon/Anime/Fiction  "
+        case 2:
+            return " Celebrity/Gossip  "
+        case 3:
+            return " Culture  "
+        case 4:
+            return " Education  "
+        case 5:
+            return " Electronics  "
+        case 6:
+            return " Fashion  "
+        case 7:
+            return " Finance  "
+        case 8:
+            return " Food/Restaurant  "
+        case 9:
+            return " Game/Entertainment  "
+        case 10:
+            return " Morality/Ethics/Law  "
+        case 11:
+            return " Movies/TV  "
+        case 12:
+            return " Music/Artists  "
+        case 13:
+            return " Politics  "
+        case 14:
+            return " Random  "
+        case 15:
+            return " Religion  "
+        case 16:
+            return " Science  "
+        case 17:
+            return " Social Issues  "
+        case 18:
+            return " Sports  "
+        case 19:
+            return " Technology  "
+        case 20:
+            return " Weapons  "
+        default:
+            return " Random  "
+        }
         
     }
     
@@ -104,9 +182,9 @@ class EditPostViewController: UIViewController, UITextFieldDelegate, UINavigatio
             let backItem = UIBarButtonItem()
             backItem.title = "Back"
             navigationItem.backBarButtonItem = backItem
-            rootVC.setUpRootPage(post: createdPost!, userAction: UserAction(idIn: UserDefaults.standard.string(forKey: "KEY_USERNAME")!+createdPost!.post_id), fromCreatePost: true)
+            rootVC.setUpRootPage(post: createdPost!, userAction: UserAction(idIn: UserDefaults.standard.string(forKey: "KEY_USERNAME")!+createdPost!.post_id), fromCreatePost: false)
             
-            
+            /*
             question.text = ""
             categoryButton.setTitle("Select a Category", for: .normal)
             redName.text = ""
@@ -120,6 +198,7 @@ class EditPostViewController: UIViewController, UITextFieldDelegate, UINavigatio
             selectedCategory = ""
             leftImageSet = DEFAULT
             rightImageSet = DEFAULT
+            */
             
             
         }
@@ -128,63 +207,31 @@ class EditPostViewController: UIViewController, UITextFieldDelegate, UINavigatio
     @objc
     func postButtonTapped() {
         view.endEditing(true)
-        if selectedCategory == nil || selectedCategory!.count <= 0 {
-            showToast(message: "Please select a category", length: 24)
-        }
-        else if question.text!.count <= 0 {
-            showToast(message: "Please enter a question or topic for this post", length: 40)
-        }
-        else if redName.text!.count <= 0 || blueName.text!.count <= 0 {
-            showMultilineToast(message: "Please enter what you'd like to compare\n(pictures optional)", length: 37, lines: 2)
-        }
-        else {
-            
-            let newPost = PostObject(q: question.text!, rn: redName.text!, bn: blueName.text!, a: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, c: selectedCategoryNum!, ri: leftImageSet, bi: rightImageSet)
-            createdPost = newPost
-            
-            if leftImageSet == S3 || rightImageSet == S3{
-                uploadImages(postID: newPost.post_id)
-            }
-            
-            VSVersusAPIClient.default().postputPost(body: newPost.getPostPutModel(), c: newPost.post_id, a: "postput", b: newPost.author.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                if task.error != nil {
-                    DispatchQueue.main.async {
-                        print(task.error!)
-                    }
-                }
-                else {
-                    //Post creation successful. Navigate to the corresponding post page.
-                    print("ayyyyyyyy postID: \(newPost.post_id)")
-                    DispatchQueue.main.async {
-                        self.prepareCategoryPage = false
-                        self.performSegue(withIdentifier: "createPostToPostPage", sender: self)
-                    }
-                    
-                }
-                return nil
-            }
-            
-        }
+        
+        
     }
     
-    @objc
-    func backButtonTapped() {
-        (tabBarController as! TabBarViewController).createPostBack()
-        question.text = ""
-        categoryButton.setTitle("Select a Category", for: .normal)
-        redName.text = ""
-        blueName.text = ""
-        leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
-        leftImage.backgroundColor = .white
-        rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
-        rightImage.backgroundColor = .white
-        leftOptionalLabel.isHidden = false
-        rightOptionalLabel.isHidden = false
-        selectedCategory = ""
-        leftImageSet = DEFAULT
-        rightImageSet = DEFAULT
+    @IBAction func closeButtonTapped(_ sender: UIButton) {
+        /*
+         (tabBarController as! TabBarViewController).createPostBack()
+         question.text = ""
+         categoryButton.setTitle("Select a Category", for: .normal)
+         redName.text = ""
+         blueName.text = ""
+         leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+         leftImage.backgroundColor = .white
+         rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+         rightImage.backgroundColor = .white
+         leftOptionalLabel.isHidden = false
+         rightOptionalLabel.isHidden = false
+         selectedCategory = ""
+         leftImageSet = DEFAULT
+         rightImageSet = DEFAULT
+         */
+        
+        dismiss(animated: true, completion: nil)
+        
     }
-    
     
     
     @IBAction func leftImageButtonTapped(_ sender: UIButton) {

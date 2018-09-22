@@ -313,9 +313,6 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
             return " Random  "
         }
         
-        
-        
-        
     }
     
     
