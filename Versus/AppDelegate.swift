@@ -84,17 +84,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        if let user = Auth.auth().currentUser {
-            user.getIDTokenForcingRefresh(false){ (idToken, error) in
-                do {
-                    let jwt = try decode(jwt: idToken!)
-                    self.tokenExpirationTime = jwt.expiresAt
-                    UserDefaults.standard.set(self.tokenExpirationTime, forKey: "KEY_Token")
-                }
-                catch {
-                    self.tokenExpirationTime = nil
-                }
-            }
+        do {
+            let jwt = try decode(jwt: UserDefaults.standard.object(forKey: "KEY_TOKEN") as! String)
+            self.tokenExpirationTime = jwt.expiresAt
+        }
+        catch {
+            self.tokenExpirationTime = nil
         }
         
         if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
@@ -106,7 +101,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         
-        /*
+        tokenExpirationTime = nil
+        
         //if token has already expired or is 15 minutes from expiration
         if tokenExpirationTime == nil  || tokenExpirationTime!.timeIntervalSinceNow.isLess(than: 900) {
             //force a relaunch from initial VC, which will refresh the token before presenting MainVC if user is currently logged in
@@ -118,9 +114,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         else {
             self.setTokenAutoRefresh(period: tokenExpirationTime!.timeIntervalSinceNow - 60) //set token to refresh 60 seconds before expiration
         }
-        */
-        
-        
         
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
@@ -132,11 +125,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
     }
     
-    /*
+    
     func setTokenAutoRefresh(period : TimeInterval) {
         timer?.invalidate()   // just in case you had existing `Timer`, `invalidate` it before we lose our reference to it
         timer = Timer.scheduledTimer(withTimeInterval: period, repeats: false) { [weak self] _ in
             Auth.auth().currentUser!.getIDTokenForcingRefresh(true){ (idToken, error) in
+                
+                //store the fresh token in UserDefaults
+                UserDefaults.standard.set(idToken, forKey: "KEY_TOKEN")
+                
                 let oidcProvider = OIDCProvider(input: idToken! as NSString)
                 let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
                 credentialsProvider.clearCredentials()
@@ -149,7 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
     }
-    */
+ 
     
 
     func applicationDidBecomeActive(_ application: UIApplication) {

@@ -113,13 +113,8 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                         
                         user.getIDTokenForcingRefresh(true){ (idToken, error) in
                             
-                            do {
-                                let jwt = try decode(jwt: idToken!)
-                                UserDefaults.standard.set(jwt.expiresAt, forKey: "KEY_Token")
-                            }
-                            catch {
-                                UserDefaults.standard.set(Date(), forKey: "KEY_Token")
-                            }
+                            //store the fresh token in UserDefaults
+                            UserDefaults.standard.set(idToken, forKey: "KEY_TOKEN")
                             
                             let oidcProvider = OIDCProvider(input: idToken! as NSString)
                             let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
@@ -213,13 +208,8 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                     if let user = authResult?.user {
                         user.getIDTokenForcingRefresh(true){ (idToken, error) in
                             
-                            do {
-                                let jwt = try decode(jwt: idToken!)
-                                UserDefaults.standard.set(jwt.expiresAt, forKey: "KEY_Token")
-                            }
-                            catch {
-                                UserDefaults.standard.set(Date(), forKey: "KEY_Token")
-                            }
+                            //store the fresh token in UserDefaults
+                            UserDefaults.standard.set(idToken, forKey: "KEY_TOKEN")
                             
                             let oidcProvider = OIDCProvider(input: idToken! as NSString)
                             let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)

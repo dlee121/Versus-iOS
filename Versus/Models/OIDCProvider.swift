@@ -19,23 +19,7 @@ class OIDCProvider: NSObject, AWSIdentityProviderManager {
     func logins() -> AWSTask<NSDictionary> {
         print("logins() called")
         
-        if let tokenDateObject = (UserDefaults.standard.object(forKey: "KEY_Token") as? Date) {
-            if tokenDateObject.timeIntervalSinceNow > 900 {
-                return AWSTask(result:["securetoken.google.com/bcd-versus":self.tokenIn])
-            }
-        }
-        
-        //refresh token, set the new token as tokenIn, and then return it
-        let group = DispatchGroup()
-        group.enter()
-        Auth.auth().currentUser!.getIDTokenForcingRefresh(true){ (idToken, error) in
-            self.tokenIn = idToken! as NSString
-            group.leave()
-        }
-        
-        group.wait()
-        
-        return AWSTask(result:["securetoken.google.com/bcd-versus":self.tokenIn])
+        return AWSTask(result:["securetoken.google.com/bcd-versus":UserDefaults.standard.object(forKey: "KEY_TOKEN") as! NSString])
     }
     
     

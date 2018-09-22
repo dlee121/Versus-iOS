@@ -24,9 +24,14 @@ class InitialViewController: UIViewController {
                 //get user token, set up cognito auth credentials, then segue to MainContainer
                 user.getIDTokenForcingRefresh(true){ (idToken, error) in
                     
+                    //store the fresh token in UserDefaults
+                    UserDefaults.standard.set(idToken, forKey: "KEY_TOKEN")
+                    
                     let oidcProvider = OIDCProvider(input: idToken! as NSString)
                     let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
                     credentialsProvider.clearCredentials()
+                    //credentialsProvider.clearKeychain()
+                    credentialsProvider.credentials()
                     let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
                     //login session configuration is stored in the default
                     AWSServiceManager.default().defaultServiceConfiguration = configuration
