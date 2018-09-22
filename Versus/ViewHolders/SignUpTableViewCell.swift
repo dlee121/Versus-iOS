@@ -159,7 +159,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             
             usernameLabel.text = "Checking username..."
             unauthClient.userHead(a: "uc", b: input!).continueWith(block:) {(task: AWSTask) -> Empty? in
-                if task.error != nil && input!.lowercased() != "deleted" {
+                if task.error != nil && input!.lowercased() != "deleted" && input!.lowercased() != "ad" {
                     DispatchQueue.main.async {
                         if(thisVersion == self.usernameVersion){
                             self.usernameConfirmed = true
