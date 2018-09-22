@@ -8,9 +8,15 @@
 
 import UIKit
 import AWSS3
+import Nuke
 
 class EditPostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
+    
+    
+    
+    @IBOutlet weak var initialIVLeft: UIImageView!
+    @IBOutlet weak var initialIVRight: UIImageView!
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var rednameLabel: UILabel!
@@ -38,6 +44,8 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     
     var editTargetPost : PostObject!
     
+    var leftImageIn, rightImageIn : UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("setting up though")
@@ -56,6 +64,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     }
     
     func setEditPage(postToEdit : PostObject, redImg : UIImage?, blueImg : UIImage?) {
+        print("set up though")
         editTargetPost = postToEdit
         questionLabel.text = postToEdit.question
         rednameLabel.text = postToEdit.redname
@@ -64,16 +73,17 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         categoryButton.setTitle(selectedCategory, for: .normal)
         selectedCategoryNum = postToEdit.category
         
-        if redImg != nil {
-            leftImage.setImage(redImg, for: .normal)
+        if postToEdit.redimg.intValue % 10 == 1 {
+            getPostImage(postID: postToEdit.post_id, lORr: 0, editVersion: postToEdit.redimg.intValue / 10)
             leftOptionalLabel.isHidden = true
             leftImageCancelButton.isHidden = false
+            leftImageSet = S3
         }
-        
-        if blueImg != nil {
-            rightImage.setImage(blueImg, for: .normal)
+        if postToEdit.blackimg.intValue % 10 == 1 {
+            getPostImage(postID: postToEdit.post_id, lORr: 1, editVersion: postToEdit.blackimg.intValue / 10)
             rightOptionalLabel.isHidden = true
             rightImageCancelButton.isHidden = false
+            rightImageSet = S3
         }
         
         
@@ -83,7 +93,6 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = true
     }
     
     
@@ -252,6 +261,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     
     @IBAction func leftImageCancelTapped(_ sender: UIButton) {
         leftImageSet = DEFAULT
+        initialIVLeft.image = nil
         leftImage.backgroundColor = .white
         leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
         leftImageCancelButton.isHidden = true
@@ -260,6 +270,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     
     @IBAction func rightImageCancelTapped(_ sender: UIButton) {
         rightImageSet = DEFAULT
+        initialIVRight.image = nil
         rightImage.backgroundColor = .white
         rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
         rightImageCancelButton.isHidden = true
@@ -421,4 +432,57 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         
     }
     
+    func getPostImage(postID : String, lORr : Int, editVersion : Int){
+        let request = AWSS3GetPreSignedURLRequest()
+        request.expires = Date().addingTimeInterval(86400)
+        request.bucket = "versus.pictures"
+        request.httpMethod = .GET
+        
+        if lORr == 0 { //left
+            if editVersion == 0 {
+                request.key = postID + "-left.jpeg"
+            }
+            else{
+                request.key = postID + "-left\(editVersion).jpeg"
+            }
+            
+            AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+                if let error = task.error {
+                    print("Error: \(error)")
+                    return nil
+                }
+                
+                let presignedURL = task.result
+                DispatchQueue.main.async {
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.initialIVLeft)
+                }
+                
+                return nil
+            }
+        }
+        else { //right
+            if editVersion == 0 {
+                request.key = postID + "-right.jpeg"
+            }
+            else{
+                request.key = postID + "-right\(editVersion).jpeg"
+            }
+            
+            AWSS3PreSignedURLBuilder.default().getPreSignedURL(request).continueWith { (task:AWSTask<NSURL>) -> Any? in
+                if let error = task.error {
+                    print("Error: \(error)")
+                    return nil
+                }
+                
+                let presignedURL = task.result
+                DispatchQueue.main.async {
+                    print("interessant")
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.initialIVRight)
+                }
+                
+                return nil
+            }
+        }
+        
+    }
 }
