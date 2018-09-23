@@ -193,10 +193,11 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
             createPostVC?.categoryButton.setTitle(getCategoryName(categoryInt: indexPath.row), for: .normal)
             
         case EditPost:
-            let createPostVC = originVC as? EditPostViewController
-            createPostVC?.selectedCategory = "\(indexPath.row)"
-            createPostVC?.selectedCategoryNum = NSNumber(value: indexPath.row)
-            createPostVC?.categoryButton.setTitle(getCategoryName(categoryInt: indexPath.row), for: .normal)
+            let editPostVC = originVC as? EditPostViewController
+            editPostVC?.selectedCategory = "\(indexPath.row)"
+            editPostVC?.selectedCategoryNum = NSNumber(value: indexPath.row)
+            editPostVC?.categoryButton.setTitle(getCategoryName(categoryInt: indexPath.row), for: .normal)
+            editPostVC?.virginPage = false
             
         default:
             let tab2VC = originVC as? Tab2CollectionViewController

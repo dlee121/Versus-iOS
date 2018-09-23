@@ -45,6 +45,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     var editTargetPost : PostObject!
     
     var leftImageIn, rightImageIn : UIImage?
+    var virginPage = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +65,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     }
     
     func setEditPage(postToEdit : PostObject, redImg : UIImage?, blueImg : UIImage?) {
-        
+        virginPage = true
         editTargetPost = postToEdit
         questionLabel.text = postToEdit.question
         rednameLabel.text = postToEdit.redname
@@ -191,29 +192,28 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     }
     
     @IBAction func submitEdit(_ sender: UIButton) {
-        if editTargetPost.category != selectedCategoryNum {
-            print("cat changed")
+        if !virginPage {
             
+            if editTargetPost.category != selectedCategoryNum {
+                print("cat changed")
+                
+                
+            }
             
+            if (editTargetPost.redimg.intValue % 10 == 1 && initialIVLeft.image == nil) || (editTargetPost.redimg.intValue % 10 == 0 && leftOptionalLabel.isHidden) {
+                print("left image changed")
+                
+            }
+            
+            if (editTargetPost.blackimg.intValue % 10 == 1 && initialIVRight.image == nil) || (editTargetPost.blackimg.intValue % 10 == 0 && rightOptionalLabel.isHidden) {
+                print("right image changed")
+                
+            }
         }
-        
-        if (editTargetPost.redimg.intValue % 10 == 1 && initialIVLeft.image == nil) || (editTargetPost.redimg.intValue % 10 == 0 && leftOptionalLabel.isHidden) {
-            print("left image changed")
-            
-        }
-        
-        if (editTargetPost.blackimg.intValue % 10 == 1 && initialIVRight.image == nil) || (editTargetPost.blackimg.intValue % 10 == 0 && rightOptionalLabel.isHidden) {
-            print("right image changed")
-            
-        }
-        
         
         
         
     }
-    
-    
-    
     
     
     
@@ -241,6 +241,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        virginPage = false
         if let image = info[UIImagePickerControllerEditedImage] as?  UIImage {
             
             if leftClick {
@@ -291,6 +292,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     
     
     @IBAction func leftImageCancelTapped(_ sender: UIButton) {
+        virginPage = false
         leftImageSet = DEFAULT
         initialIVLeft.image = nil
         leftImage.backgroundColor = .white
@@ -300,6 +302,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     }
     
     @IBAction func rightImageCancelTapped(_ sender: UIButton) {
+        virginPage = false
         rightImageSet = DEFAULT
         initialIVRight.image = nil
         rightImage.backgroundColor = .white
