@@ -68,8 +68,6 @@
 		70B9A7E320ED650A00C06709 /* String+HashCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E220ED650A00C06709 /* String+HashCode.swift */; };
 		70B9A7E520ED93B600C06709 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E420ED93B600C06709 /* InitialViewController.swift */; };
 		70B9A7E920EEDACB00C06709 /* PostObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7E820EEDACB00C06709 /* PostObject.swift */; };
-		70B9A7ED20EEE33800C06709 /* PostImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7EC20EEE33800C06709 /* PostImageCollectionViewCell.swift */; };
-		70B9A7EF20EF12E100C06709 /* PostTextCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9A7EE20EF12E100C06709 /* PostTextCollectionViewCell.swift */; };
 		70BEBDCA21326204008791DD /* NotificationsDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BEBDC921326204008791DD /* NotificationsDelegator.swift */; };
 		70CB9E47210FE4D800D86E37 /* Array+Shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */; };
 		70CB9E492110020500D86E37 /* MyCircleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */; };
@@ -209,8 +207,6 @@
 		70B9A7E220ED650A00C06709 /* String+HashCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HashCode.swift"; sourceTree = "<group>"; };
 		70B9A7E420ED93B600C06709 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		70B9A7E820EEDACB00C06709 /* PostObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostObject.swift; sourceTree = "<group>"; };
-		70B9A7EC20EEE33800C06709 /* PostImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageCollectionViewCell.swift; sourceTree = "<group>"; };
-		70B9A7EE20EF12E100C06709 /* PostTextCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTextCollectionViewCell.swift; sourceTree = "<group>"; };
 		70BEBDC921326204008791DD /* NotificationsDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsDelegator.swift; sourceTree = "<group>"; };
 		70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Shuffle.swift"; sourceTree = "<group>"; };
 		70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleTableViewCell.swift; sourceTree = "<group>"; };
@@ -371,8 +367,6 @@
 		701C8CC920F977D80072AECD /* ViewHolders */ = {
 			isa = PBXGroup;
 			children = (
-				70B9A7EC20EEE33800C06709 /* PostImageCollectionViewCell.swift */,
-				70B9A7EE20EF12E100C06709 /* PostTextCollectionViewCell.swift */,
 				701C8CCA20F978350072AECD /* GoldLeaderTableViewCell.swift */,
 				701C8CCC20F978B30072AECD /* SilverLeaderTableViewCell.swift */,
 				701C8CCE20F978C80072AECD /* BronzeLeaderTableViewCell.swift */,
@@ -764,7 +758,6 @@
 				701C8CD120F978E20072AECD /* PlainLeaderTableViewCell.swift in Sources */,
 				701C8CC420F8C51F0072AECD /* NotificationsViewController.swift in Sources */,
 				70E80CBC20E6DB570067DF08 /* VSAIModel_hits.swift in Sources */,
-				70B9A7ED20EEE33800C06709 /* PostImageCollectionViewCell.swift in Sources */,
 				706192DF21562B1700C0E91E /* EditPostViewController.swift in Sources */,
 				702518CF21350826008B8E65 /* VSCommentsListModel_hits_hits_item__source.swift in Sources */,
 				70E80CC120E6DB570067DF08 /* VSUserPutModel.swift in Sources */,
@@ -788,7 +781,6 @@
 				70E80CD020E6DB570067DF08 /* VSPostsListCompactModel_hits.swift in Sources */,
 				701C8CC220F8C4F00072AECD /* LeaderboardViewController.swift in Sources */,
 				70D17FED2126613000A0C9D6 /* UIImage+resize.swift in Sources */,
-				70B9A7EF20EF12E100C06709 /* PostTextCollectionViewCell.swift in Sources */,
 				70E80CBE20E6DB570067DF08 /* VSAIModel_hits_hits_item__source.swift in Sources */,
 				70CB9E51211552D200D86E37 /* CommentCardTableViewCell.swift in Sources */,
 				70E80CB920E6DB570067DF08 /* VSLeaderboardModel__shards.swift in Sources */,

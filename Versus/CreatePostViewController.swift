@@ -37,7 +37,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Create a Post"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "POST", style: .done, target: self, action: #selector(postButtonTapped))
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "close"), style: .done, target: self, action: #selector(backButtonTapped))
         imagePicker.delegate = self
         leftImage.imageView!.contentMode = .scaleAspectFill
@@ -54,6 +54,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "POST", style: .done, target: self, action: #selector(postButtonTapped))
     }
     
     
@@ -128,6 +129,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     @objc
     func postButtonTapped() {
         view.endEditing(true)
+        
         if selectedCategory == nil || selectedCategory!.count <= 0 {
             showToast(message: "Please select a category", length: 24)
         }
@@ -138,6 +140,12 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
             showMultilineToast(message: "Please enter what you'd like to compare\n(pictures optional)", length: 37, lines: 2)
         }
         else {
+            
+            let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 44, height: 20))
+            activityIndicator.activityIndicatorViewStyle = .gray
+            let barIndicator = UIBarButtonItem(customView: activityIndicator)
+            navigationItem.rightBarButtonItem = barIndicator
+            activityIndicator.startAnimating()
             
             let newPost = PostObject(q: question.text!, rn: redName.text!, bn: blueName.text!, a: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, c: selectedCategoryNum!, ri: leftImageSet, bi: rightImageSet)
             createdPost = newPost
