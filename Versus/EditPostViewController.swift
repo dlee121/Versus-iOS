@@ -110,13 +110,6 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         performSegue(withIdentifier: "editPostToCategories", sender: self)
     }
     
-    @objc
-    func postButtonTapped() {
-        view.endEditing(true)
-        
-        
-    }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let categoriesVC = segue.destination as? CategoryFilterViewController else {return}
@@ -196,6 +189,33 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         self.present(alert, animated: true, completion: nil)
         
     }
+    
+    @IBAction func submitEdit(_ sender: UIButton) {
+        if editTargetPost.category != selectedCategoryNum {
+            print("cat changed")
+            
+            
+        }
+        
+        if (editTargetPost.redimg.intValue % 10 == 1 && initialIVLeft.image == nil) || (editTargetPost.redimg.intValue % 10 == 0 && leftOptionalLabel.isHidden) {
+            print("left image changed")
+            
+        }
+        
+        if (editTargetPost.blackimg.intValue % 10 == 1 && initialIVRight.image == nil) || (editTargetPost.blackimg.intValue % 10 == 0 && rightOptionalLabel.isHidden) {
+            print("right image changed")
+            
+        }
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
     
     func openCamera()
     {
