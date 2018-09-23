@@ -207,20 +207,31 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
             }
             
             if (editTargetPost.redimg.intValue % 10 == 1 && initialIVLeft.image == nil) || (editTargetPost.redimg.intValue % 10 == 0 && leftOptionalLabel.isHidden) {
+                
+                if editTargetPost.redimg.intValue % 10 == 1 {
+                    let s3 = AWSS3.default()
+                    let deleteObjectRequest = AWSS3DeleteObjectRequest()
+                    deleteObjectRequest!.bucket = "versus.pictures"
+                    
+                    let oldEditVersion = editTargetPost.redimg.intValue / 10
+                    
+                    if oldEditVersion > 0 {
+                        deleteObjectRequest!.key = "\(editTargetPost.post_id)-left\(oldEditVersion).jpeg"
+                    }
+                    else {
+                        deleteObjectRequest!.key = "\(editTargetPost.post_id)-left.jpeg"
+                    }
+                    
+                    s3.deleteObject(deleteObjectRequest!)
+                }
+                
                 if leftOptionalLabel.isHidden { //new image is set
+                    
                     editTargetPost.redimg = NSNumber(value: (editTargetPost.redimg.intValue / 10 + 1) * 10 + 1)
-                    
-                    
-                    
                     
                 }
                 else { //image is deleted
                     editTargetPost.redimg = NSNumber(value: 0)
-                    
-                    
-                    
-                    
-                    
                 }
                 
                 
@@ -229,9 +240,28 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
             }
             
             if (editTargetPost.blackimg.intValue % 10 == 1 && initialIVRight.image == nil) || (editTargetPost.blackimg.intValue % 10 == 0 && rightOptionalLabel.isHidden) {
-                if rightOptionalLabel.isHidden { //new image is set
-                    editTargetPost.blackimg = NSNumber(value: (editTargetPost.blackimg.intValue / 10 + 1) * 10 + 1)
+                
+                if editTargetPost.blackimg.intValue % 10 == 1 {
+                    let s3 = AWSS3.default()
+                    let deleteObjectRequest = AWSS3DeleteObjectRequest()
+                    deleteObjectRequest!.bucket = "versus.pictures"
                     
+                    let oldEditVersion = editTargetPost.blackimg.intValue / 10
+                    
+                    if oldEditVersion > 0 {
+                        deleteObjectRequest!.key = "\(editTargetPost.post_id)-right\(oldEditVersion).jpeg"
+                    }
+                    else {
+                        deleteObjectRequest!.key = "\(editTargetPost.post_id)-right.jpeg"
+                    }
+                    
+                    s3.deleteObject(deleteObjectRequest!)
+                }
+                
+                
+                if rightOptionalLabel.isHidden { //new image is set
+                    
+                    editTargetPost.blackimg = NSNumber(value: (editTargetPost.blackimg.intValue / 10 + 1) * 10 + 1)
                     
                     
                     
@@ -239,9 +269,6 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                 }
                 else { //image is deleted
                     editTargetPost.blackimg = NSNumber(value: 0)
-                    
-                    
-                    
                 }
                 
                 
