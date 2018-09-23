@@ -153,7 +153,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         }
                         else { //post has comments so don't delete the post, just set the author to "deleted"
                             
-                            
+                            //implement partial delete 'ppd'
                             
                         }
                         

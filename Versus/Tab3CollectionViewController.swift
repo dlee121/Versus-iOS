@@ -505,6 +505,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    
 }
 
 extension Tab3CollectionViewController : IndicatorInfoProvider {
