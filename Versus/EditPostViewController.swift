@@ -14,6 +14,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     
     
     
+    @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var initialIVLeft: UIImageView!
@@ -199,7 +200,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     @IBAction func submitEdit(_ sender: UIButton) {
         if !virginPage {
             postingIndicator.startAnimating()
-            
+            postButton.isHidden = true
             var postEdited = false
             if editTargetPost.category != selectedCategoryNum {
                 print("cat changed")
@@ -281,34 +282,35 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                 postEdited = true
             }
             
-            var postEditModel = VSPostEditModel()
-            var postEditModelDoc = VSPostEditModel_doc()
-            postEditModelDoc!.bi = editTargetPost.blackimg
-            postEditModelDoc!.c = editTargetPost.category
-            postEditModelDoc!.ri = editTargetPost.redimg
-            postEditModel!.doc = postEditModelDoc
-            
-            group.enter()
-            VSVersusAPIClient.default().posteditPost(body: postEditModel!, a: "editp", b: editTargetPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                if task.error != nil {
+            if postEdited {
+                var postEditModel = VSPostEditModel()
+                var postEditModelDoc = VSPostEditModel_doc()
+                postEditModelDoc!.bi = editTargetPost.blackimg
+                postEditModelDoc!.c = editTargetPost.category
+                postEditModelDoc!.ri = editTargetPost.redimg
+                postEditModel!.doc = postEditModelDoc
+                
+                group.enter()
+                VSVersusAPIClient.default().posteditPost(body: postEditModel!, a: "editp", b: editTargetPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                    if task.error != nil {
+                        DispatchQueue.main.async {
+                            print(task.error!)
+                        }
+                    }
+                    
+                    self.group.leave()
+                    
+                    return nil
+                }
+                
+                group.notify(queue: .main) {
                     DispatchQueue.main.async {
-                        print(task.error!)
+                        self.sourceVC.currentPost = self.editTargetPost
+                        self.sourceVC.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                        self.dismiss(animated: true, completion: nil)
                     }
                 }
-                
-                self.group.leave()
-                
-                return nil
             }
-            
-            group.notify(queue: .main) {
-                DispatchQueue.main.async {
-                    self.sourceVC.currentPost = self.editTargetPost
-                    self.sourceVC.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-            
         }
         
         

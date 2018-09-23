@@ -5367,6 +5367,7 @@
                         <outlet property="leftImage" destination="Tj0-Ix-OR2" id="iZu-dD-bIr"/>
                         <outlet property="leftImageCancelButton" destination="iKw-Aq-dS0" id="ggB-3s-7NV"/>
                         <outlet property="leftOptionalLabel" destination="YbC-Fi-aXG" id="0Z7-Yn-Dea"/>
+                        <outlet property="postButton" destination="tbx-BS-5ZP" id="f39-Gy-EcD"/>
                         <outlet property="postingIndicator" destination="Tcl-9v-gjZ" id="gIP-VR-jjH"/>
                         <outlet property="questionLabel" destination="3hx-96-Y4E" id="CVW-9B-fUK"/>
                         <outlet property="rednameLabel" destination="5cv-4Y-Sf0" id="Kvk-rP-rVL"/>
@@ -5412,7 +5413,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kMN-CP-0NP"/>
-        <segue reference="8lW-z2-B4d"/>
+        <segue reference="Adv-3g-zxs"/>
         <segue reference="YuF-tM-5cL"/>
         <segue reference="K6P-9d-yI2"/>
         <segue reference="uAF-H9-Oin"/>

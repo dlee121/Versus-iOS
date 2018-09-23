@@ -75,10 +75,7 @@ class PostCardTableViewCell: UITableViewCell {
         author.text = post.author
         votecount.text = "\(post.redcount.intValue+post.blackcount.intValue) votes"
         
-        
-        
-        
-        if post.redimg.intValue % 10 == S3 {
+        if post.redimg.intValue % 10 == S3 && post.blackimg.intValue % 10 == S3 { //both images
             textOnlyRedName.text = ""
             redImageTop.constant = 8
             redname.text = post.redname
@@ -86,18 +83,7 @@ class PostCardTableViewCell: UITableViewCell {
             leftOverlayAlpha = 0.3
             redNameHeight.constant = 21
             getPostImage(postID: post.post_id, lORr: 0, editVersion: post.redimg.intValue / 10)
-        }
-        else {
-            //textOnlyRedName.adjustsFontSizeToFitWidth = true
-            textOnlyRedName.text = post.redname
-            redImageTop.constant = -34
-            redNameHeight.constant = 0
-            redname.text = ""
-            redCheck.image = #imageLiteral(resourceName: "check_circle_gray")
-            leftOverlayAlpha = 0.0
-        }
-        
-        if post.blackimg.intValue % 10 == S3 {
+            
             textOnlyBlueName.text = ""
             blueImageTop.constant = 8
             bluename.text = post.blackname
@@ -106,7 +92,51 @@ class PostCardTableViewCell: UITableViewCell {
             blueNameHeight.constant = 21
             getPostImage(postID: post.post_id, lORr: 1, editVersion: post.blackimg.intValue / 10)
         }
-        else {
+        else if post.redimg.intValue % 10 == S3 { //only left image
+            textOnlyRedName.text = ""
+            redImageTop.constant = 8
+            redname.text = post.redname
+            redCheck.image = #imageLiteral(resourceName: "check_circle_white")
+            leftOverlayAlpha = 0.3
+            redNameHeight.constant = 21
+            getPostImage(postID: post.post_id, lORr: 0, editVersion: post.redimg.intValue / 10)
+            
+            textOnlyBlueName.text = ""
+            blueImageTop.constant = 8
+            bluename.text = post.blackname
+            blueCheck.image = #imageLiteral(resourceName: "check_circle_white")
+            rightOverlayAlpha = 0.3
+            blueNameHeight.constant = 21
+            blueImage.image = #imageLiteral(resourceName: "defaultImage")
+        }
+        else if post.blackimg.intValue % 10 == S3 { //only right image
+            textOnlyBlueName.text = ""
+            blueImageTop.constant = 8
+            bluename.text = post.blackname
+            blueCheck.image = #imageLiteral(resourceName: "check_circle_white")
+            rightOverlayAlpha = 0.3
+            blueNameHeight.constant = 21
+            getPostImage(postID: post.post_id, lORr: 1, editVersion: post.blackimg.intValue / 10)
+            
+            textOnlyRedName.text = ""
+            redImageTop.constant = 8
+            redname.text = post.redname
+            redCheck.image = #imageLiteral(resourceName: "check_circle_white")
+            leftOverlayAlpha = 0.3
+            redNameHeight.constant = 21
+            redImage.image = #imageLiteral(resourceName: "defaultImage")
+            
+        }
+        else { //both text only
+            //textOnlyRedName.adjustsFontSizeToFitWidth = true
+            textOnlyRedName.text = post.redname
+            redImageTop.constant = -34
+            redNameHeight.constant = 0
+            redname.text = ""
+            redCheck.image = #imageLiteral(resourceName: "check_circle_gray")
+            leftOverlayAlpha = 0.0
+            redImage.image = nil
+            
             //textOnlyBlueName.adjustsFontSizeToFitWidth = true
             textOnlyBlueName.text = post.blackname
             blueImageTop.constant = -34
@@ -114,6 +144,7 @@ class PostCardTableViewCell: UITableViewCell {
             bluename.text = ""
             blueCheck.image = #imageLiteral(resourceName: "check_circle_gray")
             rightOverlayAlpha = 0.0
+            blueImage.image = nil
         }
         
         switch votedSide {
