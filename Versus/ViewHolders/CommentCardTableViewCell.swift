@@ -135,7 +135,7 @@ class CommentCardTableViewCell: UITableViewCell {
             commentVote = downvoted
         }
         
-        leftMargin.constant = indent * 48
+        leftMargin.constant = indent * 48 + 8
         
         rowNumber = row
         
