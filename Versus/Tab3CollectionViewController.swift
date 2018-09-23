@@ -501,7 +501,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     func handlePostFullDelete(postID : String, index : Int) {
         if posts[index].post_id == postID {
             posts.remove(at: index)
-            tableView.deleteRows(at: [IndexPath(row: 0, section: index)], with: .none)
+            tableView.deleteSections([index], with: .none)
         }
     }
     

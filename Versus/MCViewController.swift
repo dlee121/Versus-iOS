@@ -46,6 +46,8 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     private var adQueue : APDNativeAdQueue = APDNativeAdQueue()
     fileprivate var nativeArray : [APDNativeAd]! = Array()
     
+    var tab3 : Tab3CollectionViewController!
+    
     var adIndex = 0
     
     override func viewDidLoad() {
@@ -117,6 +119,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         let child_1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Tab1")
         let child_2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Tab2")
         let child_3 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Tab3")
+        tab3 = child_3 as! Tab3CollectionViewController
         return [child_1, child_2, child_3]
     }
     
@@ -344,9 +347,12 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
             return nil
         }
         
-        
-        
     }
+    
+    func handlePostFullDelete(postID : String, index : Int) {
+        tab3.handlePostFullDelete(postID: postID, index: index)
+    }
+    
     
 }
 
