@@ -48,9 +48,11 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     var leftImageIn, rightImageIn : UIImage?
     var virginPage = true
     
+    var group : DispatchGroup!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("setting up though")
+        group = DispatchGroup()
         navigationItem.title = "Create a Post"
         
         imagePicker.delegate = self
@@ -201,8 +203,6 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                 print("cat changed")
                 editTargetPost.category = selectedCategoryNum!
                 
-                
-                
                 postEdited = true
             }
             
@@ -228,6 +228,10 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                 if leftOptionalLabel.isHidden { //new image is set
                     
                     editTargetPost.redimg = NSNumber(value: (editTargetPost.redimg.intValue / 10 + 1) * 10 + 1)
+                    
+                    //upload new image
+                    group.enter()
+                    uploadImage(imageKey: editTargetPost.post_id+"-left\(editTargetPost.redimg).jpeg", rawImage: leftImage.currentImage!)
                     
                 }
                 else { //image is deleted
@@ -263,16 +267,14 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                     
                     editTargetPost.blackimg = NSNumber(value: (editTargetPost.blackimg.intValue / 10 + 1) * 10 + 1)
                     
-                    
-                    
+                    //upload new image
+                    group.enter()
+                    uploadImage(imageKey: editTargetPost.post_id+"-right\(editTargetPost.blackimg).jpeg", rawImage: rightImage.currentImage!)
                     
                 }
                 else { //image is deleted
                     editTargetPost.blackimg = NSNumber(value: 0)
                 }
-                
-                
-                
                 
                 postEdited = true
             }
@@ -283,22 +285,26 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
             postEditModelDoc!.c = editTargetPost.category
             postEditModelDoc!.ri = editTargetPost.redimg
             postEditModel!.doc = postEditModelDoc
-            /*
+            
+            group.enter()
             VSVersusAPIClient.default().posteditPost(body: postEditModel!, a: "editp", b: editTargetPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                 if task.error != nil {
                     DispatchQueue.main.async {
                         print(task.error!)
                     }
                 }
-                else {
-                    DispatchQueue.main.async {
-                        self.dismiss(animated: true, completion: nil)
-                    }
-                    
-                }
+                
+                self.group.leave()
+                
                 return nil
             }
-            */
+            
+            group.notify(queue: .main) {
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+            
         }
         
         
@@ -401,105 +407,50 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         rightOptionalLabel.isHidden = false
     }
     
-    func uploadImages(postID : String) {
-        if leftImageSet == S3 {
-            let imageKey = postID+"-left.jpeg"
-            let image : UIImage!
-            if let rawImage = leftImage.currentImage {
-                if rawImage.size.width >= rawImage.size.height {
-                    image = rawImage.resized(toWidth: 304)
-                }
-                else {
-                    image = rawImage.resized(toHeight: 304)
-                }
-                
-                let fileManager = FileManager.default
-                let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
-                let imageData = UIImageJPEGRepresentation(image, 0.5)
-                fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
-                
-                let fileUrl = NSURL(fileURLWithPath: path)
-                let uploadRequest = AWSS3TransferManagerUploadRequest()
-                uploadRequest?.bucket = "versus.pictures"
-                uploadRequest?.key = imageKey
-                uploadRequest?.contentType = "image/jpeg"
-                uploadRequest?.body = fileUrl as URL
-                
-                let transferManager = AWSS3TransferManager.default()
-                transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
-                    
-                    if let error = task.error as? NSError {
-                        if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                            switch code {
-                            case .cancelled, .paused:
-                                break
-                            default:
-                                print("Error uploading: \(uploadRequest!.key) Error: \(error)")
-                            }
-                        } else {
-                            print("Error uploading: \(uploadRequest!.key) Error: \(error)")
-                        }
-                        return nil
-                    }
-                    else {
-                        //for now we don't handle additional code for image upload success
-                    }
-                    
-                    return nil
-                })
-                
-            }
+    func uploadImage(imageKey : String, rawImage : UIImage) {
+        
+        let image : UIImage!
+        if rawImage.size.width >= rawImage.size.height {
+            image = rawImage.resized(toWidth: 304)
+        }
+        else {
+            image = rawImage.resized(toHeight: 304)
         }
         
+        let fileManager = FileManager.default
+        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
+        let imageData = UIImageJPEGRepresentation(image, 0.5)
+        fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
         
-        if rightImageSet == S3 {
-            let imageKey = postID+"-right.jpeg"
-            let image : UIImage!
-            if let rawImage = rightImage.currentImage {
-                if rawImage.size.width >= rawImage.size.height {
-                    image = rawImage.resized(toWidth: 304)
-                }
-                else {
-                    image = rawImage.resized(toHeight: 304)
-                }
-                
-                let fileManager = FileManager.default
-                let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
-                let imageData = UIImageJPEGRepresentation(image, 0.5)
-                fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
-                
-                let fileUrl = NSURL(fileURLWithPath: path)
-                let uploadRequest = AWSS3TransferManagerUploadRequest()
-                uploadRequest?.bucket = "versus.pictures"
-                uploadRequest?.key = imageKey
-                uploadRequest?.contentType = "image/jpeg"
-                uploadRequest?.body = fileUrl as URL
-                
-                let transferManager = AWSS3TransferManager.default()
-                transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
-                    
-                    if let error = task.error as? NSError {
-                        if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                            switch code {
-                            case .cancelled, .paused:
-                                break
-                            default:
-                                print("Error uploading: \(uploadRequest!.key) Error: \(error)")
-                            }
-                        } else {
-                            print("Error uploading: \(uploadRequest!.key) Error: \(error)")
-                        }
-                        return nil
+        let fileUrl = NSURL(fileURLWithPath: path)
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest?.bucket = "versus.pictures"
+        uploadRequest?.key = imageKey
+        uploadRequest?.contentType = "image/jpeg"
+        uploadRequest?.body = fileUrl as URL
+        
+        let transferManager = AWSS3TransferManager.default()
+        transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
+            
+            if let error = task.error as? NSError {
+                if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
+                    switch code {
+                    case .cancelled, .paused:
+                        break
+                    default:
+                        print("Error uploading: \(uploadRequest!.key) Error: \(error)")
                     }
-                    else {
-                        //for now we don't handle additional code for image upload success
-                    }
-                    
-                    return nil
-                })
-                
+                } else {
+                    print("Error uploading: \(uploadRequest!.key) Error: \(error)")
+                }
+                return nil
             }
-        }
+            else {
+                //for now we don't handle additional code for image upload success
+            }
+            self.group.leave()
+            return nil
+        })
         
         
     }
