@@ -5306,6 +5306,9 @@
                                     <action selector="submitEdit:" destination="Fh3-yj-VOS" eventType="touchUpInside" id="3fz-TT-eSc"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Tcl-9v-gjZ">
+                                <rect key="frame" x="337" y="32" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -5318,6 +5321,7 @@
                             <constraint firstItem="dkO-hb-7QT" firstAttribute="top" secondItem="Cad-Xr-O3h" secondAttribute="top" constant="20" id="EP7-Am-hgs"/>
                             <constraint firstItem="74O-t6-V44" firstAttribute="top" secondItem="RQl-Jd-EMm" secondAttribute="bottom" constant="8" id="G7y-ip-NI4"/>
                             <constraint firstItem="xhE-T9-2LA" firstAttribute="top" secondItem="3hx-96-Y4E" secondAttribute="bottom" constant="8" id="Gx0-FU-ru5"/>
+                            <constraint firstItem="tbx-BS-5ZP" firstAttribute="centerY" secondItem="Tcl-9v-gjZ" secondAttribute="centerY" id="HPe-SF-9l3"/>
                             <constraint firstItem="xhE-T9-2LA" firstAttribute="leading" secondItem="lvk-H6-Ndg" secondAttribute="leading" constant="8" id="HgG-wG-MyP"/>
                             <constraint firstItem="crj-0p-y3W" firstAttribute="trailing" secondItem="74O-t6-V44" secondAttribute="trailing" id="KSS-7Q-znw"/>
                             <constraint firstItem="tbx-BS-5ZP" firstAttribute="centerY" secondItem="pym-JS-c9s" secondAttribute="centerY" id="Kxg-rA-rNb"/>
@@ -5349,6 +5353,7 @@
                             <constraint firstItem="3hx-96-Y4E" firstAttribute="leading" secondItem="lvk-H6-Ndg" secondAttribute="leading" constant="8" id="rnb-yj-6da"/>
                             <constraint firstItem="crj-0p-y3W" firstAttribute="top" secondItem="74O-t6-V44" secondAttribute="top" id="sQY-Ci-HTC"/>
                             <constraint firstItem="Tj0-Ix-OR2" firstAttribute="leading" secondItem="lvk-H6-Ndg" secondAttribute="leading" constant="8" id="sVt-QU-RNy"/>
+                            <constraint firstItem="tbx-BS-5ZP" firstAttribute="centerX" secondItem="Tcl-9v-gjZ" secondAttribute="centerX" id="uE7-Zz-x51"/>
                             <constraint firstItem="5cv-4Y-Sf0" firstAttribute="leading" secondItem="lvk-H6-Ndg" secondAttribute="leading" constant="8" id="xpi-Pv-k3u"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lvk-H6-Ndg"/>
@@ -5362,6 +5367,7 @@
                         <outlet property="leftImage" destination="Tj0-Ix-OR2" id="iZu-dD-bIr"/>
                         <outlet property="leftImageCancelButton" destination="iKw-Aq-dS0" id="ggB-3s-7NV"/>
                         <outlet property="leftOptionalLabel" destination="YbC-Fi-aXG" id="0Z7-Yn-Dea"/>
+                        <outlet property="postingIndicator" destination="Tcl-9v-gjZ" id="gIP-VR-jjH"/>
                         <outlet property="questionLabel" destination="3hx-96-Y4E" id="CVW-9B-fUK"/>
                         <outlet property="rednameLabel" destination="5cv-4Y-Sf0" id="Kvk-rP-rVL"/>
                         <outlet property="rightImage" destination="74O-t6-V44" id="1jN-No-BZ3"/>

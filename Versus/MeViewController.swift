@@ -702,6 +702,15 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
                     }
                     return nil
                 }
+                
+                if newProfileImageVersion > 1 {
+                    let s3 = AWSS3.default()
+                    let deleteObjectRequest = AWSS3DeleteObjectRequest()
+                    deleteObjectRequest!.bucket = "versus.profile-pictures"
+                    deleteObjectRequest!.key = "\(self.currentUsername!)-\(newProfileImageVersion-1).jpeg"
+                    s3.deleteObject(deleteObjectRequest!)
+                }
+                
             }
             
             return nil

@@ -14,6 +14,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     
     
     
+    @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var initialIVLeft: UIImageView!
     @IBOutlet weak var initialIVRight: UIImageView!
@@ -193,22 +194,84 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     
     @IBAction func submitEdit(_ sender: UIButton) {
         if !virginPage {
+            postingIndicator.startAnimating()
             
+            var postEdited = false
             if editTargetPost.category != selectedCategoryNum {
                 print("cat changed")
+                editTargetPost.category = selectedCategoryNum!
                 
                 
+                
+                postEdited = true
             }
             
             if (editTargetPost.redimg.intValue % 10 == 1 && initialIVLeft.image == nil) || (editTargetPost.redimg.intValue % 10 == 0 && leftOptionalLabel.isHidden) {
-                print("left image changed")
+                if leftOptionalLabel.isHidden { //new image is set
+                    editTargetPost.redimg = NSNumber(value: (editTargetPost.redimg.intValue / 10 + 1) * 10 + 1)
+                    
+                    
+                    
+                    
+                }
+                else { //image is deleted
+                    editTargetPost.redimg = NSNumber(value: 0)
+                    
+                    
+                    
+                    
+                    
+                }
                 
+                
+                
+                postEdited = true
             }
             
             if (editTargetPost.blackimg.intValue % 10 == 1 && initialIVRight.image == nil) || (editTargetPost.blackimg.intValue % 10 == 0 && rightOptionalLabel.isHidden) {
-                print("right image changed")
+                if rightOptionalLabel.isHidden { //new image is set
+                    editTargetPost.blackimg = NSNumber(value: (editTargetPost.blackimg.intValue / 10 + 1) * 10 + 1)
+                    
+                    
+                    
+                    
+                    
+                }
+                else { //image is deleted
+                    editTargetPost.blackimg = NSNumber(value: 0)
+                    
+                    
+                    
+                }
                 
+                
+                
+                
+                postEdited = true
             }
+            
+            var postEditModel = VSPostEditModel()
+            var postEditModelDoc = VSPostEditModel_doc()
+            postEditModelDoc!.bi = editTargetPost.blackimg
+            postEditModelDoc!.c = editTargetPost.category
+            postEditModelDoc!.ri = editTargetPost.redimg
+            postEditModel!.doc = postEditModelDoc
+            /*
+            VSVersusAPIClient.default().posteditPost(body: postEditModel!, a: "editp", b: editTargetPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                if task.error != nil {
+                    DispatchQueue.main.async {
+                        print(task.error!)
+                    }
+                }
+                else {
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    
+                }
+                return nil
+            }
+            */
         }
         
         
