@@ -1629,14 +1629,16 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func startIndicator() {
         if !refreshControl.isRefreshing {
-            let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! PostCardTableViewCell
-            cell.startIndicator()
+            if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? PostCardTableViewCell {
+                cell.startIndicator()
+            }
         }
     }
     
     func stopIndicator() {
-        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! PostCardTableViewCell
-        cell.stopIndicator()
+        if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? PostCardTableViewCell {
+            cell.stopIndicator()
+        }
     }
 
 }

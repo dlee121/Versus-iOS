@@ -1192,8 +1192,9 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     func startIndicator() {
         DispatchQueue.main.async {
             if !self.refreshControl.isRefreshing {
-                let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
-                cell.startIndicator()
+                if let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? CommentCardTableViewCell {
+                    cell.startIndicator()
+                }
             }
         }
         
@@ -1201,8 +1202,9 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     
     func stopIndicator() {
         DispatchQueue.main.async {
-            let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
-            cell.stopIndicator()
+            if let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? CommentCardTableViewCell {
+                cell.stopIndicator()
+            }
         }
     }
     
