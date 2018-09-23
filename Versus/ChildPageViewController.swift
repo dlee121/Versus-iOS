@@ -116,7 +116,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         rootComments.removeAll()
         childComments.removeAll()
         comments.removeAll()
-        tableView.reloadData()
         
         winnerTreeRoots.removeAllObjects()
         medalistCQPayload = ""
@@ -126,6 +125,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         nowLoading = false
         
         comments.append(topCardComment)
+        tableView.reloadData()
         
         if sortType == POPULAR {
             setMedals()
@@ -1408,16 +1408,20 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func startIndicator() {
-        if !refreshControl.isRefreshing {
-            let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
-            cell.startIndicator()
+        DispatchQueue.main.async {
+            if !self.refreshControl.isRefreshing {
+                let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
+                cell.startIndicator()
+            }
         }
         
     }
     
     func stopIndicator() {
-        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
-        cell.stopIndicator()
+        DispatchQueue.main.async {
+            let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
+            cell.stopIndicator()
+        }
     }
     
 }

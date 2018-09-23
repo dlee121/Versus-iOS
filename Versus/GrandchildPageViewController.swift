@@ -111,7 +111,6 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         fromIndex = 0
         
         comments.removeAll()
-        tableView.reloadData()
         
         winnerTreeRoots.removeAllObjects()
         
@@ -120,6 +119,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         nowLoading = false
         
         comments.append(topCardComment)
+        tableView.reloadData()
         
         if sortType == POPULAR {
             setMedals()
@@ -1190,16 +1190,20 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func startIndicator() {
-        if !refreshControl.isRefreshing {
-            let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
-            cell.startIndicator()
+        DispatchQueue.main.async {
+            if !self.refreshControl.isRefreshing {
+                let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
+                cell.startIndicator()
+            }
         }
         
     }
     
     func stopIndicator() {
-        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
-        cell.stopIndicator()
+        DispatchQueue.main.async {
+            let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! CommentCardTableViewCell
+            cell.stopIndicator()
+        }
     }
     
 }
