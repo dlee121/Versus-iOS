@@ -304,7 +304,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
             group.notify(queue: .main) {
                 DispatchQueue.main.async {
                     self.sourceVC.currentPost = self.editTargetPost
-                    //self.sourceVC.tableView.upd
+                    self.sourceVC.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
                     self.dismiss(animated: true, completion: nil)
                 }
             }
