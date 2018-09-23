@@ -322,7 +322,8 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currentPost = posts[indexPath.section]
-        
+        currentPost.meORnewIndex = indexPath.section
+        currentPost.meORnew = 1
         if currentPost.post_id != "0" {
             if !clickLock {
                 clickLock = true
@@ -497,6 +498,12 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    func handlePostFullDelete(postID : String, index : Int) {
+        if posts[index].post_id == postID {
+            posts.remove(at: index)
+            tableView.deleteRows(at: [IndexPath(row: 0, section: index)], with: .none)
+        }
+    }
     
 }
 

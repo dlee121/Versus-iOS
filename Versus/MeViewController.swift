@@ -48,6 +48,7 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
     var segueUserAction : UserAction?
     
     var imagePicker : UIImagePickerController!
+    var postsHistoryTab : PostsHistoryViewController!
     
     override func viewDidLoad() {
         print("viewDidLoad called")
@@ -197,6 +198,7 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
         let child_1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CommentsHistory")
         let child_2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostsHistory")
         let view = child_2.view
+        postsHistoryTab = child_2 as! PostsHistoryViewController
         (child_1 as! CommentsHistoryViewController).setUpCommentsHistory(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, thisIsMe: true)
         (child_2 as! PostsHistoryViewController).setUpPostsHistory(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, thisIsMe: true)
         return [child_1, child_2]
@@ -461,6 +463,8 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
                 else {
                     if let postResult = task.result {
                         var postObject = PostObject(itemSource: postResult.source!, id: postResult.id!)
+                        postObject.meORnew = self.clickedPost?.meORnew
+                        postObject.meORnewIndex = self.clickedPost?.meORnewIndex
                         VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
                                 rootVC.setUpRootPage(post: postObject, userAction: UserAction(idIn: userActionID), fromCreatePost: false)
@@ -717,6 +721,13 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
         })
     }
     
+    func handlePostFullDelete(postID : String, index : Int) {
+        
+        if postsHistoryTab.posts[index].post_id == postID {
+            postsHistoryTab.posts.remove(at: index)
+            postsHistoryTab.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        }
+    }
     
     
 

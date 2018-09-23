@@ -66,6 +66,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var sortTypeString = "Popular"
     
     var editSegue = false
+    var commentsLoaded = false
+    
     
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -117,7 +119,47 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 }))
                 
                 alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
-                    //self.openGallary()
+                    if self.commentsLoaded {
+                        if self.comments.count == 1 { //only contains post card placeholder
+                            VSVersusAPIClient.default().deleteGet(a: "del", b: self.currentPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                if task.error != nil {
+                                    DispatchQueue.main.async {
+                                        print(task.error!)
+                                    }
+                                }
+                                else {
+                                    
+                                    DispatchQueue.main.async {
+                                        if let navigationStack = self.navigationController?.childViewControllers {
+                                            let parentVC = navigationStack[navigationStack.count-2]
+                                            if let meORnew = self.currentPost.meORnew {
+                                                switch meORnew {
+                                                case 0: //from MeVC
+                                                    (parentVC as! MeViewController).handlePostFullDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
+                                                case 1: //from Tab3NewVC
+                                                    (parentVC as! Tab3CollectionViewController).handlePostFullDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
+                                                default:
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        self.navigationController!.popViewController(animated: true)
+                                    }
+                                    
+                                }
+                                return nil
+                            }
+                            
+                        }
+                        else { //post has comments so don't delete the post, just set the author to "deleted"
+                            
+                            
+                            
+                        }
+                        
+                        
+                    }
+                    
                 }))
                 
                 alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
@@ -395,6 +437,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func setMedals(){
+        if comments.count == 1 {
+            commentsLoaded = false
+        }
+        
         medalWinnersList.removeAll()
         winnerTreeRoots.removeAllObjects()
         VSVersusAPIClient.default().commentslistGet(c: nil, d: nil, a: "m", b: currentPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -609,6 +655,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func commentsQuery(){
+        if comments.count == 1 {
+            commentsLoaded = false
+        }
+        
         startIndicator()
         
         if fromIndex == nil {
@@ -689,6 +739,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     if rootQueryResults.count == 0 {
                         DispatchQueue.main.async {
                             self.refreshControl.endRefreshing()
+                            self.commentsLoaded = true
                         }
                     }
                     
@@ -818,6 +869,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     else { //no root comments
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
+                            self.commentsLoaded = true
                         }
                     }
                 }
@@ -880,7 +932,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.nowLoading = false
             }
         }
-        
+        commentsLoaded = true
     }
     
     func setCommentsFromChildPage() {

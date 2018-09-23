@@ -16,7 +16,6 @@ import Appodeal
 
 class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MyCircleDelegator {
     
-    @IBOutlet weak var debugLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     var fromIndex : Int!
@@ -199,18 +198,20 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func executeQuery(payload : String){
-        debugLabel.text = "executing query"
+        //debugLabel.text = "executing query"
         VSVersusAPIClient.default().commentslistGet(c: payload, d: nil, a: "nwv2", b: "\(fromIndex!)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
-                    self.debugLabel.text = "debugDesc=\(task.error.debugDescription)\ndebugLocDesc=\(task.error?.localizedDescription)"
+                    //self.debugLabel.text = "debugDesc=\(task.error.debugDescription)\ndebugLocDesc=\(task.error?.localizedDescription)"
                 }
             }
             else {
+                /*
                 DispatchQueue.main.async {
                     self.debugLabel.text = "api no error"
                 }
+                */
                 
                 let results = task.result?.hits?.hits
                 var loadedItemsCount = results?.count

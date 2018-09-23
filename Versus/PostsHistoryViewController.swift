@@ -173,6 +173,9 @@ class PostsHistoryViewController: UIViewController, UITableViewDataSource, UITab
             clickLock = true
             if isMe {
                 let meVC = parent as! MeViewController
+                posts[indexPath.row].meORnewIndex = indexPath.row
+                posts[indexPath.row].meORnew = 0
+                print("meORnew == \(posts[indexPath.row].meORnew)")
                 meVC.handlePostsHistoryClick(post: posts[indexPath.row])
             }
             else {

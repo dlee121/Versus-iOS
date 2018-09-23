@@ -26,6 +26,9 @@ class PostObject {
     
     var profileImageVersion : Int
     
+    var meORnew : Int? //0 if MeVC, 1 if NewVC
+    var meORnewIndex : Int?
+    
     init(itemSource : VSPostsListModel_hits_hits_item__source, id : String){
         question = itemSource.q!
         author = itemSource.a!
