@@ -1032,16 +1032,16 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             
             if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? PostCardTableViewCell {
                 if currentPost.redimg.intValue % 10 == 1 && currentPost.blackimg.intValue % 10 == 1 {
-                    editPostVC.setEditPage(postToEdit: currentPost, redImg: cell.redImage.image, blueImg: cell.blueImage.image)
+                    editPostVC.setEditPage(postToEdit: currentPost, redImg: cell.redImage.image, blueImg: cell.blueImage.image, rootVC: self)
                 }
                 else if currentPost.redimg.intValue % 10 == 1 {
-                    editPostVC.setEditPage(postToEdit: currentPost, redImg: cell.redImage.image, blueImg: nil)
+                    editPostVC.setEditPage(postToEdit: currentPost, redImg: cell.redImage.image, blueImg: nil, rootVC: self)
                 }
                 else if currentPost.blackimg.intValue % 10 == 1 {
-                    editPostVC.setEditPage(postToEdit: currentPost, redImg: nil, blueImg: cell.blueImage.image)
+                    editPostVC.setEditPage(postToEdit: currentPost, redImg: nil, blueImg: cell.blueImage.image, rootVC: self)
                 }
                 else {
-                    editPostVC.setEditPage(postToEdit: currentPost, redImg: nil, blueImg: nil)
+                    editPostVC.setEditPage(postToEdit: currentPost, redImg: nil, blueImg: nil, rootVC: self)
                 }
             }
             

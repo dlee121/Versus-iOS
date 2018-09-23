@@ -49,6 +49,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     var virginPage = true
     
     var group : DispatchGroup!
+    var sourceVC : RootPageViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,8 +68,9 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         
     }
     
-    func setEditPage(postToEdit : PostObject, redImg : UIImage?, blueImg : UIImage?) {
+    func setEditPage(postToEdit : PostObject, redImg : UIImage?, blueImg : UIImage?, rootVC : RootPageViewController) {
         virginPage = true
+        sourceVC = rootVC
         editTargetPost = postToEdit
         questionLabel.text = postToEdit.question
         rednameLabel.text = postToEdit.redname
@@ -231,7 +233,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                     
                     //upload new image
                     group.enter()
-                    uploadImage(imageKey: editTargetPost.post_id+"-left\(editTargetPost.redimg).jpeg", rawImage: leftImage.currentImage!)
+                    uploadImage(imageKey: editTargetPost.post_id+"-left\(editTargetPost.redimg.intValue / 10).jpeg", rawImage: leftImage.currentImage!)
                     
                 }
                 else { //image is deleted
@@ -269,7 +271,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                     
                     //upload new image
                     group.enter()
-                    uploadImage(imageKey: editTargetPost.post_id+"-right\(editTargetPost.blackimg).jpeg", rawImage: rightImage.currentImage!)
+                    uploadImage(imageKey: editTargetPost.post_id+"-right\(editTargetPost.blackimg.intValue / 10).jpeg", rawImage: rightImage.currentImage!)
                     
                 }
                 else { //image is deleted
@@ -301,6 +303,8 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
             
             group.notify(queue: .main) {
                 DispatchQueue.main.async {
+                    self.sourceVC.currentPost = self.editTargetPost
+                    //self.sourceVC.tableView.upd
                     self.dismiss(animated: true, completion: nil)
                 }
             }
