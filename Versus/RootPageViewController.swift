@@ -137,7 +137,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                 case 0: //from MeVC
                                                     (parentVC as! MeViewController).handlePostDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
                                                 case 1: //from Tab3NewVC
-                                                    (parentVC as! MCViewController).handlePostFullDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
+                                                    (parentVC as! MCViewController).handlePostDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
                                                 default:
                                                     break
                                                 }
@@ -169,7 +169,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                 case 0: //from MeVC
                                                     (parentVC as! MeViewController).handlePostDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
                                                 case 1: //from Tab3NewVC
-                                                    (parentVC as! MCViewController).handlePostPartialDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
+                                                    (parentVC as! MCViewController).handlePostDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
                                                 default:
                                                     break
                                                 }

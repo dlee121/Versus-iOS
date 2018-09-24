@@ -729,14 +729,6 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
         }
     }
     
-    func handlePostPartialDelete(postID : String, index : Int) {
-        if postsHistoryTab.posts[index].post_id == postID {
-            postsHistoryTab.posts[index].author = "deleted"
-            postsHistoryTab.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-        }
-    }
-    
-    
     
 
 }
