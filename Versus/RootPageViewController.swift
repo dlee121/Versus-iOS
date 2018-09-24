@@ -135,7 +135,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                             if let meORnew = self.currentPost.meORnew {
                                                 switch meORnew {
                                                 case 0: //from MeVC
-                                                    (parentVC as! MeViewController).handlePostFullDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
+                                                    (parentVC as! MeViewController).handlePostDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
                                                 case 1: //from Tab3NewVC
                                                     (parentVC as! MCViewController).handlePostFullDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
                                                 default:
@@ -153,7 +153,34 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                         }
                         else { //post has comments so don't delete the post, just set the author to "deleted"
                             
-                            //implement partial delete 'ppd'
+                            VSVersusAPIClient.default().deleteGet(a: "ppd", b: self.currentPost.post_id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                if task.error != nil {
+                                    DispatchQueue.main.async {
+                                        print(task.error!)
+                                    }
+                                }
+                                else {
+                                    
+                                    DispatchQueue.main.async {
+                                        if let navigationStack = self.navigationController?.childViewControllers {
+                                            let parentVC = navigationStack[navigationStack.count-2]
+                                            if let meORnew = self.currentPost.meORnew {
+                                                switch meORnew {
+                                                case 0: //from MeVC
+                                                    (parentVC as! MeViewController).handlePostDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
+                                                case 1: //from Tab3NewVC
+                                                    (parentVC as! MCViewController).handlePostPartialDelete(postID: self.currentPost.post_id, index: self.currentPost.meORnewIndex!)
+                                                default:
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        self.navigationController!.popViewController(animated: true)
+                                    }
+                                    
+                                }
+                                return nil
+                            }
                             
                         }
                         

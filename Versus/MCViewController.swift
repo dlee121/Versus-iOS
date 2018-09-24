@@ -353,6 +353,11 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         tab3.handlePostFullDelete(postID: postID, index: index)
     }
     
+    func handlePostPartialDelete(postID : String, index : Int) {
+        tab3.handlePostPartialDelete(postID: postID, index: index)
+    }
+    
+    
     
 }
 

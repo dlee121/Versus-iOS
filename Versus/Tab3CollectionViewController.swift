@@ -505,6 +505,13 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    func handlePostPartialDelete(postID : String, index : Int) {
+        if posts[index].post_id == postID {
+            posts[index].author = "deleted"
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        }
+    }
+    
     
 }
 
