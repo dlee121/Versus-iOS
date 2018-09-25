@@ -227,6 +227,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         let buttonTwo = DefaultButton(title: "Yes") {
             let postReportPath = "reports/p/\(self.currentPost.post_id)/"
             Database.database().reference().child(postReportPath).setValue(true)
+            self.showToast(message: "Post reported.", length: 14)
         }
         
         popup.addButtons([buttonOne, buttonTwo])
@@ -1747,6 +1748,66 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.stopIndicator()
             }
         }
+    }
+    
+    func commentCardOverflow(comment: VSComment, sender: UIButton) {
+        if comment.author == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            alert.popoverPresentationController?.sourceView = sender
+            alert.popoverPresentationController?.sourceRect = sender.bounds
+            
+            alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
+                //handle comment edit
+                
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+                //handle comment delete
+                
+            }))
+            
+            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+        else {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            alert.popoverPresentationController?.sourceView = sender
+            alert.popoverPresentationController?.sourceRect = sender.bounds
+            
+            alert.addAction(UIAlertAction(title: "Report", style: .default, handler: { _ in
+                // Prepare the popup assets
+                let title = "Report this comment?"
+                let message = ""
+                
+                // Create the dialog
+                let popup = PopupDialog(title: title, message: message)
+                
+                // Create buttons
+                let buttonOne = DefaultButton(title: "No", action: nil)
+                
+                // This button will not the dismiss the dialog
+                let buttonTwo = DefaultButton(title: "Yes") {
+                    let commentReportPath = "reports/c/\(comment.comment_id)/"
+                    Database.database().reference().child(commentReportPath).setValue(true)
+                    self.showToast(message: "Comment reported.", length: 17)
+                }
+                
+                popup.addButtons([buttonOne, buttonTwo])
+                popup.buttonAlignment = .horizontal
+                
+                // Present dialog
+                self.present(popup, animated: true, completion: nil)
+            }))
+            
+            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+        
     }
 
 }

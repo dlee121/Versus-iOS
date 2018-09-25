@@ -10,4 +10,5 @@ protocol PostPageDelegator {
     func replyButtonTapped(replyTarget : VSComment, cell : CommentCardTableViewCell)
     func viewMoreRepliesTapped(topCardComment : VSComment)
     func presentSortMenu(sortButtonLabel : UILabel)
+    func commentCardOverflow(comment : VSComment, sender : UIButton)
 }

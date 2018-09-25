@@ -456,6 +456,7 @@ class CommentCardTableViewCell: UITableViewCell {
     }
     
     @IBAction func overflowTapped(_ sender: UIButton) {
+        delegate.commentCardOverflow(comment: currentComment, sender: sender)
     }
     
     
