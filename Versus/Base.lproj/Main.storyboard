@@ -5429,9 +5429,6 @@
         <namedColor name="VS_Red">
             <color red="1" green="0.125" blue="0.125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="VS_Red">
-            <color red="1" green="0.125" blue="0.125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kMN-CP-0NP"/>

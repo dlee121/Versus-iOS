@@ -633,7 +633,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func goToProfile(profileUsername: String) {
-        if textInput.text != nil && (textInput.text!.count > 0 && textInput.text != placeholder) {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
@@ -1197,7 +1197,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     override func shouldPopOnBackButton() -> Bool {
-        if textInput.text != nil && (textInput.text!.count > 0 && textInput.text != placeholder) {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))

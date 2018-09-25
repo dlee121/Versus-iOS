@@ -826,7 +826,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func goToProfile(profileUsername: String) {
-        if textInput.text != nil && (textInput.text!.count > 0 && textInput.text != placeholder) {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
@@ -1337,7 +1337,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func viewMoreRepliesTapped(topCardComment: VSComment) {
-        if textInput.text != nil && (textInput.text!.count > 0 && textInput.text != placeholder) {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
@@ -1418,7 +1418,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     override func shouldPopOnBackButton() -> Bool {
-        if textInput.text != nil && (textInput.text!.count > 0 && textInput.text != placeholder) {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
