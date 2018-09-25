@@ -71,6 +71,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var commentsLoaded = false
     let placeholder = "Join the discussion!"
     
+    var inputHasPrefix = false
+    
     
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -1323,10 +1325,28 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
+        
+        
+        
+        
         // Combine the textView text and the replacement text to
         // create the updated text string
         let currentText:String = textView.text
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        if grandchildReplyTargetAuthor != nil {
+            if updatedText.count > grandchildReplyTargetAuthor!.count + 2 && !updatedText[grandchildReplyTargetAuthor!.count + 2 ... updatedText.count - 1].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                textView.textColor = UIColor.black
+                commentSendButton.isEnabled = true
+                commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
+            }
+            else {
+                commentSendButton.isEnabled = false
+                commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+            }
+            
+            return range.intersection(NSMakeRange(0, grandchildReplyTargetAuthor!.count+2)) == nil
+        }
         
         // If updated text view will be empty, add the placeholder
         // and set the cursor to the beginning of the text view
@@ -1344,7 +1364,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             // length of the replacement string is greater than 0, set
             // the text color to black then set its text to the
             // replacement string
-        else if textView.textColor == UIColor.lightGray && !text.isEmpty {
+        else if textView.textColor == UIColor.lightGray && !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.textColor = UIColor.black
             textView.text = text
             commentSendButton.isEnabled = true
@@ -1370,9 +1390,19 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func textViewDidChangeSelection(_ textView: UITextView) {
         if self.view.window != nil {
-            if textView.textColor == UIColor.lightGray {
-                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            if grandchildReplyTargetAuthor == nil {
+                if textView.selectedTextRange?.end != textView.beginningOfDocument && textView.textColor == UIColor.lightGray {
+                    textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+                }
             }
+            else {
+                if let offsetPosition = textView.position(from: textView.beginningOfDocument, offset: grandchildReplyTargetAuthor!.count+2) {
+                    if textView.text.count == grandchildReplyTargetAuthor!.count + 2 && textView.selectedTextRange?.end != offsetPosition {
+                        textView.selectedTextRange = textView.textRange(from: offsetPosition, to: offsetPosition)
+                    }
+                }
+            }
+            
         }
     }
     
@@ -1653,7 +1683,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             grandchildRealTargetID = nil
             grandchildReplyTargetAuthor = nil
             
-            textInput.text = ""
+            textInput.text = placeholder
+            textInput.textColor = UIColor.lightGray
+            textInput.selectedTextRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.beginningOfDocument)
         }
         else {
             grandchildReplyTargetAuthor = replyTarget.author
@@ -1661,6 +1693,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             replyTargetID = replyTarget.parent_id
             
             textInput.text = "@"+grandchildReplyTargetAuthor! + " "
+            textInput.textColor = .black
+            textInput.selectedTextRange = textInput.textRange(from: textInput.endOfDocument, to: textInput.endOfDocument)
         }
         
         textInput.becomeFirstResponder()
@@ -1717,12 +1751,14 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    /*
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if grandchildRealTargetID != nil {
             return range.intersection(NSMakeRange(0, grandchildReplyTargetAuthor!.count+2)) == nil
         }
         return true
     }
+    */
     
     func presentSortMenu(sortButtonLabel: UILabel){
         let alertController = UIAlertController(title: "SORT BY", message: nil, preferredStyle: .actionSheet)
@@ -1822,6 +1858,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             if Date().timeIntervalSince(formatter.date(from: comment.time)!).isLess(than: 301) {
                 alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
                     //handle comment edit
+                    if comment.root != "0" { //the comment has an @prefix
+                        
+                        
+                    }
+                    else {
+                        
+                        
+                        
+                    }
                     
                     
                     

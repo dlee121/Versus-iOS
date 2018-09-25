@@ -996,7 +996,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        if self.view.window != nil {
+        if self.view.window != nil && textView.selectedTextRange?.end != textView.beginningOfDocument {
             if textView.textColor == UIColor.lightGray {
                 textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
             }
