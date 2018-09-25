@@ -455,4 +455,8 @@ class CommentCardTableViewCell: UITableViewCell {
         indicator.stopAnimating()
     }
     
+    @IBAction func overflowTapped(_ sender: UIButton) {
+    }
+    
+    
 }
