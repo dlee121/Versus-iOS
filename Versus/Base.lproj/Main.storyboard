@@ -925,19 +925,15 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i5l-wt-BD9">
                                 <rect key="frame" x="0.0" y="616" width="375" height="51"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Join the discussion!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="plD-8I-NIC">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uJM-9H-cX8">
                                         <rect key="frame" x="8" y="8" width="316" height="35"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="Q0G-aJ-zZL"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
-                                            <action selector="textChangeListener:" destination="Jk1-If-Hre" eventType="editingChanged" id="Bgx-Tp-kdb"/>
-                                            <outlet property="delegate" destination="Jk1-If-Hre" id="1yP-DY-gH2"/>
+                                            <outlet property="delegate" destination="Jk1-If-Hre" id="2Tx-gM-pTn"/>
                                         </connections>
-                                    </textField>
+                                    </textView>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jB-Kr-pCC">
                                         <rect key="frame" x="332" y="8" width="35" height="35"/>
                                         <state key="normal" backgroundImage="ic_send_grey"/>
@@ -948,15 +944,15 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="plD-8I-NIC" secondAttribute="bottom" constant="8" id="0er-jq-OvJ"/>
-                                    <constraint firstItem="3jB-Kr-pCC" firstAttribute="leading" secondItem="plD-8I-NIC" secondAttribute="trailing" constant="8" id="44i-Qj-uCR"/>
+                                    <constraint firstAttribute="bottom" secondItem="uJM-9H-cX8" secondAttribute="bottom" constant="8" id="47q-6K-gCK"/>
+                                    <constraint firstAttribute="trailing" secondItem="uJM-9H-cX8" secondAttribute="trailing" constant="51" id="98x-xj-Mbt"/>
+                                    <constraint firstItem="3jB-Kr-pCC" firstAttribute="leading" secondItem="uJM-9H-cX8" secondAttribute="trailing" constant="8" id="HJ4-xZ-u4H"/>
+                                    <constraint firstItem="uJM-9H-cX8" firstAttribute="top" secondItem="i5l-wt-BD9" secondAttribute="top" constant="8" id="Ht1-lX-NxG"/>
                                     <constraint firstItem="3jB-Kr-pCC" firstAttribute="top" secondItem="i5l-wt-BD9" secondAttribute="top" constant="8" id="IBm-r5-FF2"/>
                                     <constraint firstAttribute="bottom" secondItem="3jB-Kr-pCC" secondAttribute="bottom" constant="8" id="XFi-i2-b2t"/>
                                     <constraint firstAttribute="trailing" secondItem="3jB-Kr-pCC" secondAttribute="trailing" constant="8" id="jQc-eR-QdA"/>
+                                    <constraint firstItem="uJM-9H-cX8" firstAttribute="leading" secondItem="i5l-wt-BD9" secondAttribute="leading" constant="8" id="nnu-Es-i0x"/>
                                     <constraint firstAttribute="height" constant="51" id="qgV-3e-EeN"/>
-                                    <constraint firstItem="plD-8I-NIC" firstAttribute="leading" secondItem="i5l-wt-BD9" secondAttribute="leading" constant="8" id="tMY-Zs-JOg"/>
-                                    <constraint firstAttribute="trailing" secondItem="plD-8I-NIC" secondAttribute="trailing" constant="51" id="zg8-OB-ekn"/>
-                                    <constraint firstItem="plD-8I-NIC" firstAttribute="top" secondItem="i5l-wt-BD9" secondAttribute="top" constant="8" id="zlO-h2-ncZ"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVV-0w-CAJ">
@@ -988,7 +984,7 @@
                         <outlet property="commentSendButton" destination="3jB-Kr-pCC" id="rew-gf-jyF"/>
                         <outlet property="replyTargetLabel" destination="lVV-0w-CAJ" id="CST-Ak-nRa"/>
                         <outlet property="tableView" destination="uGt-gg-JwK" id="63d-QQ-kTx"/>
-                        <outlet property="textInput" destination="plD-8I-NIC" id="mEa-uE-Krv"/>
+                        <outlet property="textInput" destination="uJM-9H-cX8" id="bFg-CC-9T8"/>
                         <outlet property="textInputContainer" destination="i5l-wt-BD9" id="FuC-6q-yJC"/>
                         <outlet property="textInputContainerBottom" destination="n9C-8P-puB" id="7i0-x1-UTa"/>
                         <segue destination="X1q-ax-jCK" kind="show" identifier="rootToChild" id="tN5-20-0qe"/>
@@ -5440,6 +5436,9 @@
         <image name="profile_icon_f" width="32" height="32"/>
         <namedColor name="VS_Blue">
             <color red="0.36899998784065247" green="0.82700002193450928" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="VS_Red">
+            <color red="1" green="0.125" blue="0.125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="VS_Red">
             <color red="1" green="0.125" blue="0.125" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

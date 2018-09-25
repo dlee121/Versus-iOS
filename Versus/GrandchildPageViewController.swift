@@ -768,7 +768,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBAction func textChangeListener(_ sender: UITextField) {
         if let input = textInput.text{
-            if input.count > 0 {
+            if input.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
                 commentSendButton.isEnabled = true
                 commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
             }
@@ -787,7 +787,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     @IBAction func sendButtonTapped(_ sender: UIButton) {
         let currentGrandchildRealTargetID = grandchildRealTargetID
         
-        if let text = textInput.text {
+        if let text = textInput.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
             if text.count > 0 {
                 
                 textInput.text = ""
