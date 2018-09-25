@@ -1757,10 +1757,16 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             alert.popoverPresentationController?.sourceView = sender
             alert.popoverPresentationController?.sourceRect = sender.bounds
             
-            alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
-                //handle comment edit
-                
-            }))
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            if Date().timeIntervalSince(formatter.date(from: comment.time)!).isLess(than: 301) {
+                alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
+                    //handle comment edit
+                    
+                    
+                    
+                }))
+            }
             
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
                 //handle comment delete
