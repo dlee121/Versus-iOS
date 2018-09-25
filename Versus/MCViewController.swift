@@ -8,7 +8,6 @@
 
 import UIKit
 import XLPagerTabStrip
-import Firebase
 import FirebaseMessaging
 import Appodeal
 

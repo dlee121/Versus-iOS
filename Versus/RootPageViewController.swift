@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseDatabase
+import PopupDialog
 
 
 class RootPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator, UITextFieldDelegate {
@@ -200,7 +201,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
                 
                 alert.addAction(UIAlertAction(title: "Report", style: .default, handler: { _ in
-                    //self.openGallary()
+                    self.showReportDialog()
                 }))
                 
                 alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
@@ -209,6 +210,30 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
         
+    }
+    
+    func showReportDialog() {
+        // Prepare the popup assets
+        let title = "Report this post?"
+        let message = ""
+        
+        // Create the dialog
+        let popup = PopupDialog(title: title, message: message)
+        
+        // Create buttons
+        let buttonOne = DefaultButton(title: "No", action: nil)
+        
+        // This button will not the dismiss the dialog
+        let buttonTwo = DefaultButton(title: "Yes") {
+            let postReportPath = "reports/p/\(self.currentPost.post_id)/"
+            Database.database().reference().child(postReportPath).setValue(true)
+        }
+        
+        popup.addButtons([buttonOne, buttonTwo])
+        popup.buttonAlignment = .horizontal
+        
+        // Present dialog
+        self.present(popup, animated: true, completion: nil)
     }
     
     @objc private func refreshList(_ sender: Any) {

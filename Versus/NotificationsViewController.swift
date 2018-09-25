@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 import PopupDialog
 
 class NotificationsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NotificationsDelegator {

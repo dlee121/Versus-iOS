@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 import Nuke
 import AWSS3
 import XLPagerTabStrip
