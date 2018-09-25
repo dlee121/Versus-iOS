@@ -1403,19 +1403,15 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aFR-VA-RvC">
                                 <rect key="frame" x="0.0" y="616" width="375" height="51"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Join the discussion!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hLV-Xh-cNn">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="f8h-YZ-CZ5">
                                         <rect key="frame" x="8" y="8" width="316" height="35"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="bgS-pW-BN7"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <connections>
-                                            <action selector="textChangeListener:" destination="X1q-ax-jCK" eventType="editingChanged" id="NRm-Wq-pzR"/>
-                                            <outlet property="delegate" destination="X1q-ax-jCK" id="fZ0-8Z-JbG"/>
+                                            <outlet property="delegate" destination="X1q-ax-jCK" id="cuq-Bp-38z"/>
                                         </connections>
-                                    </textField>
+                                    </textView>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9HX-S1-50D">
                                         <rect key="frame" x="332" y="8" width="35" height="35"/>
                                         <state key="normal" backgroundImage="ic_send_grey"/>
@@ -1426,15 +1422,15 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="hLV-Xh-cNn" firstAttribute="leading" secondItem="aFR-VA-RvC" secondAttribute="leading" constant="8" id="0Y5-KX-tIk"/>
-                                    <constraint firstAttribute="bottom" secondItem="hLV-Xh-cNn" secondAttribute="bottom" constant="8" id="8xW-GP-Y0p"/>
                                     <constraint firstItem="9HX-S1-50D" firstAttribute="top" secondItem="aFR-VA-RvC" secondAttribute="top" constant="8" id="EI0-vy-BdH"/>
-                                    <constraint firstAttribute="trailing" secondItem="hLV-Xh-cNn" secondAttribute="trailing" constant="51" id="TKt-Hz-Urz"/>
-                                    <constraint firstItem="hLV-Xh-cNn" firstAttribute="top" secondItem="aFR-VA-RvC" secondAttribute="top" constant="8" id="efa-Cq-weJ"/>
-                                    <constraint firstItem="9HX-S1-50D" firstAttribute="leading" secondItem="hLV-Xh-cNn" secondAttribute="trailing" constant="8" id="hTp-6M-y6F"/>
+                                    <constraint firstItem="f8h-YZ-CZ5" firstAttribute="leading" secondItem="aFR-VA-RvC" secondAttribute="leading" constant="8" id="Fxp-ep-Hlc"/>
+                                    <constraint firstItem="f8h-YZ-CZ5" firstAttribute="top" secondItem="aFR-VA-RvC" secondAttribute="top" constant="8" id="ZhM-zO-K4K"/>
                                     <constraint firstAttribute="trailing" secondItem="9HX-S1-50D" secondAttribute="trailing" constant="8" id="oii-pZ-yJ5"/>
+                                    <constraint firstAttribute="trailing" secondItem="f8h-YZ-CZ5" secondAttribute="trailing" constant="51" id="pII-4D-eyE"/>
+                                    <constraint firstItem="9HX-S1-50D" firstAttribute="leading" secondItem="f8h-YZ-CZ5" secondAttribute="trailing" constant="8" id="qDr-z1-70j"/>
                                     <constraint firstAttribute="bottom" secondItem="9HX-S1-50D" secondAttribute="bottom" constant="8" id="qp9-yS-cy5"/>
                                     <constraint firstAttribute="height" constant="51" id="tOo-kp-ZDM"/>
+                                    <constraint firstAttribute="bottom" secondItem="f8h-YZ-CZ5" secondAttribute="bottom" constant="8" id="u1i-Js-6uH"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edV-uV-NmA">
@@ -1466,7 +1462,7 @@
                         <outlet property="commentSendButton" destination="9HX-S1-50D" id="7zh-fp-AUh"/>
                         <outlet property="replyTargetLabel" destination="edV-uV-NmA" id="gl2-K0-ZYC"/>
                         <outlet property="tableView" destination="kh9-vK-rCJ" id="YKG-HT-rIo"/>
-                        <outlet property="textInput" destination="hLV-Xh-cNn" id="OcY-st-uYB"/>
+                        <outlet property="textInput" destination="f8h-YZ-CZ5" id="Mu4-Iq-wel"/>
                         <outlet property="textInputContainer" destination="aFR-VA-RvC" id="6B1-nv-pLE"/>
                         <outlet property="textInputContainerBottom" destination="G4D-MF-9NQ" id="H4M-82-t9J"/>
                         <segue destination="Ef4-68-ZeO" kind="show" identifier="childToGrandchild" id="fc6-RI-lzA"/>
@@ -1882,19 +1878,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UAZ-1x-qgY">
                                 <rect key="frame" x="0.0" y="616" width="375" height="51"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Join the discussion!" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Xx-r1-MVy">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="C04-7o-jo1">
                                         <rect key="frame" x="8" y="8" width="316" height="35"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="Q4J-qN-sc3"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        <connections>
-                                            <action selector="textChangeListener:" destination="Ef4-68-ZeO" eventType="editingChanged" id="kiI-tb-uCY"/>
-                                            <outlet property="delegate" destination="Ef4-68-ZeO" id="rk6-3B-r6T"/>
-                                        </connections>
-                                    </textField>
+                                    </textView>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDr-Ri-9QI">
                                         <rect key="frame" x="332" y="8" width="35" height="35"/>
                                         <state key="normal" backgroundImage="ic_send_grey"/>
@@ -1905,15 +1894,15 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="C04-7o-jo1" firstAttribute="top" secondItem="UAZ-1x-qgY" secondAttribute="top" constant="8" id="0gG-Ud-ZNH"/>
                                     <constraint firstAttribute="bottom" secondItem="aDr-Ri-9QI" secondAttribute="bottom" constant="8" id="1S5-RH-4wT"/>
                                     <constraint firstItem="aDr-Ri-9QI" firstAttribute="top" secondItem="UAZ-1x-qgY" secondAttribute="top" constant="8" id="5Bw-ll-ESf"/>
-                                    <constraint firstItem="6Xx-r1-MVy" firstAttribute="top" secondItem="UAZ-1x-qgY" secondAttribute="top" constant="8" id="5g6-XG-dDi"/>
-                                    <constraint firstAttribute="trailing" secondItem="6Xx-r1-MVy" secondAttribute="trailing" constant="51" id="BMf-ad-s5l"/>
-                                    <constraint firstAttribute="bottom" secondItem="6Xx-r1-MVy" secondAttribute="bottom" constant="8" id="PIV-vx-ztr"/>
-                                    <constraint firstItem="6Xx-r1-MVy" firstAttribute="leading" secondItem="UAZ-1x-qgY" secondAttribute="leading" constant="8" id="WUq-lC-D3r"/>
+                                    <constraint firstItem="C04-7o-jo1" firstAttribute="leading" secondItem="UAZ-1x-qgY" secondAttribute="leading" constant="8" id="Wo4-iz-OXG"/>
                                     <constraint firstAttribute="trailing" secondItem="aDr-Ri-9QI" secondAttribute="trailing" constant="8" id="aId-kI-04k"/>
-                                    <constraint firstItem="aDr-Ri-9QI" firstAttribute="leading" secondItem="6Xx-r1-MVy" secondAttribute="trailing" constant="8" id="arJ-Ym-dYy"/>
+                                    <constraint firstAttribute="bottom" secondItem="C04-7o-jo1" secondAttribute="bottom" constant="8" id="amX-mp-MWz"/>
+                                    <constraint firstAttribute="trailing" secondItem="C04-7o-jo1" secondAttribute="trailing" constant="51" id="b8z-sm-QbO"/>
                                     <constraint firstAttribute="height" constant="51" id="kgM-pc-sUp"/>
+                                    <constraint firstItem="aDr-Ri-9QI" firstAttribute="leading" secondItem="C04-7o-jo1" secondAttribute="trailing" constant="8" id="pxA-04-z3x"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQ5-Jt-Tfb">
@@ -1945,7 +1934,7 @@
                         <outlet property="commentSendButton" destination="aDr-Ri-9QI" id="jmX-y6-Pc6"/>
                         <outlet property="replyTargetLabel" destination="VQ5-Jt-Tfb" id="VHK-Up-lS2"/>
                         <outlet property="tableView" destination="7bO-sD-hj7" id="aPR-JE-Z5i"/>
-                        <outlet property="textInput" destination="6Xx-r1-MVy" id="iVl-Ag-IAd"/>
+                        <outlet property="textInput" destination="C04-7o-jo1" id="aXd-AS-Kek"/>
                         <outlet property="textInputContainer" destination="UAZ-1x-qgY" id="xnD-g4-0gh"/>
                         <outlet property="textInputContainerBottom" destination="j6m-BW-6vV" id="dge-Km-xP7"/>
                         <segue destination="00O-u0-BLe" kind="show" identifier="grandchildToProfile" id="ndU-Xn-ImY"/>
@@ -5448,9 +5437,9 @@
         <segue reference="kMN-CP-0NP"/>
         <segue reference="8lW-z2-B4d"/>
         <segue reference="YuF-tM-5cL"/>
-        <segue reference="qbd-PO-7a5"/>
+        <segue reference="ndU-Xn-ImY"/>
         <segue reference="uAF-H9-Oin"/>
-        <segue reference="pLb-S7-nGp"/>
+        <segue reference="fc6-RI-lzA"/>
         <segue reference="tN5-20-0qe"/>
         <segue reference="QIQ-jM-7ZR"/>
         <segue reference="Lbc-3X-Z2H"/>

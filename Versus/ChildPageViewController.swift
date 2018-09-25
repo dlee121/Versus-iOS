@@ -10,10 +10,10 @@ import UIKit
 import FirebaseDatabase
 
 
-class ChildPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator, UITextFieldDelegate {
+class ChildPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator, UITextViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var textInput: UITextField!
+    @IBOutlet weak var textInput: UITextView!
     @IBOutlet weak var textInputContainer: UIView!
     @IBOutlet weak var textInputContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var commentSendButton: UIButton!
@@ -60,6 +60,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     let MOST_RECENT = 1
     let CHRONOLOGICAL = 2
     var sortTypeString = "Popular"
+    let placeholder = "Join the discussion!"
     
     /*
      updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -79,6 +80,13 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
         
         tableView.separatorStyle = .none
+        
+        let color = UIColor(red: 186/255, green: 186/255, blue: 186/255, alpha: 1.0).cgColor
+        textInput.layer.borderColor = color
+        textInput.layer.borderWidth = 0.5
+        textInput.layer.cornerRadius = 5
+        textInput.text = placeholder
+        textInput.textColor = UIColor.lightGray
         
         //tableView.allowsSelection = false
         ref = Database.database().reference()
@@ -218,8 +226,10 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if keyboardIsShowing {
-            textInputContainer.isHidden = true
-            replyTargetLabel.isHidden = true
+            if scrollView is UITableView {
+                textInputContainer.isHidden = true
+                replyTargetLabel.isHidden = true
+            }
         }
         
     }
@@ -816,12 +826,14 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func goToProfile(profileUsername: String) {
-        if textInput.text != nil && textInput.text!.count > 0 {
+        if textInput.text != nil && (textInput.text!.count > 0 && textInput.text != placeholder) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                 self.textInput.text = ""
+                self.commentSendButton.isEnabled = false
+                self.commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
                 self.profileTap = true
                 self.vmrTap = false
                 self.tappedUsername = profileUsername
@@ -936,8 +948,22 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         currentUserAction.changed = true
     }
     
-    @IBAction func textChangeListener(_ sender: UITextField) {
-        if let input = textInput.text{
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = placeholder
+            textView.textColor = UIColor.lightGray
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if let input = textInput.text {
             if input.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
                 commentSendButton.isEnabled = true
                 commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
@@ -1311,12 +1337,14 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func viewMoreRepliesTapped(topCardComment: VSComment) {
-        if textInput.text != nil && textInput.text!.count > 0 {
+        if textInput.text != nil && (textInput.text!.count > 0 && textInput.text != placeholder) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                 self.textInput.text = ""
+                self.commentSendButton.isEnabled = false
+                self.commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
                 self.vmrTap = true
                 self.profileTap = false
                 self.vmrComment = topCardComment
@@ -1390,12 +1418,14 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     override func shouldPopOnBackButton() -> Bool {
-        if textInput.text != nil && textInput.text!.count > 0 {
+        if textInput.text != nil && (textInput.text!.count > 0 && textInput.text != placeholder) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                 self.textInput.text = ""
+                self.commentSendButton.isEnabled = false
+                self.commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
                 _ = self.navigationController?.popViewController(animated: true)
             }))
             self.present(alert, animated: true, completion: nil)

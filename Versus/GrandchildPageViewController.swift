@@ -10,10 +10,10 @@ import UIKit
 import FirebaseDatabase
 
 
-class GrandchildPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator, UITextFieldDelegate {
+class GrandchildPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator, UITextViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var textInput: UITextField!
+    @IBOutlet weak var textInput: UITextView!
     @IBOutlet weak var textInputContainer: UIView!
     @IBOutlet weak var textInputContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var commentSendButton: UIButton!
@@ -56,6 +56,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     let MOST_RECENT = 1
     let CHRONOLOGICAL = 2
     var sortTypeString = "Popular"
+    let placeholder = "Join the discussion!"
     
     /*
      updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -76,6 +77,13 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
         
         tableView.separatorStyle = .none
+        
+        let color = UIColor(red: 186/255, green: 186/255, blue: 186/255, alpha: 1.0).cgColor
+        textInput.layer.borderColor = color
+        textInput.layer.borderWidth = 0.5
+        textInput.layer.cornerRadius = 5
+        textInput.text = placeholder
+        textInput.textColor = UIColor.lightGray
         
         //tableView.allowsSelection = false
         ref = Database.database().reference()
@@ -233,11 +241,13 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if keyboardIsShowing {
-            textInputContainer.isHidden = true
-            replyTargetLabel.isHidden = true
+            if scrollView is UITableView {
+                textInputContainer.isHidden = true
+                replyTargetLabel.isHidden = true
+            }
         }
-        
     }
+    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         textInputContainer.isHidden = false
         replyTargetLabel.isHidden = false
@@ -623,12 +633,14 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func goToProfile(profileUsername: String) {
-        if textInput.text != nil && textInput.text!.count > 0 {
+        if textInput.text != nil && (textInput.text!.count > 0 && textInput.text != placeholder) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                 self.textInput.text = ""
+                self.commentSendButton.isEnabled = false
+                self.commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
                 self.tappedUsername = profileUsername
                 //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
                 self.performSegue(withIdentifier: "grandchildToProfile", sender: self)
@@ -765,9 +777,22 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         currentUserAction.changed = true
     }
     
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
     
-    @IBAction func textChangeListener(_ sender: UITextField) {
-        if let input = textInput.text{
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = placeholder
+            textView.textColor = UIColor.lightGray
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if let input = textInput.text {
             if input.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
                 commentSendButton.isEnabled = true
                 commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
@@ -1172,12 +1197,14 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     override func shouldPopOnBackButton() -> Bool {
-        if textInput.text != nil && textInput.text!.count > 0 {
+        if textInput.text != nil && (textInput.text!.count > 0 && textInput.text != placeholder) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                 self.textInput.text = ""
+                self.commentSendButton.isEnabled = false
+                self.commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
                 _ = self.navigationController?.popViewController(animated: true)
             }))
             self.present(alert, animated: true, completion: nil)
