@@ -100,9 +100,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         textInput.text = placeholder
         textInput.textColor = UIColor.lightGray
         
-        //textInput.becomeFirstResponder()
-        //textInput.selectedTextRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.beginningOfDocument)
-        
         //tableView.allowsSelection = false
         ref = Database.database().reference()
         
