@@ -71,9 +71,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var commentsLoaded = false
     let placeholder = "Join the discussion!"
     
-    var inputHasPrefix = false
-    
-    
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
             ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -1325,10 +1322,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
-        
-        
-        
-        
         // Combine the textView text and the replacement text to
         // create the updated text string
         let currentText:String = textView.text
@@ -1751,14 +1744,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
-    /*
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if grandchildRealTargetID != nil {
-            return range.intersection(NSMakeRange(0, grandchildReplyTargetAuthor!.count+2)) == nil
-        }
-        return true
-    }
-    */
     
     func presentSortMenu(sortButtonLabel: UILabel){
         let alertController = UIAlertController(title: "SORT BY", message: nil, preferredStyle: .actionSheet)

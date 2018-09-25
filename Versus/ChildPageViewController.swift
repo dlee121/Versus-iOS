@@ -955,6 +955,20 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         let currentText:String = textView.text
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
+        if grandchildReplyTargetAuthor != nil {
+            if updatedText.count > grandchildReplyTargetAuthor!.count + 2 && !updatedText[grandchildReplyTargetAuthor!.count + 2 ... updatedText.count - 1].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                textView.textColor = UIColor.black
+                commentSendButton.isEnabled = true
+                commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
+            }
+            else {
+                commentSendButton.isEnabled = false
+                commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+            }
+            
+            return range.intersection(NSMakeRange(0, grandchildReplyTargetAuthor!.count+2)) == nil
+        }
+        
         // If updated text view will be empty, add the placeholder
         // and set the cursor to the beginning of the text view
         if updatedText.isEmpty {
@@ -971,7 +985,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             // length of the replacement string is greater than 0, set
             // the text color to black then set its text to the
             // replacement string
-        else if textView.textColor == UIColor.lightGray && !text.isEmpty {
+        else if textView.textColor == UIColor.lightGray && !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.textColor = UIColor.black
             textView.text = text
             commentSendButton.isEnabled = true
@@ -996,10 +1010,20 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        if self.view.window != nil && textView.selectedTextRange?.end != textView.beginningOfDocument {
-            if textView.textColor == UIColor.lightGray {
-                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+        if self.view.window != nil {
+            if grandchildReplyTargetAuthor == nil {
+                if textView.selectedTextRange?.end != textView.beginningOfDocument && textView.textColor == UIColor.lightGray {
+                    textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+                }
             }
+            else {
+                if let offsetPosition = textView.position(from: textView.beginningOfDocument, offset: grandchildReplyTargetAuthor!.count+2) {
+                    if textView.text.count == grandchildReplyTargetAuthor!.count + 2 && textView.selectedTextRange?.end != offsetPosition {
+                        textView.selectedTextRange = textView.textRange(from: offsetPosition, to: offsetPosition)
+                    }
+                }
+            }
+            
         }
     }
     
@@ -1339,14 +1363,18 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             grandchildRealTargetID = nil
             grandchildReplyTargetAuthor = nil
             
-            textInput.text = ""
+            textInput.text = placeholder
+            textInput.textColor = UIColor.lightGray
+            textInput.selectedTextRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.beginningOfDocument)
         }
-        else if replyTarget.comment_id != topCardComment.comment_id{
+        else {
             grandchildReplyTargetAuthor = replyTarget.author
             grandchildRealTargetID = replyTarget.comment_id
             replyTargetID = replyTarget.parent_id
             
             textInput.text = "@"+grandchildReplyTargetAuthor! + " "
+            textInput.textColor = .black
+            textInput.selectedTextRange = textInput.textRange(from: textInput.endOfDocument, to: textInput.endOfDocument)
         }
         
         textInput.becomeFirstResponder()
@@ -1390,13 +1418,6 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             //go to grandchild page
             performSegue(withIdentifier: "childToGrandchild", sender: self)
         }
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if grandchildRealTargetID != nil {
-            return range.intersection(NSMakeRange(0, grandchildReplyTargetAuthor!.count+2)) == nil
-        }
-        return true
     }
     
     func presentSortMenu(sortButtonLabel: UILabel){
