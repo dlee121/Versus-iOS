@@ -1012,7 +1012,10 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             if let text = textInput.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
                 if text.count > 0 {
                     
-                    textInput.text = ""
+                    textInput.text = placeholder
+                    textInput.textColor = UIColor.lightGray
+                    commentSendButton.isEnabled = false
+                    commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
                     textInput.resignFirstResponder()
                     
                     if currentReplyTargetID != nil && currentReplyTargetID != topCardComment.comment_id {
