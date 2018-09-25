@@ -790,6 +790,8 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
             
             textView.text = placeholder
             textView.textColor = UIColor.lightGray
+            commentSendButton.isEnabled = false
+            commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
             
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
         }
@@ -801,6 +803,8 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         else if textView.textColor == UIColor.lightGray && !text.isEmpty {
             textView.textColor = UIColor.black
             textView.text = text
+            commentSendButton.isEnabled = true
+            commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
         }
             
             // For every other case, the text should change with the usual
@@ -828,233 +832,216 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        if let input = textInput.text {
-            if input.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
-                commentSendButton.isEnabled = true
-                commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
-            }
-            else {
-                commentSendButton.isEnabled = false
-                commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
-            }
-        }
-        else {
-            commentSendButton.isEnabled = false
-            commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
-        }
-    }
-    
     
     @IBAction func sendButtonTapped(_ sender: UIButton) {
-        let currentGrandchildRealTargetID = grandchildRealTargetID
-        
-        if let text = textInput.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
-            if text.count > 0 {
-                
-                textInput.text = ""
-                textInput.resignFirstResponder()
-                
-                if currentGrandchildRealTargetID != nil {
+        if textInput.textColor != UIColor.lightGray {
+            let currentGrandchildRealTargetID = grandchildRealTargetID
+            
+            if let text = textInput.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                if text.count > 0 {
                     
-                    // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
+                    textInput.text = ""
+                    textInput.resignFirstResponder()
                     
-                    let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: topCardComment.comment_id, postID: topCardComment.post_id, newContent: text, rootID: topCardComment.parent_id)
-                    
-                    newComment.nestedLevel = 5
-                    
-                    VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                        if task.error != nil {
-                            DispatchQueue.main.async {
-                                print(task.error!)
-                            }
-                        }
-                        else {
-                            
-                            let newCommentNode = VSCNode(comment: newComment)
-                            
-                            if let grandchildReplyTargetNode = self.nodeMap[currentGrandchildRealTargetID!] {
-                                if let prevTailNode = grandchildReplyTargetNode.tailSibling {
-                                    prevTailNode.headSibling = newCommentNode
-                                    newCommentNode.tailSibling = prevTailNode
+                    if currentGrandchildRealTargetID != nil {
+                        
+                        // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
+                        
+                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: topCardComment.comment_id, postID: topCardComment.post_id, newContent: text, rootID: topCardComment.parent_id)
+                        
+                        newComment.nestedLevel = 5
+                        
+                        VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            if task.error != nil {
+                                DispatchQueue.main.async {
+                                    print(task.error!)
                                 }
-                                grandchildReplyTargetNode.tailSibling = newCommentNode
-                                newCommentNode.headSibling = grandchildReplyTargetNode
-                            }
-                            
-                            self.nodeMap[newComment.comment_id] = newCommentNode
-                            
-                            if self.replyTargetRowNumber! + 1 >= self.comments.count {
-                                self.comments.append(newComment)
                             }
                             else {
-                                self.comments.insert(newComment, at: self.replyTargetRowNumber! + 1)
-                            }
-                            
-                            print("newCommentID: \(newComment.comment_id)")
-                            
-                            DispatchQueue.main.async {
-                                self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
-                            }
-                            
-                            VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: self.topCardComment.comment_id, a: "v", b: "cm") //ps increment for comment submission
-                            
-                            if self.fromRoot {
-                                if self.parentRootVC != nil {
-                                    if let node = self.parentRootVC!.nodeMap[self.topCardComment.comment_id] {
-                                        if let prevFirstChild = node.firstChild {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.tailSibling = prevFirstChild
-                                            prevFirstChild.headSibling = newCommentNode
-                                            prevFirstChild.parent = nil
-                                            newCommentNode.parent = node
+                                
+                                let newCommentNode = VSCNode(comment: newComment)
+                                
+                                if let grandchildReplyTargetNode = self.nodeMap[currentGrandchildRealTargetID!] {
+                                    if let prevTailNode = grandchildReplyTargetNode.tailSibling {
+                                        prevTailNode.headSibling = newCommentNode
+                                        newCommentNode.tailSibling = prevTailNode
+                                    }
+                                    grandchildReplyTargetNode.tailSibling = newCommentNode
+                                    newCommentNode.headSibling = grandchildReplyTargetNode
+                                }
+                                
+                                self.nodeMap[newComment.comment_id] = newCommentNode
+                                
+                                if self.replyTargetRowNumber! + 1 >= self.comments.count {
+                                    self.comments.append(newComment)
+                                }
+                                else {
+                                    self.comments.insert(newComment, at: self.replyTargetRowNumber! + 1)
+                                }
+                                
+                                print("newCommentID: \(newComment.comment_id)")
+                                
+                                DispatchQueue.main.async {
+                                    self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
+                                }
+                                
+                                VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: self.topCardComment.comment_id, a: "v", b: "cm") //ps increment for comment submission
+                                
+                                if self.fromRoot {
+                                    if self.parentRootVC != nil {
+                                        if let node = self.parentRootVC!.nodeMap[self.topCardComment.comment_id] {
+                                            if let prevFirstChild = node.firstChild {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.tailSibling = prevFirstChild
+                                                prevFirstChild.headSibling = newCommentNode
+                                                prevFirstChild.parent = nil
+                                                newCommentNode.parent = node
+                                            }
+                                            else {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.parent = node.firstChild
+                                            }
+                                            self.parentRootVC!.setCommentsFromChildPage()
                                         }
-                                        else {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.parent = node.firstChild
-                                        }
-                                        self.parentRootVC!.setCommentsFromChildPage()
                                     }
                                 }
-                            }
-                            else {
-                                if self.parentRootVC != nil {
-                                    if let node = self.parentRootVC!.nodeMap[self.topCardComment.comment_id] {
-                                        if let prevFirstChild = node.firstChild {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.tailSibling = prevFirstChild
-                                            prevFirstChild.headSibling = newCommentNode
-                                            prevFirstChild.parent = nil
-                                            newCommentNode.parent = node
+                                else {
+                                    if self.parentRootVC != nil {
+                                        if let node = self.parentRootVC!.nodeMap[self.topCardComment.comment_id] {
+                                            if let prevFirstChild = node.firstChild {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.tailSibling = prevFirstChild
+                                                prevFirstChild.headSibling = newCommentNode
+                                                prevFirstChild.parent = nil
+                                                newCommentNode.parent = node
+                                            }
+                                            else {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.parent = node.firstChild
+                                            }
+                                            self.parentRootVC!.setCommentsFromChildPage()
                                         }
-                                        else {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.parent = node.firstChild
+                                    }
+                                    
+                                    if self.parentChildVC != nil {
+                                        if let node = self.parentChildVC!.nodeMap[self.topCardComment.comment_id] {
+                                            if let prevFirstChild = node.firstChild {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.tailSibling = prevFirstChild
+                                                prevFirstChild.headSibling = newCommentNode
+                                                prevFirstChild.parent = nil
+                                                newCommentNode.parent = node
+                                            }
+                                            else {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.parent = node.firstChild
+                                            }
+                                            self.parentChildVC!.setCommentsFromChildPage()
                                         }
-                                        self.parentRootVC!.setCommentsFromChildPage()
                                     }
                                 }
                                 
-                                if self.parentChildVC != nil {
-                                    if let node = self.parentChildVC!.nodeMap[self.topCardComment.comment_id] {
-                                        if let prevFirstChild = node.firstChild {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.tailSibling = prevFirstChild
-                                            prevFirstChild.headSibling = newCommentNode
-                                            prevFirstChild.parent = nil
-                                            newCommentNode.parent = node
-                                        }
-                                        else {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.parent = node.firstChild
-                                        }
-                                        self.parentChildVC!.setCommentsFromChildPage()
-                                    }
-                                }
+                                self.sendCommentReplyNotification(replyTargetComment: self.nodeMap[currentGrandchildRealTargetID!]!.nodeContent)
                             }
-                            
-                            self.sendCommentReplyNotification(replyTargetComment: self.nodeMap[currentGrandchildRealTargetID!]!.nodeContent)
+                            return nil
                         }
-                        return nil
+                        
+                        
                     }
-                    
-                    
-                }
-                else {
-                    // a reply to the top card
-                    let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: topCardComment.comment_id, postID: topCardComment.post_id, newContent: text, rootID: topCardComment.parent_id)
-                    newComment.nestedLevel = 5
-                    
-                    VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                        if task.error != nil {
-                            DispatchQueue.main.async {
-                                print(task.error!)
-                            }
-                        }
-                        else {
-                            
-                            let newCommentNode = VSCNode(comment: newComment)
-                            if self.comments.count > 1 { //at least one another root comment in the page
-                                let prevTopCommentNode = self.nodeMap[self.comments[1].comment_id]
-                                
-                                newCommentNode.tailSibling = prevTopCommentNode
-                                prevTopCommentNode?.headSibling = newCommentNode
-                            }
-                            
-                            self.nodeMap[newComment.comment_id] = newCommentNode
-                            
-                            print("newCommentID: \(newComment.comment_id)")
-                            
-                            DispatchQueue.main.async {
-                                self.comments.insert(newComment, at: 1)
-                                self.tableView.insertRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
-                            }
-                            
-                            VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: self.topCardComment.comment_id, a: "v", b: "cm") //ps increment for comment submission
-                            
-                            if self.fromRoot {
-                                if self.parentRootVC != nil {
-                                    if let node = self.parentRootVC!.nodeMap[self.topCardComment.comment_id] {
-                                        if let prevFirstChild = node.firstChild {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.tailSibling = prevFirstChild
-                                            prevFirstChild.headSibling = newCommentNode
-                                            prevFirstChild.parent = nil
-                                            newCommentNode.parent = node
-                                        }
-                                        else {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.parent = node.firstChild
-                                        }
-                                        self.parentRootVC!.setCommentsFromChildPage()
-                                    }
+                    else {
+                        // a reply to the top card
+                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: topCardComment.comment_id, postID: topCardComment.post_id, newContent: text, rootID: topCardComment.parent_id)
+                        newComment.nestedLevel = 5
+                        
+                        VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            if task.error != nil {
+                                DispatchQueue.main.async {
+                                    print(task.error!)
                                 }
                             }
                             else {
-                                if self.parentRootVC != nil {
-                                    if let node = self.parentRootVC!.nodeMap[self.topCardComment.comment_id] {
-                                        if let prevFirstChild = node.firstChild {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.tailSibling = prevFirstChild
-                                            prevFirstChild.headSibling = newCommentNode
-                                            prevFirstChild.parent = nil
-                                            newCommentNode.parent = node
+                                
+                                let newCommentNode = VSCNode(comment: newComment)
+                                if self.comments.count > 1 { //at least one another root comment in the page
+                                    let prevTopCommentNode = self.nodeMap[self.comments[1].comment_id]
+                                    
+                                    newCommentNode.tailSibling = prevTopCommentNode
+                                    prevTopCommentNode?.headSibling = newCommentNode
+                                }
+                                
+                                self.nodeMap[newComment.comment_id] = newCommentNode
+                                
+                                print("newCommentID: \(newComment.comment_id)")
+                                
+                                DispatchQueue.main.async {
+                                    self.comments.insert(newComment, at: 1)
+                                    self.tableView.insertRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
+                                }
+                                
+                                VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: self.topCardComment.comment_id, a: "v", b: "cm") //ps increment for comment submission
+                                
+                                if self.fromRoot {
+                                    if self.parentRootVC != nil {
+                                        if let node = self.parentRootVC!.nodeMap[self.topCardComment.comment_id] {
+                                            if let prevFirstChild = node.firstChild {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.tailSibling = prevFirstChild
+                                                prevFirstChild.headSibling = newCommentNode
+                                                prevFirstChild.parent = nil
+                                                newCommentNode.parent = node
+                                            }
+                                            else {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.parent = node.firstChild
+                                            }
+                                            self.parentRootVC!.setCommentsFromChildPage()
                                         }
-                                        else {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.parent = node.firstChild
+                                    }
+                                }
+                                else {
+                                    if self.parentRootVC != nil {
+                                        if let node = self.parentRootVC!.nodeMap[self.topCardComment.comment_id] {
+                                            if let prevFirstChild = node.firstChild {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.tailSibling = prevFirstChild
+                                                prevFirstChild.headSibling = newCommentNode
+                                                prevFirstChild.parent = nil
+                                                newCommentNode.parent = node
+                                            }
+                                            else {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.parent = node.firstChild
+                                            }
+                                            self.parentRootVC!.setCommentsFromChildPage()
                                         }
-                                        self.parentRootVC!.setCommentsFromChildPage()
+                                    }
+                                    
+                                    if self.parentChildVC != nil {
+                                        if let node = self.parentChildVC!.nodeMap[self.topCardComment.comment_id] {
+                                            if let prevFirstChild = node.firstChild {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.tailSibling = prevFirstChild
+                                                prevFirstChild.headSibling = newCommentNode
+                                                prevFirstChild.parent = nil
+                                                newCommentNode.parent = node
+                                            }
+                                            else {
+                                                node.firstChild = newCommentNode
+                                                newCommentNode.parent = node.firstChild
+                                            }
+                                            self.parentChildVC!.setCommentsFromChildPage()
+                                        }
                                     }
                                 }
                                 
-                                if self.parentChildVC != nil {
-                                    if let node = self.parentChildVC!.nodeMap[self.topCardComment.comment_id] {
-                                        if let prevFirstChild = node.firstChild {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.tailSibling = prevFirstChild
-                                            prevFirstChild.headSibling = newCommentNode
-                                            prevFirstChild.parent = nil
-                                            newCommentNode.parent = node
-                                        }
-                                        else {
-                                            node.firstChild = newCommentNode
-                                            newCommentNode.parent = node.firstChild
-                                        }
-                                        self.parentChildVC!.setCommentsFromChildPage()
-                                    }
-                                }
+                                self.sendCommentReplyNotification(replyTargetComment: self.topCardComment!)
                             }
-                            
-                            self.sendCommentReplyNotification(replyTargetComment: self.topCardComment!)
+                            return nil
                         }
-                        return nil
                     }
-                    
                 }
-                
-                
             }
+            
         }
     }
     

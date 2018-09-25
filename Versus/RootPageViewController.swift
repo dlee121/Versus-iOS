@@ -1334,6 +1334,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             
             textView.text = placeholder
             textView.textColor = UIColor.lightGray
+            commentSendButton.isEnabled = false
+            commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
             
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
         }
@@ -1345,6 +1347,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         else if textView.textColor == UIColor.lightGray && !text.isEmpty {
             textView.textColor = UIColor.black
             textView.text = text
+            commentSendButton.isEnabled = true
+            commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
         }
             
             // For every other case, the text should change with the usual
@@ -1372,100 +1376,132 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        if let input = textInput.text {
-            if input.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
-                commentSendButton.isEnabled = true
-                commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
-            }
-            else {
-                commentSendButton.isEnabled = false
-                commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
-            }
-        }
-        else {
-            commentSendButton.isEnabled = false
-            commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
-        }
-    }
-    
-    
     @IBAction func sendButtonTapped(_ sender: Any) {
-        let currentReplyTargetID = replyTargetID
-        let currentGrandchildRealTargetID = grandchildRealTargetID
-        
-        if let text = textInput.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
-            if text.count > 0 {
-                
-                textInput.text = ""
-                textInput.resignFirstResponder()
-                
-                if currentReplyTargetID != nil {
-                    if currentGrandchildRealTargetID != nil {
-                        // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
-                        
-                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: nodeMap[currentReplyTargetID!]!.nodeContent.parent_id)
-                        
-                        newComment.nestedLevel = 2
-                        
-                        VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                            if task.error != nil {
-                                DispatchQueue.main.async {
-                                    print(task.error!)
-                                }
-                            }
-                            else {
-                                
-                                let newCommentNode = VSCNode(comment: newComment)
-                                
-                                if let grandchildReplyTargetNode = self.nodeMap[currentGrandchildRealTargetID!] {
-                                    if let prevTailNode = grandchildReplyTargetNode.tailSibling {
-                                        prevTailNode.headSibling = newCommentNode
-                                        newCommentNode.tailSibling = prevTailNode
+        if textInput.textColor != UIColor.lightGray {
+            let currentReplyTargetID = replyTargetID
+            let currentGrandchildRealTargetID = grandchildRealTargetID
+            
+            if let text = textInput.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                if text.count > 0 {
+                    
+                    textInput.text = ""
+                    textInput.resignFirstResponder()
+                    
+                    if currentReplyTargetID != nil {
+                        if currentGrandchildRealTargetID != nil {
+                            // an @reply at a grandchild comment. The actual parent of this comment will be the child comment.
+                            
+                            let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: nodeMap[currentReplyTargetID!]!.nodeContent.parent_id)
+                            
+                            newComment.nestedLevel = 2
+                            
+                            VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                if task.error != nil {
+                                    DispatchQueue.main.async {
+                                        print(task.error!)
                                     }
-                                    grandchildReplyTargetNode.tailSibling = newCommentNode
-                                    newCommentNode.headSibling = grandchildReplyTargetNode
-                                }
-                                
-                                self.nodeMap[newComment.comment_id] = newCommentNode
-                                
-                                if self.replyTargetRowNumber! + 1 >= self.comments.count {
-                                    self.comments.append(newComment)
                                 }
                                 else {
-                                    self.comments.insert(newComment, at: self.replyTargetRowNumber! + 1)
+                                    
+                                    let newCommentNode = VSCNode(comment: newComment)
+                                    
+                                    if let grandchildReplyTargetNode = self.nodeMap[currentGrandchildRealTargetID!] {
+                                        if let prevTailNode = grandchildReplyTargetNode.tailSibling {
+                                            prevTailNode.headSibling = newCommentNode
+                                            newCommentNode.tailSibling = prevTailNode
+                                        }
+                                        grandchildReplyTargetNode.tailSibling = newCommentNode
+                                        newCommentNode.headSibling = grandchildReplyTargetNode
+                                    }
+                                    
+                                    self.nodeMap[newComment.comment_id] = newCommentNode
+                                    
+                                    if self.replyTargetRowNumber! + 1 >= self.comments.count {
+                                        self.comments.append(newComment)
+                                    }
+                                    else {
+                                        self.comments.insert(newComment, at: self.replyTargetRowNumber! + 1)
+                                    }
+                                    
+                                    print("newCommentID: \(newComment.comment_id)")
+                                    
+                                    DispatchQueue.main.async {
+                                        self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
+                                    }
+                                    
+                                    VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: currentReplyTargetID!, a: "v", b: "cm") //ps increment for comment submission
+                                    self.sendCommentReplyNotification(replyTargetComment: self.nodeMap[currentGrandchildRealTargetID!]!.nodeContent)
+                                    
                                 }
-                                
-                                print("newCommentID: \(newComment.comment_id)")
-                                
-                                DispatchQueue.main.async {
-                                    self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
-                                }
-                                
-                                VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: currentReplyTargetID!, a: "v", b: "cm") //ps increment for comment submission
-                                self.sendCommentReplyNotification(replyTargetComment: self.nodeMap[currentGrandchildRealTargetID!]!.nodeContent)
-                                
+                                return nil
                             }
-                            return nil
+                            
+                            
                         }
-                        
-                        
+                        else { //a reply to a root comment or a child comment
+                            var rootID : String!
+                            let replyTarget = nodeMap[currentReplyTargetID!]!.nodeContent
+                            let targetNestedLevel = replyTarget.nestedLevel
+                            if targetNestedLevel == 0 { //reply to a root comment
+                                rootID = "0"
+                            }
+                            else { //reply to a child comment
+                                rootID = replyTarget.parent_id
+                            }
+                            
+                            let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: rootID)
+                            
+                            newComment.nestedLevel = targetNestedLevel! + 1 //root comment in root page has nested level of 0
+                            
+                            
+                            VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                                if task.error != nil {
+                                    DispatchQueue.main.async {
+                                        print(task.error!)
+                                    }
+                                }
+                                else {
+                                    
+                                    let newCommentNode = VSCNode(comment: newComment)
+                                    
+                                    let replyTargetNode = self.nodeMap[currentReplyTargetID!]
+                                    
+                                    if let prevTopChildNode = replyTargetNode!.firstChild {
+                                        replyTargetNode!.firstChild = newCommentNode
+                                        newCommentNode.tailSibling = prevTopChildNode
+                                        prevTopChildNode.headSibling = newCommentNode
+                                    }
+                                    else {
+                                        replyTargetNode!.firstChild = newCommentNode
+                                    }
+                                    self.nodeMap[newComment.comment_id] = newCommentNode
+                                    
+                                    if self.replyTargetRowNumber! + 1 >= self.comments.count {
+                                        self.comments.append(newComment)
+                                    }
+                                    else {
+                                        self.comments.insert(newComment, at: self.replyTargetRowNumber! + 1)
+                                    }
+                                    
+                                    print("newCommentID: \(newComment.comment_id)")
+                                    
+                                    DispatchQueue.main.async {
+                                        self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
+                                    }
+                                    
+                                    VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: currentReplyTargetID!, a: "v", b: "cm") //ps increment for comment submission
+                                    self.sendCommentReplyNotification(replyTargetComment: replyTarget)
+                                    
+                                }
+                                return nil
+                            }
+                            
+                        }
                     }
-                    else { //a reply to a root comment or a child comment
-                        var rootID : String!
-                        let replyTarget = nodeMap[currentReplyTargetID!]!.nodeContent
-                        let targetNestedLevel = replyTarget.nestedLevel
-                        if targetNestedLevel == 0 { //reply to a root comment
-                            rootID = "0"
-                        }
-                        else { //reply to a child comment
-                            rootID = replyTarget.parent_id
-                        }
-                        
-                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentReplyTargetID!, postID: currentPost.post_id, newContent: text, rootID: rootID)
-                        
-                        newComment.nestedLevel = targetNestedLevel! + 1 //root comment in root page has nested level of 0
-                        
+                    else {
+                        // a root comment to the post
+                        let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentPost.post_id, postID: currentPost.post_id, newContent: text, rootID: "0")
+                        newComment.nestedLevel = 0 //root comment in root page has nested level of 0
                         
                         VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if task.error != nil {
@@ -1476,78 +1512,30 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                             else {
                                 
                                 let newCommentNode = VSCNode(comment: newComment)
-                                
-                                let replyTargetNode = self.nodeMap[currentReplyTargetID!]
-                                
-                                if let prevTopChildNode = replyTargetNode!.firstChild {
-                                    replyTargetNode!.firstChild = newCommentNode
-                                    newCommentNode.tailSibling = prevTopChildNode
-                                    prevTopChildNode.headSibling = newCommentNode
+                                if self.comments.count > 1 { //at least one another root comment in the page
+                                    let prevTopCommentNode = self.nodeMap[self.comments[1].comment_id]
+                                    
+                                    newCommentNode.tailSibling = prevTopCommentNode
+                                    prevTopCommentNode?.headSibling = newCommentNode
                                 }
-                                else {
-                                    replyTargetNode!.firstChild = newCommentNode
-                                }
+                                
                                 self.nodeMap[newComment.comment_id] = newCommentNode
-                                
-                                if self.replyTargetRowNumber! + 1 >= self.comments.count {
-                                    self.comments.append(newComment)
-                                }
-                                else {
-                                    self.comments.insert(newComment, at: self.replyTargetRowNumber! + 1)
-                                }
                                 
                                 print("newCommentID: \(newComment.comment_id)")
                                 
                                 DispatchQueue.main.async {
-                                    self.tableView.insertRows(at: [IndexPath(row: self.replyTargetRowNumber! + 1, section: 0)], with: .fade)
+                                    self.rootComments.insert(newComment, at: 0)
+                                    self.comments.insert(newComment, at: 1)
+                                    self.tableView.insertRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
                                 }
                                 
-                                VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: currentReplyTargetID!, a: "v", b: "cm") //ps increment for comment submission
-                                self.sendCommentReplyNotification(replyTargetComment: replyTarget)
-                                
+                                VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
+                                self.sendRootCommentNotification()
                             }
                             return nil
                         }
                         
                     }
-                }
-                else {
-                    // a root comment to the post
-                    let newComment = VSComment(username: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, parentID: currentPost.post_id, postID: currentPost.post_id, newContent: text, rootID: "0")
-                    newComment.nestedLevel = 0 //root comment in root page has nested level of 0
-                    
-                    VSVersusAPIClient.default().commentputPost(body: newComment.getPutModel(), c: newComment.comment_id, a: "put", b: "vscomment").continueWith(block:) {(task: AWSTask) -> AnyObject? in
-                        if task.error != nil {
-                            DispatchQueue.main.async {
-                                print(task.error!)
-                            }
-                        }
-                        else {
-                            
-                            let newCommentNode = VSCNode(comment: newComment)
-                            if self.comments.count > 1 { //at least one another root comment in the page
-                                let prevTopCommentNode = self.nodeMap[self.comments[1].comment_id]
-                                
-                                newCommentNode.tailSibling = prevTopCommentNode
-                                prevTopCommentNode?.headSibling = newCommentNode
-                            }
-                            
-                            self.nodeMap[newComment.comment_id] = newCommentNode
-                            
-                            print("newCommentID: \(newComment.comment_id)")
-                            
-                            DispatchQueue.main.async {
-                                self.rootComments.insert(newComment, at: 0)
-                                self.comments.insert(newComment, at: 1)
-                                self.tableView.insertRows(at: [IndexPath(row: 1, section: 0)], with: .fade)
-                            }
-                            
-                            VSVersusAPIClient.default().vGet(e: nil, c: self.currentPost.post_id, d: nil, a: "v", b: "cm") //ps increment for comment submission
-                            self.sendRootCommentNotification()
-                        }
-                        return nil
-                    }
-                    
                 }
             }
         }
