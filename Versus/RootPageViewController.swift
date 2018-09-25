@@ -1750,7 +1750,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func commentCardOverflow(comment: VSComment, sender: UIButton) {
+    func commentCardOverflow(comment: VSComment, sender: UIButton, row: Int) {
         if comment.author == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
@@ -1764,6 +1764,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
                 //handle comment delete
+                VSVersusAPIClient.default().deleteGet(a: "cd", b: comment.comment_id)
+                
+                if self.comments[row].comment_id == comment.comment_id {
+                    self.comments[row].author = "deleted"
+                    self.nodeMap[comment.comment_id]?.nodeContent.author = "deleted"
+                    self.tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+                }
                 
             }))
             

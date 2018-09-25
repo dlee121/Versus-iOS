@@ -1208,7 +1208,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
-    func commentCardOverflow(comment: VSComment, sender: UIButton) {
+    func commentCardOverflow(comment: VSComment, sender: UIButton, row: Int) {
         //comment card overflow handling
     }
     

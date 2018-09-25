@@ -1426,7 +1426,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func commentCardOverflow(comment: VSComment, sender: UIButton) {
+    func commentCardOverflow(comment: VSComment, sender: UIButton, row: Int) {
         //comment card overflow handling
     }
     
