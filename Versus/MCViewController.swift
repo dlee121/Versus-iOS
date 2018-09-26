@@ -45,7 +45,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     
     let nativeAdStack : NSMapTable <NSIndexPath, APDNativeAd> = NSMapTable(keyOptions: .strongMemory, valueOptions: .strongMemory)
     
-    var withMedia = false
+    var withMedia = true
     
     lazy var nativeAdQueue : APDNativeAdQueue = {
         return APDNativeAdQueue(sdk: nil,
