@@ -110,7 +110,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         self.definesPresentationContext = true
         
         Appodeal.setLogLevel(.debug)
-        
+        nativeAdQueue.setMaxAdSize(2)
         nativeAdQueue.loadAd()
         
         

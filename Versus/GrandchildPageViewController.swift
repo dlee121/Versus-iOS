@@ -94,6 +94,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
         } else {
+            refreshControl.tag = 420
             tableView.addSubview(refreshControl)
         }
         
@@ -214,6 +215,15 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
+        
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = nil
+        } else {
+            if let tagview = tableView.viewWithTag(420) {
+                tagview.removeFromSuperview()
+            }
+        }
+        
         keyboardIsShowing = true
         let userInfo: NSDictionary = notification.userInfo! as NSDictionary
         let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue
@@ -226,6 +236,14 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
+        
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            refreshControl.tag = 420
+            tableView.addSubview(refreshControl)
+        }
+        
         keyboardIsShowing = false
         tableView.contentInset = .zero
         tableView.scrollIndicatorInsets = .zero

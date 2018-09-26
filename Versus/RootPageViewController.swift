@@ -108,6 +108,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
         } else {
+            refreshControl.tag = 420
             tableView.addSubview(refreshControl)
         }
         
@@ -332,6 +333,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
+        
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = nil
+        } else {
+            if let tagview = tableView.viewWithTag(420) {
+                tagview.removeFromSuperview()
+            }
+        }
+        
         keyboardIsShowing = true
         let userInfo: NSDictionary = notification.userInfo! as NSDictionary
         let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue
@@ -344,6 +354,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
+        
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            refreshControl.tag = 420
+            tableView.addSubview(refreshControl)
+        }
+        
+        
         keyboardIsShowing = false
         tableView.contentInset = .zero
         tableView.scrollIndicatorInsets = .zero
