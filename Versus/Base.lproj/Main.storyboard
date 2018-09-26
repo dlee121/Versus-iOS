@@ -846,7 +846,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D0a-rs-Kza">
-                                                    <rect key="frame" x="351" y="8" width="16" height="22"/>
+                                                    <rect key="frame" x="343" y="8" width="16" height="22"/>
                                                     <state key="normal" image="overflowHorizontal"/>
                                                     <connections>
                                                         <action selector="overflowTapped:" destination="wRp-Wl-UwL" eventType="touchUpInside" id="1xu-hx-9s8"/>
@@ -871,7 +871,7 @@
                                                 <constraint firstItem="0sC-5A-CsB" firstAttribute="leading" secondItem="8Mi-NA-HWN" secondAttribute="trailing" constant="4" id="JrM-P9-GIC"/>
                                                 <constraint firstItem="nun-Ao-p1T" firstAttribute="bottom" secondItem="Mqo-9K-9vg" secondAttribute="bottom" id="KUz-aY-1pB"/>
                                                 <constraint firstItem="9GV-at-02i" firstAttribute="trailing" secondItem="UQd-Mi-JZv" secondAttribute="trailing" id="KrS-Qm-8iQ"/>
-                                                <constraint firstAttribute="trailing" secondItem="D0a-rs-Kza" secondAttribute="trailing" constant="8" id="Lcy-IK-JSp"/>
+                                                <constraint firstAttribute="trailing" secondItem="D0a-rs-Kza" secondAttribute="trailing" constant="16" id="Lcy-IK-JSp"/>
                                                 <constraint firstItem="AXi-bI-VON" firstAttribute="leading" secondItem="UQd-Mi-JZv" secondAttribute="leading" id="NaN-rl-koS"/>
                                                 <constraint firstItem="Toa-3e-vAk" firstAttribute="leading" secondItem="UQd-Mi-JZv" secondAttribute="trailing" constant="8" id="PMT-id-cVh"/>
                                                 <constraint firstItem="AXi-bI-VON" firstAttribute="trailing" secondItem="Zsi-vD-uC0" secondAttribute="trailingMargin" id="Pva-cL-9aI"/>
@@ -965,15 +965,30 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k8k-Ww-1el">
+                                <rect key="frame" x="8" y="598" width="20" height="18"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="DyX-tL-yD4"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                <state key="normal" image="close"/>
+                                <connections>
+                                    <action selector="replyTargetResetTapped:" destination="Jk1-If-Hre" eventType="touchUpInside" id="hYf-pd-W94"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="k8k-Ww-1el" firstAttribute="top" secondItem="lVV-0w-CAJ" secondAttribute="top" constant="3" id="9Kd-EZ-j2f"/>
                             <constraint firstItem="uGt-gg-JwK" firstAttribute="trailing" secondItem="HpG-Yk-086" secondAttribute="trailing" id="B6n-0a-sru"/>
+                            <constraint firstItem="k8k-Ww-1el" firstAttribute="leading" secondItem="lVV-0w-CAJ" secondAttribute="trailing" id="GDO-xr-6cH"/>
                             <constraint firstItem="uGt-gg-JwK" firstAttribute="leading" secondItem="HpG-Yk-086" secondAttribute="leading" id="JOf-7v-mfa"/>
                             <constraint firstItem="i5l-wt-BD9" firstAttribute="leading" secondItem="HpG-Yk-086" secondAttribute="leading" id="QF1-fj-a4y"/>
                             <constraint firstItem="lVV-0w-CAJ" firstAttribute="leading" secondItem="HpG-Yk-086" secondAttribute="leading" constant="8" id="R5V-Us-mWV"/>
                             <constraint firstItem="uGt-gg-JwK" firstAttribute="bottom" secondItem="HpG-Yk-086" secondAttribute="bottom" constant="-43" id="ROr-Ta-3G6"/>
                             <constraint firstItem="i5l-wt-BD9" firstAttribute="top" secondItem="lVV-0w-CAJ" secondAttribute="bottom" id="Y5Y-qk-kXw"/>
+                            <constraint firstItem="lVV-0w-CAJ" firstAttribute="bottom" secondItem="k8k-Ww-1el" secondAttribute="bottom" id="Z4H-l6-2MJ"/>
                             <constraint firstItem="HpG-Yk-086" firstAttribute="trailing" secondItem="i5l-wt-BD9" secondAttribute="trailing" id="bxe-VT-ahE"/>
                             <constraint firstItem="uGt-gg-JwK" firstAttribute="top" secondItem="HpG-Yk-086" secondAttribute="top" id="kcc-iw-70k"/>
                             <constraint firstItem="i5l-wt-BD9" firstAttribute="bottom" secondItem="HpG-Yk-086" secondAttribute="bottom" id="n9C-8P-puB"/>
@@ -983,6 +998,7 @@
                     <connections>
                         <outlet property="commentSendButton" destination="3jB-Kr-pCC" id="rew-gf-jyF"/>
                         <outlet property="replyTargetLabel" destination="lVV-0w-CAJ" id="CST-Ak-nRa"/>
+                        <outlet property="replyTargetResetButton" destination="k8k-Ww-1el" id="rm8-CU-t7h"/>
                         <outlet property="tableView" destination="uGt-gg-JwK" id="63d-QQ-kTx"/>
                         <outlet property="textInput" destination="uJM-9H-cX8" id="bFg-CC-9T8"/>
                         <outlet property="textInputContainer" destination="i5l-wt-BD9" id="FuC-6q-yJC"/>
@@ -1148,7 +1164,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mEd-Vl-lls">
-                                                    <rect key="frame" x="351" y="8" width="16" height="22"/>
+                                                    <rect key="frame" x="343" y="8" width="16" height="22"/>
                                                     <state key="normal" image="overflowHorizontal"/>
                                                     <connections>
                                                         <action selector="overflowTapped:" destination="Gwa-5V-6Gg" eventType="touchUpInside" id="BYG-0V-CoO"/>
@@ -1178,7 +1194,7 @@
                                                 <constraint firstItem="C3b-Q7-rTQ" firstAttribute="trailing" secondItem="vuy-Qc-2GO" secondAttribute="trailingMargin" id="XBx-a3-BfY"/>
                                                 <constraint firstItem="iet-hU-mf4" firstAttribute="bottom" secondItem="rXl-ne-l5d" secondAttribute="bottom" id="XOx-7h-b3v"/>
                                                 <constraint firstItem="UOS-4r-4pE" firstAttribute="top" secondItem="vuy-Qc-2GO" secondAttribute="topMargin" id="bo6-rE-3eX"/>
-                                                <constraint firstAttribute="trailing" secondItem="mEd-Vl-lls" secondAttribute="trailing" constant="8" id="fQx-lq-ssX"/>
+                                                <constraint firstAttribute="trailing" secondItem="mEd-Vl-lls" secondAttribute="trailing" constant="16" id="fQx-lq-ssX"/>
                                                 <constraint firstItem="DO7-eT-fAc" firstAttribute="top" secondItem="rXl-ne-l5d" secondAttribute="bottom" constant="8" id="fSO-gX-D6L"/>
                                                 <constraint firstItem="DO7-eT-fAc" firstAttribute="leading" secondItem="vuy-Qc-2GO" secondAttribute="leading" id="grk-tJ-4mD"/>
                                                 <constraint firstItem="zFz-A6-sXB" firstAttribute="top" secondItem="hEn-L1-av3" secondAttribute="top" id="gw0-cG-y8M"/>
@@ -1324,7 +1340,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7c5-X8-dMT">
-                                                    <rect key="frame" x="351" y="8" width="16" height="22"/>
+                                                    <rect key="frame" x="343" y="8" width="16" height="22"/>
                                                     <state key="normal" image="overflowHorizontal"/>
                                                     <connections>
                                                         <action selector="overflowTapped:" destination="aM5-RM-nhf" eventType="touchUpInside" id="Xvv-4v-6ek"/>
@@ -1343,7 +1359,7 @@
                                                 <constraint firstItem="6Oj-eH-lfz" firstAttribute="top" secondItem="OjE-YQ-6Hi" secondAttribute="topMargin" id="H0Z-du-LhJ"/>
                                                 <constraint firstItem="Xg0-J1-qrF" firstAttribute="leading" secondItem="ZGV-gL-IMl" secondAttribute="trailing" constant="8" id="HZc-nx-1Ug"/>
                                                 <constraint firstItem="XAd-dT-zEz" firstAttribute="top" secondItem="lce-gJ-TNi" secondAttribute="top" id="IvC-wV-uib"/>
-                                                <constraint firstAttribute="trailing" secondItem="7c5-X8-dMT" secondAttribute="trailing" constant="8" id="K4L-SQ-8OC"/>
+                                                <constraint firstAttribute="trailing" secondItem="7c5-X8-dMT" secondAttribute="trailing" constant="16" id="K4L-SQ-8OC"/>
                                                 <constraint firstItem="sw9-s4-K9C" firstAttribute="top" secondItem="l8P-iM-48F" secondAttribute="top" id="KQF-Of-yU6"/>
                                                 <constraint firstItem="sw9-s4-K9C" firstAttribute="bottom" secondItem="l8P-iM-48F" secondAttribute="bottom" id="N1V-NQ-HK8"/>
                                                 <constraint firstItem="XAd-dT-zEz" firstAttribute="leading" secondItem="lce-gJ-TNi" secondAttribute="trailing" id="O4f-yA-Aas"/>
@@ -1443,17 +1459,33 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X6a-c1-Hda">
+                                <rect key="frame" x="8" y="592" width="20" height="24"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="OkU-vS-Ol9"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                <state key="normal" image="close"/>
+                                <connections>
+                                    <action selector="replyTargetResetTapped:" destination="X1q-ax-jCK" eventType="touchUpInside" id="9EN-S9-wl4"/>
+                                    <action selector="replyTargetResetTapped:" destination="Jk1-If-Hre" eventType="touchUpInside" id="Nng-6E-wvB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="69O-FS-4aR" firstAttribute="bottom" secondItem="kh9-vK-rCJ" secondAttribute="bottom" constant="43" id="1eE-db-GnJ"/>
+                            <constraint firstItem="edV-uV-NmA" firstAttribute="top" secondItem="X6a-c1-Hda" secondAttribute="top" constant="3" id="5aT-Ug-GMD"/>
                             <constraint firstItem="aFR-VA-RvC" firstAttribute="leading" secondItem="69O-FS-4aR" secondAttribute="leading" id="82X-rF-FXZ"/>
                             <constraint firstItem="aFR-VA-RvC" firstAttribute="bottom" secondItem="69O-FS-4aR" secondAttribute="bottom" id="G4D-MF-9NQ"/>
                             <constraint firstItem="69O-FS-4aR" firstAttribute="trailing" secondItem="aFR-VA-RvC" secondAttribute="trailing" id="Slt-ep-4hi"/>
                             <constraint firstItem="edV-uV-NmA" firstAttribute="leading" secondItem="69O-FS-4aR" secondAttribute="leading" constant="8" id="byN-T8-7lk"/>
                             <constraint firstItem="kh9-vK-rCJ" firstAttribute="top" secondItem="69O-FS-4aR" secondAttribute="top" id="crM-s7-yHY"/>
+                            <constraint firstItem="X6a-c1-Hda" firstAttribute="leading" secondItem="edV-uV-NmA" secondAttribute="trailing" id="kD9-kA-DM7"/>
                             <constraint firstItem="kh9-vK-rCJ" firstAttribute="trailing" secondItem="69O-FS-4aR" secondAttribute="trailing" id="kfK-pa-d6j"/>
                             <constraint firstItem="kh9-vK-rCJ" firstAttribute="leading" secondItem="69O-FS-4aR" secondAttribute="leading" id="lll-Pk-tdS"/>
+                            <constraint firstItem="edV-uV-NmA" firstAttribute="bottom" secondItem="X6a-c1-Hda" secondAttribute="bottom" id="nxO-c3-PBS"/>
                             <constraint firstItem="aFR-VA-RvC" firstAttribute="top" secondItem="edV-uV-NmA" secondAttribute="bottom" id="xEf-dY-uBE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="69O-FS-4aR"/>
@@ -1461,6 +1493,7 @@
                     <connections>
                         <outlet property="commentSendButton" destination="9HX-S1-50D" id="7zh-fp-AUh"/>
                         <outlet property="replyTargetLabel" destination="edV-uV-NmA" id="gl2-K0-ZYC"/>
+                        <outlet property="replyTargetResetButton" destination="X6a-c1-Hda" id="wDg-h5-Ev0"/>
                         <outlet property="tableView" destination="kh9-vK-rCJ" id="YKG-HT-rIo"/>
                         <outlet property="textInput" destination="f8h-YZ-CZ5" id="Mu4-Iq-wel"/>
                         <outlet property="textInputContainer" destination="aFR-VA-RvC" id="6B1-nv-pLE"/>
@@ -1623,7 +1656,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Atn-gu-JGf">
-                                                    <rect key="frame" x="351" y="8" width="16" height="22"/>
+                                                    <rect key="frame" x="343" y="8" width="16" height="22"/>
                                                     <state key="normal" image="overflowHorizontal"/>
                                                     <connections>
                                                         <action selector="overflowTapped:" destination="yGK-5f-cdE" eventType="touchUpInside" id="kXX-eC-Wah"/>
@@ -1637,7 +1670,7 @@
                                                 <constraint firstItem="sJ8-II-zdi" firstAttribute="top" secondItem="Sux-JT-nJN" secondAttribute="topMargin" id="6iM-Yo-pA2"/>
                                                 <constraint firstItem="E0a-bW-8dq" firstAttribute="trailing" secondItem="k7Y-pr-dMV" secondAttribute="trailing" id="7WO-oB-k6U"/>
                                                 <constraint firstItem="cin-eG-Eky" firstAttribute="leading" secondItem="Sux-JT-nJN" secondAttribute="leading" id="9fD-q1-kam"/>
-                                                <constraint firstAttribute="trailing" secondItem="Atn-gu-JGf" secondAttribute="trailing" constant="8" id="Bal-Lz-2u7"/>
+                                                <constraint firstAttribute="trailing" secondItem="Atn-gu-JGf" secondAttribute="trailing" constant="16" id="Bal-Lz-2u7"/>
                                                 <constraint firstItem="mnT-fg-CdS" firstAttribute="leading" secondItem="k7Y-pr-dMV" secondAttribute="trailing" constant="8" id="Bvu-V5-PJf"/>
                                                 <constraint firstItem="lzR-xJ-3O4" firstAttribute="bottom" secondItem="wbY-Nr-DAK" secondAttribute="bottom" id="E0S-T5-3NC"/>
                                                 <constraint firstItem="UuQ-iv-Bow" firstAttribute="top" secondItem="lzR-xJ-3O4" secondAttribute="top" id="IY4-P1-a7O"/>
@@ -1799,7 +1832,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hi7-Oe-vR8">
-                                                    <rect key="frame" x="351" y="8" width="16" height="22"/>
+                                                    <rect key="frame" x="343" y="8" width="16" height="22"/>
                                                     <state key="normal" image="overflowHorizontal"/>
                                                     <connections>
                                                         <action selector="overflowTapped:" destination="7jz-oh-23d" eventType="touchUpInside" id="ycE-0r-Lpk"/>
@@ -1814,7 +1847,7 @@
                                                 <constraint firstItem="zEd-FW-BRz" firstAttribute="top" secondItem="1ap-NP-9Jd" secondAttribute="top" id="5r0-9H-dCC"/>
                                                 <constraint firstItem="sAF-n9-nTa" firstAttribute="bottom" secondItem="97a-Lj-GMd" secondAttribute="bottom" id="7rS-FA-xiU"/>
                                                 <constraint firstItem="VbT-G9-KSY" firstAttribute="leading" secondItem="Iks-vB-bI3" secondAttribute="leading" constant="1" id="8mq-yw-qug"/>
-                                                <constraint firstAttribute="trailing" secondItem="hi7-Oe-vR8" secondAttribute="trailing" constant="8" id="Fe1-VT-hyq"/>
+                                                <constraint firstAttribute="trailing" secondItem="hi7-Oe-vR8" secondAttribute="trailing" constant="16" id="Fe1-VT-hyq"/>
                                                 <constraint firstItem="Ds9-Gi-dYe" firstAttribute="trailing" secondItem="97a-Lj-GMd" secondAttribute="trailing" id="GSj-wg-P6Q"/>
                                                 <constraint firstItem="hi7-Oe-vR8" firstAttribute="top" secondItem="7XE-6u-ncV" secondAttribute="top" constant="8" id="Gec-BZ-zBI"/>
                                                 <constraint firstItem="mbS-az-bD1" firstAttribute="top" secondItem="1ap-NP-9Jd" secondAttribute="bottom" constant="4" id="Hfa-en-1gh"/>
@@ -5434,9 +5467,9 @@
         <segue reference="kMN-CP-0NP"/>
         <segue reference="8lW-z2-B4d"/>
         <segue reference="YuF-tM-5cL"/>
-        <segue reference="qbd-PO-7a5"/>
+        <segue reference="ndU-Xn-ImY"/>
         <segue reference="uAF-H9-Oin"/>
-        <segue reference="pLb-S7-nGp"/>
+        <segue reference="fc6-RI-lzA"/>
         <segue reference="tN5-20-0qe"/>
         <segue reference="QIQ-jM-7ZR"/>
         <segue reference="Lbc-3X-Z2H"/>

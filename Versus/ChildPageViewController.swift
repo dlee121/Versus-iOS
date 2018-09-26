@@ -19,6 +19,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var commentSendButton: UIButton!
     @IBOutlet weak var replyTargetLabel: UILabel!
     
+    @IBOutlet weak var replyTargetResetButton: UIButton!
+    
+    
     var currentPost : PostObject!
     var comments = [VSComment]()
     
@@ -213,10 +216,12 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.scrollIndicatorInsets = .zero
         textInputContainerBottom.constant = 0
         //textInput.text = ""
+        /*
         replyTargetID = nil
         grandchildRealTargetID = nil
         grandchildReplyTargetAuthor = nil
         replyTargetLabel.text = ""
+        */
         if let indexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPath, animated: true)
             tableView.cellForRow(at: indexPath)?.selectionStyle = UITableViewCellSelectionStyle.none
@@ -224,11 +229,22 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
     }
     
+    @IBAction func replyTargetResetTapped(_ sender: UIButton) {
+        replyTargetResetButton.isHidden = true
+        replyTargetID = nil
+        grandchildRealTargetID = nil
+        grandchildReplyTargetAuthor = nil
+        replyTargetLabel.text = ""
+        
+    }
+    
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if keyboardIsShowing {
             if scrollView is UITableView {
                 textInputContainer.isHidden = true
                 replyTargetLabel.isHidden = true
+                replyTargetResetButton.isHidden = true
             }
         }
         
@@ -236,6 +252,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         textInputContainer.isHidden = false
         replyTargetLabel.isHidden = false
+        if replyTargetLabel.text != nil && replyTargetLabel.text!.count > 0 {
+            replyTargetResetButton.isHidden = false
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -1379,6 +1398,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
         textInput.becomeFirstResponder()
         replyTargetLabel.text = "Replying to: \(replyTarget.author)"
+        replyTargetResetButton.isHidden = false
         
         if let indexPath = tableView.indexPathForSelectedRow {
             if indexPath.row != row {

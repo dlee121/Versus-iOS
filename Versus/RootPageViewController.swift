@@ -22,6 +22,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var commentSendButton: UIButton!
     @IBOutlet weak var replyTargetLabel: UILabel!
     
+    @IBOutlet weak var replyTargetResetButton: UIButton!
+    
     
     var currentPost : PostObject!
     var comments = [VSComment]()
@@ -347,10 +349,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.scrollIndicatorInsets = .zero
         textInputContainerBottom.constant = 0
         //textInput.text = ""
+        /*
         replyTargetID = nil
         grandchildRealTargetID = nil
         grandchildReplyTargetAuthor = nil
         replyTargetLabel.text = ""
+        */
         if let indexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPath, animated: true)
             tableView.cellForRow(at: indexPath)?.selectionStyle = UITableViewCellSelectionStyle.none
@@ -358,12 +362,22 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    @IBAction func replyTargetResetTapped(_ sender: UIButton) {
+        replyTargetResetButton.isHidden = true
+        replyTargetID = nil
+        grandchildRealTargetID = nil
+        grandchildReplyTargetAuthor = nil
+        replyTargetLabel.text = ""
+    }
+    
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
         if keyboardIsShowing {
             if scrollView is UITableView {
                 textInputContainer.isHidden = true
                 replyTargetLabel.isHidden = true
+                replyTargetResetButton.isHidden = true
             }
         }
         
@@ -371,6 +385,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         textInputContainer.isHidden = false
         replyTargetLabel.isHidden = false
+        if replyTargetLabel.text != nil && replyTargetLabel.text!.count > 0 {
+            replyTargetResetButton.isHidden = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -1168,7 +1185,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func goToProfile(profileUsername: String) {
-        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count > grandchildReplyTargetAuthor!.count + 2) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
@@ -1339,6 +1356,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             return range.intersection(NSMakeRange(0, grandchildReplyTargetAuthor!.count+2)) == nil
+        }
+        else {
+            print("all of a sudden, grandchildReplyTargetAuthor is nil")
         }
         
         // If updated text view will be empty, add the placeholder
@@ -1692,6 +1712,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         textInput.becomeFirstResponder()
         replyTargetLabel.text = "Replying to: \(replyTarget.author)"
+        replyTargetResetButton.isHidden = false
         
         if let indexPath = tableView.indexPathForSelectedRow {
             if indexPath.row != row {
@@ -1706,7 +1727,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func viewMoreRepliesTapped(topCardComment: VSComment) {
-        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count > grandchildReplyTargetAuthor!.count + 2) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
@@ -1794,7 +1815,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     override func shouldPopOnBackButton() -> Bool {
-        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count <= grandchildReplyTargetAuthor!.count + 2) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
