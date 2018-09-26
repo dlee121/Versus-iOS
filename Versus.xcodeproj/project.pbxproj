@@ -73,6 +73,8 @@
 		70C49475215B9051006F1D0D /* Native.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70C49474215B9051006F1D0D /* Native.xib */; };
 		70C49477215B9156006F1D0D /* NativeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C49476215B9156006F1D0D /* NativeView.swift */; };
 		70C49479215B9AEE006F1D0D /* UIView+ASExtentions.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C49478215B9AEC006F1D0D /* UIView+ASExtentions.m */; };
+		70C4947C215BB2D6006F1D0D /* NativeImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4947B215BB2D6006F1D0D /* NativeImageView.swift */; };
+		70C4947E215BB32C006F1D0D /* NativeImage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70C4947D215BB32C006F1D0D /* NativeImage.xib */; };
 		70CB9E47210FE4D800D86E37 /* Array+Shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */; };
 		70CB9E492110020500D86E37 /* MyCircleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */; };
 		70CB9E4B2112B33C00D86E37 /* CategoryFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB9E4A2112B33C00D86E37 /* CategoryFilterViewController.swift */; };
@@ -217,6 +219,8 @@
 		70C49476215B9156006F1D0D /* NativeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeView.swift; sourceTree = "<group>"; };
 		70C49478215B9AEC006F1D0D /* UIView+ASExtentions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ASExtentions.m"; sourceTree = "<group>"; };
 		70C4947A215B9B25006F1D0D /* UIView+ASExtentions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+ASExtentions.h"; sourceTree = "<group>"; };
+		70C4947B215BB2D6006F1D0D /* NativeImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeImageView.swift; sourceTree = "<group>"; };
+		70C4947D215BB32C006F1D0D /* NativeImage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NativeImage.xib; sourceTree = "<group>"; };
 		70CB9E46210FE4D800D86E37 /* Array+Shuffle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Shuffle.swift"; sourceTree = "<group>"; };
 		70CB9E482110020500D86E37 /* MyCircleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleTableViewCell.swift; sourceTree = "<group>"; };
 		70CB9E4A2112B33C00D86E37 /* CategoryFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterViewController.swift; sourceTree = "<group>"; };
@@ -370,6 +374,7 @@
 				70FEE425212F7302000638C6 /* SettingsViewController.swift */,
 				706192DE21562B1700C0E91E /* EditPostViewController.swift */,
 				70C49474215B9051006F1D0D /* Native.xib */,
+				70C4947D215BB32C006F1D0D /* NativeImage.xib */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -396,6 +401,7 @@
 				7093B22121512F9F00BCC376 /* PostTextTableViewCell.swift */,
 				705F140C21528240004A24CD /* NativeAdTableViewCell.swift */,
 				70C49476215B9156006F1D0D /* NativeView.swift */,
+				70C4947B215BB2D6006F1D0D /* NativeImageView.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -586,6 +592,7 @@
 			files = (
 				701B9BAF20E3FB22003C9E7E /* LaunchScreen.storyboard in Resources */,
 				70B58F442130ABF700557661 /* GoogleService-Info.plist in Resources */,
+				70C4947E215BB32C006F1D0D /* NativeImage.xib in Resources */,
 				701B9BAC20E3FB22003C9E7E /* Assets.xcassets in Resources */,
 				701B9BAA20E3FB20003C9E7E /* Main.storyboard in Resources */,
 				70C49475215B9051006F1D0D /* Native.xib in Resources */,
@@ -826,6 +833,7 @@
 				70E80CE120E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item__source.swift in Sources */,
 				70E80BFA20E6976E0067DF08 /* MCViewController.swift in Sources */,
 				706F89F121080D8F00A78EFB /* VSComment.swift in Sources */,
+				70C4947C215BB2D6006F1D0D /* NativeImageView.swift in Sources */,
 				70E80CC820E6DB570067DF08 /* VSPostEditModel_doc.swift in Sources */,
 				70A7ED4B211FC3410059507A /* PostPageDelegator.swift in Sources */,
 				70E80CB520E6DB570067DF08 /* VSProfileInfoModel__source.swift in Sources */,

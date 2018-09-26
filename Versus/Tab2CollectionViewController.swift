@@ -289,8 +289,8 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
         else { //nativeAd
             let mainVC = parent as! MCViewController
-            var cell = UITableViewCell(style: .default, reuseIdentifier: "Native")
-            mainVC.presentNative(onView: cell.contentView, fromIndex: indexPath as NSIndexPath)
+            var cell = UITableViewCell(style: .default, reuseIdentifier: "NativeImage")
+            mainVC.presentNative(onView: cell.contentView, fromIndex: indexPath as NSIndexPath, showMedia: true)
             return cell
         }
         

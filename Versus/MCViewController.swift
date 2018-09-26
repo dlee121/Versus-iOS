@@ -45,6 +45,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     
     let nativeAdStack : NSMapTable <NSIndexPath, APDNativeAd> = NSMapTable(keyOptions: .strongMemory, valueOptions: .strongMemory)
     
+    var withMedia = false
     
     lazy var nativeAdQueue : APDNativeAdQueue = {
         return APDNativeAdQueue(sdk: nil,
@@ -56,8 +57,15 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     var nativeAdSettings: APDNativeAdSettings! {
         get {
             let instance = APDNativeAdSettings()
-            instance.adViewClass = NativeView.self
-            return instance;
+            
+            if !withMedia {
+                instance.adViewClass = NativeView.self
+            }
+            else {
+                instance.adViewClass = NativeImageView.self
+            }
+            
+            return instance
         }
     }
     
@@ -109,7 +117,8 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         
     }
     
-    func presentNative(onView view: UIView, fromIndex index: NSIndexPath) {
+    func presentNative(onView view: UIView, fromIndex index: NSIndexPath, showMedia : Bool) {
+        withMedia = showMedia
         var nativeAd: APDNativeAd?;
         
         if nativeAdStack.object(forKey: index) != nil {
@@ -123,6 +132,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
             let nativeView = nativeAd!.getViewFor(self)
             view.addSubview(nativeView!)
             nativeView!.asxEdgesEqualView(view)
+            
             return
         }
     }
