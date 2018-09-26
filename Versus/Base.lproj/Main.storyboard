@@ -966,12 +966,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k8k-Ww-1el">
-                                <rect key="frame" x="8" y="598" width="20" height="18"/>
+                                <rect key="frame" x="8" y="595" width="20" height="21"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="DyX-tL-yD4"/>
                                 </constraints>
-                                <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="4" minY="3" maxX="4" maxY="0.0"/>
                                 <state key="normal" image="close"/>
                                 <connections>
                                     <action selector="replyTargetResetTapped:" destination="Jk1-If-Hre" eventType="touchUpInside" id="hYf-pd-W94"/>
@@ -980,7 +980,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="k8k-Ww-1el" firstAttribute="top" secondItem="lVV-0w-CAJ" secondAttribute="top" constant="3" id="9Kd-EZ-j2f"/>
+                            <constraint firstItem="k8k-Ww-1el" firstAttribute="top" secondItem="lVV-0w-CAJ" secondAttribute="top" id="9Kd-EZ-j2f"/>
                             <constraint firstItem="uGt-gg-JwK" firstAttribute="trailing" secondItem="HpG-Yk-086" secondAttribute="trailing" id="B6n-0a-sru"/>
                             <constraint firstItem="k8k-Ww-1el" firstAttribute="leading" secondItem="lVV-0w-CAJ" secondAttribute="trailing" id="GDO-xr-6cH"/>
                             <constraint firstItem="uGt-gg-JwK" firstAttribute="leading" secondItem="HpG-Yk-086" secondAttribute="leading" id="JOf-7v-mfa"/>
@@ -1460,12 +1460,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X6a-c1-Hda">
-                                <rect key="frame" x="8" y="598" width="20" height="18"/>
+                                <rect key="frame" x="8" y="595" width="20" height="21"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="OkU-vS-Ol9"/>
                                 </constraints>
-                                <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="4" minY="3" maxX="4" maxY="0.0"/>
                                 <state key="normal" image="close"/>
                                 <connections>
                                     <action selector="replyTargetResetTapped:" destination="X1q-ax-jCK" eventType="touchUpInside" id="9EN-S9-wl4"/>
@@ -1476,7 +1476,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="69O-FS-4aR" firstAttribute="bottom" secondItem="kh9-vK-rCJ" secondAttribute="bottom" constant="43" id="1eE-db-GnJ"/>
-                            <constraint firstItem="X6a-c1-Hda" firstAttribute="top" secondItem="edV-uV-NmA" secondAttribute="top" constant="3" id="5aT-Ug-GMD"/>
+                            <constraint firstItem="X6a-c1-Hda" firstAttribute="top" secondItem="edV-uV-NmA" secondAttribute="top" id="5aT-Ug-GMD"/>
                             <constraint firstItem="aFR-VA-RvC" firstAttribute="leading" secondItem="69O-FS-4aR" secondAttribute="leading" id="82X-rF-FXZ"/>
                             <constraint firstItem="aFR-VA-RvC" firstAttribute="bottom" secondItem="69O-FS-4aR" secondAttribute="bottom" id="G4D-MF-9NQ"/>
                             <constraint firstItem="69O-FS-4aR" firstAttribute="trailing" secondItem="aFR-VA-RvC" secondAttribute="trailing" id="Slt-ep-4hi"/>
@@ -1952,12 +1952,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YH8-9N-7cN">
-                                <rect key="frame" x="8" y="598" width="20" height="18"/>
+                                <rect key="frame" x="8" y="595" width="20" height="21"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="APt-Tk-dJK"/>
                                 </constraints>
-                                <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="4" minY="3" maxX="4" maxY="0.0"/>
                                 <state key="normal" image="close"/>
                                 <connections>
                                     <action selector="replyTargetResetTapped:" destination="X1q-ax-jCK" eventType="touchUpInside" id="Ntm-Py-bkj"/>
@@ -1968,7 +1968,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="YH8-9N-7cN" firstAttribute="top" secondItem="VQ5-Jt-Tfb" secondAttribute="top" constant="3" id="9hQ-uF-ABy"/>
+                            <constraint firstItem="YH8-9N-7cN" firstAttribute="top" secondItem="VQ5-Jt-Tfb" secondAttribute="top" id="9hQ-uF-ABy"/>
                             <constraint firstItem="7bO-sD-hj7" firstAttribute="trailing" secondItem="OQX-TW-bka" secondAttribute="trailing" id="AuG-2g-iK1"/>
                             <constraint firstItem="OQX-TW-bka" firstAttribute="bottom" secondItem="7bO-sD-hj7" secondAttribute="bottom" constant="43" id="EPC-bc-OVh"/>
                             <constraint firstItem="UAZ-1x-qgY" firstAttribute="leading" secondItem="OQX-TW-bka" secondAttribute="leading" id="G74-mm-MIB"/>
