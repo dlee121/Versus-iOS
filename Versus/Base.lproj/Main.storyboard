@@ -1460,7 +1460,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X6a-c1-Hda">
-                                <rect key="frame" x="8" y="592" width="20" height="24"/>
+                                <rect key="frame" x="8" y="598" width="20" height="18"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="OkU-vS-Ol9"/>
@@ -1476,7 +1476,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="69O-FS-4aR" firstAttribute="bottom" secondItem="kh9-vK-rCJ" secondAttribute="bottom" constant="43" id="1eE-db-GnJ"/>
-                            <constraint firstItem="edV-uV-NmA" firstAttribute="top" secondItem="X6a-c1-Hda" secondAttribute="top" constant="3" id="5aT-Ug-GMD"/>
+                            <constraint firstItem="X6a-c1-Hda" firstAttribute="top" secondItem="edV-uV-NmA" secondAttribute="top" constant="3" id="5aT-Ug-GMD"/>
                             <constraint firstItem="aFR-VA-RvC" firstAttribute="leading" secondItem="69O-FS-4aR" secondAttribute="leading" id="82X-rF-FXZ"/>
                             <constraint firstItem="aFR-VA-RvC" firstAttribute="bottom" secondItem="69O-FS-4aR" secondAttribute="bottom" id="G4D-MF-9NQ"/>
                             <constraint firstItem="69O-FS-4aR" firstAttribute="trailing" secondItem="aFR-VA-RvC" secondAttribute="trailing" id="Slt-ep-4hi"/>
@@ -1948,15 +1948,32 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YH8-9N-7cN">
+                                <rect key="frame" x="8" y="598" width="20" height="18"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="APt-Tk-dJK"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                <state key="normal" image="close"/>
+                                <connections>
+                                    <action selector="replyTargetResetTapped:" destination="X1q-ax-jCK" eventType="touchUpInside" id="Ntm-Py-bkj"/>
+                                    <action selector="replyTargetResetTapped:" destination="Ef4-68-ZeO" eventType="touchUpInside" id="kLs-qy-tG6"/>
+                                    <action selector="replyTargetResetTapped:" destination="Jk1-If-Hre" eventType="touchUpInside" id="ms9-pi-faH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="YH8-9N-7cN" firstAttribute="top" secondItem="VQ5-Jt-Tfb" secondAttribute="top" constant="3" id="9hQ-uF-ABy"/>
                             <constraint firstItem="7bO-sD-hj7" firstAttribute="trailing" secondItem="OQX-TW-bka" secondAttribute="trailing" id="AuG-2g-iK1"/>
                             <constraint firstItem="OQX-TW-bka" firstAttribute="bottom" secondItem="7bO-sD-hj7" secondAttribute="bottom" constant="43" id="EPC-bc-OVh"/>
                             <constraint firstItem="UAZ-1x-qgY" firstAttribute="leading" secondItem="OQX-TW-bka" secondAttribute="leading" id="G74-mm-MIB"/>
                             <constraint firstItem="VQ5-Jt-Tfb" firstAttribute="leading" secondItem="OQX-TW-bka" secondAttribute="leading" constant="8" id="L1X-XW-g5S"/>
                             <constraint firstItem="UAZ-1x-qgY" firstAttribute="top" secondItem="VQ5-Jt-Tfb" secondAttribute="bottom" id="XKU-gJ-BHP"/>
+                            <constraint firstItem="YH8-9N-7cN" firstAttribute="leading" secondItem="VQ5-Jt-Tfb" secondAttribute="trailing" id="iT4-uU-aPa"/>
                             <constraint firstItem="UAZ-1x-qgY" firstAttribute="bottom" secondItem="OQX-TW-bka" secondAttribute="bottom" id="j6m-BW-6vV"/>
+                            <constraint firstItem="VQ5-Jt-Tfb" firstAttribute="bottom" secondItem="YH8-9N-7cN" secondAttribute="bottom" id="ji9-92-Nvo"/>
                             <constraint firstItem="7bO-sD-hj7" firstAttribute="leading" secondItem="OQX-TW-bka" secondAttribute="leading" id="mbY-3T-2xz"/>
                             <constraint firstItem="UAZ-1x-qgY" firstAttribute="trailing" secondItem="OQX-TW-bka" secondAttribute="trailing" id="nVO-wK-z7D"/>
                             <constraint firstItem="7bO-sD-hj7" firstAttribute="top" secondItem="hs2-um-2aZ" secondAttribute="top" id="rE1-8K-hBb"/>
@@ -1966,6 +1983,7 @@
                     <connections>
                         <outlet property="commentSendButton" destination="aDr-Ri-9QI" id="jmX-y6-Pc6"/>
                         <outlet property="replyTargetLabel" destination="VQ5-Jt-Tfb" id="VHK-Up-lS2"/>
+                        <outlet property="replyTargetResetButton" destination="YH8-9N-7cN" id="y4S-QM-rRP"/>
                         <outlet property="tableView" destination="7bO-sD-hj7" id="aPR-JE-Z5i"/>
                         <outlet property="textInput" destination="C04-7o-jo1" id="aXd-AS-Kek"/>
                         <outlet property="textInputContainer" destination="UAZ-1x-qgY" id="xnD-g4-0gh"/>

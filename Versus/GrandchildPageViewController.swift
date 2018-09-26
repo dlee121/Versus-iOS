@@ -19,6 +19,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var commentSendButton: UIButton!
     @IBOutlet weak var replyTargetLabel: UILabel!
     
+    @IBOutlet weak var replyTargetResetButton: UIButton!
     
     var currentPost : PostObject!
     var comments = [VSComment]()
@@ -229,9 +230,11 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         tableView.scrollIndicatorInsets = .zero
         textInputContainerBottom.constant = 0
         //textInput.text = ""
+        /*
         grandchildRealTargetID = nil
         grandchildReplyTargetAuthor = nil
         replyTargetLabel.text = ""
+        */
         if let indexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPath, animated: true)
             tableView.cellForRow(at: indexPath)?.selectionStyle = UITableViewCellSelectionStyle.none
@@ -239,11 +242,39 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         
     }
     
+    @IBAction func replyTargetResetTapped(_ sender: UIButton) {
+        replyTargetResetButton.isHidden = true
+        grandchildRealTargetID = nil
+        grandchildReplyTargetAuthor = nil
+        replyTargetLabel.text = ""
+        
+        textInput.text = placeholder
+        textInput.textColor = UIColor.lightGray
+        commentSendButton.isEnabled = false
+        commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+        textInput.selectedTextRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.beginningOfDocument)
+    }
+    
+    func resetCommentInput() {
+        replyTargetResetButton.isHidden = true
+        grandchildRealTargetID = nil
+        grandchildReplyTargetAuthor = nil
+        replyTargetLabel.text = ""
+        
+        textInput.text = placeholder
+        textInput.textColor = UIColor.lightGray
+        commentSendButton.isEnabled = false
+        commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+        textInput.selectedTextRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.beginningOfDocument)
+    }
+    
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if keyboardIsShowing {
             if scrollView is UITableView {
                 textInputContainer.isHidden = true
                 replyTargetLabel.isHidden = true
+                replyTargetResetButton.isHidden = true
             }
         }
     }
@@ -251,6 +282,9 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         textInputContainer.isHidden = false
         replyTargetLabel.isHidden = false
+        if replyTargetLabel.text != nil && replyTargetLabel.text!.count > 0 {
+            replyTargetResetButton.isHidden = false
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -633,7 +667,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func goToProfile(profileUsername: String) {
-        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count <= grandchildReplyTargetAuthor!.count + 2) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
@@ -864,10 +898,13 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
             if let text = textInput.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
                 if text.count > 0 {
                     
+                    resetCommentInput()
+                    /*
                     textInput.text = placeholder
                     textInput.textColor = UIColor.lightGray
                     commentSendButton.isEnabled = false
                     commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+                    */
                     textInput.resignFirstResponder()
                     
                     if currentGrandchildRealTargetID != nil {
@@ -1178,6 +1215,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         
         textInput.becomeFirstResponder()
         replyTargetLabel.text = "Replying to: \(replyTarget.author)"
+        replyTargetResetButton.isHidden = false
         
         if let indexPath = tableView.indexPathForSelectedRow {
             if indexPath.row != row {
@@ -1247,7 +1285,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     override func shouldPopOnBackButton() -> Bool {
-        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count <= grandchildReplyTargetAuthor!.count + 2) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))

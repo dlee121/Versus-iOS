@@ -368,6 +368,26 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         grandchildRealTargetID = nil
         grandchildReplyTargetAuthor = nil
         replyTargetLabel.text = ""
+        
+        textInput.text = placeholder
+        textInput.textColor = UIColor.lightGray
+        commentSendButton.isEnabled = false
+        commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+        textInput.selectedTextRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.beginningOfDocument)
+    }
+    
+    func resetCommentInput() {
+        replyTargetResetButton.isHidden = true
+        replyTargetID = nil
+        grandchildRealTargetID = nil
+        grandchildReplyTargetAuthor = nil
+        replyTargetLabel.text = ""
+        
+        textInput.text = placeholder
+        textInput.textColor = UIColor.lightGray
+        commentSendButton.isEnabled = false
+        commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+        textInput.selectedTextRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.beginningOfDocument)
     }
     
     
@@ -1185,7 +1205,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func goToProfile(profileUsername: String) {
-        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count > grandchildReplyTargetAuthor!.count + 2) {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count <= grandchildReplyTargetAuthor!.count + 2) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
@@ -1427,10 +1447,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             if let text = textInput.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
                 if text.count > 0 {
                     
+                    resetCommentInput()
+                    /*
                     textInput.text = placeholder
                     textInput.textColor = UIColor.lightGray
                     commentSendButton.isEnabled = false
                     commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+                    */
                     textInput.resignFirstResponder()
                     
                     if currentReplyTargetID != nil {
@@ -1727,7 +1750,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func viewMoreRepliesTapped(topCardComment: VSComment) {
-        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count > grandchildReplyTargetAuthor!.count + 2) {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count <= grandchildReplyTargetAuthor!.count + 2) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))

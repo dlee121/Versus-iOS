@@ -236,6 +236,25 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         grandchildReplyTargetAuthor = nil
         replyTargetLabel.text = ""
         
+        textInput.text = placeholder
+        textInput.textColor = UIColor.lightGray
+        commentSendButton.isEnabled = false
+        commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+        textInput.selectedTextRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.beginningOfDocument)
+    }
+    
+    func resetCommentInput() {
+        replyTargetResetButton.isHidden = true
+        replyTargetID = nil
+        grandchildRealTargetID = nil
+        grandchildReplyTargetAuthor = nil
+        replyTargetLabel.text = ""
+        
+        textInput.text = placeholder
+        textInput.textColor = UIColor.lightGray
+        commentSendButton.isEnabled = false
+        commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+        textInput.selectedTextRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.beginningOfDocument)
     }
     
     
@@ -580,7 +599,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
                     
                     for item in rootQueryResults {
                         let comment = VSComment(itemSource: item.source!, id: item.id!)
-                        comment.nestedLevel = 0
+                        comment.nestedLevel = 3
                         
                         //set up node structure with current root comment
                         if rootIndex == 0 {
@@ -845,7 +864,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func goToProfile(profileUsername: String) {
-        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count <= grandchildReplyTargetAuthor!.count + 2) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
@@ -1055,10 +1074,13 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             if let text = textInput.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
                 if text.count > 0 {
                     
+                    resetCommentInput()
+                    /*
                     textInput.text = placeholder
                     textInput.textColor = UIColor.lightGray
                     commentSendButton.isEnabled = false
                     commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+                    */
                     textInput.resignFirstResponder()
                     
                     if currentReplyTargetID != nil && currentReplyTargetID != topCardComment.comment_id {
@@ -1376,8 +1398,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         let row = tableView.indexPath(for: cell)!.row
         replyTargetRowNumber = row
         
+        //print("replyTarget nestedLevel == \(replyTarget.nestedLevel!)")
         
-        if replyTarget.nestedLevel != 1 {
+        if replyTarget.nestedLevel != 4 {
             replyTargetID = replyTarget.comment_id
             grandchildRealTargetID = nil
             grandchildReplyTargetAuthor = nil
@@ -1415,7 +1438,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func viewMoreRepliesTapped(topCardComment: VSComment) {
-        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count <= grandchildReplyTargetAuthor!.count + 2) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
@@ -1489,7 +1512,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     override func shouldPopOnBackButton() -> Bool {
-        if textInput.text != nil && textInput.textColor != UIColor.lightGray {
+        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count <= grandchildReplyTargetAuthor!.count + 2) {
             //textInput.resignFirstResponder()
             let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
