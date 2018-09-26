@@ -40,10 +40,26 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     var segueUserAction : UserAction?
     
     var currentUsername : String!
-    var availableAdCount = 0
     
-    private var adQueue : APDNativeAdQueue = APDNativeAdQueue()
-    fileprivate var nativeArray : [APDNativeAd]! = Array()
+    @IBOutlet weak var nativeAdContainer: UIView!
+    
+    let nativeAdStack : NSMapTable <NSIndexPath, APDNativeAd> = NSMapTable(keyOptions: .strongMemory, valueOptions: .strongMemory)
+    
+    
+    lazy var nativeAdQueue : APDNativeAdQueue = {
+        return APDNativeAdQueue(sdk: nil,
+                                settings: self.nativeAdSettings,
+                                delegate: self,
+                                autocache: true)
+    }()
+    
+    var nativeAdSettings: APDNativeAdSettings! {
+        get {
+            let instance = APDNativeAdSettings()
+            instance.adViewClass = NativeView.self
+            return instance;
+        }
+    }
     
     var tab3 : Tab3CollectionViewController!
     
@@ -87,18 +103,29 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         
         Appodeal.setLogLevel(.debug)
         
-        adQueue.settings.adViewClass = NativeAdTableViewCell.self
-        adQueue.settings.autocacheMask = [.icon, .media]
-        adQueue.settings.type = .noVideo
-        
-        adQueue.delegate = self
-        adQueue.setMaxAdSize(2) //deprecated
-        adQueue.loadAd()
+        nativeAdQueue.loadAd()
         
         
         
     }
     
+    func presentNative(onView view: UIView, fromIndex index: NSIndexPath) {
+        var nativeAd: APDNativeAd?;
+        
+        if nativeAdStack.object(forKey: index) != nil {
+            nativeAd = nativeAdStack.object(forKey: index)
+        } else if nativeAdQueue.currentAdCount > 0 {
+            nativeAd = nativeAdQueue.getNativeAds(ofCount: 1).first
+        }
+        
+        guard nativeAd == nil else {
+            nativeAd!.delegate = self
+            let nativeView = nativeAd!.getViewFor(self)
+            view.addSubview(nativeView!)
+            nativeView!.asxEdgesEqualView(view)
+            return
+        }
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -327,6 +354,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         }
     }
     
+    /*
     func getNextNativeAd()  -> APDNativeAd? {
         print("nativeArray.count == \(nativeArray.count), adIndex == \(adIndex)")
         print("current ad count == \(adQueue.currentAdCount)")
@@ -347,6 +375,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         }
         
     }
+    */
     
     func handlePostDelete(postID : String, index : Int) {
         tab3.handlePostDelete(postID: postID, index: index)
@@ -368,17 +397,22 @@ extension MCViewController : APDNativeAdPresentationDelegate {
 
 extension MCViewController : APDNativeAdQueueDelegate {
     
-    func adQueue(_ adQueue: APDNativeAdQueue!, failedWithError error: Error!) {
-        print("appodeal error debug \(error.localizedDescription)")
+    /// Method called when loader receives native ad.
+    ///
+    /// - Parameters:
+    ///   - adQueue: ad queue object
+    ///   - count: count of available native ad
+    func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue, ofCount count: UInt) {
+        
     }
     
-    func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue!, ofCount count: UInt) {
-        print("adQueueIsAvailable is called")
-        if nativeArray.count == 0 {
-            nativeArray.append(contentsOf:adQueue.getNativeAds(ofCount: 2))
-        }
- 
-        //apdNativeArray will contain all available
+    /// Method called when loader fails to receive native ad.
+    ///
+    /// - Parameters:
+    ///   - adQueue: ad queue object
+    ///   - error: Error occurred
+    func adQueue(_ adQueue: APDNativeAdQueue, failedWithError error: Error) {
+        
     }
     
 }

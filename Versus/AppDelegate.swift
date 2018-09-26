@@ -8,7 +8,10 @@
 
 import UIKit
 import AWSCore
-import Firebase
+import FirebaseCore
+import FirebaseAuth
+import FirebaseDatabase
+
 import FacebookCore
 import GoogleSignIn
 import UserNotifications

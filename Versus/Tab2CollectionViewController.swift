@@ -288,19 +288,9 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
             }
         }
         else { //nativeAd
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Native", for: indexPath) as! NativeAdTableViewCell
-            
             let mainVC = parent as! MCViewController
-            //delegate already set in getNextNativeAd()
-            if let nextAd = mainVC.getNextNativeAd() {
-                cell.setCell(nativeAd: nextAd, displayMainIMage: true)
-                print("appodeal got an ad")
-            }
-            else {
-                //if no ad then make the cell's height 0
-                print("appodeal ad is nil")
-            }
-            
+            var cell = UITableViewCell(style: .default, reuseIdentifier: "Native")
+            mainVC.presentNative(onView: cell.contentView, fromIndex: indexPath as NSIndexPath)
             return cell
         }
         

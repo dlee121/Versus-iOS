@@ -464,11 +464,23 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             else {
                 return 124
             }
-            
-            
         }
     }
- 
+    /*
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if expandedCells.contains(indexPath.section) {
+            return UITableViewAutomaticDimension
+        }
+        else {
+            if comments[indexPath.section].comment_id != "0" {
+                return UITableViewAutomaticDimension
+            }
+            else {
+                return 124
+            }
+        }
+    }
+    */
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentComment = comments[indexPath.section]
@@ -503,24 +515,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             return cell
         }
         else { //native ad
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Native", for: indexPath) as! NativeAdTableViewCell
-            
             let mainVC = parent as! MCViewController
-            //delegate already set in getNextNativeAd()
-            if let nextAd = mainVC.getNextNativeAd() {
-                cell.setCell(nativeAd: nextAd, displayMainIMage: false)
-                print("appodeal got an ad")
-            }
-            else {
-                //if no ad then make the cell's height 0
-                print("appodeal ad is nil")
-            }
-            
+            var cell = UITableViewCell(style: .default, reuseIdentifier: "Native")
+            mainVC.presentNative(onView: cell.contentView, fromIndex: indexPath as NSIndexPath)
             return cell
             
         }
-        
-        
         
     }
     
