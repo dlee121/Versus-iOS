@@ -342,7 +342,7 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                                 self.seguePost = PostObject(itemSource: result.source!, id: result.id!)
                                 
                                 
-                                let userActionID = self.currentUsername + self.seguePost!.post_id
+                                let userActionID = UserDefaults.standard.string(forKey: "KEY_USERNAME")! + self.seguePost!.post_id
                                 
                                 VSVersusAPIClient.default().recordGet(a: "rcg", b: userActionID).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                                     
