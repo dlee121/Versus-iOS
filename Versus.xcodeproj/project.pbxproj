@@ -34,6 +34,7 @@
 		702518D121350826008B8E65 /* VSCommentsListModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702518CC21350825008B8E65 /* VSCommentsListModel__shards.swift */; };
 		702518D221350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702518CD21350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift */; };
 		7027A7DD214E1D500071A939 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027A7DC214E1D500071A939 /* SignUpViewController.swift */; };
+		703D7ACC215B66B000B33186 /* EditCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D7ACB215B66B000B33186 /* EditCommentViewController.swift */; };
 		70484B82212A56D000E198F9 /* MedalUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */; };
 		704E57CA2143F39E000F4109 /* MyCircleDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704E57C92143F39E000F4109 /* MyCircleDelegator.swift */; };
 		704E57CC2143F980000F4109 /* ProfileDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704E57CB2143F980000F4109 /* ProfileDelegator.swift */; };
@@ -172,6 +173,7 @@
 		702518CC21350825008B8E65 /* VSCommentsListModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel__shards.swift; sourceTree = "<group>"; };
 		702518CD21350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits_hits_item.swift; sourceTree = "<group>"; };
 		7027A7DC214E1D500071A939 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		703D7ACB215B66B000B33186 /* EditCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentViewController.swift; sourceTree = "<group>"; };
 		70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedalUpdateRequest.swift; sourceTree = "<group>"; };
 		704E57C92143F39E000F4109 /* MyCircleDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleDelegator.swift; sourceTree = "<group>"; };
 		704E57CB2143F980000F4109 /* ProfileDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDelegator.swift; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				70D17FF021278A4E00A0C9D6 /* NotificationItem.swift */,
 				70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */,
 				70086D532131FDD000B20989 /* EmailSetpVC.swift */,
+				703D7ACB215B66B000B33186 /* EditCommentViewController.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				701C8CC820F96FCF0072AECD /* LeaderboardEntry.swift in Sources */,
 				70E80CCB20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item__source.swift in Sources */,
 				706F89E92107EAB300A78EFB /* ProfileViewController.swift in Sources */,
+				703D7ACC215B66B000B33186 /* EditCommentViewController.swift in Sources */,
 				70E80CD920E6DB570067DF08 /* VSPostsListCompactModel__shards.swift in Sources */,
 				7093B22221512F9F00BCC376 /* PostTextTableViewCell.swift in Sources */,
 				702518D021350826008B8E65 /* VSCommentsListModel.swift in Sources */,

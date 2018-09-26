@@ -1377,9 +1377,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             
             return range.intersection(NSMakeRange(0, grandchildReplyTargetAuthor!.count+2)) == nil
         }
-        else {
-            print("all of a sudden, grandchildReplyTargetAuthor is nil")
-        }
         
         // If updated text view will be empty, add the placeholder
         // and set the cursor to the beginning of the text view
@@ -1887,17 +1884,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             if Date().timeIntervalSince(formatter.date(from: comment.time)!).isLess(than: 301) {
                 alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
                     //handle comment edit
-                    if comment.root != "0" { //the comment has an @prefix
-                        
-                        
-                    }
-                    else {
-                        
-                        
-                        
-                    }
-                    
-                    
+                    self.showEditCommentDialog(commentToEdit: comment, row: row)
                     
                 }))
             }
@@ -1956,5 +1943,86 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
     }
+    
+    
+    
+    func showEditCommentDialog(commentToEdit : VSComment, row : Int) {
+        
+        // Create a custom view controller
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let editCommentVC : EditCommentViewController = storyboard.instantiateViewController(withIdentifier: "editCommentVC") as! EditCommentViewController
+        let view = editCommentVC.view
+        
+        if commentToEdit.root != "0" { //the comment has an @prefix
+            
+            let splitResult = commentToEdit.content.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: false)
+            let prefix = String(splitResult[0])
+            let content = String(splitResult[1])
+            
+            print("prefix: \(prefix), content: \(content)")
+            
+            editCommentVC.setUpWithPrefix(prefix: prefix, commentText: content)
+            
+        }
+        else {
+            editCommentVC.setUpWithoutPrefix(commentText: commentToEdit.content)
+            
+        }
+        
+        // Create the dialog
+        let popup = PopupDialog(viewController: editCommentVC,
+                                buttonAlignment: .horizontal,
+                                transitionStyle: .bounceDown,
+                                tapGestureDismissal: true,
+                                panGestureDismissal: false)
+        
+        // Create first button
+        let buttonOne = CancelButton(title: "CANCEL", height: 30) {
+            print("cancel")
+        }
+        
+        // Create second button
+        let buttonTwo = DefaultButton(title: "OK", height: 30, dismissOnTap: false) {
+            if let input = editCommentVC.textInput.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                if input.count > 0 {
+                    var finalInput = ""
+                    if let prefix = editCommentVC.prefixLabel.text {
+                        finalInput = prefix + " " + input
+                    }
+                    else {
+                        finalInput = input
+                    }
+                    
+                    let commentEditModel = VSCommentEditModel()
+                    let commentEditModelDoc = VSCommentEditModel_doc()
+                    commentEditModelDoc!.ct = finalInput
+                    commentEditModel!.doc = commentEditModelDoc
+                    VSVersusAPIClient.default().commenteditPost(body: commentEditModel!, a: "editc", b: commentToEdit.comment_id)
+                    self.comments[row].content = finalInput
+                    self.nodeMap[commentToEdit.comment_id]?.nodeContent.content = finalInput
+                    self.tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+                    self.dismiss(animated: true, completion: nil)
+                    self.showToast(message: "Comment edited successfully!", length: 26)
+                }
+                else {
+                    self.showToast(message: "Please enter a comment.", length: 23)
+                }
+            }
+        }
+        
+        // Add buttons to dialog
+        popup.addButtons([buttonOne, buttonTwo])
+        
+        // Present dialog
+        present(popup, animated: true, completion: nil)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
