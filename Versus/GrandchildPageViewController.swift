@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseDatabase
+import PopupDialog
 
 
 class GrandchildPageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PostPageDelegator, UITextViewDelegate {
@@ -1324,7 +1325,148 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func commentCardOverflow(comment: VSComment, sender: UIButton, row: Int) {
-        //comment card overflow handling
+        if comment.author == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            alert.popoverPresentationController?.sourceView = sender
+            alert.popoverPresentationController?.sourceRect = sender.bounds
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            if Date().timeIntervalSince(formatter.date(from: comment.time)!).isLess(than: 301) {
+                alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
+                    //handle comment edit
+                    self.showEditCommentDialog(commentToEdit: comment, row: row)
+                    
+                }))
+            }
+            
+            alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+                //handle comment delete
+                VSVersusAPIClient.default().deleteGet(a: "cd", b: comment.comment_id)
+                
+                if self.comments[row].comment_id == comment.comment_id {
+                    self.comments[row].author = "deleted"
+                    self.nodeMap[comment.comment_id]?.nodeContent.author = "deleted"
+                    self.tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+                }
+                
+            }))
+            
+            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+        else {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            alert.popoverPresentationController?.sourceView = sender
+            alert.popoverPresentationController?.sourceRect = sender.bounds
+            
+            alert.addAction(UIAlertAction(title: "Report", style: .default, handler: { _ in
+                // Prepare the popup assets
+                let title = "Report this comment?"
+                let message = ""
+                
+                // Create the dialog
+                let popup = PopupDialog(title: title, message: message)
+                
+                // Create buttons
+                let buttonOne = DefaultButton(title: "No", action: nil)
+                
+                // This button will not the dismiss the dialog
+                let buttonTwo = DefaultButton(title: "Yes") {
+                    let commentReportPath = "reports/c/\(comment.comment_id)/"
+                    Database.database().reference().child(commentReportPath).setValue(true)
+                    self.showToast(message: "Comment reported.", length: 17)
+                }
+                
+                popup.addButtons([buttonOne, buttonTwo])
+                popup.buttonAlignment = .horizontal
+                
+                // Present dialog
+                self.present(popup, animated: true, completion: nil)
+            }))
+            
+            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+        
     }
+    
+    func showEditCommentDialog(commentToEdit : VSComment, row : Int) {
+        
+        // Create a custom view controller
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let editCommentVC : EditCommentViewController = storyboard.instantiateViewController(withIdentifier: "editCommentVC") as! EditCommentViewController
+        let view = editCommentVC.view
+        
+        if commentToEdit.root != "0" { //the comment has an @prefix
+            
+            let splitResult = commentToEdit.content.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: false)
+            let prefix = String(splitResult[0])
+            let content = String(splitResult[1])
+            
+            print("prefix: \(prefix), content: \(content)")
+            
+            editCommentVC.setUpWithPrefix(prefix: prefix, commentText: content)
+            
+        }
+        else {
+            editCommentVC.setUpWithoutPrefix(commentText: commentToEdit.content)
+            
+        }
+        
+        // Create the dialog
+        let popup = PopupDialog(viewController: editCommentVC,
+                                buttonAlignment: .horizontal,
+                                transitionStyle: .bounceDown,
+                                tapGestureDismissal: true,
+                                panGestureDismissal: false)
+        
+        // Create first button
+        let buttonOne = CancelButton(title: "CANCEL", height: 30) {
+            print("cancel")
+        }
+        
+        // Create second button
+        let buttonTwo = DefaultButton(title: "OK", height: 30, dismissOnTap: false) {
+            if let input = editCommentVC.textInput.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                if input.count > 0 {
+                    var finalInput = ""
+                    if let prefix = editCommentVC.prefixLabel.text {
+                        finalInput = prefix + " " + input
+                    }
+                    else {
+                        finalInput = input
+                    }
+                    
+                    let commentEditModel = VSCommentEditModel()
+                    let commentEditModelDoc = VSCommentEditModel_doc()
+                    commentEditModelDoc!.ct = finalInput
+                    commentEditModel!.doc = commentEditModelDoc
+                    VSVersusAPIClient.default().commenteditPost(body: commentEditModel!, a: "editc", b: commentToEdit.comment_id)
+                    self.comments[row].content = finalInput
+                    self.nodeMap[commentToEdit.comment_id]?.nodeContent.content = finalInput
+                    self.tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+                    self.dismiss(animated: true, completion: nil)
+                    self.showToast(message: "Comment edited successfully!", length: 26)
+                }
+                else {
+                    self.showToast(message: "Please enter a comment.", length: 23)
+                }
+            }
+        }
+        
+        // Add buttons to dialog
+        popup.addButtons([buttonOne, buttonTwo])
+        
+        // Present dialog
+        present(popup, animated: true, completion: nil)
+    }
+    
+    
     
 }
