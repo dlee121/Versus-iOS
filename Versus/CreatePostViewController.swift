@@ -130,6 +130,18 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     func postButtonTapped() {
         view.endEditing(true)
         
+        if (tabBarController as! TabBarViewController).previousTabNum == 0 {
+            if let mainNavigationController = tabBarController?.viewControllers?[0] as? UINavigationController {
+                if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
+                    if mainVC.currentIndex == 2 {
+                        print("came from New tab")
+                        
+                        
+                    }
+                }
+            }
+        }
+        
         if selectedCategory == nil || selectedCategory!.count <= 0 {
             showToast(message: "Please select a category", length: 24)
         }

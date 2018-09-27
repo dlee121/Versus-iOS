@@ -209,6 +209,7 @@ class TabBarViewController: UITabBarController {
             print("exiting notifications, setting badge again")
             self.tabBar.items?[3].badgeValue = "New" //in case a new notification arrived while user was in the notifications page
         }
+        
     }
     
     
