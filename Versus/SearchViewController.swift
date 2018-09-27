@@ -27,6 +27,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     var clickLock = false
     
+    var searchVersion = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorStyle = .none
@@ -50,11 +52,23 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func searchExecute(input : String, index : Int){
+        searchVersion += 1
+        let thisSearchVersion = searchVersion
         print("execute search")
         DispatchQueue.main.async {
             self.indicator.startAnimating()
         }
+        
+        guard thisSearchVersion == self.searchVersion else {
+            return
+        }
+        
         VSVersusAPIClient.default().postslistcompactGet(c: input, a: "sp", b: "\(index)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+            if thisSearchVersion != self.searchVersion {
+                return nil
+            }
+            
+            
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -63,6 +77,11 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             else {
                 let queryResults = task.result?.hits?.hits
                 if !queryResults!.isEmpty{
+                    
+                    if thisSearchVersion != self.searchVersion {
+                        return nil
+                    }
+                    
                     var pivString = "{\"ids\":["
                     var index = 0
                     for item in queryResults! {
@@ -81,8 +100,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                     }
                     pivString += "]}"
                     
+                    if thisSearchVersion != self.searchVersion {
+                        return nil
+                    }
+                    
+                    //this effectively means that if the search result only contains deleted posts, it won't show the results. maybe change that in future updates.
                     if index > 0 {
                         VSVersusAPIClient.default().pivGet(a: "pis", b: pivString.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                            
                             if task.error != nil {
                                 DispatchQueue.main.async {
                                     print(task.error!)
@@ -92,6 +117,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                             if let results = task.result?.docs {
                                 for item in results {
                                     self.profileImageVersions[item.id!] = item.source?.pi?.intValue
+                                }
+                                
+                                if thisSearchVersion != self.searchVersion {
+                                    return nil
                                 }
                                 
                                 if self.fromIndex == 0 {
@@ -194,6 +223,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     
     func updateSearchResults(for searchController: UISearchController) {
+        
         guard let searchText = searchController.searchBar.text else { return }
         if searchText != currentSearchTerm {
             searchThis(input: searchText)
