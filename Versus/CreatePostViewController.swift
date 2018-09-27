@@ -121,7 +121,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
             selectedCategory = ""
             leftImageSet = DEFAULT
             rightImageSet = DEFAULT
-            
+            leftImageCancelButton.isHidden = true
+            rightImageCancelButton.isHidden = true
             
         }
     }
@@ -171,6 +172,9 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                             if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
                                 if let tab3New = mainVC.viewControllers.last as? Tab3CollectionViewController {
                                     if tab3New.posts != nil && tab3New.posts.count > 0 {
+                                        let piv = UserDefaults.standard.integer(forKey: "KEY_PI")
+                                        newPost.profileImageVersion = piv
+                                        tab3New.profileImageVersions[UserDefaults.standard.string(forKey: "KEY_USERNAME")!.lowercased()] = piv
                                         tab3New.posts.insert(newPost, at: 0)
                                         tab3New.tableView.insertSections([0], with: .none)
                                     }
@@ -202,6 +206,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         selectedCategory = ""
         leftImageSet = DEFAULT
         rightImageSet = DEFAULT
+        leftImageCancelButton.isHidden = true
+        rightImageCancelButton.isHidden = true
     }
     
     
