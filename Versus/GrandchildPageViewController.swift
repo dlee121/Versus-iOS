@@ -103,7 +103,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @objc private func refreshList(_ sender: Any) {
-        if comments.count > 1 && currentPost != nil && currentUserAction != nil && topCardComment != nil{
+        if !keyboardIsShowing && comments.count > 1 && currentPost != nil && currentUserAction != nil && topCardComment != nil{
             comments.removeAll()
             tableView.reloadData()
             if fromRoot {
@@ -215,7 +215,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        
+        /*
         if #available(iOS 10.0, *) {
             tableView.refreshControl = nil
         } else {
@@ -223,7 +223,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                 tagview.removeFromSuperview()
             }
         }
-        
+        */
         keyboardIsShowing = true
         let userInfo: NSDictionary = notification.userInfo! as NSDictionary
         let keyboardInfo = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue
@@ -236,14 +236,14 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        
+        /*
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
         } else {
             refreshControl.tag = 420
             tableView.addSubview(refreshControl)
         }
-        
+        */
         keyboardIsShowing = false
         tableView.contentInset = .zero
         tableView.scrollIndicatorInsets = .zero
