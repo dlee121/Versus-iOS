@@ -87,16 +87,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        do {
-            let jwt = try decode(jwt: UserDefaults.standard.object(forKey: "KEY_TOKEN") as! String)
-            self.tokenExpirationTime = jwt.expiresAt
-        }
-        catch {
-            self.tokenExpirationTime = nil
-        }
-        
-        if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
-            Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
+        if let token = UserDefaults.standard.object(forKey: "KEY_TOKEN") as? String {
+            do {
+                let jwt = try decode(jwt: token)
+                self.tokenExpirationTime = jwt.expiresAt
+            }
+            catch {
+                self.tokenExpirationTime = nil
+            }
+            
+            if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+                Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
+            }
         }
         
         timer?.invalidate()
@@ -106,25 +108,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         //tokenExpirationTime = nil
         
-        //if token has already expired or is 15 minutes from expiration
-        if tokenExpirationTime == nil  || tokenExpirationTime!.timeIntervalSinceNow.isLess(than: 900) {
-            //force a relaunch from initial VC, which will refresh the token before presenting MainVC if user is currently logged in
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            self.window?.rootViewController = storyboard.instantiateInitialViewController()
+        if Auth.auth().currentUser != nil {
+            //if token has already expired or is 15 minutes from expiration
+            if tokenExpirationTime == nil  || tokenExpirationTime!.timeIntervalSinceNow.isLess(than: 900) {
+                //force a relaunch from initial VC, which will refresh the token before presenting MainVC if user is currently logged in
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                self.window?.rootViewController = storyboard.instantiateInitialViewController()
+                
+                self.setTokenAutoRefresh(period: 3480) //set token to refresh in 58 minutes, so 2 minutes before new token expiration
+            }
+            else {
+                self.setTokenAutoRefresh(period: tokenExpirationTime!.timeIntervalSinceNow - 60) //set token to refresh 60 seconds before expiration
+            }
             
-            self.setTokenAutoRefresh(period: 3480) //set token to refresh in 58 minutes, so 2 minutes before new token expiration
+            // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+            if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+                Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
+            }
+            
+            //clear any push notification displayed on the phone
+            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         }
-        else {
-            self.setTokenAutoRefresh(period: tokenExpirationTime!.timeIntervalSinceNow - 60) //set token to refresh 60 seconds before expiration
-        }
-        
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
-            Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
-        }
-        
-        //clear any push notification displayed on the phone
-        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         
     }
     

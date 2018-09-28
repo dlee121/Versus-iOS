@@ -163,10 +163,10 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 }
                 else {
                     //Post creation successful. Navigate to the corresponding post page.
-                    print("ayyyyyyyy postID: \(newPost.post_id)")
+                    //print("ayyyyyyyy postID: \(newPost.post_id)")
                     DispatchQueue.main.async {
-                        self.prepareCategoryPage = false
-                        self.performSegue(withIdentifier: "createPostToPostPage", sender: self)
+                        //self.prepareCategoryPage = false
+                        //self.performSegue(withIdentifier: "createPostToPostPage", sender: self)
                         
                         if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
                             if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
@@ -181,6 +181,9 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                                 }
                             }
                         }
+                        
+                        (self.tabBarController as! TabBarViewController).newCreatePostExit()
+                        
                     }
                     
                 }

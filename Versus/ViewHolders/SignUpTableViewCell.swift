@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import ActiveLabel
 
 class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var usernameIn: UITextField!
     @IBOutlet weak var passwordIn: UITextField!
-    @IBOutlet weak var legalText: UILabel!
+    @IBOutlet weak var legalText: ActiveLabel!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var createAccountButton: UIButton!
@@ -26,6 +27,8 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
     var delegate : SignUpDelegator!
     var usernameVersion : Int = 0
     var unauthClient : VSVersusAPIClient!
+    
+    let label = ActiveLabel()
     
     func setCell(isNative : Bool, delegator : SignUpDelegator) {
         
@@ -86,6 +89,19 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
         
         
+        let customType = ActiveType.custom(pattern: "\\sTerms and Policies\\b")
+        legalText.enabledTypes.append(customType)
+        
+        //label.urlMaximumLength = 31
+        
+        legalText.customize { label in
+            legalText.customColor[customType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
+            
+            legalText.handleCustomTap(for: customType) { _ in
+                guard let url = URL(string: "https://www.versusdaily.com/terms-and-policies") else { return }
+                UIApplication.shared.open(url)
+            }
+        }
         
     }
     

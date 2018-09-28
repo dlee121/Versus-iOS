@@ -219,6 +219,18 @@ class TabBarViewController: UITabBarController {
         tabBar.isHidden = false
     }
     
+    func newCreatePostExit() {
+        selectedIndex = 0
+        tabBar.isHidden = false
+        
+        if let mainNavigationController = self.viewControllers?[0] as? UINavigationController {
+            if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
+                mainVC.moveToViewController(at: 2)
+                //mainVC.moveToViewController(at: 2, animated: false)
+            }
+        }
+    }
+    
     @objc
     func handleTouchTabbarCenter(sender : UIButton)
     {

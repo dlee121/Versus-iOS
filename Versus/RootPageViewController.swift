@@ -299,6 +299,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         commentSendButton.setNeedsLayout()
     }
     
+    /*
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isMovingFromParentViewController && fromCreatePost && createPostVC != nil{
+            createPostVC?.backButtonTapped()
+        }
+    }
+    */
+    
     override func viewWillAppear(_ animated: Bool) {
         //hidesBottomBarWhenPushed = true
         super.viewWillAppear(animated)
@@ -325,13 +334,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             VSVersusAPIClient.default().recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
         }
         
-        if isMovingFromParentViewController && fromCreatePost && createPostVC != nil{
-            createPostVC?.backButtonTapped()
-        }
         
         NotificationCenter.default.removeObserver(self)
         
     }
+    
+    
     
     @objc func keyboardWillShow(notification: NSNotification) {
         /*

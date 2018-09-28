@@ -320,7 +320,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up, you agree to our Terms and Policies." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6h-vd-jNM">
+                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up, you agree to our Terms and Policies." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6h-vd-jNM" customClass="ActiveLabel" customModule="ActiveLabel">
                                                     <rect key="frame" x="23" y="348.5" width="329" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="ItZ-5R-Gok"/>
@@ -2196,7 +2196,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="goldLeader" rowHeight="116" id="ILp-0h-Dau" customClass="GoldLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="goldLeader" rowHeight="116" id="ILp-0h-Dau" customClass="GoldLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="116"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ILp-0h-Dau" id="orY-Ch-Ykj">
@@ -2296,7 +2296,7 @@
                                             <outlet property="username" destination="9J5-SX-NJc" id="lHt-Ng-kEI"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="silverLeader" rowHeight="102" id="T6V-5F-xKQ" customClass="SilverLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="silverLeader" rowHeight="102" id="T6V-5F-xKQ" customClass="SilverLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="144" width="375" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T6V-5F-xKQ" id="t1h-7m-422">
@@ -2415,7 +2415,7 @@
                                             <outlet property="username" destination="Fsw-bm-bLp" id="Kr4-42-a9M"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="bronzeLeader" rowHeight="102" id="Rdk-De-6IG" customClass="BronzeLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="bronzeLeader" rowHeight="102" id="Rdk-De-6IG" customClass="BronzeLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="246" width="375" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rdk-De-6IG" id="fBn-0K-cw1">
@@ -2521,7 +2521,7 @@
                                             <outlet property="username" destination="OhN-4a-pzn" id="4l1-BT-L5e"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="plainLeader" rowHeight="102" id="CVz-yi-kpR" customClass="PlainLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="plainLeader" rowHeight="102" id="CVz-yi-kpR" customClass="PlainLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="348" width="375" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CVz-yi-kpR" id="C79-Q4-FNo">
@@ -5273,7 +5273,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kMN-CP-0NP"/>
+        <segue reference="H2x-dk-GMV"/>
         <segue reference="Adv-3g-zxs"/>
         <segue reference="YuF-tM-5cL"/>
         <segue reference="ndU-Xn-ImY"/>
@@ -5281,6 +5281,6 @@
         <segue reference="fc6-RI-lzA"/>
         <segue reference="tN5-20-0qe"/>
         <segue reference="QIQ-jM-7ZR"/>
-        <segue reference="Lbc-3X-Z2H"/>
+        <segue reference="MmY-zm-xEb"/>
     </inferredMetricsTieBreakers>
 </document>
