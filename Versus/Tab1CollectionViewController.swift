@@ -44,6 +44,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     private let refreshControl = UIRefreshControl()
     
     var adFrequency = 11
+    var queryTime : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,6 +156,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     func myCircleQuery(){
         
+        if fromIndex == 0 {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            queryTime = formatter.string(from: Date())
+        }
+        
         DispatchQueue.main.async {
             if !self.indicator.isAnimating && !self.refreshControl.isRefreshing {
                 self.indicator.startAnimating()
@@ -185,12 +192,15 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             }
             names.append(",\"\(currentUsername!)\"")
             
-            payload = "{\"from\":\(fromIndex!),\"size\":\(retrievalSize),\"query\":{\"function_score\":{\"query\":{\"bool\":{\"should\":[{\"range\":{\"t\":{\"gt\":\"\(payloadTime)\"}}}]}},\"functions\":[{\"script_score\":{\"script\":\"doc[\'ci\'].value\"}},{\"filter\":{\"terms\":{\"a.keyword\":[\(names)]}},\"script_score\":{\"script\":\"10000\"}}],\"score_mode\":\"sum\"}}}"
+            payload = "{\"from\":\(fromIndex!),\"size\":\(retrievalSize),\"query\":{\"function_score\":{\"query\":{\"bool\":{\"should\":[{\"range\":{\"t\":{\"gt\":\"\(payloadTime)\",\"lte\":\"\(queryTime!)\"}}}]}},\"functions\":[{\"script_score\":{\"script\":\"doc[\'ci\'].value\"}},{\"filter\":{\"terms\":{\"a.keyword\":[\(names)]}},\"script_score\":{\"script\":\"10000\"}}],\"score_mode\":\"sum\"}}}"
         }
         else {
-            payload = "{\"from\":\(fromIndex!),\"size\":\(retrievalSize),\"query\":{\"function_score\":{\"query\":{\"bool\":{\"should\":[{\"range\":{\"t\":{\"gt\":\"\(payloadTime)\"}}}]}},\"functions\":[{\"script_score\":{\"script\":\"doc[\'ci\'].value\"}},{\"filter\":{\"terms\":{\"a.keyword\":[\"\(currentUsername!)\"]}},\"script_score\":{\"script\":\"10000\"}}],\"score_mode\":\"sum\"}}}"
+            print("payloadTime = \(payloadTime)")
+            payload = "{\"from\":\(fromIndex!),\"size\":\(retrievalSize),\"query\":{\"function_score\":{\"query\":{\"bool\":{\"should\":[{\"range\":{\"t\":{\"gt\":\"\(payloadTime)\",\"lte\":\"\(queryTime!)\"}}}]}},\"functions\":[{\"script_score\":{\"script\":\"doc[\'ci\'].value\"}},{\"filter\":{\"terms\":{\"a.keyword\":[\"\(currentUsername!)\"]}},\"script_score\":{\"script\":\"10000\"}}],\"score_mode\":\"sum\"}}}"
 
         }
+        
+        print("queryTime = \(queryTime!)")
         
         executeQuery(payload: payload)
         

@@ -40,6 +40,8 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     var adFrequency = 7
     
+    var queryTime : Int!
+    
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -50,6 +52,10 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
         categorySelectionLabel.addGestureRecognizer(tap)
         
         if posts.count == 0 {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH\\:mm\\:ssZ"
+            queryTime = Int(Date().timeIntervalSince1970.rounded())
+            
             trendingQuery()
         }
         
@@ -73,6 +79,11 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
             fromIndex = 0
             posts.removeAll()
             tableView.reloadData()
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH\\:mm\\:ssZ"
+            queryTime = Int(Date().timeIntervalSince1970.rounded())
+            
             trendingQuery()
         }
         else {
@@ -97,8 +108,8 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
                 self.indicator.startAnimating()
             }
         }
-        
-        VSVersusAPIClient.default().postslistGet(c: categorySelection, d: nil, a: "tr", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        print("queryTime = \(queryTime!)")
+        VSVersusAPIClient.default().postslistGet(c: categorySelection, d: "\(queryTime!)", a: "tr2", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
