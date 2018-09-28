@@ -103,53 +103,45 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         if currentUsername != nil  {
             
-            if gList.isEmpty {
+            if(currentUsername.count < 5){
+                usernameHash = currentUsername.hashCode()
+            }
+            else{
+                var hashIn = ""
                 
-                if(currentUsername.count < 5){
-                    usernameHash = currentUsername.hashCode()
+                hashIn.append(currentUsername[0])
+                hashIn.append(currentUsername[currentUsername.count-2])
+                hashIn.append(currentUsername[1])
+                hashIn.append(currentUsername[currentUsername.count-1])
+                
+                usernameHash = hashIn.hashCode()
+            }
+            
+            let gPath = "\(usernameHash)/" + currentUsername + "/g"
+            let hPath = "\(usernameHash)/" + currentUsername + "/h"
+            
+            self.ref.child(gPath).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let enumerator = snapshot.children
+                while let item = enumerator.nextObject() as? DataSnapshot {
+                    self.gList.append(item.key)
                 }
-                else{
-                    var hashIn = ""
-                    
-                    hashIn.append(currentUsername[0])
-                    hashIn.append(currentUsername[currentUsername.count-2])
-                    hashIn.append(currentUsername[1])
-                    hashIn.append(currentUsername[currentUsername.count-1])
-                    
-                    usernameHash = hashIn.hashCode()
-                }
                 
-                let gPath = "\(usernameHash)/" + currentUsername + "/g"
-                let hPath = "\(usernameHash)/" + currentUsername + "/h"
-                
-                self.ref.child(gPath).observeSingleEvent(of: .value, with: { (snapshot) in
+                self.ref.child(hPath).observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     let enumerator = snapshot.children
                     while let item = enumerator.nextObject() as? DataSnapshot {
                         self.gList.append(item.key)
                     }
                     
-                    self.ref.child(hPath).observeSingleEvent(of: .value, with: { (snapshot) in
-                        
-                        let enumerator = snapshot.children
-                        while let item = enumerator.nextObject() as? DataSnapshot {
-                            self.gList.append(item.key)
-                        }
-                        
-                        self.myCircleQuery()
-                        
-                    }) { (error) in
-                        print(error.localizedDescription)
-                    }
+                    self.myCircleQuery()
                     
                 }) { (error) in
                     print(error.localizedDescription)
                 }
                 
-                
-            }
-            else {
-                myCircleQuery()
+            }) { (error) in
+                print(error.localizedDescription)
             }
         }
     }
@@ -200,7 +192,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
 
         }
         
-        print("queryTime = \(queryTime!)")
+        //print("queryTime = \(queryTime!)")
         
         executeQuery(payload: payload)
         

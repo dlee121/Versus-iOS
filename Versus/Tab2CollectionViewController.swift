@@ -108,7 +108,7 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
                 self.indicator.startAnimating()
             }
         }
-        print("queryTime = \(queryTime!)")
+        //print("queryTime = \(queryTime!)")
         VSVersusAPIClient.default().postslistGet(c: categorySelection, d: "\(queryTime!)", a: "tr2", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {

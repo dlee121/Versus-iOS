@@ -112,7 +112,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
                 self.indicator.startAnimating()
             }
         }
-        print("queryTime in tab3 is \(queryTime!)")
+        //print("queryTime in tab3 is \(queryTime!)")
         VSVersusAPIClient.default().postslistGet(c: categorySelection, d: queryTime, a: "nw2", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
