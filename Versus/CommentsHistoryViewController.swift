@@ -275,9 +275,6 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentsHistoryItem", for: indexPath) as? CommentsHistoryTableViewCell
         let comment = comments[indexPath.row]
-        if let info = postInfoMap[comment.post_id] {
-            print("ok cool \(info.r!)")
-        }
         cell!.setCell(comment: comment, postInfo: postInfoMap[comment.post_id])
         return cell!
     }
