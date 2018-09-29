@@ -18,6 +18,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var createAccountButton: UIButton!
     
+    @IBOutlet weak var createAccountIndicator: UIActivityIndicatorView!
     @IBOutlet weak var passwordInHeight: NSLayoutConstraint!
     @IBOutlet weak var passwordLabelHeight: NSLayoutConstraint!
     var confirmedUsername, confirmedPW : String!
@@ -101,6 +102,16 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             }
         }
         
+    }
+    
+    func lockCreateAccountButton() {
+        createAccountIndicator.startAnimating()
+        createAccountButton.isEnabled = false
+    }
+    
+    func unlockCreateAccountButton() {
+        createAccountIndicator.stopAnimating()
+        createAccountButton.isEnabled = true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -266,20 +266,20 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_splash" translatesAutoresizingMaskIntoConstraints="NO" id="Dt5-hF-r9o">
-                                                    <rect key="frame" x="98" y="43" width="124" height="106"/>
+                                                    <rect key="frame" x="125.5" y="43" width="124" height="106"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="124" id="HCS-Ht-60d"/>
                                                         <constraint firstAttribute="height" constant="106" id="rUy-Ai-awc"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Influence the world anonymously" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Snc-s5-Qyg">
-                                                    <rect key="frame" x="23" y="157" width="274" height="21.5"/>
+                                                    <rect key="frame" x="23" y="157" width="329" height="21.5"/>
                                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lrz-91-SUD">
-                                                    <rect key="frame" x="23" y="210.5" width="274" height="38"/>
+                                                    <rect key="frame" x="23" y="210.5" width="329" height="38"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="38" id="tMZ-bS-nTX"/>
                                                     </constraints>
@@ -291,7 +291,7 @@
                                                     </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E8L-Z0-fWc">
-                                                    <rect key="frame" x="27" y="250.5" width="270" height="17"/>
+                                                    <rect key="frame" x="27" y="250.5" width="325" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="yXF-3E-rqA"/>
                                                     </constraints>
@@ -300,7 +300,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" tag="-1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EcG-QE-9lH">
-                                                    <rect key="frame" x="23" y="275.5" width="274" height="38"/>
+                                                    <rect key="frame" x="23" y="275.5" width="329" height="38"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="38" id="Z1N-rD-HBQ"/>
                                                     </constraints>
@@ -312,7 +312,7 @@
                                                     </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Oj-iV-udy">
-                                                    <rect key="frame" x="27" y="315.5" width="270" height="17"/>
+                                                    <rect key="frame" x="27" y="315.5" width="325" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="17" id="NOI-l0-9sR"/>
                                                     </constraints>
@@ -321,7 +321,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up, you agree to our Terms and Policies." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6h-vd-jNM" customClass="ActiveLabel" customModule="ActiveLabel">
-                                                    <rect key="frame" x="23" y="348.5" width="274" height="29"/>
+                                                    <rect key="frame" x="23" y="348.5" width="329" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="ItZ-5R-Gok"/>
                                                     </constraints>
@@ -330,7 +330,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krW-dm-e6I">
-                                                    <rect key="frame" x="23" y="385.5" width="274" height="30"/>
+                                                    <rect key="frame" x="23" y="373.5" width="329" height="30"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal" title="Create account">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -339,6 +339,9 @@
                                                         <action selector="createAccountButtonTapped:" destination="EPe-Wp-lgx" eventType="touchUpInside" id="BUj-LH-IXw"/>
                                                     </connections>
                                                 </button>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="52e-ey-lyX">
+                                                    <rect key="frame" x="324" y="378.5" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="EcG-QE-9lH" secondAttribute="trailing" constant="8" id="0rJ-x6-p9O"/>
@@ -349,6 +352,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="0Oj-iV-udy" secondAttribute="trailing" constant="8" id="7IJ-Y1-vgs"/>
                                                 <constraint firstItem="0Oj-iV-udy" firstAttribute="top" secondItem="EcG-QE-9lH" secondAttribute="bottom" constant="2" id="8u6-bd-C57"/>
                                                 <constraint firstItem="lrz-91-SUD" firstAttribute="top" secondItem="Snc-s5-Qyg" secondAttribute="bottom" constant="32" id="GHk-Ja-geB"/>
+                                                <constraint firstItem="52e-ey-lyX" firstAttribute="trailing" secondItem="krW-dm-e6I" secondAttribute="trailing" constant="-8" id="GVb-vK-GvM"/>
                                                 <constraint firstItem="Snc-s5-Qyg" firstAttribute="top" secondItem="Dt5-hF-r9o" secondAttribute="bottom" constant="8" id="IoS-TY-qv6"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="B6h-vd-jNM" secondAttribute="trailing" constant="8" id="JPa-ad-fJX"/>
                                                 <constraint firstItem="lrz-91-SUD" firstAttribute="leading" secondItem="ZO9-TO-9bs" secondAttribute="leadingMargin" constant="8" id="Jqh-2A-hvO"/>
@@ -364,10 +368,12 @@
                                                 <constraint firstItem="krW-dm-e6I" firstAttribute="top" secondItem="B6h-vd-jNM" secondAttribute="bottom" constant="8" id="sEQ-AI-yfI"/>
                                                 <constraint firstItem="Snc-s5-Qyg" firstAttribute="leading" secondItem="ZO9-TO-9bs" secondAttribute="leadingMargin" constant="8" id="v59-Y5-QT2"/>
                                                 <constraint firstItem="EcG-QE-9lH" firstAttribute="top" secondItem="E8L-Z0-fWc" secondAttribute="bottom" constant="8" id="wUs-Cz-FKl"/>
+                                                <constraint firstItem="52e-ey-lyX" firstAttribute="centerY" secondItem="krW-dm-e6I" secondAttribute="centerY" id="zFO-M9-c3b"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="createAccountButton" destination="krW-dm-e6I" id="rG0-gi-BuD"/>
+                                            <outlet property="createAccountIndicator" destination="52e-ey-lyX" id="GDZ-ZY-3wx"/>
                                             <outlet property="legalText" destination="B6h-vd-jNM" id="iPk-qC-Ica"/>
                                             <outlet property="passwordIn" destination="EcG-QE-9lH" id="UQ3-Aa-tmt"/>
                                             <outlet property="passwordInHeight" destination="Z1N-rD-HBQ" id="n1d-Pj-hWB"/>

@@ -107,6 +107,10 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
             if username != nil && pw != nil {
                 let password = pw! //just so I don't fuck around and end up with "Optional("pw")"
                 
+                DispatchQueue.main.async {
+                    (self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! SignUpTableViewCell).lockCreateAccountButton()
+                }
+                
                 Auth.auth().createUser(withEmail: username+"@versusbcd.com", password: password) { (authResult, error) in
                     // ...
                     if let user = authResult?.user {
@@ -145,6 +149,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                                 if task.error != nil{
                                     DispatchQueue.main.async {
                                         self.showToast(message: "Something went wrong. Please try again.", length: 39)
+                                        (self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! SignUpTableViewCell).unlockCreateAccountButton()
                                     }
                                 }
                                 else { //successfully created user
@@ -187,7 +192,10 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                         
                     }
                     else{
-                        self.showToast(message: "Something went wrong, please try again.", length: 39)
+                        DispatchQueue.main.async {
+                            self.showToast(message: "Something went wrong, please try again.", length: 39)
+                            (self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! SignUpTableViewCell).unlockCreateAccountButton()
+                        }
                     }
                 }
             }
@@ -199,9 +207,17 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
         else {
             //fb or google signup
             if username != nil && authCredential != nil {
+                
+                DispatchQueue.main.async {
+                    (self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! SignUpTableViewCell).lockCreateAccountButton()
+                }
+                
                 Auth.auth().signInAndRetrieveData(with: self.authCredential!) { (authResult, error) in
                     if let error = error {
                         // ...
+                        DispatchQueue.main.async {
+                            (self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! SignUpTableViewCell).unlockCreateAccountButton()
+                        }
                         return
                     }
                     
@@ -240,6 +256,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                                 if task.error != nil{
                                     DispatchQueue.main.async {
                                         self.showToast(message: "Something went wrong. Please try again.", length: 39)
+                                        (self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! SignUpTableViewCell).unlockCreateAccountButton()
                                     }
                                 }
                                 else { //successfully created user
