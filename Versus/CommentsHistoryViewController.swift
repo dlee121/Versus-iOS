@@ -169,10 +169,13 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
                         self.comments.append(VSComment(itemSource: source, id: queryResults[0].id!))
                         self.fromIndex = self.comments.count
                         
-                        VSVersusAPIClient.default().postinfoGet(a: "pinf", b: source.pt).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                        
+                        
+                        VSVersusAPIClient.default().postinfoGet(a: "pinf", b: source.pt!).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                             if let pinfResult = task.result {
-                                self.postInfoMap[queryResults[0].id!] = PostInfo(itemSource: pinfResult)
+                                self.postInfoMap[queryResults[0].source!.pt!] = PostInfo(itemSource: pinfResult)
                             }
+                            
                             if self.comments.count < self.retrievalSize {
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
@@ -272,6 +275,9 @@ class CommentsHistoryViewController: UIViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentsHistoryItem", for: indexPath) as? CommentsHistoryTableViewCell
         let comment = comments[indexPath.row]
+        if let info = postInfoMap[comment.post_id] {
+            print("ok cool \(info.r!)")
+        }
         cell!.setCell(comment: comment, postInfo: postInfoMap[comment.post_id])
         return cell!
     }
