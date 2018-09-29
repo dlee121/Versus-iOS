@@ -51,11 +51,11 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorStyle = .none
-        
+        print("tab3 loaded")
         let tap = UITapGestureRecognizer(target: self, action: #selector(Tab3CollectionViewController.resetCategorySelection))
         categorySelectionLabel.addGestureRecognizer(tap)
         
-        if posts.count == 0 {
+        if posts.count <= 1 { // <= 1 because it can be 1 if newly created post is appended to posts before this
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH\\:mm\\:ssZ"
             queryTime = formatter.string(from: Date())
