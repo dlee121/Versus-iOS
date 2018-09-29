@@ -3314,26 +3314,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CircleImageView," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ul9-Ao-LpO" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="118" width="131" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="qpv-jK-gYc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Glide" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Opw-yk-M4A" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="143" width="40" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="Ppg-2g-yBr"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ActiveLabel, Nuke, XLPagerTabStrip, PopupDialog, JWTDecode" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ul9-Ao-LpO" customClass="ActiveLabel" customModule="ActiveLabel">
+                                <rect key="frame" x="32" y="118" width="335" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icons from the following authors:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhV-06-XUS">
-                                <rect key="frame" x="16" y="172" width="262.5" height="21"/>
+                                <rect key="frame" x="16" y="167" width="262.5" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="ZFw-6j-HSF"/>
                                 </constraints>
@@ -3342,7 +3330,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gregor Cresnar," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3KW-hW-85y" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="197" width="122" height="21"/>
+                                <rect key="frame" x="32" y="192" width="122" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Udh-5f-35r"/>
                                 </constraints>
@@ -3351,7 +3339,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Freepik," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ptU-Mv-GoR" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="222" width="62" height="21"/>
+                                <rect key="frame" x="32" y="217" width="62" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="SnY-nC-LVA"/>
                                 </constraints>
@@ -3360,7 +3348,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chanut," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6CS-4e-qlx" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="247" width="60" height="21"/>
+                                <rect key="frame" x="32" y="242" width="60" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="cFv-nP-ess"/>
                                 </constraints>
@@ -3369,7 +3357,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eleanor Wang," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TuL-Bs-KmL" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="272" width="110" height="21"/>
+                                <rect key="frame" x="32" y="267" width="110" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="j51-UQ-R6o"/>
                                 </constraints>
@@ -3378,7 +3366,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icomoon," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MJJ-qN-a2g" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="322" width="71" height="21"/>
+                                <rect key="frame" x="32" y="317" width="71" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="qfz-qg-YMv"/>
                                 </constraints>
@@ -3387,7 +3375,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pixel Perfect," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qau-FK-rlu" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="297" width="101" height="21"/>
+                                <rect key="frame" x="32" y="292" width="101" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="313-2K-4aH"/>
                                 </constraints>
@@ -3396,7 +3384,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anton Saputro," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faP-mp-zGn" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="372" width="115" height="21"/>
+                                <rect key="frame" x="32" y="367" width="115" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="yM6-Vt-YAJ"/>
                                 </constraints>
@@ -3405,7 +3393,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vectors Market," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e8v-UJ-p2g" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="347" width="121" height="21"/>
+                                <rect key="frame" x="32" y="342" width="121" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="wTV-ih-254"/>
                                 </constraints>
@@ -3414,7 +3402,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pavel Kozlov," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eJT-7e-eiU" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="422" width="99" height="21"/>
+                                <rect key="frame" x="32" y="417" width="99" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="tWy-hX-3Nt"/>
                                 </constraints>
@@ -3423,7 +3411,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hanan," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1z1-Fb-25r" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="397" width="54" height="21"/>
+                                <rect key="frame" x="32" y="392" width="54" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="s7j-cg-32F"/>
                                 </constraints>
@@ -3432,7 +3420,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Google Material Design," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVb-kB-oTX" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="32" y="447" width="183" height="21"/>
+                                <rect key="frame" x="32" y="442" width="183" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="gu6-Gd-oqJ"/>
                                 </constraints>
@@ -3441,7 +3429,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="And custom icons from Andrew Cho, Aryaman Kochar, Francisca Caviedes, Teddy DeMask, Nikki Mantis, and Alexia Jackson." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNK-gQ-tVE">
-                                <rect key="frame" x="16" y="476" width="351" height="61"/>
+                                <rect key="frame" x="16" y="471" width="351" height="61"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -3470,11 +3458,10 @@
                             <constraint firstItem="TuL-Bs-KmL" firstAttribute="top" secondItem="6CS-4e-qlx" secondAttribute="bottom" constant="4" id="1Nf-sF-RCM"/>
                             <constraint firstItem="eJT-7e-eiU" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="32" id="1cX-p2-dfn"/>
                             <constraint firstItem="faP-mp-zGn" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="32" id="3gB-0F-KuG"/>
+                            <constraint firstAttribute="trailing" secondItem="ul9-Ao-LpO" secondAttribute="trailing" constant="8" id="6xr-5T-IbS"/>
                             <constraint firstItem="8ce-pC-Hk1" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="16" id="7Qi-Uz-kf6"/>
                             <constraint firstItem="7gv-dO-ZbS" firstAttribute="top" secondItem="4Wk-fi-NsP" secondAttribute="bottom" id="81s-x4-hVM"/>
-                            <constraint firstItem="Opw-yk-M4A" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="32" id="9Dx-os-dus"/>
                             <constraint firstItem="MJJ-qN-a2g" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="32" id="A3u-V5-bun"/>
-                            <constraint firstItem="nhV-06-XUS" firstAttribute="top" secondItem="Opw-yk-M4A" secondAttribute="bottom" constant="8" id="BiI-o0-ZVQ"/>
                             <constraint firstItem="FrZ-58-fTg" firstAttribute="trailing" secondItem="TNK-gQ-tVE" secondAttribute="trailing" constant="8" id="GGO-cE-hZK"/>
                             <constraint firstItem="6CS-4e-qlx" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="32" id="IxH-ka-QbZ"/>
                             <constraint firstItem="6CS-4e-qlx" firstAttribute="top" secondItem="ptU-Mv-GoR" secondAttribute="bottom" constant="4" id="K1H-2h-b7d"/>
@@ -3487,7 +3474,6 @@
                             <constraint firstItem="3KW-hW-85y" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="32" id="U9K-E8-n3r"/>
                             <constraint firstItem="TuL-Bs-KmL" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="32" id="Vad-aX-TjG"/>
                             <constraint firstItem="8ce-pC-Hk1" firstAttribute="top" secondItem="7gv-dO-ZbS" secondAttribute="bottom" constant="8" id="WBP-Im-JNk"/>
-                            <constraint firstItem="Opw-yk-M4A" firstAttribute="top" secondItem="ul9-Ao-LpO" secondAttribute="bottom" constant="4" id="WKl-pj-9cm"/>
                             <constraint firstItem="F2S-fF-wY0" firstAttribute="centerY" secondItem="4Wk-fi-NsP" secondAttribute="centerY" id="XHr-H7-2Sq"/>
                             <constraint firstItem="TNK-gQ-tVE" firstAttribute="top" secondItem="xVb-kB-oTX" secondAttribute="bottom" constant="8" id="Y3p-4l-vhi"/>
                             <constraint firstItem="7gv-dO-ZbS" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="16" id="ZOI-UP-5nj"/>
@@ -3502,6 +3488,7 @@
                             <constraint firstItem="faP-mp-zGn" firstAttribute="top" secondItem="e8v-UJ-p2g" secondAttribute="bottom" constant="4" id="qW8-HP-fpZ"/>
                             <constraint firstItem="F2S-fF-wY0" firstAttribute="centerX" secondItem="YID-yO-lZm" secondAttribute="centerX" id="qet-Vu-IPe"/>
                             <constraint firstItem="ul9-Ao-LpO" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="32" id="srL-8N-Wil"/>
+                            <constraint firstItem="nhV-06-XUS" firstAttribute="top" secondItem="ul9-Ao-LpO" secondAttribute="bottom" constant="8" id="sra-Cv-Xtk"/>
                             <constraint firstItem="nhV-06-XUS" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="16" id="uP8-TB-tnd"/>
                             <constraint firstItem="ul9-Ao-LpO" firstAttribute="top" secondItem="8ce-pC-Hk1" secondAttribute="bottom" constant="4" id="wLS-N5-IWo"/>
                             <constraint firstItem="TNK-gQ-tVE" firstAttribute="leading" secondItem="FrZ-58-fTg" secondAttribute="leading" constant="16" id="xP8-UZ-qlf"/>
@@ -3512,14 +3499,13 @@
                     <connections>
                         <outlet property="antonSaputro" destination="faP-mp-zGn" id="UPd-pz-x8p"/>
                         <outlet property="chanut" destination="6CS-4e-qlx" id="mey-Ro-aoy"/>
-                        <outlet property="circleImageView" destination="ul9-Ao-LpO" id="heU-TT-s8X"/>
                         <outlet property="eleanorWang" destination="TuL-Bs-KmL" id="hTX-Vo-wJf"/>
                         <outlet property="freepik" destination="ptU-Mv-GoR" id="P7V-Lo-KWh"/>
-                        <outlet property="glide" destination="Opw-yk-M4A" id="meU-7I-EWb"/>
                         <outlet property="googleMaterialDesign" destination="xVb-kB-oTX" id="Occ-91-6GF"/>
                         <outlet property="gregorCresnar" destination="3KW-hW-85y" id="f6X-Yl-d3H"/>
                         <outlet property="hanan" destination="1z1-Fb-25r" id="e0g-C3-YgD"/>
                         <outlet property="icomoon" destination="MJJ-qN-a2g" id="2Aq-2L-oe3"/>
+                        <outlet property="libraries" destination="ul9-Ao-LpO" id="heU-TT-s8X"/>
                         <outlet property="pavelKozlov" destination="eJT-7e-eiU" id="Oln-Xx-A1i"/>
                         <outlet property="pixelPerfect" destination="Qau-FK-rlu" id="niH-CK-EPn"/>
                         <outlet property="termsAndPolicies" destination="7gv-dO-ZbS" id="z1u-1G-0M9"/>

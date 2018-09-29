@@ -13,8 +13,7 @@ class AboutViewController: UIViewController {
 
     
     @IBOutlet weak var termsAndPolicies: ActiveLabel!
-    @IBOutlet weak var circleImageView: ActiveLabel!
-    @IBOutlet weak var glide: ActiveLabel!
+    @IBOutlet weak var libraries: ActiveLabel!
     @IBOutlet weak var gregorCresnar: ActiveLabel!
     @IBOutlet weak var freepik: ActiveLabel!
     @IBOutlet weak var chanut: ActiveLabel!
@@ -47,24 +46,51 @@ class AboutViewController: UIViewController {
             }
         }
         
-        let circleImageViewType = ActiveType.custom(pattern: "CircleImageView")
-        circleImageView.enabledTypes.append(circleImageViewType)
-        circleImageView.customize { label in
-            circleImageView.customColor[circleImageViewType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
+        let activeLabelType = ActiveType.custom(pattern: "ActiveLabel\\b")
+        let nukeType = ActiveType.custom(pattern: "\\sNuke\\b")
+        let xLPagerTabStripType = ActiveType.custom(pattern: "\\sXLPagerTabStrip\\b")
+        let popupDialogType = ActiveType.custom(pattern: "\\sPopupDialog\\b")
+        let jwtDecodeType = ActiveType.custom(pattern: "\\sJWTDecode\\b")
+        
+        libraries.enabledTypes.append(activeLabelType)
+        libraries.enabledTypes.append(nukeType)
+        libraries.enabledTypes.append(xLPagerTabStripType)
+        libraries.enabledTypes.append(popupDialogType)
+        libraries.enabledTypes.append(jwtDecodeType)
+        
+        libraries.customize { label in
+            libraries.customColor[activeLabelType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
             
-            circleImageView.handleCustomTap(for: circleImageViewType) { _ in
-                guard let url = URL(string: "https://github.com/hdodenhof/CircleImageView/blob/master/LICENSE.txt") else { return }
+            libraries.handleCustomTap(for: activeLabelType) { _ in
+                guard let url = URL(string: "https://github.com/optonaut/ActiveLabel.swift/blob/master/LICENSE") else { return }
                 UIApplication.shared.open(url)
             }
-        }
-        
-        let glideType = ActiveType.custom(pattern: "Glide")
-        glide.enabledTypes.append(glideType)
-        glide.customize { label in
-            glide.customColor[glideType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
             
-            glide.handleCustomTap(for: glideType) { _ in
-                guard let url = URL(string: "https://github.com/bumptech/glide/blob/master/LICENSE") else { return }
+            libraries.customColor[nukeType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
+            
+            libraries.handleCustomTap(for: nukeType) { _ in
+                guard let url = URL(string: "https://github.com/kean/Nuke/blob/master/LICENSE") else { return }
+                UIApplication.shared.open(url)
+            }
+            
+            libraries.customColor[xLPagerTabStripType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
+            
+            libraries.handleCustomTap(for: xLPagerTabStripType) { _ in
+                guard let url = URL(string: "https://github.com/xmartlabs/XLPagerTabStrip/blob/master/LICENSE") else { return }
+                UIApplication.shared.open(url)
+            }
+            
+            libraries.customColor[popupDialogType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
+            
+            libraries.handleCustomTap(for: popupDialogType) { _ in
+                guard let url = URL(string: "https://github.com/Orderella/PopupDialog/blob/master/LICENSE") else { return }
+                UIApplication.shared.open(url)
+            }
+            
+            libraries.customColor[jwtDecodeType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
+            
+            libraries.handleCustomTap(for: jwtDecodeType) { _ in
+                guard let url = URL(string: "https://github.com/auth0/JWTDecode.swift/blob/master/LICENSE.txt") else { return }
                 UIApplication.shared.open(url)
             }
         }
