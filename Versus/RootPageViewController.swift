@@ -73,6 +73,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var commentsLoaded = false
     let placeholder = "Join the discussion!"
     
+    
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
             ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -86,6 +87,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var postVoteUpdate : String!
     
     private let refreshControl = UIRefreshControl()
+    
+    var paddingBottom : CGFloat = 0.0
+    
+    override func viewDidLayoutSubviews() {
+        if #available(iOS 11.0, *) {
+            paddingBottom = view.safeAreaInsets.bottom
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -359,7 +369,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.contentInset = contentInsets
         tableView.scrollIndicatorInsets = contentInsets
         
-        textInputContainerBottom.constant = -keyboardSize.height
+        textInputContainerBottom.constant = -keyboardSize.height + paddingBottom
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {

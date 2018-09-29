@@ -73,9 +73,13 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     
     var adIndex = 0
     
+    
     override func viewDidLoad() {
         self.loadDesign()
         super.viewDidLoad()
+        
+        
+        
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         searchViewController = storyboard!.instantiateViewController(withIdentifier: "searchViewController") as? SearchViewController
         searchViewController.mainContainer = self

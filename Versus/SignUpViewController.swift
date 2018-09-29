@@ -101,7 +101,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     */
     
     func signUpButtonTapped(username: String, pw: String?) {
-        
+        print("tapped that")
         if authID == nil {
             //native signup
             if username != nil && pw != nil {

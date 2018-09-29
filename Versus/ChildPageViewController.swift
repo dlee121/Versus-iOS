@@ -78,7 +78,16 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
      */
     var postVoteUpdate : String!
     
+    var paddingBottom : CGFloat = 0.0
+    
     private let refreshControl = UIRefreshControl()
+    
+    override func viewDidLayoutSubviews() {
+        if #available(iOS 11.0, *) {
+            paddingBottom = view.safeAreaInsets.bottom
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -218,7 +227,7 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.contentInset = contentInsets
         tableView.scrollIndicatorInsets = contentInsets
         
-        textInputContainerBottom.constant = -keyboardSize.height
+        textInputContainerBottom.constant = -keyboardSize.height + paddingBottom
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {

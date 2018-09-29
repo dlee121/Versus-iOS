@@ -24,11 +24,13 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
-        addCenterButton(withImage: #imageLiteral(resourceName: "main_fab"), highlightImage: #imageLiteral(resourceName: "main_fab"))
+        //addCenterButton(withImage: #imageLiteral(resourceName: "main_fab"), highlightImage: #imageLiteral(resourceName: "main_fab"))
         addNotificationObserver()
         
         Messaging.messaging().subscribe(toTopic: currentUsername)
+        
     }
+    
     
     
     deinit {
@@ -243,8 +245,12 @@ class TabBarViewController: UITabBarController {
     }
     
     func addCenterButton(withImage buttonImage : UIImage, highlightImage: UIImage) {
+        var paddingBottom : CGFloat!
+        if #available(iOS 11.0, *) {
+            paddingBottom = view.safeAreaInsets.bottom + 10.0
+        }
+        paddingBottom = 10.0
         
-        let paddingBottom : CGFloat = 10.0
         let diameter : CGFloat = 58
         
         button.autoresizingMask = [.flexibleRightMargin, .flexibleTopMargin, .flexibleLeftMargin, .flexibleBottomMargin]
@@ -276,6 +282,9 @@ class TabBarViewController: UITabBarController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        addCenterButton(withImage: #imageLiteral(resourceName: "main_fab"), highlightImage: #imageLiteral(resourceName: "main_fab"))
+        
         // safe place to set the frame of button manually
         //button.frame = CGRect.init(x: self.tabBar.center.x - 32, y: self.view.bounds.height - 74, width: 64, height: 64)
     }

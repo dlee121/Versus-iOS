@@ -74,6 +74,15 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     
     private let refreshControl = UIRefreshControl()
     
+    var paddingBottom : CGFloat = 0.0
+    
+    override func viewDidLayoutSubviews() {
+        if #available(iOS 11.0, *) {
+            paddingBottom = view.safeAreaInsets.bottom
+        }
+        
+    }
+    
     override func viewDidLoad() {
         print("gc loaded")
         super.viewDidLoad()
@@ -232,7 +241,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         tableView.contentInset = contentInsets
         tableView.scrollIndicatorInsets = contentInsets
         
-        textInputContainerBottom.constant = -keyboardSize.height
+        textInputContainerBottom.constant = -keyboardSize.height + paddingBottom
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
