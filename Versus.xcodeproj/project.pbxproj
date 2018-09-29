@@ -52,6 +52,7 @@
 		706F89ED2107EF1A00A78EFB /* PostsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89EC2107EF1A00A78EFB /* PostsHistoryViewController.swift */; };
 		706F89EF21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89EE21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift */; };
 		706F89F121080D8F00A78EFB /* VSComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F89F021080D8F00A78EFB /* VSComment.swift */; };
+		7086C8A2215F1E9700552DC1 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7086C8A1215F1E9700552DC1 /* AboutViewController.swift */; };
 		70908BCE214EA7C7004005C5 /* SignUpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70908BCD214EA7C7004005C5 /* SignUpTableViewCell.swift */; };
 		7093B21E2150F01300BCC376 /* UIViewController + BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7093B21D2150F01300BCC376 /* UIViewController + BackButton.swift */; };
 		7093B22021512DB500BCC376 /* PostImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7093B21F21512DB500BCC376 /* PostImageTableViewCell.swift */; };
@@ -196,6 +197,7 @@
 		706F89EC2107EF1A00A78EFB /* PostsHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsHistoryViewController.swift; sourceTree = "<group>"; };
 		706F89EE21080D0F00A78EFB /* CommentsHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		706F89F021080D8F00A78EFB /* VSComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSComment.swift; sourceTree = "<group>"; };
+		7086C8A1215F1E9700552DC1 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		70908BCD214EA7C7004005C5 /* SignUpTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTableViewCell.swift; sourceTree = "<group>"; };
 		7093B21D2150F01300BCC376 /* UIViewController + BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + BackButton.swift"; sourceTree = "<group>"; };
 		7093B21F21512DB500BCC376 /* PostImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				706192DE21562B1700C0E91E /* EditPostViewController.swift */,
 				70C49474215B9051006F1D0D /* Native.xib */,
 				70C4947D215BB32C006F1D0D /* NativeImage.xib */,
+				7086C8A1215F1E9700552DC1 /* AboutViewController.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -835,6 +838,7 @@
 				70E80CE120E6DB570067DF08 /* VSPostsListCompactModel_hits_hits_item__source.swift in Sources */,
 				70E80BFA20E6976E0067DF08 /* MCViewController.swift in Sources */,
 				706F89F121080D8F00A78EFB /* VSComment.swift in Sources */,
+				7086C8A2215F1E9700552DC1 /* AboutViewController.swift in Sources */,
 				70C4947C215BB2D6006F1D0D /* NativeImageView.swift in Sources */,
 				70E80CC820E6DB570067DF08 /* VSPostEditModel_doc.swift in Sources */,
 				70A7ED4B211FC3410059507A /* PostPageDelegator.swift in Sources */,

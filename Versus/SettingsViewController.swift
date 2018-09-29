@@ -110,7 +110,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             else {
                 //About
-                
+                performSegue(withIdentifier: "settingToAbout", sender: self)
                 
             }
             
@@ -118,6 +118,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             break
         case 2:
             //About
+            performSegue(withIdentifier: "settingToAbout", sender: self)
             
             break
         default:

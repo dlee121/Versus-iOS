@@ -28,7 +28,7 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
     var usernameVersion : Int = 0
     var unauthClient : VSVersusAPIClient!
     
-    let label = ActiveLabel()
+    //let label = ActiveLabel()
     
     func setCell(isNative : Bool, delegator : SignUpDelegator) {
         
@@ -91,8 +91,6 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         let customType = ActiveType.custom(pattern: "\\sTerms and Policies\\b")
         legalText.enabledTypes.append(customType)
-        
-        //label.urlMaximumLength = 31
         
         legalText.customize { label in
             legalText.customColor[customType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)

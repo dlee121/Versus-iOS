@@ -178,9 +178,30 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                                         tab3New.posts.insert(newPost, at: 0)
                                         tab3New.tableView.insertSections([0], with: .none)
                                     }
+                                    else {
+                                        
+                                        
+                                        
+                                    }
                                 }
                             }
                         }
+                        
+                        self.question.text = ""
+                        self.categoryButton.setTitle("Select a Category", for: .normal)
+                        self.redName.text = ""
+                        self.blueName.text = ""
+                        self.leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+                        self.leftImage.backgroundColor = .white
+                        self.rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+                        self.rightImage.backgroundColor = .white
+                        self.leftOptionalLabel.isHidden = false
+                        self.rightOptionalLabel.isHidden = false
+                        self.selectedCategory = ""
+                        self.leftImageSet = self.DEFAULT
+                        self.rightImageSet = self.DEFAULT
+                        self.leftImageCancelButton.isHidden = true
+                        self.rightImageCancelButton.isHidden = true
                         
                         (self.tabBarController as! TabBarViewController).newCreatePostExit()
                         
