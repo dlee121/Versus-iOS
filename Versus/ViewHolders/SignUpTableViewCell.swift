@@ -98,7 +98,12 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             
             legalText.handleCustomTap(for: customType) { _ in
                 guard let url = URL(string: "https://www.versusdaily.com/terms-and-policies") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -206,7 +211,12 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
                     DispatchQueue.main.async {
                         if(thisVersion == self.usernameVersion){
                             self.usernameConfirmed = false
-                            self.usernameLabel.textColor = UIColor(named: "noticeRed")
+                            if #available(iOS 11.0, *) {
+                                self.usernameLabel.textColor = UIColor(named: "noticeRed")
+                            } else {
+                                // Fallback on earlier versions
+                                self.usernameLabel.textColor = UIColor(red: 0.961, green: 0.235, blue: 0.333, alpha: 1.0)
+                            }
                             self.usernameLabel.text = input! + " is already taken!"
                         }
                     }
@@ -222,7 +232,13 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             }
             else{
                 usernameConfirmed = false
-                usernameLabel.textColor = UIColor(named: "noticeRed")
+                if #available(iOS 11.0, *) {
+                    usernameLabel.textColor = UIColor(named: "noticeRed")
+                } else {
+                    // Fallback on earlier versions
+                    self.usernameLabel.textColor = UIColor(red: 0.961, green: 0.235, blue: 0.333, alpha: 1.0)
+                    
+                }
                 usernameLabel.text = "Can only contain letters, numbers, and the following special characters: '-', '_', '~', and '%'"
             }
         }
@@ -241,11 +257,21 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
                 if input.count >= 6{
                     if input.prefix(1) == " "{
                         passwordLabel.text = "Password cannot start with blank space"
-                        passwordLabel.textColor = UIColor(named: "noticeRed")
+                        if #available(iOS 11.0, *) {
+                            passwordLabel.textColor = UIColor(named: "noticeRed")
+                        } else {
+                            // Fallback on earlier versions
+                            self.usernameLabel.textColor = UIColor(red: 0.961, green: 0.235, blue: 0.333, alpha: 1.0)
+                        }
                     }
                     else if input.suffix(1) == " "{
                         passwordLabel.text = "Password cannot end with blank space"
-                        passwordLabel.textColor = UIColor(named: "noticeRed")
+                        if #available(iOS 11.0, *) {
+                            passwordLabel.textColor = UIColor(named: "noticeRed")
+                            self.usernameLabel.textColor = UIColor(red: 0.961, green: 0.235, blue: 0.333, alpha: 1.0)
+                        } else {
+                            // Fallback on earlier versions
+                        }
                     }
                     else{
                         passwordStrengthCheck(pw: input)
@@ -257,7 +283,12 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
                 }
                 else{
                     passwordLabel.text = "Must be at least 6 characters"
-                    passwordLabel.textColor = UIColor(named: "noticeRed")
+                    if #available(iOS 11.0, *) {
+                        passwordLabel.textColor = UIColor(named: "noticeRed")
+                    } else {
+                        // Fallback on earlier versions
+                        self.usernameLabel.textColor = UIColor(red: 0.961, green: 0.235, blue: 0.333, alpha: 1.0)
+                    }
                 }
             }
             else{
@@ -290,23 +321,53 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         switch (strength){
         case 0:
-            passwordLabel.textColor = UIColor(named: "noticeRed")
+            if #available(iOS 11.0, *) {
+                passwordLabel.textColor = UIColor(named: "noticeRed")
+            } else {
+                // Fallback on earlier versions
+                self.usernameLabel.textColor = UIColor(red: 0.961, green: 0.235, blue: 0.333, alpha: 1.0)
+            }
             passwordLabel.text = "Password strength: weak"
         case 1:
-            passwordLabel.textColor = UIColor(named: "noticeRed")
+            if #available(iOS 11.0, *) {
+                passwordLabel.textColor = UIColor(named: "noticeRed")
+            } else {
+                // Fallback on earlier versions
+                self.usernameLabel.textColor = UIColor(red: 0.961, green: 0.235, blue: 0.333, alpha: 1.0)
+            }
             passwordLabel.text = "Password strength: weak"
         case 2:
             passwordLabel.text = "Password strength: medium"
-            passwordLabel.textColor = UIColor(named: "noticeYellow")
+            if #available(iOS 11.0, *) {
+                passwordLabel.textColor = UIColor(named: "noticeYellow")
+            } else {
+                // Fallback on earlier versions
+                self.usernameLabel.textColor = UIColor(red: 1.0, green: 0.867, blue: 0.0, alpha: 1.0)
+            }
         case 3:
             passwordLabel.text = "Password strength: good"
-            passwordLabel.textColor = UIColor(named: "noticeGreen")
+            if #available(iOS 11.0, *) {
+                passwordLabel.textColor = UIColor(named: "noticeGreen")
+            } else {
+                // Fallback on earlier versions
+                self.usernameLabel.textColor = UIColor(red: 0.094, green: 0.749, blue: 0.184, alpha: 1.0)
+            }
         case 4:
             passwordLabel.text = "Password strength: strong"
-            passwordLabel.textColor = UIColor(named: "noticeGreen")
+            if #available(iOS 11.0, *) {
+                passwordLabel.textColor = UIColor(named: "noticeGreen")
+            } else {
+                // Fallback on earlier versions
+                self.usernameLabel.textColor = UIColor(red: 0.094, green: 0.749, blue: 0.184, alpha: 1.0)
+            }
         default:
             passwordLabel.text = "Password strength: medium"
-            passwordLabel.textColor = UIColor(named: "noticeYellow")
+            if #available(iOS 11.0, *) {
+                passwordLabel.textColor = UIColor(named: "noticeYellow")
+            } else {
+                // Fallback on earlier versions
+                self.usernameLabel.textColor = UIColor(red: 1.0, green: 0.867, blue: 0.0, alpha: 1.0)
+            }
         }
     }
     

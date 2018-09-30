@@ -127,7 +127,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
             
             //clear any push notification displayed on the phone
-            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+            if #available(iOS 10.0, *) {
+                UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+            } else {
+                // Fallback on earlier versions
+                application.applicationIconBadgeNumber = 0
+                application.cancelAllLocalNotifications()
+            }
         }
         
     }
@@ -135,25 +141,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func setTokenAutoRefresh(period : TimeInterval) {
         timer?.invalidate()   // just in case you had existing `Timer`, `invalidate` it before we lose our reference to it
-        timer = Timer.scheduledTimer(withTimeInterval: period, repeats: false) { [weak self] _ in
-            Auth.auth().currentUser!.getIDTokenForcingRefresh(true){ (idToken, error) in
-                //store the fresh token in UserDefaults
-                UserDefaults.standard.set(idToken, forKey: "KEY_TOKEN")
-                
-                let oidcProvider = OIDCProvider(input: idToken! as NSString)
-                let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
-                credentialsProvider.clearCredentials()
-                let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
-                //login session configuration is stored in the default
-                AWSServiceManager.default().defaultServiceConfiguration = configuration
-                
-                AWSServiceManager.default().defaultServiceConfiguration.credentialsProvider.invalidateCachedTemporaryCredentials()
-                AWSServiceManager.default().defaultServiceConfiguration.credentialsProvider.credentials()
+        if #available(iOS 10.0, *) {
+            timer = Timer.scheduledTimer(withTimeInterval: period, repeats: false) { [weak self] _ in
+                Auth.auth().currentUser!.getIDTokenForcingRefresh(true){ (idToken, error) in
+                    //store the fresh token in UserDefaults
+                    UserDefaults.standard.set(idToken, forKey: "KEY_TOKEN")
+                    
+                    let oidcProvider = OIDCProvider(input: idToken! as NSString)
+                    let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+                    credentialsProvider.clearCredentials()
+                    let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+                    //login session configuration is stored in the default
+                    AWSServiceManager.default().defaultServiceConfiguration = configuration
+                    
+                    AWSServiceManager.default().defaultServiceConfiguration.credentialsProvider.invalidateCachedTemporaryCredentials()
+                    AWSServiceManager.default().defaultServiceConfiguration.credentialsProvider.credentials()
+                }
             }
+        } else {
+            // Fallback on earlier versions
+            timer = Timer.scheduledTimer(timeInterval: period,
+                                 target: self,
+                                 selector: #selector(self.iOS9Timer),
+                                 userInfo: nil,
+                                 repeats: false)
         }
     }
- 
     
+    @objc
+    func iOS9Timer() {
+        Auth.auth().currentUser!.getIDTokenForcingRefresh(true){ (idToken, error) in
+            //store the fresh token in UserDefaults
+            UserDefaults.standard.set(idToken, forKey: "KEY_TOKEN")
+            
+            let oidcProvider = OIDCProvider(input: idToken! as NSString)
+            let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
+            credentialsProvider.clearCredentials()
+            let configuration = AWSServiceConfiguration(region:.USEast1, credentialsProvider:credentialsProvider)
+            //login session configuration is stored in the default
+            AWSServiceManager.default().defaultServiceConfiguration = configuration
+            
+            AWSServiceManager.default().defaultServiceConfiguration.credentialsProvider.invalidateCachedTemporaryCredentials()
+            AWSServiceManager.default().defaultServiceConfiguration.credentialsProvider.credentials()
+        }
+    }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.

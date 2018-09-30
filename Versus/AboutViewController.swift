@@ -42,7 +42,12 @@ class AboutViewController: UIViewController {
             
             termsAndPolicies.handleCustomTap(for: termsAndPoliciesType) { _ in
                 guard let url = URL(string: "https://www.versusdaily.com/terms-and-policies") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -63,35 +68,60 @@ class AboutViewController: UIViewController {
             
             libraries.handleCustomTap(for: activeLabelType) { _ in
                 guard let url = URL(string: "https://github.com/optonaut/ActiveLabel.swift/blob/master/LICENSE") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
             
             libraries.customColor[nukeType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
             
             libraries.handleCustomTap(for: nukeType) { _ in
                 guard let url = URL(string: "https://github.com/kean/Nuke/blob/master/LICENSE") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
             
             libraries.customColor[xLPagerTabStripType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
             
             libraries.handleCustomTap(for: xLPagerTabStripType) { _ in
                 guard let url = URL(string: "https://github.com/xmartlabs/XLPagerTabStrip/blob/master/LICENSE") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
             
             libraries.customColor[popupDialogType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
             
             libraries.handleCustomTap(for: popupDialogType) { _ in
                 guard let url = URL(string: "https://github.com/Orderella/PopupDialog/blob/master/LICENSE") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
             
             libraries.customColor[jwtDecodeType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
             
             libraries.handleCustomTap(for: jwtDecodeType) { _ in
                 guard let url = URL(string: "https://github.com/auth0/JWTDecode.swift/blob/master/LICENSE.txt") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -102,7 +132,12 @@ class AboutViewController: UIViewController {
             
             gregorCresnar.handleCustomTap(for: gregorCresnarType) { _ in
                 guard let url = URL(string: "https://www.flaticon.com/authors/gregor-cresnar") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -113,7 +148,12 @@ class AboutViewController: UIViewController {
             
             freepik.handleCustomTap(for: freepikType) { _ in
                 guard let url = URL(string: "https://www.flaticon.com/authors/freepik") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -124,7 +164,12 @@ class AboutViewController: UIViewController {
             
             chanut.handleCustomTap(for: chanutType) { _ in
                 guard let url = URL(string: "https://www.flaticon.com/authors/chanut") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -135,7 +180,12 @@ class AboutViewController: UIViewController {
             
             eleanorWang.handleCustomTap(for: eleanorWangType) { _ in
                 guard let url = URL(string: "https://www.flaticon.com/authors/eleonor-wang") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -146,7 +196,12 @@ class AboutViewController: UIViewController {
             
             icomoon.handleCustomTap(for: icomoonType) { _ in
                 guard let url = URL(string: "https://www.flaticon.com/authors/icomoon") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -157,7 +212,12 @@ class AboutViewController: UIViewController {
             
             pixelPerfect.handleCustomTap(for: pixelPerfectType) { _ in
                 guard let url = URL(string: "https://www.flaticon.com/authors/pixel-perfect") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -168,7 +228,12 @@ class AboutViewController: UIViewController {
             
             antonSaputro.handleCustomTap(for: antonSaputroType) { _ in
                 guard let url = URL(string: "https://www.flaticon.com/authors/anton-saputro") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -179,7 +244,12 @@ class AboutViewController: UIViewController {
             
             vectorsMarket.handleCustomTap(for: vectorsMarketType) { _ in
                 guard let url = URL(string: "https://www.flaticon.com/authors/vectors-market") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -190,7 +260,12 @@ class AboutViewController: UIViewController {
             
             pavelKozlov.handleCustomTap(for: pavelKozlovType) { _ in
                 guard let url = URL(string: "https://www.flaticon.com/authors/pavel-kozlov") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -201,7 +276,12 @@ class AboutViewController: UIViewController {
             
             hanan.handleCustomTap(for: hananType) { _ in
                 guard let url = URL(string: "https://www.flaticon.com/authors/hanan") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
@@ -212,7 +292,12 @@ class AboutViewController: UIViewController {
             
             googleMaterialDesign.handleCustomTap(for: googleMaterialDesignType) { _ in
                 guard let url = URL(string: "https://github.com/google/material-design-icons") else { return }
-                UIApplication.shared.open(url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
         
