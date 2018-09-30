@@ -10,15 +10,12 @@ import UIKit
 
 class NotificationsTableViewCell: UITableViewCell {
     
-    
-    
-    @IBOutlet weak var secondImage: UIImageView!
     @IBOutlet weak var body: UILabel!
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var notificationContainer: UIView!
     
-    @IBOutlet weak var secondImageTop: NSLayoutConstraint!
-    @IBOutlet weak var secondImageHeight: NSLayoutConstraint!
+    @IBOutlet weak var notificationIcon: UIImageView!
+    
     
     let TYPE_U = 0 //new comment upvote notification
     let TYPE_C = 1 //new comment reply notification
@@ -37,32 +34,27 @@ class NotificationsTableViewCell: UITableViewCell {
         
         switch item.type! {
         case TYPE_U:
-            secondImage.image = #imageLiteral(resourceName: "heart_red")
-            showSecondImage()
+            notificationIcon.image = #imageLiteral(resourceName: "heart_red")
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "u/\(item.key!)"
             
         case TYPE_C:
-            hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "c/\(item.key!)"
             
         case TYPE_V:
-            hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "v/\(item.key!)"
             
         case TYPE_R:
-            hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "r/\(item.key!)"
             
         case TYPE_F:
-            hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "f"
@@ -70,23 +62,19 @@ class NotificationsTableViewCell: UITableViewCell {
         case TYPE_M:
             switch item.medalType {
             case "g":
-                secondImage.image = #imageLiteral(resourceName: "medalGold")
-                showSecondImage()
+                notificationIcon.image = #imageLiteral(resourceName: "medalGold")
             case "s":
-                secondImage.image = #imageLiteral(resourceName: "medalSilver")
-                showSecondImage()
+                notificationIcon.image = #imageLiteral(resourceName: "medalSilver")
             case "b":
-                secondImage.image = #imageLiteral(resourceName: "medalBronze")
-                showSecondImage()
+                notificationIcon.image = #imageLiteral(resourceName: "medalBronze")
             default:
-                hideSecondImage()
+                break
             }
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "m/\(item.key!)"
             
         case TYPE_EM:
-            hideSecondImage()
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "em"
@@ -102,17 +90,6 @@ class NotificationsTableViewCell: UITableViewCell {
         }
     }
     
-    func showSecondImage(){
-        secondImageHeight.constant = 42
-        secondImageTop.constant = 8
-    }
-    
-    func hideSecondImage(){
-        secondImageHeight.constant = 0
-        secondImageTop.constant = 0
-        secondImage.image = nil
-        
-    }
 
     @IBAction func closeButtonTapped(_ sender: UIButton) {
         if subpath != nil && subpath.count > 0 {
