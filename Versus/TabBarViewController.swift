@@ -238,8 +238,13 @@ class TabBarViewController: UITabBarController {
                     }
                 }
                 
-                break
             case 3: //Notifications
+                if let notificationsNavigationController = self.viewControllers?[3] as? UINavigationController {
+                    if let notificationsVC = notificationsNavigationController.viewControllers.first as? NotificationsViewController {
+                        notificationsVC.scrollOrRefresh() //for now, this only scrolls
+                    }
+                }
+                
                 break
             case 4: //Me
                 break

@@ -598,6 +598,12 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
         
     }
     
+    func scrollOrRefresh() {
+        if tableView != nil  && notificationItems != nil && notificationItems.count > 0 {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segueType {
         case postSegue:
