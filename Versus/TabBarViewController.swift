@@ -232,6 +232,12 @@ class TabBarViewController: UITabBarController {
                     }
                  }
             case 1: //Leaderboard
+                if let leaderboardNavigationController = self.viewControllers?[1] as? UINavigationController {
+                    if let leaderboardVC = leaderboardNavigationController.viewControllers.first as? LeaderboardViewController {
+                        leaderboardVC.scrollOrRefresh()
+                    }
+                }
+                
                 break
             case 3: //Notifications
                 break
