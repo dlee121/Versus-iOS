@@ -115,6 +115,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         
         //Appodeal.setLogLevel(.debug)
         //nativeAdQueue.setMaxAdSize(2)
+        
         nativeAdQueue.loadAd()
         
         
@@ -324,10 +325,13 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
     }
     
     func goToProfile(username : String) {
-        mainSegueType = profileSegue
-        tappedUsername = username
+        if username.lowercased() != "deleted" {
+            mainSegueType = profileSegue
+            tappedUsername = username
+            
+            performSegue(withIdentifier: "mainToProfile", sender: self)
+        }
         
-        performSegue(withIdentifier: "mainToProfile", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

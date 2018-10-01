@@ -364,7 +364,9 @@ class PostCardTableViewCell: UITableViewCell {
     
     
     @IBAction func profileTapped(_ sender: UIButton) {
-        delegate.goToProfile(profileUsername: currentPost.author)
+        if currentPost.author.lowercased() != "deleted" {
+             delegate.goToProfile(profileUsername: currentPost.author)
+        }
     }
     
     @IBAction func leftTapped(_ sender: UIButton) {

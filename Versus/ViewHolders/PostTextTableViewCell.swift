@@ -207,7 +207,9 @@ class PostTextTableViewCell: UITableViewCell {
     }
     
     @IBAction func profileTapped(_ sender: UIButton) {
-        delegate.goToProfile(username: authorLabel.text!)
+        if authorLabel.text!.lowercased() != "deleted" {
+            delegate.goToProfile(username: authorLabel.text!)
+        }
     }
     
     

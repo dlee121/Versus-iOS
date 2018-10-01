@@ -374,7 +374,9 @@ class CommentCardTableViewCell: UITableViewCell {
     }
     
     @IBAction func profileTapped(_ sender: UIButton) {
-        delegate.goToProfile(profileUsername: currentComment.author)
+        if currentComment.author.lowercased() != "deleted" {
+            delegate.goToProfile(profileUsername: currentComment.author)
+        }
     }
     
     func showSeeMore() {

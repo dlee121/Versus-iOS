@@ -287,11 +287,15 @@ class MyCircleTableViewCell: UITableViewCell {
     }
     
     @IBAction func postProfileTapped(_ sender: UIButton) {
-        delegate.goToProfile(username: postAuthor.text!)
+        if postAuthor.text!.lowercased() != "deleted" {
+            delegate.goToProfile(username: postAuthor.text!)
+        }
     }
     
     @IBAction func commentProfileImgTapped(_ sender: UIButton) {
-        delegate.goToProfile(username: commentAuthor.text!)
+        if commentAuthor.text!.lowercased() != "deleted" {
+            delegate.goToProfile(username: commentAuthor.text!)
+        }
     }
     
     @IBAction func commentUsernameTapped(_ sender: UIButton) {
