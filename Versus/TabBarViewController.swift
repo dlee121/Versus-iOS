@@ -218,17 +218,13 @@ class TabBarViewController: UITabBarController {
                             
                         case 1: //Trending
                             if let tab2Trending = mainVC.viewControllers[1] as? Tab2CollectionViewController {
-                                
-                                
-                                
+                                tab2Trending.scrollOrRefresh()
                             }
                             
                             
                         case 2: //New
                             if let tab3New = mainVC.viewControllers[2] as? Tab3CollectionViewController {
-                                
-                                
-                                
+                                tab3New.scrollOrRefresh()
                             }
                         default:
                             break

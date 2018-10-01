@@ -199,9 +199,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func scrollOrRefresh() {
-        print("here called")
         if tableView != nil  && comments != nil && comments.count > 0 && !indicator.isAnimating {
-            print("here executed")
             if tableView.contentOffset.y == 0.0 {
                 refreshList(0)
                 

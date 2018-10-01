@@ -95,6 +95,18 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    func scrollOrRefresh() {
+        if tableView != nil  && posts != nil && posts.count > 0 && !indicator.isAnimating {
+            if tableView.contentOffset.y == 0.0 {
+                refreshList(0)
+                
+            }
+            else {
+                tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         clickLock = false
