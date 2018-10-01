@@ -203,7 +203,53 @@ class TabBarViewController: UITabBarController {
     
     
     
+    
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if selectedIndex != 2 && selectedIndex == tabBar.items!.index(of: item) { //change 2 (CreatePost) if the tab bar item count changes
+            switch selectedIndex {
+            case 0: //MainVC
+                 if let mainNavigationController = self.viewControllers?[0] as? UINavigationController {
+                    if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
+                        switch mainVC.currentIndex {
+                        case 0: //MyCircle
+                            if let tab1MyCircle = mainVC.viewControllers[0] as? Tab1CollectionViewController {
+                                tab1MyCircle.scrollOrRefresh()
+                            }
+                            
+                        case 1: //Trending
+                            if let tab2Trending = mainVC.viewControllers[1] as? Tab2CollectionViewController {
+                                
+                                
+                                
+                            }
+                            
+                            
+                        case 2: //New
+                            if let tab3New = mainVC.viewControllers[2] as? Tab3CollectionViewController {
+                                
+                                
+                                
+                            }
+                        default:
+                            break
+                        }
+                    }
+                 }
+            case 1: //Leaderboard
+                break
+            case 3: //Notifications
+                break
+            case 4: //Me
+                break
+                
+            default:
+                break
+            }
+            
+            
+        }
+        
+        
         //necessary in case user taps the actual middle tap element exposed below the center button instead of tapping the center button
         previousTabNum = selectedIndex
         
