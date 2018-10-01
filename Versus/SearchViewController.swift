@@ -31,7 +31,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.separatorStyle = .none
         // Do any additional setup after loading the view.
     }
 
@@ -41,6 +40,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func searchThis(input : String){
+        tableView.separatorStyle = .none
         posts.removeAll()
         fromIndex = 0
         tableView.reloadData()
@@ -125,6 +125,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                                 
                                 if self.fromIndex == 0 {
                                     DispatchQueue.main.async {
+                                        self.tableView.separatorStyle = .singleLine
                                         self.tableView.reloadData()
                                         self.indicator.stopAnimating()
                                     }
