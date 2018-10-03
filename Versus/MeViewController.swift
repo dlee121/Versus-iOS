@@ -11,6 +11,7 @@ import XLPagerTabStrip
 import AWSS3
 import Nuke
 import FirebaseDatabase
+import FirebaseStorage
 
 class MeViewController: ButtonBarPagerTabStripViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
@@ -28,6 +29,8 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
     var gList = [String]()
     var hList = [String]()
     var ref: DatabaseReference!
+    var storageRef : StorageReference!
+    var refHandle : DatabaseHandle!
     
     var fgcp = 0 //0 = f, 1 = g, c = 2, p = 3
     let f = 0
@@ -56,6 +59,7 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
         
         super.viewDidLoad()
         ref = Database.database().reference()
+        storageRef = Storage.storage().reference()
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         DispatchQueue.main.async {
             self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
@@ -666,6 +670,52 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
     
     func uploadImage(rawImage : UIImage) {
         profileImage.image = nil
+        
+        let data : Data = UIImageJPEGRepresentation(rawImage, 0.8)!
+        let requestID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        let filePath = "profile/\(currentUsername!)/\(requestID).jpg"
+        let uploadRef = storageRef.child(filePath)
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        let uploadTask = uploadRef.putData(data, metadata: metadata) { (metadata, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.showToast(message: "Please check your network connection.", length: 37)
+                }
+                
+            }else{
+                //attach a listener that listens for image check results and calls executeImageUpload if image is good, otherwise returns with a warning
+                
+                self.refHandle = self.ref.child("gvresults/\(self.currentUsername!)/\(requestID)").observe(DataEventType.value, with: { (snapshot) in
+                    let result = snapshot.value as? String
+                    if result != nil {
+                        self.ref.child("gvresults/\(self.currentUsername!)/\(requestID)").removeObserver(withHandle: self.refHandle)
+                        //fields[0] = Adult, fields[1] = Medical, fields[2] = Violence
+                        let fields = result!.split(separator: ",")
+                        let imageIsSafe = (fields[0] == "VERY_UNLIKELY" || fields[0] == "UNLIKELY")
+                                    && (fields[1] == "VERY_UNLIKELY" || fields[1] == "UNLIKELY")
+                                    && (fields[2] == "VERY_UNLIKELY" || fields[2] == "UNLIKELY")
+                        
+                        if imageIsSafe {
+                            self.executeImageUpload(rawImage: rawImage)
+                        }
+                        else {
+                            DispatchQueue.main.async {
+                                self.showToast(message: "Inappropriate image detected.", length: 29)
+                            }
+                        }
+                    }
+                })
+            }
+        }
+    }
+    
+    
+    
+    func executeImageUpload(rawImage : UIImage) {
+        
         let newProfileImageVersion = UserDefaults.standard.integer(forKey: "KEY_PI") + 1
         var image : UIImage!
         let imageKey = "\(currentUsername!)-\(newProfileImageVersion).jpeg"
