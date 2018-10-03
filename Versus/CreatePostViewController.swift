@@ -40,8 +40,11 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     var storageRef : StorageReference!
     var refHandleLeft, refHandleRight : DatabaseHandle!
     
+    var group : DispatchGroup!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        group = DispatchGroup()
         navigationItem.title = "Create a Post"
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "close"), style: .done, target: self, action: #selector(backButtonTapped))
@@ -162,7 +165,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
             if leftImageSet == S3 || rightImageSet == S3{
                 uploadImages(postID: newPost.post_id)
             }
-            
+            group.enter()
             VSVersusAPIClient.default().postputPost(body: newPost.getPostPutModel(), c: newPost.post_id, a: "postput", b: newPost.author.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                 if task.error != nil {
                     DispatchQueue.main.async {
@@ -176,45 +179,49 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                         //self.prepareCategoryPage = false
                         //self.performSegue(withIdentifier: "createPostToPostPage", sender: self)
                         
-                        if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
-                            if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
-                                if let tab3New = mainVC.viewControllers.last as? Tab3CollectionViewController {
-                                    
-                                    let piv = UserDefaults.standard.integer(forKey: "KEY_PI")
-                                    newPost.profileImageVersion = piv
-                                    
-                                    if tab3New.posts != nil && tab3New.posts.count > 0 {
-                                        tab3New.profileImageVersions[UserDefaults.standard.string(forKey: "KEY_USERNAME")!.lowercased()] = piv
-                                        tab3New.posts.insert(newPost, at: 0)
-                                        tab3New.tableView.insertSections([0], with: .none)
-                                    }
-                                    else {
-                                        let view = tab3New.view
-                                        tab3New.profileImageVersions[UserDefaults.standard.string(forKey: "KEY_USERNAME")!.lowercased()] = piv
-                                        tab3New.posts.insert(newPost, at: 0)
-                                        tab3New.tableView.reloadData()
+                        self.group.leave()
+                        
+                        self.group.notify(queue: .main) {
+                            if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
+                                if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
+                                    if let tab3New = mainVC.viewControllers.last as? Tab3CollectionViewController {
+                                        
+                                        let piv = UserDefaults.standard.integer(forKey: "KEY_PI")
+                                        newPost.profileImageVersion = piv
+                                        
+                                        if tab3New.posts != nil && tab3New.posts.count > 0 {
+                                            tab3New.profileImageVersions[UserDefaults.standard.string(forKey: "KEY_USERNAME")!.lowercased()] = piv
+                                            tab3New.posts.insert(newPost, at: 0)
+                                            tab3New.tableView.insertSections([0], with: .none)
+                                        }
+                                        else {
+                                            let view = tab3New.view
+                                            tab3New.profileImageVersions[UserDefaults.standard.string(forKey: "KEY_USERNAME")!.lowercased()] = piv
+                                            tab3New.posts.insert(newPost, at: 0)
+                                            tab3New.tableView.reloadData()
+                                        }
                                     }
                                 }
                             }
+                            
+                            self.question.text = ""
+                            self.categoryButton.setTitle("Select a Category", for: .normal)
+                            self.redName.text = ""
+                            self.blueName.text = ""
+                            self.leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+                            self.leftImage.backgroundColor = .white
+                            self.rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
+                            self.rightImage.backgroundColor = .white
+                            self.leftOptionalLabel.isHidden = false
+                            self.rightOptionalLabel.isHidden = false
+                            self.selectedCategory = ""
+                            self.leftImageSet = self.DEFAULT
+                            self.rightImageSet = self.DEFAULT
+                            self.leftImageCancelButton.isHidden = true
+                            self.rightImageCancelButton.isHidden = true
+                            
+                            (self.tabBarController as! TabBarViewController).newCreatePostExit()
                         }
-                        
-                        self.question.text = ""
-                        self.categoryButton.setTitle("Select a Category", for: .normal)
-                        self.redName.text = ""
-                        self.blueName.text = ""
-                        self.leftImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
-                        self.leftImage.backgroundColor = .white
-                        self.rightImage.setImage(#imageLiteral(resourceName: "plus_blue"), for: .normal)
-                        self.rightImage.backgroundColor = .white
-                        self.leftOptionalLabel.isHidden = false
-                        self.rightOptionalLabel.isHidden = false
-                        self.selectedCategory = ""
-                        self.leftImageSet = self.DEFAULT
-                        self.rightImageSet = self.DEFAULT
-                        self.leftImageCancelButton.isHidden = true
-                        self.rightImageCancelButton.isHidden = true
-                        
-                        (self.tabBarController as! TabBarViewController).newCreatePostExit()
                         
                     }
                     
@@ -430,7 +437,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 return nil
             }
             else {
-                //for now we don't handle additional code for image upload success
+                self.group.leave()
             }
             
             return nil
@@ -439,6 +446,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     
     func uploadImages(postID : String) {
         if leftImageSet == S3 {
+            group.enter()
+            
             let imageKey = postID+"-left.jpeg"
             let image : UIImage!
             if let rawImage = leftImage.currentImage {
@@ -484,6 +493,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                                 else {
                                     DispatchQueue.main.async {
                                         self.showToast(message: "Inappropriate image detected.", length: 29)
+                                        self.group.leave()
                                     }
                                 }
                             }
@@ -495,6 +505,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         
         
         if rightImageSet == S3 {
+            group.enter()
+            
             let imageKey = postID+"-right.jpeg"
             let image : UIImage!
             if let rawImage = rightImage.currentImage {
@@ -540,6 +552,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                                 else {
                                     DispatchQueue.main.async {
                                         self.showToast(message: "Inappropriate image detected.", length: 29)
+                                        self.group.leave()
                                     }
                                 }
                             }
