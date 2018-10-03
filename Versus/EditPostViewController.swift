@@ -9,6 +9,8 @@
 import UIKit
 import AWSS3
 import Nuke
+import FirebaseStorage
+import FirebaseDatabase
 
 class EditPostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
@@ -52,10 +54,14 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     var group : DispatchGroup!
     var sourceVC : RootPageViewController!
     
+    var ref: DatabaseReference!
+    var storageRef : StorageReference!
+    var refHandleLeft, refHandleRight : DatabaseHandle!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         group = DispatchGroup()
-        navigationItem.title = "Create a Post"
+        navigationItem.title = "Edit Post"
         
         imagePicker.delegate = self
         leftImage.imageView!.contentMode = .scaleAspectFill
@@ -63,6 +69,8 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         leftImageSet = DEFAULT
         rightImageSet = DEFAULT
         
+        ref = Database.database().reference()
+        storageRef = Storage.storage().reference()
         
         // Do any additional setup after loading the view.
         
@@ -414,7 +422,6 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     }
     
     func uploadImage(imageKey : String, rawImage : UIImage) {
-        
         let image : UIImage!
         if rawImage.size.width >= rawImage.size.height {
             image = rawImage.resized(toWidth: 304)
@@ -422,6 +429,55 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         else {
             image = rawImage.resized(toHeight: 304)
         }
+        
+        let currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")!
+        
+        let data : Data = UIImageJPEGRepresentation(rawImage, 0.8)!
+        let requestID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        let filePath = "profile/\(currentUsername)/\(requestID).jpg"
+        let uploadRef = storageRef.child(filePath)
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
+        uploadRef.putData(data, metadata: metadata) { (metadata, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.showToast(message: "Please check your network connection.", length: 37)
+                }
+                
+            }else{
+                //attach a listener that listens for image check results and calls executeImageUpload if image is good, otherwise returns with a warning
+                
+                self.refHandleLeft = self.ref.child("gvresults/\(currentUsername)/\(requestID)").observe(DataEventType.value, with: { (snapshot) in
+                    let result = snapshot.value as? String
+                    if result != nil {
+                        self.ref.child("gvresults/\(currentUsername)/\(requestID)").removeObserver(withHandle: self.refHandleLeft)
+                        //fields[0] = Adult, fields[1] = Medical, fields[2] = Violence
+                        let fields = result!.split(separator: ",")
+                        let imageIsSafe = (fields[0] == "VERY_UNLIKELY" || fields[0] == "UNLIKELY")
+                            && (fields[1] == "VERY_UNLIKELY" || fields[1] == "UNLIKELY")
+                            && (fields[2] == "VERY_UNLIKELY" || fields[2] == "UNLIKELY")
+                        
+                        if imageIsSafe {
+                            self.executeImageUpload(imageKey: imageKey, image: image)
+                        }
+                        else {
+                            DispatchQueue.main.async {
+                                self.showToast(message: "Inappropriate image detected.", length: 29)
+                                self.group.leave()
+                            }
+                        }
+                    }
+                })
+            }
+        }
+        
+        
+        
+    }
+    
+    func executeImageUpload(imageKey : String, image : UIImage) {
         
         let fileManager = FileManager.default
         let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
@@ -452,9 +508,9 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                 return nil
             }
             else {
-                //for now we don't handle additional code for image upload success
+                self.group.leave()
             }
-            self.group.leave()
+            
             return nil
         })
         
