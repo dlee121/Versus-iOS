@@ -678,7 +678,7 @@ class MeViewController: ButtonBarPagerTabStripViewController, UINavigationContro
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
         
-        let uploadTask = uploadRef.putData(data, metadata: metadata) { (metadata, error) in
+        uploadRef.putData(data, metadata: metadata) { (metadata, error) in
             if let error = error {
                 print(error.localizedDescription)
                 DispatchQueue.main.async {

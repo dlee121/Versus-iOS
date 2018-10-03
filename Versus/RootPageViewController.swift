@@ -1007,7 +1007,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                     }
                     else { //no root comments
                         DispatchQueue.main.async {
-                            self.tableView.reloadData()
+                            (self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! PostCardTableViewCell).stopIndicator()
                             self.commentsLoaded = true
                         }
                     }
@@ -1029,6 +1029,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     func setComments(){
+        let commentsCountBeforeAppends = comments.count
         
         for i in fromIndex!...rootComments.count-1{
             let currentRootNode = nodeMap[rootComments[i].comment_id]
@@ -1065,7 +1066,17 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.refreshControl.endRefreshing()
             }
             
-            self.tableView.reloadData()
+            var indexPaths = [IndexPath]()
+            for index in commentsCountBeforeAppends ... self.comments.count - 1 {
+                indexPaths.append(IndexPath(row: index, section: 0))
+            }
+            
+            //self.tableView.reloadData()
+            if let firstCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? PostCardTableViewCell {
+                firstCell.stopIndicator()
+            }
+            
+            self.tableView.insertRows(at: indexPaths, with: .none)
             
             if self.reactivateLoadMore {
                 self.nowLoading = false

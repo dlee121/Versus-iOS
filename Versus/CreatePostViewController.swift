@@ -8,6 +8,8 @@
 
 import UIKit
 import AWSS3
+import FirebaseStorage
+import FirebaseDatabase
 
 class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
@@ -34,6 +36,10 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
     let DEFAULT : NSNumber = 0
     let S3 : NSNumber = 1
     
+    var ref: DatabaseReference!
+    var storageRef : StorageReference!
+    var refHandleLeft, refHandleRight : DatabaseHandle!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Create a Post"
@@ -45,7 +51,9 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         leftImageSet = DEFAULT
         rightImageSet = DEFAULT
         
-
+        ref = Database.database().reference()
+        storageRef = Storage.storage().reference()
+        
         // Do any additional setup after loading the view.
         
         
@@ -392,6 +400,43 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         rightOptionalLabel.isHidden = false
     }
     
+    func executeImageUpload(image : UIImage, imageKey : String) {
+        let fileManager = FileManager.default
+        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
+        let imageData = UIImageJPEGRepresentation(image, 0.5)
+        fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
+        
+        let fileUrl = NSURL(fileURLWithPath: path)
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest?.bucket = "versus.pictures"
+        uploadRequest?.key = imageKey
+        uploadRequest?.contentType = "image/jpeg"
+        uploadRequest?.body = fileUrl as URL
+        
+        let transferManager = AWSS3TransferManager.default()
+        transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
+            
+            if let error = task.error as? NSError {
+                if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
+                    switch code {
+                    case .cancelled, .paused:
+                        break
+                    default:
+                        print("Error uploading: \(uploadRequest!.key) Error: \(error)")
+                    }
+                } else {
+                    print("Error uploading: \(uploadRequest!.key) Error: \(error)")
+                }
+                return nil
+            }
+            else {
+                //for now we don't handle additional code for image upload success
+            }
+            
+            return nil
+        })
+    }
+    
     func uploadImages(postID : String) {
         if leftImageSet == S3 {
             let imageKey = postID+"-left.jpeg"
@@ -404,41 +449,47 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                     image = rawImage.resized(toHeight: 304)
                 }
                 
-                let fileManager = FileManager.default
-                let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
-                let imageData = UIImageJPEGRepresentation(image, 0.5)
-                fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
+                let currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")!
                 
-                let fileUrl = NSURL(fileURLWithPath: path)
-                let uploadRequest = AWSS3TransferManagerUploadRequest()
-                uploadRequest?.bucket = "versus.pictures"
-                uploadRequest?.key = imageKey
-                uploadRequest?.contentType = "image/jpeg"
-                uploadRequest?.body = fileUrl as URL
+                let data : Data = UIImageJPEGRepresentation(rawImage, 0.8)!
+                let requestID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+                let filePath = "profile/\(currentUsername)/\(requestID).jpg"
+                let uploadRef = storageRef.child(filePath)
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
                 
-                let transferManager = AWSS3TransferManager.default()
-                transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
-                    
-                    if let error = task.error as? NSError {
-                        if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                            switch code {
-                            case .cancelled, .paused:
-                                break
-                            default:
-                                print("Error uploading: \(uploadRequest!.key) Error: \(error)")
-                            }
-                        } else {
-                            print("Error uploading: \(uploadRequest!.key) Error: \(error)")
+                uploadRef.putData(data, metadata: metadata) { (metadata, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        DispatchQueue.main.async {
+                            self.showToast(message: "Please check your network connection.", length: 37)
                         }
-                        return nil
+                        
+                    }else{
+                        //attach a listener that listens for image check results and calls executeImageUpload if image is good, otherwise returns with a warning
+                        
+                        self.refHandleLeft = self.ref.child("gvresults/\(currentUsername)/\(requestID)").observe(DataEventType.value, with: { (snapshot) in
+                            let result = snapshot.value as? String
+                            if result != nil {
+                                self.ref.child("gvresults/\(currentUsername)/\(requestID)").removeObserver(withHandle: self.refHandleLeft)
+                                //fields[0] = Adult, fields[1] = Medical, fields[2] = Violence
+                                let fields = result!.split(separator: ",")
+                                let imageIsSafe = (fields[0] == "VERY_UNLIKELY" || fields[0] == "UNLIKELY")
+                                    && (fields[1] == "VERY_UNLIKELY" || fields[1] == "UNLIKELY")
+                                    && (fields[2] == "VERY_UNLIKELY" || fields[2] == "UNLIKELY")
+                                
+                                if imageIsSafe {
+                                    self.executeImageUpload(image: image, imageKey: imageKey)
+                                }
+                                else {
+                                    DispatchQueue.main.async {
+                                        self.showToast(message: "Inappropriate image detected.", length: 29)
+                                    }
+                                }
+                            }
+                        })
                     }
-                    else {
-                        //for now we don't handle additional code for image upload success
-                    }
-                    
-                    return nil
-                })
-                
+                }
             }
         }
         
@@ -454,41 +505,47 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                     image = rawImage.resized(toHeight: 304)
                 }
                 
-                let fileManager = FileManager.default
-                let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageKey)
-                let imageData = UIImageJPEGRepresentation(image, 0.5)
-                fileManager.createFile(atPath: path as String, contents: imageData, attributes: nil)
+                let currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")!
                 
-                let fileUrl = NSURL(fileURLWithPath: path)
-                let uploadRequest = AWSS3TransferManagerUploadRequest()
-                uploadRequest?.bucket = "versus.pictures"
-                uploadRequest?.key = imageKey
-                uploadRequest?.contentType = "image/jpeg"
-                uploadRequest?.body = fileUrl as URL
+                let data : Data = UIImageJPEGRepresentation(rawImage, 0.8)!
+                let requestID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+                let filePath = "profile/\(currentUsername)/\(requestID).jpg"
+                let uploadRef = storageRef.child(filePath)
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
                 
-                let transferManager = AWSS3TransferManager.default()
-                transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
-                    
-                    if let error = task.error as? NSError {
-                        if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                            switch code {
-                            case .cancelled, .paused:
-                                break
-                            default:
-                                print("Error uploading: \(uploadRequest!.key) Error: \(error)")
-                            }
-                        } else {
-                            print("Error uploading: \(uploadRequest!.key) Error: \(error)")
+                uploadRef.putData(data, metadata: metadata) { (metadata, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        DispatchQueue.main.async {
+                            self.showToast(message: "Please check your network connection.", length: 37)
                         }
-                        return nil
+                        
+                    }else{
+                        //attach a listener that listens for image check results and calls executeImageUpload if image is good, otherwise returns with a warning
+                        
+                        self.refHandleRight = self.ref.child("gvresults/\(currentUsername)/\(requestID)").observe(DataEventType.value, with: { (snapshot) in
+                            let result = snapshot.value as? String
+                            if result != nil {
+                                self.ref.child("gvresults/\(currentUsername)/\(requestID)").removeObserver(withHandle: self.refHandleRight)
+                                //fields[0] = Adult, fields[1] = Medical, fields[2] = Violence
+                                let fields = result!.split(separator: ",")
+                                let imageIsSafe = (fields[0] == "VERY_UNLIKELY" || fields[0] == "UNLIKELY")
+                                    && (fields[1] == "VERY_UNLIKELY" || fields[1] == "UNLIKELY")
+                                    && (fields[2] == "VERY_UNLIKELY" || fields[2] == "UNLIKELY")
+                                
+                                if imageIsSafe {
+                                    self.executeImageUpload(image: image, imageKey: imageKey)
+                                }
+                                else {
+                                    DispatchQueue.main.async {
+                                        self.showToast(message: "Inappropriate image detected.", length: 29)
+                                    }
+                                }
+                            }
+                        })
                     }
-                    else {
-                        //for now we don't handle additional code for image upload success
-                    }
-                    
-                    return nil
-                })
-                
+                }
             }
         }
         
