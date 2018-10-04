@@ -21,9 +21,16 @@ class PostTextTableViewCell: UITableViewCell {
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     
+    var postID : String!
+    var rowNumber : Int!
+    
     var delegate : ProfileDelegator!
     
-    func setCell(post : PostObject, vIsRed : Bool){
+    
+    func setCell(post : PostObject, vIsRed : Bool, row : Int){
+        postID = post.post_id
+        rowNumber = row
+        
         authorLabel.text = post.author
         votecountLabel.text = "\(post.redcount.intValue + post.blackcount.intValue) votes"
         categoryLabel.text = getCategoryString(categoryInt: post.category)
@@ -213,6 +220,7 @@ class PostTextTableViewCell: UITableViewCell {
     }
     
     @IBAction func overflowTapped(_ sender: UIButton) {
+        delegate.overflowTapped(postID: postID, sender: sender, rowNumber: rowNumber)        
     }
     
     

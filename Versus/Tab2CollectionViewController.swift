@@ -246,6 +246,10 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
         
     }
     
+    func overflowTapped(postID: String, sender: UIButton, rowNumber: Int) {
+        //hi
+    }
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return posts.count
@@ -295,7 +299,7 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
             
             if currentPost.redimg.intValue % 10 == S3 || currentPost.blackimg.intValue % 10 == S3 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_images", for: indexPath) as! PostImageTableViewCell
-                cell.setCell(post: currentPost, vIsRed: vIsRed)
+                cell.setCell(post: currentPost, vIsRed: vIsRed, row: indexPath.section)
                 vIsRed = !vIsRed
                 cell.delegate = self
                 
@@ -303,7 +307,7 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
             }
             else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "vscard_texts", for: indexPath) as! PostTextTableViewCell
-                cell.setCell(post: currentPost, vIsRed: vIsRed)
+                cell.setCell(post: currentPost, vIsRed: vIsRed, row: indexPath.section)
                 vIsRed = !vIsRed
                 cell.delegate = self
                 

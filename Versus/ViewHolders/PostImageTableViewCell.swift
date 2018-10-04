@@ -23,6 +23,10 @@ class PostImageTableViewCell: UITableViewCell {
     @IBOutlet weak var rednameLabel: UILabel!
     @IBOutlet weak var blacknameLabel: UILabel!
     
+    
+    var postID : String!
+    var rowNumber : Int!
+    
     var delegate : ProfileDelegator!
     
     let DEFAULT = 0
@@ -30,7 +34,10 @@ class PostImageTableViewCell: UITableViewCell {
     
     let getPreSignedURLRequest = AWSS3GetPreSignedURLRequest()
     
-    func setCell(post : PostObject, vIsRed : Bool){
+    func setCell(post : PostObject, vIsRed : Bool, row : Int){
+        postID = post.post_id
+        rowNumber = row
+        
         authorLabel.text = post.author
         votecountLabel.text = "\(post.redcount.intValue + post.blackcount.intValue) votes"
         categoryLabel.text = getCategoryString(categoryInt: post.category)
@@ -295,6 +302,7 @@ class PostImageTableViewCell: UITableViewCell {
     }
     
     @IBAction func overflowTapped(_ sender: UIButton) {
+        delegate.overflowTapped(postID: postID, sender: sender, rowNumber: rowNumber)
     }
     
     
