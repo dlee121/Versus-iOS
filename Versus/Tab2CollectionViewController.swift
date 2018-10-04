@@ -121,6 +121,9 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
         
         if fromIndex == 0  || blockedUsernames == nil{
             if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
+                if blockedUsernames.count > 0 {
+                    blockedUsernames.removeAllObjects()
+                }
                 blockedUsernames.addObjects(from: blockList)
             }
         }
@@ -323,7 +326,8 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if hiddenSections.contains(posts[section].post_id) {
+        let post = posts[section]
+        if hiddenSections.contains(post.post_id) || blockedUsernames.contains(post.author) {
             return 0
         }
         else {

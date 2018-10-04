@@ -97,6 +97,9 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     func myCircleInitialSetup(){
         if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
+            if blockedUsernames.count > 0 {
+                blockedUsernames.removeAllObjects()
+            }
             blockedUsernames.addObjects(from: blockList)
         }
         
@@ -456,8 +459,17 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if hiddenSections.contains(comments[section].comment_id) {
+        let comment = comments[section]
+        if hiddenSections.contains(comment.comment_id) || blockedUsernames.contains(comment.author) {
             return 0
+        }
+        else if let postInfo = postInfos[comment.post_id] {
+            if self.blockedUsernames.contains(postInfo.a) {
+                return 0
+            }
+            else {
+                return cellSpacingHeight
+            }
         }
         else {
             return cellSpacingHeight
@@ -481,8 +493,16 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let comment = comments[indexPath.section]
-        if hiddenSections.contains(comment.comment_id) || blockedUsernames.contains(comment.author) || blockedUsernames.contains(comment.postAuthor!) {
+        if hiddenSections.contains(comment.comment_id) || blockedUsernames.contains(comment.author) {
             return 0
+        }
+        else if let postInfo = postInfos[comment.post_id] {
+            if self.blockedUsernames.contains(postInfo.a) {
+                return 0
+            }
+            else {
+                return UITableViewAutomaticDimension
+            }
         }
         else {
             return UITableViewAutomaticDimension
