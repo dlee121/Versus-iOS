@@ -44,6 +44,7 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
     var queryTime : Int!
     
     var hiddenSections = NSMutableSet()
+    var blockedUsernames = NSMutableSet()
     
     private let refreshControl = UIRefreshControl()
     
@@ -117,6 +118,13 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func trendingQuery(){
+        
+        if fromIndex == 0  || blockedUsernames == nil{
+            if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
+                blockedUsernames.addObjects(from: blockList)
+            }
+        }
+        
         //print("trending query started")
         DispatchQueue.main.async {
             if !self.indicator.isAnimating && !self.refreshControl.isRefreshing {
@@ -296,7 +304,8 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if hiddenSections.contains(posts[indexPath.section].post_id) {
+        let post = posts[indexPath.section]
+        if hiddenSections.contains(post.post_id) || blockedUsernames.contains(post.author) {
             return 0
         }
         else {

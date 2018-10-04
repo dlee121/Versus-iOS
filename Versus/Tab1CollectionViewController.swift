@@ -49,6 +49,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     var hiddenSections = NSMutableSet()
     
+    var blockedUsernames = NSMutableSet()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
@@ -94,6 +96,9 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func myCircleInitialSetup(){
+        if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
+            blockedUsernames.addObjects(from: blockList)
+        }
         
         expandedCells.removeAllObjects()
         
@@ -475,7 +480,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if hiddenSections.contains(comments[indexPath.section].comment_id) {
+        let comment = comments[indexPath.section]
+        if hiddenSections.contains(comment.comment_id) || blockedUsernames.contains(comment.author) || blockedUsernames.contains(comment.postAuthor!) {
             return 0
         }
         else {
