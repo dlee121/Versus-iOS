@@ -627,6 +627,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
         alert.addAction(UIAlertAction(title: "Hide", style: .default, handler: { _ in
             self.hiddenSections.add(rowNumber)
             self.tableView.reloadRows(at: [IndexPath(row: 0, section: rowNumber)], with: .automatic)
+            self.showToast(message: "Comment hidden.", length: 17)
         }))
         
         alert.addAction(UIAlertAction(title: "Report", style: .default, handler: { _ in
@@ -644,7 +645,7 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             let buttonTwo = DefaultButton(title: "Yes") {
                 let commentReportPath = "reports/c/\(commentID)/"
                 Database.database().reference().child(commentReportPath).setValue(true)
-                self.showToast(message: "Comment reported.", length: 17)
+                self.showToast(message: "Comment reported.", length: 19)
             }
             
             popup.addButtons([buttonOne, buttonTwo])

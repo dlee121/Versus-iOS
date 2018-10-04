@@ -262,6 +262,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         alert.addAction(UIAlertAction(title: "Hide", style: .default, handler: { _ in
             self.hiddenSections.add(rowNumber)
             self.tableView.reloadRows(at: [IndexPath(row: 0, section: rowNumber)], with: .automatic)
+            self.showToast(message: "Post hidden.", length: 14)
         }))
         
         alert.addAction(UIAlertAction(title: "Report", style: .default, handler: { _ in
