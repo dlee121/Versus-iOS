@@ -260,7 +260,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         alert.popoverPresentationController?.sourceRect = sender.bounds
         
         alert.addAction(UIAlertAction(title: "Hide", style: .default, handler: { _ in
-            self.hiddenSections.add(rowNumber)
+            self.hiddenSections.add(postID)
             self.tableView.reloadRows(at: [IndexPath(row: 0, section: rowNumber)], with: .automatic)
             self.showToast(message: "Post hidden.", length: 14)
         }))
@@ -299,7 +299,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if hiddenSections.contains(indexPath.section) {
+        if hiddenSections.contains(posts[indexPath.section].post_id) {
             return 0
         }
         else {
@@ -316,7 +316,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if hiddenSections.contains(section) {
+        if hiddenSections.contains(posts[section].post_id) {
             return 0
         }
         else {
