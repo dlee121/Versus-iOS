@@ -34,20 +34,20 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 if email == "0" {
                     emailIsSetup = false
-                    settingsItems = ["Log Out", "Set Up Email for Account Recovery", "About"]
+                    settingsItems = ["Log Out", "Blocked Users", "Set Up Email for Account Recovery", "About"]
                 }
                 else {
                     emailIsSetup = true
                     currentEmail = email
-                    settingsItems = ["Log Out", "Edit Email for Account Recovery", "About"]
+                    settingsItems = ["Log Out", "Blocked Users", "Edit Email for Account Recovery", "About"]
                 }
             }
             else {
-                settingsItems = ["Log Out", "Set Up Email for Account Recovery", "About"]
+                settingsItems = ["Log Out", "Blocked Users", "Set Up Email for Account Recovery", "About"]
             }
         }
         else {
-            settingsItems = ["Log Out", "About"]
+            settingsItems = ["Log Out", "Blocked Users", "About"]
         }
         tableView.reloadData()
     }
@@ -105,6 +105,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             }, completion: nil)
             
         case 1:
+            //Blocked Users
+            performSegue(withIdentifier: "showBlockedUsers", sender: self)
+            
+        case 2:
             if isNative {
                 //Set Up Email. later, let's have it so that the name changes to "Edit Email" when email is already added
                 showCustomDialog()
@@ -114,18 +118,30 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 performSegue(withIdentifier: "settingToAbout", sender: self)
                 
             }
-            
-            
-            break
-        case 2:
+        case 3:
             //About
             performSegue(withIdentifier: "settingToAbout", sender: self)
             
-            break
         default:
             break
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let blockedUsersVC = segue.destination as? BlockedUsersViewController else {return}
+        let view = blockedUsersVC.view //necessary for loading the view
+        
+        if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
+            blockedUsersVC.setUpBlockedUsersPage(blockedUsersList: blockList)
+        }
+        else {
+            blockedUsersVC.setUpBlankPage()
+        }
+        
+        
+    }
+    
     
     func showCustomDialog(animated: Bool = true) {
         

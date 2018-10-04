@@ -34,6 +34,8 @@
 		702518D121350826008B8E65 /* VSCommentsListModel__shards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702518CC21350825008B8E65 /* VSCommentsListModel__shards.swift */; };
 		702518D221350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702518CD21350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift */; };
 		7027A7DD214E1D500071A939 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027A7DC214E1D500071A939 /* SignUpViewController.swift */; };
+		703ABCC121663FEA003150C4 /* BlockedUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703ABCC021663FEA003150C4 /* BlockedUsersViewController.swift */; };
+		703ABCC321664088003150C4 /* BlockedUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703ABCC221664088003150C4 /* BlockedUserTableViewCell.swift */; };
 		703D7ACC215B66B000B33186 /* EditCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703D7ACB215B66B000B33186 /* EditCommentViewController.swift */; };
 		70484B82212A56D000E198F9 /* MedalUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */; };
 		704E57CA2143F39E000F4109 /* MyCircleDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704E57C92143F39E000F4109 /* MyCircleDelegator.swift */; };
@@ -179,6 +181,8 @@
 		702518CC21350825008B8E65 /* VSCommentsListModel__shards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel__shards.swift; sourceTree = "<group>"; };
 		702518CD21350826008B8E65 /* VSCommentsListModel_hits_hits_item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSCommentsListModel_hits_hits_item.swift; sourceTree = "<group>"; };
 		7027A7DC214E1D500071A939 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		703ABCC021663FEA003150C4 /* BlockedUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersViewController.swift; sourceTree = "<group>"; };
+		703ABCC221664088003150C4 /* BlockedUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUserTableViewCell.swift; sourceTree = "<group>"; };
 		703D7ACB215B66B000B33186 /* EditCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommentViewController.swift; sourceTree = "<group>"; };
 		70484B81212A56D000E198F9 /* MedalUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedalUpdateRequest.swift; sourceTree = "<group>"; };
 		704E57C92143F39E000F4109 /* MyCircleDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCircleDelegator.swift; sourceTree = "<group>"; };
@@ -378,6 +382,7 @@
 				70C49474215B9051006F1D0D /* Native.xib */,
 				70C4947D215BB32C006F1D0D /* NativeImage.xib */,
 				7086C8A1215F1E9700552DC1 /* AboutViewController.swift */,
+				703ABCC021663FEA003150C4 /* BlockedUsersViewController.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -405,6 +410,7 @@
 				705F140C21528240004A24CD /* NativeAdTableViewCell.swift */,
 				70C49476215B9156006F1D0D /* NativeView.swift */,
 				70C4947B215BB2D6006F1D0D /* NativeImageView.swift */,
+				703ABCC221664088003150C4 /* BlockedUserTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -759,6 +765,7 @@
 				7093B21E2150F01300BCC376 /* UIViewController + BackButton.swift in Sources */,
 				70E80CC220E6DB570067DF08 /* VSAIModel__shards.swift in Sources */,
 				70CB9E532115671700D86E37 /* VSCNode.swift in Sources */,
+				703ABCC321664088003150C4 /* BlockedUserTableViewCell.swift in Sources */,
 				7056672F2101564D00CB87AD /* CategoriesTableViewCell.swift in Sources */,
 				70CB9E4B2112B33C00D86E37 /* CategoryFilterViewController.swift in Sources */,
 				70CB9E492110020500D86E37 /* MyCircleTableViewCell.swift in Sources */,
@@ -800,6 +807,7 @@
 				70036ED2210ABA96000BE8E9 /* FGHViewController.swift in Sources */,
 				702518CE21350826008B8E65 /* VSCommentsListModel_hits.swift in Sources */,
 				70E80CBA20E6DB570067DF08 /* VSAIModel_hits_hits_item.swift in Sources */,
+				703ABCC121663FEA003150C4 /* BlockedUsersViewController.swift in Sources */,
 				70B9A7E920EEDACB00C06709 /* PostObject.swift in Sources */,
 				70E80CCE20E6DB570067DF08 /* VSCommentPutModel.swift in Sources */,
 				70036ED0210A79C1000BE8E9 /* PostsHistoryTableViewCell.swift in Sources */,

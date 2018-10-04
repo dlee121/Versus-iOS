@@ -259,7 +259,9 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                                                         if let usernames = value?.allKeys as? [String] {
                                                             UserDefaults.standard.set(usernames, forKey: "KEY_BLOCKS")
                                                         }
-                                                        
+                                                        else {
+                                                            print("suddenly it's not getting set?")
+                                                        }
                                                         // ...
                                                     }) { (error) in
                                                         print(error.localizedDescription)
