@@ -12,6 +12,7 @@ import AWSS3
 import XLPagerTabStrip
 import FirebaseDatabase
 import Appodeal
+import PopupDialog
 
 class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MyCircleDelegator {
     
@@ -45,6 +46,8 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     var adFrequency = 11
     var queryTime : String!
+    
+    var hiddenSections = NSMutableSet()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -448,7 +451,12 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return cellSpacingHeight
+        if hiddenSections.contains(section) {
+            return 0
+        }
+        else {
+            return cellSpacingHeight
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -463,6 +471,15 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             nowLoading = true
             fromIndex = comments.count
             myCircleQuery()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if hiddenSections.contains(indexPath.section) {
+            return 0
+        }
+        else {
+            return UITableViewAutomaticDimension
         }
     }
     
@@ -598,6 +615,51 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             
             mainVC.myCircleItemClick(comment: clickedComment, postProfileImage: piv)
         }
+    }
+    
+    func overflowTapped(commentID: String, sender: UIButton, rowNumber: Int) {
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.popoverPresentationController?.sourceView = sender
+        alert.popoverPresentationController?.sourceRect = sender.bounds
+        
+        alert.addAction(UIAlertAction(title: "Hide", style: .default, handler: { _ in
+            self.hiddenSections.add(rowNumber)
+            self.tableView.reloadRows(at: [IndexPath(row: 0, section: rowNumber)], with: .automatic)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Report", style: .default, handler: { _ in
+            // Prepare the popup assets
+            let title = "Report this comment?"
+            let message = ""
+            
+            // Create the dialog
+            let popup = PopupDialog(title: title, message: message)
+            
+            // Create buttons
+            let buttonOne = DefaultButton(title: "No", action: nil)
+            
+            // This button will not the dismiss the dialog
+            let buttonTwo = DefaultButton(title: "Yes") {
+                let commentReportPath = "reports/c/\(commentID)/"
+                Database.database().reference().child(commentReportPath).setValue(true)
+                self.showToast(message: "Comment reported.", length: 17)
+            }
+            
+            popup.addButtons([buttonOne, buttonTwo])
+            popup.buttonAlignment = .horizontal
+            
+            // Present dialog
+            self.present(popup, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+        
+        
     }
     
     func goToProfile(username: String) {

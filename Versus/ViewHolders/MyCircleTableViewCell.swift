@@ -32,7 +32,7 @@ class MyCircleTableViewCell: UITableViewCell {
     @IBOutlet weak var medalTrailing: NSLayoutConstraint!
     @IBOutlet weak var medalWidth: NSLayoutConstraint!
     
-    
+    var commentID : String!
     
     var delegate:MyCircleDelegator!
     var rowNumber : Int!
@@ -44,6 +44,8 @@ class MyCircleTableViewCell: UITableViewCell {
             postVotes.text = "\(postInfo.rc!.intValue + postInfo.bc!.intValue) votes"
             question.text = postInfo.q
         }
+        
+        commentID = comment.comment_id
         
         commentAuthor.text = comment.author
         time.text = getTimeString(time: comment.time)
@@ -280,6 +282,11 @@ class MyCircleTableViewCell: UITableViewCell {
             
         }
     }
+    
+    @IBAction func overflowTapped(_ sender: UIButton) {
+        delegate.overflowTapped(commentID: commentID, sender: sender, rowNumber: rowNumber)
+    }
+    
     
     
     @IBAction func replyButtonTapped(_ sender: UIButton) {

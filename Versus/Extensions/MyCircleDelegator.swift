@@ -6,4 +6,6 @@ protocol MyCircleDelegator {
     func endUpdatesForSeeLess(row : Int)
     func replyButtonTapped(row : Int)
     func goToProfile(username : String)
+    func overflowTapped(commentID : String, sender: UIButton, rowNumber : Int)
+    
 }
