@@ -3531,13 +3531,18 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KI0-lR-fSB">
-                                                    <rect key="frame" x="16" y="8" width="42" height="20.5"/>
+                                                    <rect key="frame" x="16" y="8" width="313" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S6q-TE-jst">
-                                                    <rect key="frame" x="347" y="7.5" width="12" height="22"/>
+                                                    <rect key="frame" x="337" y="2.5" width="22" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="2la-CH-0HB"/>
+                                                        <constraint firstAttribute="height" constant="32" id="dHe-y9-q36"/>
+                                                    </constraints>
+                                                    <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                                     <state key="normal" image="close"/>
                                                     <connections>
                                                         <action selector="unblockButtonTapped:" destination="fYQ-Is-UX2" eventType="touchUpInside" id="cpj-ym-IFQ"/>
@@ -3548,6 +3553,7 @@
                                                 <constraint firstItem="KI0-lR-fSB" firstAttribute="leading" secondItem="jdh-NG-4EA" secondAttribute="leading" constant="16" id="HhM-32-EyL"/>
                                                 <constraint firstItem="KI0-lR-fSB" firstAttribute="centerY" secondItem="jdh-NG-4EA" secondAttribute="centerY" id="Oy1-ly-0Z1"/>
                                                 <constraint firstAttribute="trailing" secondItem="S6q-TE-jst" secondAttribute="trailing" constant="16" id="PQl-S6-FKp"/>
+                                                <constraint firstItem="S6q-TE-jst" firstAttribute="leading" secondItem="KI0-lR-fSB" secondAttribute="trailing" constant="8" id="hms-Uo-4aZ"/>
                                                 <constraint firstItem="S6q-TE-jst" firstAttribute="centerY" secondItem="jdh-NG-4EA" secondAttribute="centerY" id="iRp-0e-DFE"/>
                                             </constraints>
                                         </tableViewCellContentView>

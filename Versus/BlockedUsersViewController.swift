@@ -43,12 +43,19 @@ class BlockedUsersViewController: UIViewController, UITableViewDataSource, UITab
         cell.delegate = self
         cell.rowNumber = indexPath.row
         
+        cell.preservesSuperviewLayoutMargins = false
+        cell.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
+        
         return cell
     }
     
     func unblockUser(username: String, rowNumber: Int) {
         //hi
         print("unblock \(username) at \(rowNumber)")
+        
+        
+        
     }
     
     
