@@ -232,7 +232,8 @@ class PostImageTableViewCell: UITableViewCell {
                 
                 let presignedURL = task.result
                 DispatchQueue.main.async {
-                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.redImage)
+                    let options = ImageLoadingOptions(failureImage: UIImage(named: "removedImage"))
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, options: options, into: self.redImage)
                 }
                 
                 return nil
@@ -254,7 +255,8 @@ class PostImageTableViewCell: UITableViewCell {
                 
                 let presignedURL = task.result
                 DispatchQueue.main.async {
-                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.blackImage)
+                    let options = ImageLoadingOptions(failureImage: UIImage(named: "removedImage"))
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, options: options, into: self.blackImage)
                 }
                 
                 return nil

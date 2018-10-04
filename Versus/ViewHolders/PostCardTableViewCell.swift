@@ -308,7 +308,8 @@ class PostCardTableViewCell: UITableViewCell {
                 
                 let presignedURL = task.result
                 DispatchQueue.main.async {
-                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.redImage)
+                    let options = ImageLoadingOptions(failureImage: UIImage(named: "removedImage"))
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, options: options, into: self.redImage)
                 }
                 
                 return nil
@@ -330,7 +331,8 @@ class PostCardTableViewCell: UITableViewCell {
                 
                 let presignedURL = task.result
                 DispatchQueue.main.async {
-                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.blueImage)
+                    let options = ImageLoadingOptions(failureImage: UIImage(named: "removedImage"))
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, options: options, into: self.blueImage)
                 }
                 
                 return nil

@@ -591,7 +591,8 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                 
                 let presignedURL = task.result
                 DispatchQueue.main.async {
-                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.initialIVLeft)
+                    let options = ImageLoadingOptions(failureImage: UIImage(named: "removedImage"))
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, options: options, into: self.initialIVLeft)
                 }
                 
                 return nil
@@ -613,7 +614,8 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                 
                 let presignedURL = task.result
                 DispatchQueue.main.async {
-                    Nuke.loadImage(with: presignedURL!.absoluteURL!, into: self.initialIVRight)
+                    let options = ImageLoadingOptions(failureImage: UIImage(named: "removedImage"))
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, options: options, into: self.initialIVRight)
                 }
                 
                 return nil

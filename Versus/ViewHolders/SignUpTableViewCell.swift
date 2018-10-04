@@ -90,13 +90,28 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
         
         
-        let customType = ActiveType.custom(pattern: "\\sTerms and Policies\\b")
-        legalText.enabledTypes.append(customType)
+        let customType1 = ActiveType.custom(pattern: "\\sEULA\\b")
+        legalText.enabledTypes.append(customType1)
+        
+        let customType2 = ActiveType.custom(pattern: "\\sPolicies\\b")
+        legalText.enabledTypes.append(customType2)
         
         legalText.customize { label in
-            legalText.customColor[customType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
+            legalText.customColor[customType1] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
             
-            legalText.handleCustomTap(for: customType) { _ in
+            legalText.handleCustomTap(for: customType1) { _ in
+                guard let url = URL(string: "https://www.versusdaily.com/eula") else { return }
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
+            }
+            
+            legalText.customColor[customType2] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
+            
+            legalText.handleCustomTap(for: customType2) { _ in
                 guard let url = URL(string: "https://www.versusdaily.com/terms-and-policies") else { return }
                 if #available(iOS 10.0, *) {
                     UIApplication.shared.open(url)

@@ -319,7 +319,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up, you agree to our Terms and Policies." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6h-vd-jNM" customClass="ActiveLabel" customModule="ActiveLabel">
+                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up, you agree to our EULA and Policies." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6h-vd-jNM" customClass="ActiveLabel" customModule="ActiveLabel">
                                                     <rect key="frame" x="23" y="348.5" width="329" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="ItZ-5R-Gok"/>
@@ -3291,7 +3291,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms and Policies " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gv-dO-ZbS" customClass="ActiveLabel" customModule="ActiveLabel">
-                                <rect key="frame" x="16" y="64" width="147.5" height="21"/>
+                                <rect key="frame" x="16" y="64" width="148" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="l3W-Qa-cUX"/>
                                 </constraints>
@@ -5490,14 +5490,15 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="H2x-dk-GMV"/>
-        <segue reference="Adv-3g-zxs"/>
+        <segue reference="GMa-tb-UbF"/>
+        <segue reference="kmh-ur-Uym"/>
+        <segue reference="kUu-8a-Bhy"/>
         <segue reference="sD2-CK-5N3"/>
         <segue reference="qbd-PO-7a5"/>
         <segue reference="uAF-H9-Oin"/>
         <segue reference="pLb-S7-nGp"/>
         <segue reference="tN5-20-0qe"/>
-        <segue reference="Zrk-uo-HWn"/>
+        <segue reference="QIQ-jM-7ZR"/>
         <segue reference="MmY-zm-xEb"/>
     </inferredMetricsTieBreakers>
 </document>
