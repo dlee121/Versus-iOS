@@ -3,7 +3,7 @@
 //  Versus
 //
 //  Created by Dongkeun Lee on 7/13/18.
-//  Copyright © 2018 Versus. All rights reserved.
+//  Copyright Â© 2018 Versus. All rights reserved.
 //
 
 import UIKit
@@ -210,26 +210,11 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        /*
-        if let backTarget = navigationController?.viewControllers[navigationController!.viewControllers.count-2]  {
-            if let root = backTarget as? RootPageViewController {
-                self.tabBarController?.tabBar.isHidden = true
-            }
-            else if let child = backTarget as? ChildPageViewController {
-                self.tabBarController?.tabBar.isHidden = true
-            }
-            else if let gc = backTarget as? GrandchildPageViewController {
-                self.tabBarController?.tabBar.isHidden = true
-            }
-        }
-        */
-        /*
-        //self.tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
         
-        if !(fromPostPage != nil && fromPostPage!) {
-            //containerViewBottom.constant = -tabBarController!.tabBar.frame.height
+        if fromPostPage != nil && fromPostPage! {
+            containerViewBottom.constant = -tabBarController!.tabBar.frame.height
         }
-        */
     }
     
     override func viewWillAppear(_ animated: Bool){

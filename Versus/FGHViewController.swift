@@ -28,7 +28,7 @@ class FGHViewController: UIViewController, UITableViewDataSource, UITableViewDel
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //self.tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
