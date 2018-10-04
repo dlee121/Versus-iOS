@@ -16,16 +16,17 @@ class BlockedUsersViewController: UIViewController, UITableViewDataSource, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.tableFooterView = UIView()
         // Do any additional setup after loading the view.
     }
     
     func setUpBlankPage() {
-        coverLabel.isHidden = true
+        coverLabel.isHidden = false
+        
     }
     
     func setUpBlockedUsersPage(blockedUsersList : [String]) {
-        coverLabel.isHidden = false
+        coverLabel.isHidden = true
         usernames = blockedUsersList
         tableView.reloadData()
     }
