@@ -76,6 +76,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             //Log Out
             Messaging.messaging().unsubscribe(fromTopic: currentUsername)
             //remove session data, log out firebase user, then segue back to start screen
+            UserDefaults.standard.removeObject(forKey: "KEY_BLOCKS")
             UserDefaults.standard.removeObject(forKey: "KEY_BDAY")
             UserDefaults.standard.removeObject(forKey: "KEY_EMAIL")
             UserDefaults.standard.removeObject(forKey: "KEY_USERNAME")

@@ -79,48 +79,126 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         
         alert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         
+        var enableUnblock = false
         
-        alert.addAction(UIAlertAction(title: "Block", style: .default, handler: { _ in
-            // Prepare the popup assets
-            let title = "Block this user?"
-            let message = ""
-            
-            // Create the dialog
-            let popup = PopupDialog(title: title, message: message)
-            
-            // Create buttons
-            let buttonOne = DefaultButton(title: "No", action: nil)
-            
-            // This button will not the dismiss the dialog
-            let buttonTwo = DefaultButton(title: "Yes") {
-                var myUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")!
+        if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
+            enableUnblock = blockList.contains(currentUsername!)
+        }
+        
+        if enableUnblock {
+            alert.addAction(UIAlertAction(title: "Unblock", style: .default, handler: { _ in
+                // Prepare the popup assets
+                let title = "Unblock this user?"
+                let message = ""
                 
-                var usernameHash : Int32
-                if(myUsername.count < 5){
-                    usernameHash = myUsername.hashCode()
-                }
-                else{
-                    var hashIn = ""
-                    hashIn.append(myUsername[0])
-                    hashIn.append(myUsername[myUsername.count-2])
-                    hashIn.append(myUsername[1])
-                    hashIn.append(myUsername[myUsername.count-1])
+                // Create the dialog
+                let popup = PopupDialog(title: title, message: message)
+                
+                // Create buttons
+                let buttonOne = DefaultButton(title: "No", action: nil)
+                
+                // This button will not the dismiss the dialog
+                let buttonTwo = DefaultButton(title: "Yes") {
+                    var myUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")!
                     
-                    usernameHash = hashIn.hashCode()
+                    var usernameHash : Int32
+                    if(myUsername.count < 5){
+                        usernameHash = myUsername.hashCode()
+                    }
+                    else{
+                        var hashIn = ""
+                        hashIn.append(myUsername[0])
+                        hashIn.append(myUsername[myUsername.count-2])
+                        hashIn.append(myUsername[1])
+                        hashIn.append(myUsername[myUsername.count-1])
+                        
+                        usernameHash = hashIn.hashCode()
+                    }
+                    
+                    let blockPath = "\(usernameHash)/\(myUsername)/blocked/\(self.currentUsername!)"
+                    Database.database().reference().child(blockPath).removeValue()
+                    
+                    var blockListArray = [String]()
+                    
+                    if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
+                        blockListArray = blockList
+                    }
+                    
+                    var i = 0
+                    for username in blockListArray {
+                        if username == self.currentUsername! {
+                            blockListArray.remove(at: i)
+                        }
+                        i += 1
+                    }
+                    
+                    UserDefaults.standard.set(blockListArray, forKey: "KEY_BLOCKS")
+                    
+                    let str = "Unblocked \(self.currentUsername!)."
+                    self.showToast(message: str, length: str.count + 2)
                 }
                 
-                let blockPath = "\(usernameHash)/\(myUsername)/blocked/\(self.currentUsername!)"
-                Database.database().reference().child(blockPath).setValue(true)
-                let str = "Blocked \(self.currentUsername!)."
-                self.showToast(message: str, length: str.count + 2)
-            }
-            
-            popup.addButtons([buttonOne, buttonTwo])
-            popup.buttonAlignment = .horizontal
-            
-            // Present dialog
-            self.present(popup, animated: true, completion: nil)
-        }))
+                popup.addButtons([buttonOne, buttonTwo])
+                popup.buttonAlignment = .horizontal
+                
+                // Present dialog
+                self.present(popup, animated: true, completion: nil)
+            }))
+        }
+        else {
+            alert.addAction(UIAlertAction(title: "Block", style: .default, handler: { _ in
+                // Prepare the popup assets
+                let title = "Block this user?"
+                let message = ""
+                
+                // Create the dialog
+                let popup = PopupDialog(title: title, message: message)
+                
+                // Create buttons
+                let buttonOne = DefaultButton(title: "No", action: nil)
+                
+                // This button will not the dismiss the dialog
+                let buttonTwo = DefaultButton(title: "Yes") {
+                    var myUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")!
+                    
+                    var usernameHash : Int32
+                    if(myUsername.count < 5){
+                        usernameHash = myUsername.hashCode()
+                    }
+                    else{
+                        var hashIn = ""
+                        hashIn.append(myUsername[0])
+                        hashIn.append(myUsername[myUsername.count-2])
+                        hashIn.append(myUsername[1])
+                        hashIn.append(myUsername[myUsername.count-1])
+                        
+                        usernameHash = hashIn.hashCode()
+                    }
+                    
+                    let blockPath = "\(usernameHash)/\(myUsername)/blocked/\(self.currentUsername!)"
+                    Database.database().reference().child(blockPath).setValue(true)
+                    
+                    var blockListArray = [String]()
+                    
+                    if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
+                        blockListArray = blockList
+                    }
+                    
+                    blockListArray.append(self.currentUsername!)
+                    
+                    UserDefaults.standard.set(blockListArray, forKey: "KEY_BLOCKS")
+                    
+                    let str = "Blocked \(self.currentUsername!)."
+                    self.showToast(message: str, length: str.count + 2)
+                }
+                
+                popup.addButtons([buttonOne, buttonTwo])
+                popup.buttonAlignment = .horizontal
+                
+                // Present dialog
+                self.present(popup, animated: true, completion: nil)
+            }))
+        }
         
         alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
         

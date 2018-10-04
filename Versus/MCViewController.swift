@@ -78,8 +78,6 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         self.loadDesign()
         super.viewDidLoad()
         
-        
-        
         currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")
         searchViewController = storyboard!.instantiateViewController(withIdentifier: "searchViewController") as? SearchViewController
         searchViewController.mainContainer = self

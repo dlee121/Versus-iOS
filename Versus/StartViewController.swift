@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 import FacebookLogin
 import GoogleSignIn
 import PopupDialog
@@ -128,6 +129,7 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
         NotificationCenter.default.addObserver(self, selector: #selector(StartViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         //remove session data, log out firebase user, then segue back to start screen
+        UserDefaults.standard.removeObject(forKey: "KEY_BLOCKS")
         UserDefaults.standard.removeObject(forKey: "KEY_BDAY")
         UserDefaults.standard.removeObject(forKey: "KEY_EMAIL")
         UserDefaults.standard.removeObject(forKey: "KEY_USERNAME")
@@ -249,6 +251,20 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                                                 }
                                                 else {
                                                     let userGetModel = task.result
+                                                    
+                                                    let blockListPath = self.getUsernameHash(username: userGetModel!.cs!) + "/\(userGetModel!.cs!)/blocked"
+                                                    Database.database().reference().child(blockListPath).observeSingleEvent(of: .value, with: { (snapshot) in
+                                                        // Get user value
+                                                        let value = snapshot.value as? NSDictionary
+                                                        if let usernames = value?.allKeys as? [String] {
+                                                            UserDefaults.standard.set(usernames, forKey: "KEY_BLOCKS")
+                                                        }
+                                                        
+                                                        // ...
+                                                    }) { (error) in
+                                                        print(error.localizedDescription)
+                                                    }
+                                                    
                                                     //create user session and segue to MainContainer
                                                     UserDefaults.standard.set(userGetModel?.bd, forKey: "KEY_BDAY")
                                                     UserDefaults.standard.set(userGetModel?.em, forKey: "KEY_EMAIL")
@@ -507,6 +523,19 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                                         
                                         //Firebase authentication successful
                                         let userData = results[0].source!
+                                        
+                                        let blockListPath = self.getUsernameHash(username: userData.cs!) + "/\(userData.cs!)/blocked"
+                                        Database.database().reference().child(blockListPath).observeSingleEvent(of: .value, with: { (snapshot) in
+                                            // Get user value
+                                            let value = snapshot.value as? NSDictionary
+                                            if let usernames = value?.allKeys as? [String] {
+                                                UserDefaults.standard.set(usernames, forKey: "KEY_BLOCKS")
+                                            }
+                                            // ...
+                                        }) { (error) in
+                                            print(error.localizedDescription)
+                                        }
+                                        
                                         //create user session and segue to MainContainer
                                         UserDefaults.standard.set(userData.bd, forKey: "KEY_BDAY")
                                         UserDefaults.standard.set(userData.em, forKey: "KEY_EMAIL")
@@ -606,6 +635,18 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                                             
                                             //Firebase authentication successful
                                             let userData = results[0].source!
+                                            let blockListPath = self.getUsernameHash(username: userData.cs!) + "/\(userData.cs!)/blocked"
+                                            Database.database().reference().child(blockListPath).observeSingleEvent(of: .value, with: { (snapshot) in
+                                                // Get user value
+                                                let value = snapshot.value as? NSDictionary
+                                                if let usernames = value?.allKeys as? [String] {
+                                                    UserDefaults.standard.set(usernames, forKey: "KEY_BLOCKS")
+                                                }
+                                                // ...
+                                            }) { (error) in
+                                                print(error.localizedDescription)
+                                            }
+                                            
                                             //create user session and segue to MainContainer
                                             UserDefaults.standard.set(userData.bd, forKey: "KEY_BDAY")
                                             UserDefaults.standard.set(userData.em, forKey: "KEY_EMAIL")
@@ -632,6 +673,25 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                 
             }
         }
+    }
+    
+    func getUsernameHash(username : String) -> String {
+        var usernameHash : Int32
+        if(username.count < 5){
+            usernameHash = username.hashCode()
+        }
+        else{
+            var hashIn = ""
+            
+            hashIn.append(username[0])
+            hashIn.append(username[username.count-2])
+            hashIn.append(username[1])
+            hashIn.append(username[username.count-1])
+            
+            usernameHash = hashIn.hashCode()
+        }
+        
+        return "\(usernameHash)"
     }
     
     
