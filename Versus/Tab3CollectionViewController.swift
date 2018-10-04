@@ -11,6 +11,7 @@ import FirebaseDatabase
 import Nuke
 import AWSS3
 import XLPagerTabStrip
+import PopupDialog
 
 class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileDelegator {
     
@@ -47,6 +48,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     var queryTime : String!
     
+    var hiddenSections = NSMutableSet()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -251,9 +253,58 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func overflowTapped(postID: String, sender: UIButton, rowNumber: Int) {
-        //hi
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.popoverPresentationController?.sourceView = sender
+        alert.popoverPresentationController?.sourceRect = sender.bounds
+        
+        alert.addAction(UIAlertAction(title: "Hide", style: .default, handler: { _ in
+            self.hiddenSections.add(rowNumber)
+            self.tableView.reloadRows(at: [IndexPath(row: 0, section: rowNumber)], with: .automatic)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Report", style: .default, handler: { _ in
+            // Prepare the popup assets
+            let title = "Report this post?"
+            let message = ""
+            
+            // Create the dialog
+            let popup = PopupDialog(title: title, message: message)
+            
+            // Create buttons
+            let buttonOne = DefaultButton(title: "No", action: nil)
+            
+            // This button will not the dismiss the dialog
+            let buttonTwo = DefaultButton(title: "Yes") {
+                let postReportPath = "reports/p/\(postID)/"
+                Database.database().reference().child(postReportPath).setValue(true)
+                self.showToast(message: "Post reported.", length: 17)
+            }
+            
+            popup.addButtons([buttonOne, buttonTwo])
+            popup.buttonAlignment = .horizontal
+            
+            // Present dialog
+            self.present(popup, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+        
+        
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if hiddenSections.contains(indexPath.section) {
+            return 0
+        }
+        else {
+            return UITableViewAutomaticDimension
+        }
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return posts.count
@@ -264,7 +315,12 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return cellSpacingHeight
+        if hiddenSections.contains(section) {
+            return 0
+        }
+        else {
+            return cellSpacingHeight
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
