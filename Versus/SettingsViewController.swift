@@ -133,7 +133,12 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         let view = blockedUsersVC.view //necessary for loading the view
         
         if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
-            blockedUsersVC.setUpBlockedUsersPage(blockedUsersList: blockList)
+            if blockList.count > 0 {
+                blockedUsersVC.setUpBlockedUsersPage(blockedUsersList: blockList)
+            }
+            else {
+                blockedUsersVC.setUpBlankPage()
+            }
         }
         else {
             blockedUsersVC.setUpBlankPage()

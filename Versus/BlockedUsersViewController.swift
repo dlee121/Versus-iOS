@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import PopupDialog
 
 class BlockedUsersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, BlockedUsersDelegator {
     
@@ -51,10 +53,70 @@ class BlockedUsersViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func unblockUser(username: String, rowNumber: Int) {
-        //hi
-        print("unblock \(username) at \(rowNumber)")
         
+        // Prepare the popup assets
+        let title = "Unblock \(username)?"
+        let message = ""
         
+        // Create the dialog
+        let popup = PopupDialog(title: title, message: message)
+        
+        // Create buttons
+        let buttonOne = DefaultButton(title: "No", action: nil)
+        
+        // This button will not the dismiss the dialog
+        let buttonTwo = DefaultButton(title: "Yes") {
+            var myUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")!
+            
+            var usernameHash : Int32
+            if(myUsername.count < 5){
+                usernameHash = myUsername.hashCode()
+            }
+            else{
+                var hashIn = ""
+                hashIn.append(myUsername[0])
+                hashIn.append(myUsername[myUsername.count-2])
+                hashIn.append(myUsername[1])
+                hashIn.append(myUsername[myUsername.count-1])
+                
+                usernameHash = hashIn.hashCode()
+            }
+            
+            let blockPath = "\(usernameHash)/\(myUsername)/blocked/\(username)"
+            Database.database().reference().child(blockPath).removeValue()
+            
+            self.usernames.remove(at: rowNumber)
+            self.tableView.reloadData()
+            
+            if self.usernames.count == 0 {
+                self.coverLabel.isHidden = false
+            }
+            
+            var blockListArray = [String]()
+            
+            if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
+                blockListArray = blockList
+            }
+            
+            var i = 0
+            for name in blockListArray {
+                if name == username {
+                    blockListArray.remove(at: i)
+                }
+                i += 1
+            }
+            
+            UserDefaults.standard.set(blockListArray, forKey: "KEY_BLOCKS")
+            
+            let str = "Unblocked \(username)."
+            self.showToast(message: str, length: str.count + 2)
+        }
+        
+        popup.addButtons([buttonOne, buttonTwo])
+        popup.buttonAlignment = .horizontal
+        
+        // Present dialog
+        self.present(popup, animated: true, completion: nil)
         
     }
     
