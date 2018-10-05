@@ -83,7 +83,8 @@ class GDPRConsentViewController: UIViewController {
             
             //set local bd = "gdpr1"
             //set ES bd = "gdpr1"
-            
+            UserDefaults.standard.set("gdpr1", forKey: "KEY_BDAY")
+            VSVersusAPIClient.default().setemailGet(c: "gdpr1", a: "bd", b: UserDefaults.standard.string(forKey: "KEY_USERNAME")!)
             
             adConsentFinalVC.textLabel.text = "Great. We hope you enjoy your personalized ad experience. You can withdraw your consent at any time by enabling \"Limit Ad Tracking\" under Settings/Privacy/Advertising on your iOS device and then restarting this app."
         }
@@ -92,6 +93,8 @@ class GDPRConsentViewController: UIViewController {
             
             //set local bd = "gdpr0"
             //set ES bd = "gdpr0"
+            UserDefaults.standard.set("gdpr0", forKey: "KEY_BDAY")
+            VSVersusAPIClient.default().setemailGet(c: "gdpr0", a: "bd", b: UserDefaults.standard.string(forKey: "KEY_USERNAME")!)
             
             
             adConsentFinalVC.textLabel.text = "Appodeal won’t collect your data for personalized advertising in this app."
