@@ -93,17 +93,22 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
         
         
-        let customType1 = ActiveType.custom(pattern: "\\sEULA\\b")
+        let customType1 = ActiveType.custom(pattern: "\\sTerms and Conditions\\b")
         legalText.enabledTypes.append(customType1)
         
-        let customType2 = ActiveType.custom(pattern: "\\sPolicies\\b")
+        let customType2 = ActiveType.custom(pattern: "\\sPrivacy Policy\\b")
         legalText.enabledTypes.append(customType2)
+        
+        let customType3 = ActiveType.custom(pattern: "\\sEULA\\b")
+        legalText.enabledTypes.append(customType3)
+        
+        
         
         legalText.customize { label in
             legalText.customColor[customType1] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
             
             legalText.handleCustomTap(for: customType1) { _ in
-                guard let url = URL(string: "https://www.versusdaily.com/eula") else { return }
+                guard let url = URL(string: "https://www.versusdaily.com/terms-and-conditions") else { return }
                 if #available(iOS 10.0, *) {
                     UIApplication.shared.open(url)
                 } else {
@@ -115,7 +120,19 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
             legalText.customColor[customType2] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
             
             legalText.handleCustomTap(for: customType2) { _ in
-                guard let url = URL(string: "https://www.versusdaily.com/terms-and-policies") else { return }
+                guard let url = URL(string: "https://www.versusdaily.com/privacy-policy") else { return }
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
+            }
+            
+            legalText.customColor[customType3] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
+            
+            legalText.handleCustomTap(for: customType3) { _ in
+                guard let url = URL(string: "https://www.versusdaily.com/eula") else { return }
                 if #available(iOS 10.0, *) {
                     UIApplication.shared.open(url)
                 } else {
