@@ -92,6 +92,7 @@
 		70D17FF32127B88900A0C9D6 /* AtomicInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D17FF22127B88900A0C9D6 /* AtomicInteger.swift */; };
 		70E0DA1D216720F800203350 /* GDPRConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E0DA1C216720F800203350 /* GDPRConsentViewController.swift */; };
 		70E0DA1F2167456900203350 /* GDPRFinalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E0DA1E2167456900203350 /* GDPRFinalViewController.swift */; };
+		70E0DA2321677E3E00203350 /* BlockedCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E0DA2221677E3E00203350 /* BlockedCommentTableViewCell.swift */; };
 		70E331D621212454007414D6 /* GrandchildPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E331D521212454007414D6 /* GrandchildPageViewController.swift */; };
 		70E80BFA20E6976E0067DF08 /* MCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF920E6976E0067DF08 /* MCViewController.swift */; };
 		70E80CAB20E6DB570067DF08 /* VSLeaderboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7020E6DB4D0067DF08 /* VSLeaderboardModel.swift */; };
@@ -243,6 +244,7 @@
 		70D17FF22127B88900A0C9D6 /* AtomicInteger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtomicInteger.swift; sourceTree = "<group>"; };
 		70E0DA1C216720F800203350 /* GDPRConsentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRConsentViewController.swift; sourceTree = "<group>"; };
 		70E0DA1E2167456900203350 /* GDPRFinalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRFinalViewController.swift; sourceTree = "<group>"; };
+		70E0DA2221677E3E00203350 /* BlockedCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedCommentTableViewCell.swift; sourceTree = "<group>"; };
 		70E331D521212454007414D6 /* GrandchildPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrandchildPageViewController.swift; sourceTree = "<group>"; };
 		70E80BF920E6976E0067DF08 /* MCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCViewController.swift; sourceTree = "<group>"; };
 		70E80C7020E6DB4D0067DF08 /* VSLeaderboardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSLeaderboardModel.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 				70C49476215B9156006F1D0D /* NativeView.swift */,
 				70C4947B215BB2D6006F1D0D /* NativeImageView.swift */,
 				703ABCC221664088003150C4 /* BlockedUserTableViewCell.swift */,
+				70E0DA2221677E3E00203350 /* BlockedCommentTableViewCell.swift */,
 			);
 			path = ViewHolders;
 			sourceTree = "<group>";
@@ -800,6 +803,7 @@
 				701C8CC420F8C51F0072AECD /* NotificationsViewController.swift in Sources */,
 				70E80CBC20E6DB570067DF08 /* VSAIModel_hits.swift in Sources */,
 				706192DF21562B1700C0E91E /* EditPostViewController.swift in Sources */,
+				70E0DA2321677E3E00203350 /* BlockedCommentTableViewCell.swift in Sources */,
 				702518CF21350826008B8E65 /* VSCommentsListModel_hits_hits_item__source.swift in Sources */,
 				70E80CC120E6DB570067DF08 /* VSUserPutModel.swift in Sources */,
 				70E80CC920E6DB570067DF08 /* VSCommentEditModel.swift in Sources */,

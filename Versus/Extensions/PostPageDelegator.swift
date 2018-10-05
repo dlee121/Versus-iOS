@@ -11,4 +11,5 @@ protocol PostPageDelegator {
     func viewMoreRepliesTapped(topCardComment : VSComment)
     func presentSortMenu(sortButtonLabel : UILabel)
     func commentCardOverflow(comment : VSComment, sender : UIButton, row : Int)
+    func blockedCardOverflow(comment : VSComment, sender : UIButton, row : Int)
 }

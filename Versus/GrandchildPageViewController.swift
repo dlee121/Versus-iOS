@@ -1351,6 +1351,12 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    func blockedCardOverflow(comment: VSComment, sender: UIButton, row: Int) {
+        //here
+    }
+    
+    
+    
     func commentCardOverflow(comment: VSComment, sender: UIButton, row: Int) {
         if comment.author == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

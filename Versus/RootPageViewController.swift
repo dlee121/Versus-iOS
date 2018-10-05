@@ -1921,6 +1921,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    func blockedCardOverflow(comment: VSComment, sender: UIButton, row: Int) {
+        //here
+        print("blockedCardOverflow tapped")
+    }
+    
+    
+    
     func commentCardOverflow(comment: VSComment, sender: UIButton, row: Int) {
         if comment.author == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
