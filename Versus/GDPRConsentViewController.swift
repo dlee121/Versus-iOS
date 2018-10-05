@@ -8,6 +8,7 @@
 
 import UIKit
 import ActiveLabel
+import Appodeal
 
 class GDPRConsentViewController: UIViewController {
 
@@ -24,6 +25,7 @@ class GDPRConsentViewController: UIViewController {
     
     var screenHeight : CGFloat!
     
+    var yesTapped = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,9 +59,43 @@ class GDPRConsentViewController: UIViewController {
             }
         }
         
+        noLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(noTapped)))
+        
     }
     
+    
     @IBAction func yesTapped(_ sender: UIButton) {
+        yesTapped = true
+        performSegue(withIdentifier: "showAdConsentFinish", sender: self)
+    }
+    
+    @objc func noTapped() {
+        yesTapped = false
+        performSegue(withIdentifier: "showAdConsentFinish", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let adConsentFinalVC = segue.destination as? GDPRFinalViewController else {return}
+        let view = adConsentFinalVC.view
+        
+        if yesTapped {
+            Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
+            
+            //set local bd = "gdpr1"
+            //set ES bd = "gdpr1"
+            
+            
+            adConsentFinalVC.textLabel.text = "Great. We hope you enjoy your personalized ad experience. You can withdraw your consent at any time by enabling \"Limit Ad Tracking\" under Settings/Privacy/Advertising on your iOS device and then restarting this app."
+        }
+        else {
+            Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: false)
+            
+            //set local bd = "gdpr0"
+            //set ES bd = "gdpr0"
+            
+            
+            adConsentFinalVC.textLabel.text = "Appodeal won’t collect your data for personalized advertising in this app."
+        }
     }
     
     /*

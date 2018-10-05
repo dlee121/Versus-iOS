@@ -13,11 +13,14 @@ class GDPRFinalViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
+    
     @IBAction func startButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "adConsentToMain", sender: self)
+        
     }
     
     /*

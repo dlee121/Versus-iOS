@@ -13,6 +13,7 @@ import FacebookLogin
 import GoogleSignIn
 import PopupDialog
 import JWTDecode
+import Appodeal
 
 
 class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDelegate, GIDSignInUIDelegate {
@@ -262,6 +263,25 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                                                         // ...
                                                     }) { (error) in
                                                         print(error.localizedDescription)
+                                                    }
+                                                    
+                                                    if self.isInEU() {
+                                                        print("in EU")
+                                                        if let gdprConsentValue = userGetModel?.bd {
+                                                            if gdprConsentValue == "gdpr1" {
+                                                                Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
+                                                            }
+                                                            else {
+                                                                Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: false)
+                                                            }
+                                                        }
+                                                        else {
+                                                            Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: false)
+                                                        }
+                                                    }
+                                                    else {
+                                                        print("not in EU")
+                                                        Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
                                                     }
                                                     
                                                     //create user session and segue to MainContainer
@@ -535,6 +555,25 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                                             print(error.localizedDescription)
                                         }
                                         
+                                        if self.isInEU() {
+                                            print("in EU")
+                                            if let gdprConsentValue = userData.bd {
+                                                if gdprConsentValue == "gdpr1" {
+                                                    Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
+                                                }
+                                                else {
+                                                    Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: false)
+                                                }
+                                            }
+                                            else {
+                                                Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: false)
+                                            }
+                                        }
+                                        else {
+                                            print("not in EU")
+                                            Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
+                                        }
+                                        
                                         //create user session and segue to MainContainer
                                         UserDefaults.standard.set(userData.bd, forKey: "KEY_BDAY")
                                         UserDefaults.standard.set(userData.em, forKey: "KEY_EMAIL")
@@ -646,6 +685,25 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
                                                 print(error.localizedDescription)
                                             }
                                             
+                                            if self.isInEU() {
+                                                print("in EU")
+                                                if let gdprConsentValue = userData.bd {
+                                                    if gdprConsentValue == "gdpr1" {
+                                                        Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
+                                                    }
+                                                    else {
+                                                        Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: false)
+                                                    }
+                                                }
+                                                else {
+                                                    Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: false)
+                                                }
+                                            }
+                                            else {
+                                                print("not in EU")
+                                                Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
+                                            }
+                                            
                                             //create user session and segue to MainContainer
                                             UserDefaults.standard.set(userData.bd, forKey: "KEY_BDAY")
                                             UserDefaults.standard.set(userData.em, forKey: "KEY_EMAIL")
@@ -691,6 +749,77 @@ class StartViewController: UIViewController, UITextFieldDelegate, GIDSignInDeleg
         }
         
         return "\(usernameHash)"
+    }
+    
+    func isInEU() -> Bool {
+        
+        return true //for debugging. remove for release.
+        
+        if let regionCode = Locale.current.regionCode {
+            switch regionCode {
+            case "AT":
+                return true
+            case "BE":
+                return true
+            case "BG":
+                return true
+            case "HR":
+                return true
+            case "CY":
+                return true
+            case "CZ":
+                return true
+            case "DK":
+                return true
+            case "EE":
+                return true
+            case "FI":
+                return true
+            case "FR":
+                return true
+            case "DE":
+                return true
+            case "GR":
+                return true
+            case "HU":
+                return true
+            case "IE":
+                return true
+            case "IT":
+                return true
+            case "LV":
+                return true
+            case "LT":
+                return true
+            case "LU":
+                return true
+            case "MT":
+                return true
+            case "NL":
+                return true
+            case "PL":
+                return true
+            case "PT":
+                return true
+            case "RO":
+                return true
+            case "SK":
+                return true
+            case "SI":
+                return true
+            case "ES":
+                return true
+            case "SE":
+                return true
+            case "GB":
+                return true
+            default:
+                return false
+            }
+        }
+        else {
+            return false
+        }
     }
     
     

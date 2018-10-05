@@ -458,7 +458,7 @@
                                     <action selector="yesTapped:" destination="oKP-qc-Y73" eventType="touchUpInside" id="unQ-iZ-en0"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcA-kp-S6H">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcA-kp-S6H">
                                 <rect key="frame" x="133" y="476" width="109" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="uO8-ik-Wrc"/>
@@ -531,8 +531,8 @@
                                     <constraint firstAttribute="height" constant="106" id="foW-1P-6HM"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Appodeal won’t collect your data for personalized advertising in this app." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tov-Ia-XHi">
-                                <rect key="frame" x="24" y="190" width="327" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tov-Ia-XHi">
+                                <rect key="frame" x="24" y="190" width="327" height="146.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -558,7 +558,8 @@
                             <constraint firstItem="JRy-W8-DN1" firstAttribute="leading" secondItem="DTF-D1-hHK" secondAttribute="leading" constant="24" id="0DN-au-WeU"/>
                             <constraint firstItem="DTF-D1-hHK" firstAttribute="trailing" secondItem="JRy-W8-DN1" secondAttribute="trailing" constant="24" id="A5t-1V-xLQ"/>
                             <constraint firstItem="DTF-D1-hHK" firstAttribute="trailing" secondItem="tov-Ia-XHi" secondAttribute="trailing" constant="24" id="I3O-9X-CPw"/>
-                            <constraint firstItem="JRy-W8-DN1" firstAttribute="centerY" secondItem="Qmu-S5-4ql" secondAttribute="centerY" constant="48" id="hY1-AF-gei"/>
+                            <constraint firstItem="JRy-W8-DN1" firstAttribute="top" secondItem="tov-Ia-XHi" secondAttribute="bottom" constant="24" id="S4S-lv-o23"/>
+                            <constraint firstItem="JRy-W8-DN1" firstAttribute="centerY" relation="greaterThanOrEqual" secondItem="Qmu-S5-4ql" secondAttribute="centerY" constant="48" id="hY1-AF-gei"/>
                             <constraint firstItem="FdQ-y6-nrJ" firstAttribute="centerX" secondItem="Qmu-S5-4ql" secondAttribute="centerX" id="r08-uv-14z"/>
                             <constraint firstItem="tov-Ia-XHi" firstAttribute="top" secondItem="FdQ-y6-nrJ" secondAttribute="bottom" constant="32" id="s9K-PH-YhL"/>
                             <constraint firstItem="FdQ-y6-nrJ" firstAttribute="top" secondItem="DTF-D1-hHK" secondAttribute="top" constant="32" id="uH3-jx-fN2"/>

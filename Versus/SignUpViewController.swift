@@ -10,6 +10,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 import JWTDecode
+import Appodeal
 
 class SignUpViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SignUpDelegator {
     
@@ -132,7 +133,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                             userPutModel?.ai = "0" //AuthID for fb/google signup, hence the default value of "0" for native signup
                             userPutModel?.b = 0 //initial bronze medal count
                             
-                            userPutModel?.bd = "0" //birthday, a legacy placeholder in this case
+                            userPutModel?.bd = "0" //repurposed to hold user info
                             
                             userPutModel?.cs = username //case-sensitive username for display purposes, since user is stored with id = username.lowercased()
                             userPutModel?.em = "0" //default value for email
@@ -185,6 +186,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                                             self.performSegue(withIdentifier: "showAdConsentPage", sender: self)
                                         }
                                         else {
+                                            Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
                                             self.performSegue(withIdentifier: "signUpToMain", sender: self)
                                         }
                                     }
@@ -244,7 +246,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                             userPutModel?.ai = self.authID! //AuthID for fb/google signup
                             userPutModel?.b = 0 //initial bronze medal count
                             
-                            userPutModel?.bd = "0" //birthday, a legacy placeholder in this case
+                            userPutModel?.bd = "0" //repurposed to hold user info
                             
                             userPutModel?.cs = username //case-sensitive username for display purposes, since user is stored with id = username.lowercased()
                             userPutModel?.em = "0" //default value for email
@@ -279,6 +281,7 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                                             self.performSegue(withIdentifier: "showAdConsentPage", sender: self)
                                         }
                                         else {
+                                            Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
                                             self.performSegue(withIdentifier: "signUpToMain", sender: self)
                                         }
                                     }

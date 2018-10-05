@@ -18,7 +18,6 @@ import UserNotifications
 import FirebaseInstanceID
 import FirebaseMessaging
 import JWTDecode
-import Appodeal
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -49,82 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         application.registerForRemoteNotifications()
         Messaging.messaging().delegate = self
         
-        //if not in EU, go ahead and initialize Appodeal here with hasConsent = true
-        if !isInEU() {
-            Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
-        }
-        
         return true
     }
-    
-    func isInEU() -> Bool {
-        if let regionCode = Locale.current.regionCode {
-            switch regionCode {
-            case "AT":
-                return true
-            case "BE":
-                return true
-            case "BG":
-                return true
-            case "HR":
-                return true
-            case "CY":
-                return true
-            case "CZ":
-                return true
-            case "DK":
-                return true
-            case "EE":
-                return true
-            case "FI":
-                return true
-            case "FR":
-                return true
-            case "DE":
-                return true
-            case "GR":
-                return true
-            case "HU":
-                return true
-            case "IE":
-                return true
-            case "IT":
-                return true
-            case "LV":
-                return true
-            case "LT":
-                return true
-            case "LU":
-                return true
-            case "MT":
-                return true
-            case "NL":
-                return true
-            case "PL":
-                return true
-            case "PT":
-                return true
-            case "RO":
-                return true
-            case "SK":
-                return true
-            case "SI":
-                return true
-            case "ES":
-                return true
-            case "SE":
-                return true
-            case "GB":
-                return true
-            default:
-                return false
-            }
-        }
-        else {
-            return false
-        }
-    }
-    
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
