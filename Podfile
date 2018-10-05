@@ -20,7 +20,7 @@ target 'Versus' do
   pod 'XLPagerTabStrip', '~> 8.0'
   pod 'PopupDialog', '~> 0.8'
   pod 'JWTDecode', '~> 2.1'
-  pod 'Appodeal', '2.4.6.1-Beta'
+  pod 'Appodeal', '2.4.7.1-Beta'
   pod 'ActiveLabel'
 
 end

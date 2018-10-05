@@ -90,6 +90,8 @@
 		70D17FEF2127869B00A0C9D6 /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D17FEE2127869B00A0C9D6 /* NotificationsTableViewCell.swift */; };
 		70D17FF121278A4E00A0C9D6 /* NotificationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D17FF021278A4E00A0C9D6 /* NotificationItem.swift */; };
 		70D17FF32127B88900A0C9D6 /* AtomicInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D17FF22127B88900A0C9D6 /* AtomicInteger.swift */; };
+		70E0DA1D216720F800203350 /* GDPRConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E0DA1C216720F800203350 /* GDPRConsentViewController.swift */; };
+		70E0DA1F2167456900203350 /* GDPRFinalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E0DA1E2167456900203350 /* GDPRFinalViewController.swift */; };
 		70E331D621212454007414D6 /* GrandchildPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E331D521212454007414D6 /* GrandchildPageViewController.swift */; };
 		70E80BFA20E6976E0067DF08 /* MCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80BF920E6976E0067DF08 /* MCViewController.swift */; };
 		70E80CAB20E6DB570067DF08 /* VSLeaderboardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E80C7020E6DB4D0067DF08 /* VSLeaderboardModel.swift */; };
@@ -239,6 +241,8 @@
 		70D17FEE2127869B00A0C9D6 /* NotificationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewCell.swift; sourceTree = "<group>"; };
 		70D17FF021278A4E00A0C9D6 /* NotificationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationItem.swift; sourceTree = "<group>"; };
 		70D17FF22127B88900A0C9D6 /* AtomicInteger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtomicInteger.swift; sourceTree = "<group>"; };
+		70E0DA1C216720F800203350 /* GDPRConsentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRConsentViewController.swift; sourceTree = "<group>"; };
+		70E0DA1E2167456900203350 /* GDPRFinalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRFinalViewController.swift; sourceTree = "<group>"; };
 		70E331D521212454007414D6 /* GrandchildPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrandchildPageViewController.swift; sourceTree = "<group>"; };
 		70E80BF920E6976E0067DF08 /* MCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCViewController.swift; sourceTree = "<group>"; };
 		70E80C7020E6DB4D0067DF08 /* VSLeaderboardModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSLeaderboardModel.swift; sourceTree = "<group>"; };
@@ -383,6 +387,8 @@
 				70C4947D215BB32C006F1D0D /* NativeImage.xib */,
 				7086C8A1215F1E9700552DC1 /* AboutViewController.swift */,
 				703ABCC021663FEA003150C4 /* BlockedUsersViewController.swift */,
+				70E0DA1C216720F800203350 /* GDPRConsentViewController.swift */,
+				70E0DA1E2167456900203350 /* GDPRFinalViewController.swift */,
 			);
 			path = Versus;
 			sourceTree = "<group>";
@@ -824,6 +830,7 @@
 				70036ED4210ABBCF000BE8E9 /* FGHTableViewCell.swift in Sources */,
 				70E80CD220E6DB570067DF08 /* VSPostsListModel.swift in Sources */,
 				70D17FEF2127869B00A0C9D6 /* NotificationsTableViewCell.swift in Sources */,
+				70E0DA1F2167456900203350 /* GDPRFinalViewController.swift in Sources */,
 				702499A220E57F050024E871 /* UIViewController+Toast.swift in Sources */,
 				70E80CD720E6DB570067DF08 /* VSCGCModel.swift in Sources */,
 				700DB5CB21081CF5008E546A /* PostInfo.swift in Sources */,
@@ -884,6 +891,7 @@
 				70E80CCC20E6DB570067DF08 /* VSRecordPutModel.swift in Sources */,
 				70E80CC320E6DB570067DF08 /* VSLeaderboardModel_hits.swift in Sources */,
 				70E80CAE20E6DB570067DF08 /* VSPostInfoModel.swift in Sources */,
+				70E0DA1D216720F800203350 /* GDPRConsentViewController.swift in Sources */,
 				70CB9E552116976100D86E37 /* UserAction.swift in Sources */,
 				70E80CDC20E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift in Sources */,
 				70B1704B20F28D8600459ACE /* Tab2CollectionViewController.swift in Sources */,

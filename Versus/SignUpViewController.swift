@@ -181,7 +181,12 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                                     
                                     
                                     DispatchQueue.main.async {
-                                        self.performSegue(withIdentifier: "signUpToMain", sender: self)
+                                        if self.isInEU() {
+                                            self.performSegue(withIdentifier: "showAdConsentPage", sender: self)
+                                        }
+                                        else {
+                                            self.performSegue(withIdentifier: "signUpToMain", sender: self)
+                                        }
                                     }
                                 }
                                 
@@ -270,7 +275,12 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
                                     
                                     
                                     DispatchQueue.main.async {
-                                        self.performSegue(withIdentifier: "signUpToMain", sender: self)
+                                        if self.isInEU() {
+                                            self.performSegue(withIdentifier: "showAdConsentPage", sender: self)
+                                        }
+                                        else {
+                                            self.performSegue(withIdentifier: "signUpToMain", sender: self)
+                                        }
                                     }
                                 }
                                 
@@ -294,6 +304,77 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     
     func showSUVCToast(text : String) {
         showToast(message: text, length: text.count)
+    }
+    
+    func isInEU() -> Bool {
+        
+        return true //for debugging. remove for release.
+        
+        if let regionCode = Locale.current.regionCode {
+            switch regionCode {
+            case "AT":
+                return true
+            case "BE":
+                return true
+            case "BG":
+                return true
+            case "HR":
+                return true
+            case "CY":
+                return true
+            case "CZ":
+                return true
+            case "DK":
+                return true
+            case "EE":
+                return true
+            case "FI":
+                return true
+            case "FR":
+                return true
+            case "DE":
+                return true
+            case "GR":
+                return true
+            case "HU":
+                return true
+            case "IE":
+                return true
+            case "IT":
+                return true
+            case "LV":
+                return true
+            case "LT":
+                return true
+            case "LU":
+                return true
+            case "MT":
+                return true
+            case "NL":
+                return true
+            case "PL":
+                return true
+            case "PT":
+                return true
+            case "RO":
+                return true
+            case "SK":
+                return true
+            case "SI":
+                return true
+            case "ES":
+                return true
+            case "SE":
+                return true
+            case "GB":
+                return true
+            default:
+                return false
+            }
+        }
+        else {
+            return false
+        }
     }
     
 

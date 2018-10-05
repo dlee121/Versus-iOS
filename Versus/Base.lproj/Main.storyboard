@@ -415,11 +415,165 @@
                         <outlet property="tableView" destination="e2g-xP-KLo" id="At9-mn-Ybo"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="signUpToStart" id="MmY-zm-xEb"/>
                         <segue destination="Npi-V0-gi3" kind="show" identifier="signUpToMain" id="H2x-dk-GMV"/>
+                        <segue destination="oKP-qc-Y73" kind="show" identifier="showAdConsentPage" id="Olk-pr-1NN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CXi-Nf-Baw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="849" y="-219"/>
+        </scene>
+        <!--Consent View Controller-->
+        <scene sceneID="lYh-6X-cWA">
+            <objects>
+                <viewController id="oKP-qc-Y73" customClass="GDPRConsentViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="a29-Eg-0bJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_splash" translatesAutoresizingMaskIntoConstraints="NO" id="iJJ-qg-sED">
+                                <rect key="frame" x="125.5" y="52" width="124" height="106"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="106" id="RYs-7s-Y42"/>
+                                    <constraint firstAttribute="width" constant="124" id="lbM-nd-n24"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vUl-AN-JSf" customClass="ActiveLabel" customModule="ActiveLabel">
+                                <rect key="frame" x="24" y="190" width="327" height="172"/>
+                                <string key="text">Versus personalizes your ad experience using Appodeal. Appodeal and its partners may collect and process personal data such as device identifiers, location data, and other demographic and interest data to provide ads tailored to you. By consenting to this improved ad experience, you’ll see ads that Appodeal and its partners believe are more relevant to you. Learn more.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="upG-Mx-5VI">
+                                <rect key="frame" x="24" y="394" width="327" height="42"/>
+                                <color key="backgroundColor" red="0.88235294117647056" green="0.098039215686274508" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="hTj-XH-Fct"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <state key="normal" title="YES, I AGREE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="yesTapped:" destination="oKP-qc-Y73" eventType="touchUpInside" id="unQ-iZ-en0"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcA-kp-S6H">
+                                <rect key="frame" x="133" y="476" width="109" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="uO8-ik-Wrc"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="NO, THANK YOU">
+                                        <attributes>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <font key="NSOriginalFont" size="14" name="HelveticaNeue-Medium"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            <integer key="NSUnderline" value="1"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I understand that I will still see ads, but they may not be as relevant to my interests." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1N-e5-BoG">
+                                <rect key="frame" x="32" y="512" width="311" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="upG-Mx-5VI" firstAttribute="top" secondItem="vUl-AN-JSf" secondAttribute="bottom" constant="32" id="9sC-QO-kJU"/>
+                            <constraint firstItem="IO8-kW-3gU" firstAttribute="trailing" secondItem="vUl-AN-JSf" secondAttribute="trailing" constant="24" id="BKb-1C-Jgo"/>
+                            <constraint firstItem="gcA-kp-S6H" firstAttribute="top" secondItem="upG-Mx-5VI" secondAttribute="bottom" constant="40" id="DwC-SL-kxz"/>
+                            <constraint firstItem="gcA-kp-S6H" firstAttribute="centerX" secondItem="a29-Eg-0bJ" secondAttribute="centerX" id="HKM-7h-zqs"/>
+                            <constraint firstItem="iJJ-qg-sED" firstAttribute="top" secondItem="IO8-kW-3gU" secondAttribute="top" constant="32" id="JIw-VV-Mee"/>
+                            <constraint firstItem="S1N-e5-BoG" firstAttribute="top" secondItem="gcA-kp-S6H" secondAttribute="bottom" constant="4" id="W1A-4C-bXD"/>
+                            <constraint firstItem="IO8-kW-3gU" firstAttribute="trailing" secondItem="upG-Mx-5VI" secondAttribute="trailing" constant="24" id="aOp-BK-dXy"/>
+                            <constraint firstItem="IO8-kW-3gU" firstAttribute="trailing" secondItem="S1N-e5-BoG" secondAttribute="trailing" constant="32" id="bxb-ye-EDw"/>
+                            <constraint firstItem="upG-Mx-5VI" firstAttribute="leading" secondItem="IO8-kW-3gU" secondAttribute="leading" constant="24" id="fHa-TT-OiG"/>
+                            <constraint firstItem="S1N-e5-BoG" firstAttribute="leading" secondItem="IO8-kW-3gU" secondAttribute="leading" constant="32" id="fgj-RS-eId"/>
+                            <constraint firstItem="vUl-AN-JSf" firstAttribute="top" secondItem="iJJ-qg-sED" secondAttribute="bottom" constant="32" id="h6J-ND-R8b"/>
+                            <constraint firstItem="vUl-AN-JSf" firstAttribute="leading" secondItem="IO8-kW-3gU" secondAttribute="leading" constant="24" id="k9v-iC-QC4"/>
+                            <constraint firstItem="iJJ-qg-sED" firstAttribute="centerX" secondItem="a29-Eg-0bJ" secondAttribute="centerX" id="kA4-hQ-oja"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="IO8-kW-3gU"/>
+                    </view>
+                    <connections>
+                        <outlet property="legalText" destination="vUl-AN-JSf" id="tQf-Zm-ssO"/>
+                        <outlet property="noLabel" destination="gcA-kp-S6H" id="Puw-10-DUP"/>
+                        <outlet property="noTextTop" destination="W1A-4C-bXD" id="XZ1-8V-1r4"/>
+                        <outlet property="noTop" destination="DwC-SL-kxz" id="ZU9-sG-uZU"/>
+                        <outlet property="textTop" destination="h6J-ND-R8b" id="SeU-B9-84J"/>
+                        <outlet property="yesButton" destination="upG-Mx-5VI" id="sm6-K0-9bS"/>
+                        <outlet property="yesTop" destination="9sC-QO-kJU" id="AHc-bv-9To"/>
+                        <segue destination="gm6-Lb-eTd" kind="show" identifier="showAdConsentFinish" id="4hH-WA-wYi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kcW-Un-NVx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1570" y="-219"/>
+        </scene>
+        <!--Final View Controller-->
+        <scene sceneID="tcM-Dj-8dD">
+            <objects>
+                <viewController id="gm6-Lb-eTd" customClass="GDPRFinalViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Qmu-S5-4ql">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_splash" translatesAutoresizingMaskIntoConstraints="NO" id="FdQ-y6-nrJ">
+                                <rect key="frame" x="125.5" y="52" width="124" height="106"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="124" id="N0S-zp-e3l"/>
+                                    <constraint firstAttribute="height" constant="106" id="foW-1P-6HM"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Appodeal won’t collect your data for personalized advertising in this app." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tov-Ia-XHi">
+                                <rect key="frame" x="24" y="190" width="327" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JRy-W8-DN1">
+                                <rect key="frame" x="24" y="360.5" width="327" height="42"/>
+                                <color key="backgroundColor" red="0.88235294119999996" green="0.098039215690000001" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="bf6-Aq-n7b"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <state key="normal" title="START">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="startButtonTapped:" destination="gm6-Lb-eTd" eventType="touchUpInside" id="XDv-9I-8Nh"/>
+                                    <action selector="yesTapped:" destination="oKP-qc-Y73" eventType="touchUpInside" id="zFI-b7-2ib"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="JRy-W8-DN1" firstAttribute="leading" secondItem="DTF-D1-hHK" secondAttribute="leading" constant="24" id="0DN-au-WeU"/>
+                            <constraint firstItem="DTF-D1-hHK" firstAttribute="trailing" secondItem="JRy-W8-DN1" secondAttribute="trailing" constant="24" id="A5t-1V-xLQ"/>
+                            <constraint firstItem="DTF-D1-hHK" firstAttribute="trailing" secondItem="tov-Ia-XHi" secondAttribute="trailing" constant="24" id="I3O-9X-CPw"/>
+                            <constraint firstItem="JRy-W8-DN1" firstAttribute="centerY" secondItem="Qmu-S5-4ql" secondAttribute="centerY" constant="48" id="hY1-AF-gei"/>
+                            <constraint firstItem="FdQ-y6-nrJ" firstAttribute="centerX" secondItem="Qmu-S5-4ql" secondAttribute="centerX" id="r08-uv-14z"/>
+                            <constraint firstItem="tov-Ia-XHi" firstAttribute="top" secondItem="FdQ-y6-nrJ" secondAttribute="bottom" constant="32" id="s9K-PH-YhL"/>
+                            <constraint firstItem="FdQ-y6-nrJ" firstAttribute="top" secondItem="DTF-D1-hHK" secondAttribute="top" constant="32" id="uH3-jx-fN2"/>
+                            <constraint firstItem="tov-Ia-XHi" firstAttribute="leading" secondItem="DTF-D1-hHK" secondAttribute="leading" constant="24" id="wcZ-5N-804"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="DTF-D1-hHK"/>
+                    </view>
+                    <connections>
+                        <outlet property="textLabel" destination="tov-Ia-XHi" id="6QA-oF-Hss"/>
+                        <segue destination="Npi-V0-gi3" kind="show" identifier="adConsentToMain" id="bPk-bH-sJi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O8r-RH-SMg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2292" y="-219"/>
         </scene>
         <!--Root Page View Controller-->
         <scene sceneID="s0k-Zo-b6Y">
@@ -5672,7 +5826,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kmh-ur-Uym"/>
+        <segue reference="bPk-bH-sJi"/>
         <segue reference="Adv-3g-zxs"/>
         <segue reference="XJc-pI-oXd"/>
         <segue reference="qbd-PO-7a5"/>

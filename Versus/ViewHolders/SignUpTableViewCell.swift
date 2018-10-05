@@ -33,6 +33,9 @@ class SignUpTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func setCell(isNative : Bool, delegator : SignUpDelegator) {
         
+        createAccountButton.layer.cornerRadius = 5.0
+        createAccountButton.clipsToBounds = true
+        
         if isNative {
             passwordInHeight.constant = 38
             passwordLabelHeight.constant = 17

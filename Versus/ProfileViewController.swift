@@ -59,6 +59,9 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         self.loadDesign()
         super.viewDidLoad()
         
+        followButton.layer.cornerRadius = 5.0
+        followButton.clipsToBounds = true
+        
         ref = Database.database().reference()
         DispatchQueue.main.async {
             self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height / 2
