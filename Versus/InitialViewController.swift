@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import Appodeal
 
 class InitialViewController: UIViewController {
 
@@ -25,6 +26,26 @@ class InitialViewController: UIViewController {
                 user.getIDTokenForcingRefresh(true){ (idToken, error) in
                     //store the fresh token in UserDefaults
                     UserDefaults.standard.set(idToken, forKey: "KEY_TOKEN")
+                    
+                    //retrieve "bd" from UserDefaults, get gdpr value
+                    if self.isInEU() {
+                        print("in EU")
+                        if let gdprConsentValue = UserDefaults.standard.string(forKey: "KEY_BDAY") {
+                            if gdprConsentValue == "gdpr1" {
+                                Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
+                            }
+                            else {
+                                Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: false)
+                            }
+                        }
+                        else {
+                            Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: false)
+                        }
+                    }
+                    else {
+                        print("not in EU")
+                        Appodeal.initialize(withApiKey: "819054921bcb6cc21aa0e7a19f852d182975592b907d0ad3", types: .nativeAd, hasConsent: true)
+                    }
                     
                     let oidcProvider = OIDCProvider(input: idToken! as NSString)
                     let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast1, identityPoolId:"us-east-1:88614505-c8df-4dce-abd8-79a0543852ff", identityProviderManager: oidcProvider)
@@ -68,4 +89,74 @@ class InitialViewController: UIViewController {
     }
     */
 
+    func isInEU() -> Bool {
+        
+        if let regionCode = Locale.current.regionCode {
+            switch regionCode {
+            case "AT":
+                return true
+            case "BE":
+                return true
+            case "BG":
+                return true
+            case "HR":
+                return true
+            case "CY":
+                return true
+            case "CZ":
+                return true
+            case "DK":
+                return true
+            case "EE":
+                return true
+            case "FI":
+                return true
+            case "FR":
+                return true
+            case "DE":
+                return true
+            case "GR":
+                return true
+            case "HU":
+                return true
+            case "IE":
+                return true
+            case "IT":
+                return true
+            case "LV":
+                return true
+            case "LT":
+                return true
+            case "LU":
+                return true
+            case "MT":
+                return true
+            case "NL":
+                return true
+            case "PL":
+                return true
+            case "PT":
+                return true
+            case "RO":
+                return true
+            case "SK":
+                return true
+            case "SI":
+                return true
+            case "ES":
+                return true
+            case "SE":
+                return true
+            case "GB":
+                return true
+            default:
+                return false
+            }
+        }
+        else {
+            return false
+        }
+    }
+    
+    
 }

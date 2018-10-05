@@ -311,8 +311,6 @@ class SignUpViewController: UIViewController, UITableViewDataSource, UITableView
     
     func isInEU() -> Bool {
         
-        return true //for debugging. remove for release.
-        
         if let regionCode = Locale.current.regionCode {
             switch regionCode {
             case "AT":
