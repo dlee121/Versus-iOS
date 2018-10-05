@@ -220,7 +220,8 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
         }
         
         /*
-        
+        if #available(iOS 11.0, *) {
+            paddingBottom = UIApplication.shared.delegate?.window??.safeAreaInsets.bottom ?? 0.0
          
             if paddingBottom > 0.0 {
                 if UIScreen.main.bounds.height == 812 { //iPhone X and XS
@@ -229,7 +230,6 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                     (viewControllers[1] as? PostsHistoryViewController)?.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, tabBarController!.tabBar.frame.height * 4 + paddingBottom * 1.55, 0.0)
                     (viewControllers[1] as? PostsHistoryViewController)?.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, tabBarController!.tabBar.frame.height * 4 + paddingBottom * 1.55, 0.0)
                 }
-                /*
                 else { //iPhone XS Max and XR
                     //a temporary fix for the left margin bug, eventually we want these guys to start with comment tab too
                     //self.moveToViewController(at: 1,animated: false)
@@ -239,7 +239,6 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
                     (viewControllers[1] as? PostsHistoryViewController)?.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, tabBarController!.tabBar.frame.height * 4 + paddingBottom * 4.1, 0.0)
                     (viewControllers[1] as? PostsHistoryViewController)?.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, tabBarController!.tabBar.frame.height * 4 + paddingBottom * 4.1, 0.0)
                 }
-                */
             }
         }
         */
