@@ -1073,7 +1073,7 @@
                                             <outlet property="viewMoreRepliesCenter" destination="pzo-l3-Igf" id="r99-KX-MAe"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="MK8-CY-voY" customClass="BlockedCommentTableViewCell" customModule="Versus" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="blockedComment" rowHeight="38" id="MK8-CY-voY" customClass="BlockedCommentTableViewCell" customModule="Versus" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="508" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MK8-CY-voY" id="bXB-iw-Kwt">
@@ -1597,7 +1597,7 @@
                                             <outlet property="viewMoreRepliesCenter" destination="mAI-Qx-tes" id="kjy-Wa-Qwq"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="GNn-on-QzO" customClass="BlockedCommentTableViewCell" customModule="Versus" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="blockedComment" rowHeight="38" id="GNn-on-QzO" customClass="BlockedCommentTableViewCell" customModule="Versus" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="256" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GNn-on-QzO" id="deR-xD-OHj">
@@ -2119,7 +2119,7 @@
                                             <outlet property="viewMoreRepliesCenter" destination="2M7-3P-nhS" id="ySY-QI-lrC"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="MIw-SO-apJ" customClass="BlockedCommentTableViewCell" customModule="Versus" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="blockedComment" rowHeight="38" id="MIw-SO-apJ" customClass="BlockedCommentTableViewCell" customModule="Versus" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="256" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MIw-SO-apJ" id="Kzw-LD-uMM">
@@ -5926,8 +5926,8 @@
         <segue reference="XJc-pI-oXd"/>
         <segue reference="qbd-PO-7a5"/>
         <segue reference="uAF-H9-Oin"/>
-        <segue reference="pLb-S7-nGp"/>
-        <segue reference="tN5-20-0qe"/>
+        <segue reference="d2v-Cf-zOy"/>
+        <segue reference="DOc-Pv-QZP"/>
         <segue reference="gSn-Xx-xNp"/>
         <segue reference="MmY-zm-xEb"/>
     </inferredMetricsTieBreakers>

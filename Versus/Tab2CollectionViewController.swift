@@ -119,7 +119,7 @@ class Tab2CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     func trendingQuery(){
         
-        if fromIndex == 0  || blockedUsernames == nil{
+        if fromIndex == 0 {
             if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
                 if blockedUsernames.count > 0 {
                     blockedUsernames.removeAllObjects()

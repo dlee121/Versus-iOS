@@ -73,6 +73,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var commentsLoaded = false
     let placeholder = "Join the discussion!"
     
+    var blockedUsernames = NSMutableSet()
     
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
@@ -93,6 +94,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLayoutSubviews() {
         if #available(iOS 11.0, *) {
             paddingBottom = view.safeAreaInsets.bottom
+            print("padding bottom is \(paddingBottom)")
         }
         
     }
@@ -804,6 +806,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             fromIndex = 0
         }
         
+        if fromIndex == 0 {
+            if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
+                if blockedUsernames.count > 0 {
+                    blockedUsernames.removeAllObjects()
+                }
+                blockedUsernames.addObjects(from: blockList)
+            }
+        }
+        
         var queryType, ascORdesc : String!
         
         switch sortType {
@@ -1136,6 +1147,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         return comments.count
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        //returnhere
+        
+        return UITableViewAutomaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
             return 372
@@ -1149,6 +1166,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
         if indexPath.row == 0 { //for RootPage, first item of the comments list is a placeholder for the post object
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCard", for: indexPath) as? PostCardTableViewCell
             cell!.setCell(post: currentPost, votedSide: currentUserAction.votedSide, sortType: sortTypeString)
@@ -1156,53 +1175,65 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             return cell!
         }
         else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
             let comment = comments[indexPath.row]
-            let indent : CGFloat!
-            switch comment.nestedLevel {
-            case 0:
-                indent = 0
-            case 1:
-                indent = 1
-            case 2:
-                indent = 2
-            case 3:
-                indent = 1
-            case 4:
-                indent = 2
-            case 5:
-                indent = 2
-            default:
-                indent = 0
-            }
             
-            if let selection = currentUserAction.actionRecord[comment.comment_id] {
-                switch selection {
-                case "N":
-                    cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
-                case "U":
-                    cell!.setCellWithSelection(comment: comment, indent: indent, hearted: true, row: indexPath.row)
-                case "D":
-                    cell!.setCellWithSelection(comment: comment, indent: indent, hearted: false, row: indexPath.row)
+            if blockedUsernames.contains(comment.author) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "blockedComment", for: indexPath) as? BlockedCommentTableViewCell
+                cell!.comment = comment
+                cell!.rowNumber = indexPath.row
+                cell!.delegate = self
+                
+                return cell!
+            }
+            else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
+                
+                
+                let indent : CGFloat!
+                switch comment.nestedLevel {
+                case 0:
+                    indent = 0
+                case 1:
+                    indent = 1
+                case 2:
+                    indent = 2
+                case 3:
+                    indent = 1
+                case 4:
+                    indent = 2
+                case 5:
+                    indent = 2
                 default:
+                    indent = 0
+                }
+                
+                if let selection = currentUserAction.actionRecord[comment.comment_id] {
+                    switch selection {
+                    case "N":
+                        cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
+                    case "U":
+                        cell!.setCellWithSelection(comment: comment, indent: indent, hearted: true, row: indexPath.row)
+                    case "D":
+                        cell!.setCellWithSelection(comment: comment, indent: indent, hearted: false, row: indexPath.row)
+                    default:
+                        cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
+                    }
+                }
+                else {
                     cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
                 }
+                
+                if let medalType = medalWinnersList[comment.comment_id] {
+                    cell!.setCommentMedal(medalType: medalType)
+                }
+                else {
+                    cell!.removeMedalView()
+                }
+                
+                cell!.delegate = self
+                
+                return cell!
             }
-            else {
-                cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
-            }
-            
-            if let medalType = medalWinnersList[comment.comment_id] {
-                cell!.setCommentMedal(medalType: medalType)
-            }
-            else {
-                cell!.removeMedalView()
-            }
-            
-            cell!.delegate = self
-            
-            return cell!
-            
         }
     }
     

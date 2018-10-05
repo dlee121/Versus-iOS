@@ -66,6 +66,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
     var sortTypeString = "Popular"
     let placeholder = "Join the discussion!"
     
+    var blockedUsernames = NSMutableSet()
+    
     /*
      updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
      ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -585,6 +587,15 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             fromIndex = 0
         }
         
+        if fromIndex == 0  {
+            if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
+                if blockedUsernames.count > 0 {
+                    blockedUsernames.removeAllObjects()
+                }
+                blockedUsernames.addObjects(from: blockList)
+            }
+        }
+        
         var queryType, ascORdesc : String!
         
         switch sortType {
@@ -830,48 +841,63 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             return cell!
         }
         else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
             let comment = comments[indexPath.row]
             
-            let indent : CGFloat!
-            //print("nested level = \(comment.nestedLevel) for \(comment.content)")
-            switch comment.nestedLevel {
-            case 3:
-                indent = 0
-            case 4:
-                indent = 1
-            case 5:
-                indent = 1
-            default:
-                indent = comment.nestedLevel
+            if blockedUsernames.contains(comment.author) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "blockedComment", for: indexPath) as? BlockedCommentTableViewCell
+                cell!.comment = comment
+                cell!.rowNumber = indexPath.row
+                cell!.delegate = self
+                
+                return cell!
             }
-            
-            if let selection = currentUserAction.actionRecord[comment.comment_id] {
-                switch selection {
-                case "N":
-                    cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
-                case "U":
-                    cell!.setCellWithSelection(comment: comment, indent: indent, hearted: true, row: indexPath.row)
-                case "D":
-                    cell!.setCellWithSelection(comment: comment, indent: indent, hearted: false, row: indexPath.row)
+            else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCard", for: indexPath) as? CommentCardTableViewCell
+                
+                
+                let indent : CGFloat!
+                //print("nested level = \(comment.nestedLevel) for \(comment.content)")
+                switch comment.nestedLevel {
+                case 3:
+                    indent = 0
+                case 4:
+                    indent = 1
+                case 5:
+                    indent = 1
                 default:
+                    indent = comment.nestedLevel
+                }
+                
+                if let selection = currentUserAction.actionRecord[comment.comment_id] {
+                    switch selection {
+                    case "N":
+                        cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
+                    case "U":
+                        cell!.setCellWithSelection(comment: comment, indent: indent, hearted: true, row: indexPath.row)
+                    case "D":
+                        cell!.setCellWithSelection(comment: comment, indent: indent, hearted: false, row: indexPath.row)
+                    default:
+                        cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
+                    }
+                }
+                else {
                     cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
                 }
-            }
-            else {
-                cell!.setCell(comment: comment, indent: indent, row: indexPath.row)
+                
+                if let medalType = medalWinnersList[comment.comment_id] {
+                    cell!.setCommentMedal(medalType: medalType)
+                }
+                else {
+                    cell!.removeMedalView()
+                }
+                
+                cell!.delegate = self
+                
+                return cell!
+                
+                
             }
             
-            if let medalType = medalWinnersList[comment.comment_id] {
-                cell!.setCommentMedal(medalType: medalType)
-            }
-            else {
-                cell!.removeMedalView()
-            }
-            
-            cell!.delegate = self
-            
-            return cell!
         }
         
     }
