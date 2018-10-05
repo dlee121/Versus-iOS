@@ -34,20 +34,20 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 if email == "0" {
                     emailIsSetup = false
-                    settingsItems = ["Log Out", "Blocked Users", "Set Up Email for Account Recovery", "About"]
+                    settingsItems = ["Log Out", "Blocked Users", "Contact Us","Set Up Email for Account Recovery", "About"]
                 }
                 else {
                     emailIsSetup = true
                     currentEmail = email
-                    settingsItems = ["Log Out", "Blocked Users", "Edit Email for Account Recovery", "About"]
+                    settingsItems = ["Log Out", "Blocked Users", "Contact Us", "Edit Email for Account Recovery", "About"]
                 }
             }
             else {
-                settingsItems = ["Log Out", "Blocked Users", "Set Up Email for Account Recovery", "About"]
+                settingsItems = ["Log Out", "Blocked Users", "Contact Us", "Set Up Email for Account Recovery", "About"]
             }
         }
         else {
-            settingsItems = ["Log Out", "Blocked Users", "About"]
+            settingsItems = ["Log Out", "Blocked Users", "Contact Us", "About"]
         }
         tableView.reloadData()
     }
@@ -108,7 +108,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             //Blocked Users
             performSegue(withIdentifier: "showBlockedUsers", sender: self)
             
-        case 2:
+        case 2: //Contact Us
+            showContactUsDialog()
+            
+        case 3:
             if isNative {
                 //Set Up Email. later, let's have it so that the name changes to "Edit Email" when email is already added
                 showCustomDialog()
@@ -118,7 +121,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 performSegue(withIdentifier: "settingToAbout", sender: self)
                 
             }
-        case 3:
+        case 4:
             //About
             performSegue(withIdentifier: "settingToAbout", sender: self)
             
@@ -147,6 +150,24 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    func showContactUsDialog(animated: Bool = true) {
+        // Prepare the popup assets
+        let message = "You can email us at:\ncontact@versusdaily.com"
+        
+        // Create the dialog
+        let popup = PopupDialog(title: message, message: nil)
+        
+        // Create buttons
+        let buttonOne = CancelButton(title: "OK") {
+            print("You canceled the car dialog.")
+        }
+        
+        popup.addButton(buttonOne)
+        
+        // Present dialog
+        self.present(popup, animated: true, completion: nil)
+        
+    }
     
     func showCustomDialog(animated: Bool = true) {
         
