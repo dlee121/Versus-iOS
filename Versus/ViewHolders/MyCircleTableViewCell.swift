@@ -31,6 +31,7 @@ class MyCircleTableViewCell: UITableViewCell {
     
     @IBOutlet weak var medalTrailing: NSLayoutConstraint!
     @IBOutlet weak var medalWidth: NSLayoutConstraint!
+    @IBOutlet weak var replyButtonWidth: NSLayoutConstraint!
     
     var commentID : String!
     

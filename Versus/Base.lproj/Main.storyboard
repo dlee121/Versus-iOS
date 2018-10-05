@@ -4200,6 +4200,9 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NPR-Ca-u7Q">
                                                     <rect key="frame" x="316" y="126" width="39" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="39" id="NPA-p2-ne3"/>
+                                                    </constraints>
                                                     <state key="normal" title="Reply"/>
                                                     <connections>
                                                         <action selector="replyButtonTapped:" destination="QgD-8c-EVE" eventType="touchUpInside" id="LBg-f8-Te7"/>
@@ -4378,6 +4381,7 @@
                                             <outlet property="postVotes" destination="oEp-vU-U6F" id="S1k-N9-Na3"/>
                                             <outlet property="question" destination="axL-h2-Gmx" id="yqm-lM-jVK"/>
                                             <outlet property="replyButtonTrailing" destination="jXo-M7-yJn" id="bu1-Aq-mKC"/>
+                                            <outlet property="replyButtonWidth" destination="NPA-p2-ne3" id="fIg-Ng-Igq"/>
                                             <outlet property="replyCount" destination="P5s-pz-ENV" id="8bu-jo-ZEw"/>
                                             <outlet property="seeMoreButton" destination="5Te-24-KJd" id="swX-Wx-hnp"/>
                                             <outlet property="seeMoreWidth" destination="NZo-sd-vQ5" id="zA2-ox-m7j"/>

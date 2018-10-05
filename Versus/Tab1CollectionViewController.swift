@@ -47,12 +47,17 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
     var adFrequency = 11
     var queryTime : String!
     
+    var adjustForSmallerScreen = false
+    
     var hiddenSections = NSMutableSet()
     
     var blockedUsernames = NSMutableSet()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        adjustForSmallerScreen = UIScreen.main.bounds.height < 666
+        
         tableView.tableFooterView = UIView()
         ref = Database.database().reference()
         screenWidth = self.view.frame.size.width
@@ -553,6 +558,10 @@ class Tab1CollectionViewController: UIViewController, UITableViewDataSource, UIT
             }
             
             cell.delegate = self
+            
+            if adjustForSmallerScreen {
+                cell.replyButtonWidth.constant = 0
+            }
             
             return cell
         }
