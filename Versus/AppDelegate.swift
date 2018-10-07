@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var window: UIWindow?
     var tokenExpirationTime : Date?
     weak var timer: Timer?
+    var userAction : UserAction?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -82,6 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
+        
         if let token = UserDefaults.standard.object(forKey: "KEY_TOKEN") as? String {
             do {
                 let jwt = try decode(jwt: token)
@@ -93,6 +95,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
                 Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
+                
+                //update ES userAction here
+                if userAction != nil && userAction!.changed {
+                    VSVersusAPIClient.default().recordPost(body: userAction!.getRecordPutModel(), a: "rcp", b: userAction!.id)
+                }
+                
             }
         }
         

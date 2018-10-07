@@ -75,6 +75,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var blockedUsernames = NSMutableSet()
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     /*
         updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
             ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -343,7 +345,17 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         textInput.resignFirstResponder()
         editSegue = false
         if currentUserAction.changed {
-            VSVersusAPIClient.default().recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
+            VSVersusAPIClient.default().recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                if task.error != nil {
+                    DispatchQueue.main.async {
+                        print(task.error!)
+                    }
+                }
+                else {
+                    self.appDelegate.userAction = nil
+                }
+                return nil
+            }
         }
         
         
@@ -1357,6 +1369,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
         
         currentUserAction.changed = true
+        appDelegate.userAction = currentUserAction
         
     }
     
@@ -1392,6 +1405,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         currentUserAction.changed = true
+        appDelegate.userAction = currentUserAction
     }
     
     func commentBrokenhearted(commentID: String) {
@@ -1434,6 +1448,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         currentUserAction.changed = true
+        appDelegate.userAction = currentUserAction
     }
     
     
