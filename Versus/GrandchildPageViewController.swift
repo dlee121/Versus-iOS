@@ -62,6 +62,8 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
     
     var blockedUsernames = NSMutableSet()
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     /*
      updateMap = [commentID : action], action = u = upvote+influence, d = downvote, dci = downvote+influence,
      ud = upvote -> downvote, du = downvote -> upvote, un = upvote cancel, dn = downvote cancel
@@ -218,7 +220,17 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
                 }
             }
             
-            VSVersusAPIClient.default().recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id)
+            VSVersusAPIClient.default().recordPost(body: currentUserAction.getRecordPutModel(), a: "rcp", b: currentUserAction.id).continueWith(block:) {(task: AWSTask) -> AnyObject? in
+                if task.error != nil {
+                    DispatchQueue.main.async {
+                        print(task.error!)
+                    }
+                }
+                else {
+                    self.appDelegate.userAction = nil
+                }
+                return nil
+            }
         }
         
         NotificationCenter.default.removeObserver(self)
@@ -795,6 +807,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         currentUserAction.changed = true
+        appDelegate.userAction = currentUserAction
     }
     
     func commentBrokenhearted(commentID: String) {
@@ -858,6 +871,7 @@ class GrandchildPageViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         currentUserAction.changed = true
+        appDelegate.userAction = currentUserAction
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
