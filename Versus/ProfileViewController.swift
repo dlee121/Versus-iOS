@@ -265,12 +265,6 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
     override func viewWillAppear(_ animated: Bool){
         super.viewWillAppear(animated)
         
-        if self.currentUsername == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
-            followButton.isHidden = true
-        }
-        else {
-            followButton.isHidden = false
-        }
         self.fghIcon.image = nil
         setupFGH()
         
@@ -322,6 +316,12 @@ class ProfileViewController: ButtonBarPagerTabStripViewController {
             default:
                 self.followButton.setTitle("Follow", for: .normal)
                 self.fghIcon.image = nil
+            }
+            if self.currentUsername == UserDefaults.standard.string(forKey: "KEY_USERNAME") {
+                self.followButton.isHidden = true
+            }
+            else {
+                self.followButton.isHidden = false
             }
         }
     }

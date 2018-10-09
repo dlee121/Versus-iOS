@@ -1063,11 +1063,19 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         
         if grandchildReplyTargetAuthor != nil {
             if updatedText.count > grandchildReplyTargetAuthor!.count + 2 && !updatedText[grandchildReplyTargetAuthor!.count + 2 ... updatedText.count - 1].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                //turn autocapitalization to sentence mode
+                textView.autocapitalizationType = .sentences
+                textView.reloadInputViews()
+                
                 textView.textColor = UIColor.black
                 commentSendButton.isEnabled = true
                 commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_blue"), for: .normal)
             }
             else {
+                //force capitalization for first character
+                textView.autocapitalizationType = .words
+                textView.reloadInputViews()
+                
                 commentSendButton.isEnabled = false
                 commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
             }
@@ -1078,6 +1086,9 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         // If updated text view will be empty, add the placeholder
         // and set the cursor to the beginning of the text view
         if updatedText.isEmpty {
+            //force capitalization for first character
+            textView.autocapitalizationType = .words
+            textView.reloadInputViews()
             
             textView.text = placeholder
             textView.textColor = UIColor.lightGray
@@ -1092,6 +1103,10 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             // the text color to black then set its text to the
             // replacement string
         else if textView.textColor == UIColor.lightGray && !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            //turn autocapitalization to sentence mode
+            textView.autocapitalizationType = .sentences
+            textView.reloadInputViews()
+            
             textView.textColor = UIColor.black
             textView.text = text
             commentSendButton.isEnabled = true
