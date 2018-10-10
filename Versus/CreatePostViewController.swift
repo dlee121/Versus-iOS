@@ -218,7 +218,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                         }
                         
                         
-                        //self.group.notify(queue: .main) {
+                        self.group.notify(queue: .main) {
                             if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
                                 if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
                                     if let tab3New = mainVC.viewControllers.last as? Tab3NewViewController {
@@ -238,9 +238,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                                             tab3New.tableView.reloadData()
                                         }
                                         
-                                        if !textOnly {
-                                            tab3New.newlyCreatedPosts.append(newPost)
-                                        }
+                                        tab3New.newlyCreatedPosts.append(newPost)
+                                        tab3New.newlyCreatedPostsSet.add(newPost.post_id)
                                         
                                     }
                                 }
@@ -263,7 +262,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                             self.rightImageCancelButton.isHidden = true
                             
                             (self.tabBarController as! TabBarViewController).newCreatePostExit()
-                        //}
+                        }
+                        /*
                         if !textOnly {
                             self.group.notify(queue: .main) {
                                 if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
@@ -277,18 +277,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                                 }
                             }
                         }
-                        else {
-                            if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
-                                if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
-                                    if let tab3New = mainVC.viewControllers.last as? Tab3NewViewController {
-                                        if tab3New.newlyCreatedPosts != nil {
-                                            tab3New.newlyCreatedPosts.removeAll()
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
+                        */
                     }
                     
                 }

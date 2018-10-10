@@ -52,6 +52,7 @@ class Tab3NewViewController: UIViewController, UITableViewDataSource, UITableVie
     var blockedUsernames = NSMutableSet()
     
     var newlyCreatedPosts = [PostObject]()
+    var newlyCreatedPostsSet = NSMutableSet()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,6 +87,7 @@ class Tab3NewViewController: UIViewController, UITableViewDataSource, UITableVie
     func refresh(){
         if !indicator.isAnimating {
             fromIndex = 0
+            
             posts.removeAll()
             tableView.reloadData()
             
@@ -159,7 +161,15 @@ class Tab3NewViewController: UIViewController, UITableViewDataSource, UITableVie
                 var index = 0
                 var indexToAd = 0
                 for item in queryResults! {
-                    self.posts.append(PostObject(itemSource: item.source!, id: item.id!))
+                    let postObject = PostObject(itemSource: item.source!, id: item.id!)
+                    if !self.newlyCreatedPostsSet.contains(postObject.post_id) {
+                        self.posts.append(postObject)
+                    }
+                    else {
+                        self.newlyCreatedPostsSet.removeAllObjects()
+                        self.newlyCreatedPosts.removeAll()
+                    }
+                    
                     
                     if item.source?.a != "deleted" {
                         if index == 0 {
