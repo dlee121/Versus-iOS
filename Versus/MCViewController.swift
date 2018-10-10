@@ -159,7 +159,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         let child_2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Tab2")
         let child_3 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Tab3")
         tab3 = child_3 as! Tab3NewViewController
-        return [child_2, child_1, child_3] //switched MyCircle <-> Trending
+        return [child_1, child_2, child_3]
     }
     
     func loadDesign() {
