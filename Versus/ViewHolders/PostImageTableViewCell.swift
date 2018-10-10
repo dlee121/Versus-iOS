@@ -49,14 +49,24 @@ class PostImageTableViewCell: UITableViewCell {
         
         //set up redImage and blackImage
         if post.redimg.intValue % 10 == S3 {
-            getPostImage(postID: post.post_id, lORr: 0, editVersion: post.redimg.intValue / 10)
+            if let leftImage = post.leftImage {
+                redImage.image = leftImage
+            }
+            else {
+                getPostImage(postID: post.post_id, lORr: 0, editVersion: post.redimg.intValue / 10)
+            }
         }
         else {
             redImage.image = #imageLiteral(resourceName: "defaultImage")
         }
         
         if post.blackimg.intValue % 10 == S3 {
-            getPostImage(postID: post.post_id, lORr: 1, editVersion: post.blackimg.intValue / 10)
+            if let rightImage = post.rightImage {
+                blackImage.image = rightImage
+            }
+            else {
+                getPostImage(postID: post.post_id, lORr: 1, editVersion: post.blackimg.intValue / 10)
+            }
         }
         else {
             blackImage.image = #imageLiteral(resourceName: "defaultImage")

@@ -51,6 +51,8 @@ class Tab3NewViewController: UIViewController, UITableViewDataSource, UITableVie
     var hiddenSections = NSMutableSet()
     var blockedUsernames = NSMutableSet()
     
+    var newlyCreatedPosts = [PostObject]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorStyle = .none
@@ -86,6 +88,12 @@ class Tab3NewViewController: UIViewController, UITableViewDataSource, UITableVie
             fromIndex = 0
             posts.removeAll()
             tableView.reloadData()
+            
+            if newlyCreatedPosts != nil && newlyCreatedPosts.count > 0 {
+                for newPost in newlyCreatedPosts {
+                    posts.append(newPost)
+                }
+            }
             
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH\\:mm\\:ssZ"

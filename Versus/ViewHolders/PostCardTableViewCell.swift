@@ -82,7 +82,13 @@ class PostCardTableViewCell: UITableViewCell {
             redCheck.image = #imageLiteral(resourceName: "check_circle_white")
             leftOverlayAlpha = 0.3
             redNameHeight.constant = 21
-            getPostImage(postID: post.post_id, lORr: 0, editVersion: post.redimg.intValue / 10)
+            
+            if let leftImage = post.leftImage {
+                redImage.image = leftImage
+            }
+            else {
+                getPostImage(postID: post.post_id, lORr: 0, editVersion: post.redimg.intValue / 10)
+            }
             
             textOnlyBlueName.text = ""
             blueImageTop.constant = 8
@@ -90,7 +96,15 @@ class PostCardTableViewCell: UITableViewCell {
             blueCheck.image = #imageLiteral(resourceName: "check_circle_white")
             rightOverlayAlpha = 0.3
             blueNameHeight.constant = 21
-            getPostImage(postID: post.post_id, lORr: 1, editVersion: post.blackimg.intValue / 10)
+            
+            if let rightImage = post.rightImage {
+                blueImage.image = rightImage
+            }
+            else {
+                getPostImage(postID: post.post_id, lORr: 1, editVersion: post.blackimg.intValue / 10)
+            }
+            
+            
         }
         else if post.redimg.intValue % 10 == S3 { //only left image
             textOnlyRedName.text = ""
@@ -99,7 +113,13 @@ class PostCardTableViewCell: UITableViewCell {
             redCheck.image = #imageLiteral(resourceName: "check_circle_white")
             leftOverlayAlpha = 0.3
             redNameHeight.constant = 21
-            getPostImage(postID: post.post_id, lORr: 0, editVersion: post.redimg.intValue / 10)
+            
+            if let leftImage = post.leftImage {
+                redImage.image = leftImage
+            }
+            else {
+                getPostImage(postID: post.post_id, lORr: 0, editVersion: post.redimg.intValue / 10)
+            }
             
             textOnlyBlueName.text = ""
             blueImageTop.constant = 8
@@ -116,7 +136,13 @@ class PostCardTableViewCell: UITableViewCell {
             blueCheck.image = #imageLiteral(resourceName: "check_circle_white")
             rightOverlayAlpha = 0.3
             blueNameHeight.constant = 21
-            getPostImage(postID: post.post_id, lORr: 1, editVersion: post.blackimg.intValue / 10)
+            
+            if let rightImage = post.rightImage {
+                blueImage.image = rightImage
+            }
+            else {
+                getPostImage(postID: post.post_id, lORr: 1, editVersion: post.blackimg.intValue / 10)
+            }
             
             textOnlyRedName.text = ""
             redImageTop.constant = 8
@@ -309,7 +335,25 @@ class PostCardTableViewCell: UITableViewCell {
                 let presignedURL = task.result
                 DispatchQueue.main.async {
                     let options = ImageLoadingOptions(failureImage: UIImage(named: "removedImage"))
-                    Nuke.loadImage(with: presignedURL!.absoluteURL!, options: options, into: self.redImage)
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, options: options, into: self.redImage, progress: nil){ response, error in
+                        if error != nil {
+                            self.textOnlyRedName.text = self.currentPost.redname
+                            self.redImageTop.constant = -34
+                            self.redNameHeight.constant = 0
+                            self.redname.text = ""
+                            self.redCheck.image = #imageLiteral(resourceName: "check_circle_gray")
+                            self.leftOverlayAlpha = 0.0
+                            self.redImage.image = nil
+                            
+                            self.textOnlyBlueName.text = self.currentPost.blackname
+                            self.blueImageTop.constant = -34
+                            self.blueNameHeight.constant = 0
+                            self.bluename.text = ""
+                            self.blueCheck.image = #imageLiteral(resourceName: "check_circle_gray")
+                            self.rightOverlayAlpha = 0.0
+                            self.blueImage.image = nil
+                        }
+                    }
                 }
                 
                 return nil
@@ -332,7 +376,25 @@ class PostCardTableViewCell: UITableViewCell {
                 let presignedURL = task.result
                 DispatchQueue.main.async {
                     let options = ImageLoadingOptions(failureImage: UIImage(named: "removedImage"))
-                    Nuke.loadImage(with: presignedURL!.absoluteURL!, options: options, into: self.blueImage)
+                    Nuke.loadImage(with: presignedURL!.absoluteURL!, options: options, into: self.blueImage, progress: nil){ response, error in
+                        if error != nil {
+                            self.textOnlyRedName.text = self.currentPost.redname
+                            self.redImageTop.constant = -34
+                            self.redNameHeight.constant = 0
+                            self.redname.text = ""
+                            self.redCheck.image = #imageLiteral(resourceName: "check_circle_gray")
+                            self.leftOverlayAlpha = 0.0
+                            self.redImage.image = nil
+                            
+                            self.textOnlyBlueName.text = self.currentPost.blackname
+                            self.blueImageTop.constant = -34
+                            self.blueNameHeight.constant = 0
+                            self.bluename.text = ""
+                            self.blueCheck.image = #imageLiteral(resourceName: "check_circle_gray")
+                            self.rightOverlayAlpha = 0.0
+                            self.blueImage.image = nil
+                        }
+                    }
                 }
                 
                 return nil

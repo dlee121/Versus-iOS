@@ -164,6 +164,29 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
             
             if leftImageSet == S3 || rightImageSet == S3{
                 uploadImages(postID: newPost.post_id)
+                
+                if leftImageSet == S3 {
+                    if let leftRawImage = leftImage.currentImage {
+                        if leftRawImage.size.width >= leftRawImage.size.height {
+                            newPost.leftImage = leftRawImage.resized(toWidth: 304)
+                        }
+                        else {
+                            newPost.leftImage = leftRawImage.resized(toHeight: 304)
+                        }
+                    }
+                }
+                
+                if rightImageSet == S3 {
+                    if let rightRawImage = rightImage.currentImage {
+                        if rightRawImage.size.width >= rightRawImage.size.height {
+                            newPost.rightImage = rightRawImage.resized(toWidth: 304)
+                        }
+                        else {
+                            newPost.rightImage = rightRawImage.resized(toHeight: 304)
+                        }
+                    }
+                }
+                
             }
             group.enter()
             VSVersusAPIClient.default().postputPost(body: newPost.getPostPutModel(), c: newPost.post_id, a: "postput", b: newPost.author.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
@@ -181,7 +204,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                         
                         self.group.leave()
                         
-                        self.group.notify(queue: .main) {
+                        //self.group.notify(queue: .main) {
                             if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
                                 if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
                                     if let tab3New = mainVC.viewControllers.last as? Tab3NewViewController {
@@ -200,6 +223,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                                             tab3New.posts.insert(newPost, at: 0)
                                             tab3New.tableView.reloadData()
                                         }
+                                        
+                                        tab3New.newlyCreatedPosts.append(newPost)
                                     }
                                 }
                             }
@@ -221,6 +246,22 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                             self.rightImageCancelButton.isHidden = true
                             
                             (self.tabBarController as! TabBarViewController).newCreatePostExit()
+                        //}
+                        
+                        self.group.notify(queue: .main) {
+                            print("flipped pt")
+                            //update pt to current time
+                            let newPT = NSNumber(value: Int(((NSDate().timeIntervalSince1970/60)/60)/24))
+                            VSVersusAPIClient.default().postslistcompactGet(c: "\(newPT)", a: "pt", b: newPost.post_id)
+                            if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
+                                if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
+                                    if let tab3New = mainVC.viewControllers.last as? Tab3NewViewController {
+                                        if tab3New.newlyCreatedPosts != nil {
+                                            tab3New.newlyCreatedPosts.removeAll()
+                                        }
+                                    }
+                                }
+                            }
                         }
                         
                     }
@@ -491,10 +532,13 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                                     self.executeImageUpload(image: image, imageKey: imageKey)
                                 }
                                 else {
+                                    self.group.leave()
+                                    /*
                                     DispatchQueue.main.async {
-                                        self.showToast(message: "Inappropriate image detected.", length: 29)
-                                        self.group.leave()
+                                        //self.showToast(message: "Inappropriate image detected.", length: 29)
+                                     
                                     }
+                                    */
                                 }
                             }
                         })
@@ -550,10 +594,13 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                                     self.executeImageUpload(image: image, imageKey: imageKey)
                                 }
                                 else {
+                                    self.group.leave()
+                                    /*
                                     DispatchQueue.main.async {
-                                        self.showToast(message: "Inappropriate image detected.", length: 29)
-                                        self.group.leave()
+                                        //self.showToast(message: "Inappropriate image detected.", length: 29)
+                                     
                                     }
+                                    */
                                 }
                             }
                         })

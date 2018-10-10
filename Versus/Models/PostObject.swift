@@ -29,6 +29,8 @@ class PostObject {
     var meORnew : Int? //0 if MeVC, 1 if NewVC
     var meORnewIndex : Int?
     
+    var leftImage, rightImage : UIImage?
+    
     init(itemSource : VSPostsListModel_hits_hits_item__source, id : String){
         question = itemSource.q!
         author = itemSource.a!
@@ -127,7 +129,8 @@ class PostObject {
         redimg = ri
         blackimg = bi
         
-        pt = NSNumber(value: Int(((NSDate().timeIntervalSince1970/60)/60)/24))
+        //pt = NSNumber(value: Int(((NSDate().timeIntervalSince1970/60)/60)/24))
+        pt = -1
         ps = 0
         
         profileImageVersion = 0
