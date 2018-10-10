@@ -212,18 +212,18 @@ class TabBarViewController: UITabBarController {
                     if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
                         switch mainVC.currentIndex {
                         case 0: //MyCircle
-                            if let tab1MyCircle = mainVC.viewControllers[0] as? Tab1CollectionViewController {
-                                tab1MyCircle.scrollOrRefresh()
+                            if let tab1Trending = mainVC.viewControllers[0] as? Tab1TrendingViewController {
+                                tab1Trending.scrollOrRefresh()
                             }
                             
                         case 1: //Trending
-                            if let tab2Trending = mainVC.viewControllers[1] as? Tab2CollectionViewController {
-                                tab2Trending.scrollOrRefresh()
+                            if let tab2MyCircle = mainVC.viewControllers[1] as? Tab2MyCircleViewController {
+                                tab2MyCircle.scrollOrRefresh()
                             }
                             
                             
                         case 2: //New
-                            if let tab3New = mainVC.viewControllers[2] as? Tab3CollectionViewController {
+                            if let tab3New = mainVC.viewControllers[2] as? Tab3NewViewController {
                                 tab3New.scrollOrRefresh()
                             }
                         default:

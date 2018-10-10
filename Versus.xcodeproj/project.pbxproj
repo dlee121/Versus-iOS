@@ -62,9 +62,9 @@
 		70A7ED49211FBFB90059507A /* ChildPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A7ED48211FBFB90059507A /* ChildPageViewController.swift */; };
 		70A7ED4B211FC3410059507A /* PostPageDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A7ED4A211FC3410059507A /* PostPageDelegator.swift */; };
 		70AD4C5120EB0C4C000C9433 /* OIDCProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */; };
-		70B1704920F28D7C00459ACE /* Tab1CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */; };
-		70B1704B20F28D8600459ACE /* Tab2CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */; };
-		70B1704D20F28D8D00459ACE /* Tab3CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */; };
+		70B1704920F28D7C00459ACE /* Tab2MyCircleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704820F28D7C00459ACE /* Tab2MyCircleViewController.swift */; };
+		70B1704B20F28D8600459ACE /* Tab1TrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704A20F28D8600459ACE /* Tab1TrendingViewController.swift */; };
+		70B1704D20F28D8D00459ACE /* Tab3NewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1704C20F28D8D00459ACE /* Tab3NewViewController.swift */; };
 		70B1705120F2F97800459ACE /* ButtonBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B1705020F2F97800459ACE /* ButtonBarView.swift */; };
 		70B58F442130ABF700557661 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70B58F432130ABF600557661 /* GoogleService-Info.plist */; };
 		70B58F462131E2BE00557661 /* SettingsItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B58F452131E2BE00557661 /* SettingsItemTableViewCell.swift */; };
@@ -212,9 +212,9 @@
 		70A7ED48211FBFB90059507A /* ChildPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildPageViewController.swift; sourceTree = "<group>"; };
 		70A7ED4A211FC3410059507A /* PostPageDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPageDelegator.swift; sourceTree = "<group>"; };
 		70AD4C5020EB0C4C000C9433 /* OIDCProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OIDCProvider.swift; sourceTree = "<group>"; };
-		70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab1CollectionViewController.swift; sourceTree = "<group>"; };
-		70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab2CollectionViewController.swift; sourceTree = "<group>"; };
-		70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab3CollectionViewController.swift; sourceTree = "<group>"; };
+		70B1704820F28D7C00459ACE /* Tab2MyCircleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab2MyCircleViewController.swift; sourceTree = "<group>"; };
+		70B1704A20F28D8600459ACE /* Tab1TrendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab1TrendingViewController.swift; sourceTree = "<group>"; };
+		70B1704C20F28D8D00459ACE /* Tab3NewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab3NewViewController.swift; sourceTree = "<group>"; };
 		70B1705020F2F97800459ACE /* ButtonBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarView.swift; sourceTree = "<group>"; };
 		70B58F3C212F7DF100557661 /* Versus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Versus.entitlements; sourceTree = "<group>"; };
 		70B58F432130ABF600557661 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -363,9 +363,9 @@
 				701C8CC320F8C51F0072AECD /* NotificationsViewController.swift */,
 				701C8CC520F8C5510072AECD /* MeViewController.swift */,
 				706F89E82107EAB300A78EFB /* ProfileViewController.swift */,
-				70B1704820F28D7C00459ACE /* Tab1CollectionViewController.swift */,
-				70B1704A20F28D8600459ACE /* Tab2CollectionViewController.swift */,
-				70B1704C20F28D8D00459ACE /* Tab3CollectionViewController.swift */,
+				70B1704A20F28D8600459ACE /* Tab1TrendingViewController.swift */,
+				70B1704820F28D7C00459ACE /* Tab2MyCircleViewController.swift */,
+				70B1704C20F28D8D00459ACE /* Tab3NewViewController.swift */,
 				701B9BA820E3FB20003C9E7E /* Main.storyboard */,
 				701B9BAB20E3FB22003C9E7E /* Assets.xcassets */,
 				701B9BAD20E3FB22003C9E7E /* LaunchScreen.storyboard */,
@@ -875,12 +875,12 @@
 				70E80CCD20E6DB570067DF08 /* VSVersusAPIClient.swift in Sources */,
 				7027A7DD214E1D500071A939 /* SignUpViewController.swift in Sources */,
 				70E80CDD20E6DB570067DF08 /* VSPostEditModel.swift in Sources */,
-				70B1704920F28D7C00459ACE /* Tab1CollectionViewController.swift in Sources */,
+				70B1704920F28D7C00459ACE /* Tab2MyCircleViewController.swift in Sources */,
 				701C8CCF20F978C80072AECD /* BronzeLeaderTableViewCell.swift in Sources */,
 				70E80CB320E6DB570067DF08 /* VSPostsListModel_hits.swift in Sources */,
 				70E331D621212454007414D6 /* GrandchildPageViewController.swift in Sources */,
 				70E80CC420E6DB570067DF08 /* VSPIVModel_docs_item__source.swift in Sources */,
-				70B1704D20F28D8D00459ACE /* Tab3CollectionViewController.swift in Sources */,
+				70B1704D20F28D8D00459ACE /* Tab3NewViewController.swift in Sources */,
 				70FC66292124C97D00783FD5 /* TabBarViewController.swift in Sources */,
 				70C49477215B9156006F1D0D /* NativeView.swift in Sources */,
 				70E80CAF20E6DB570067DF08 /* VSLeaderboardModel_hits_hits_item.swift in Sources */,
@@ -900,7 +900,7 @@
 				70E0DA1D216720F800203350 /* GDPRConsentViewController.swift in Sources */,
 				70CB9E552116976100D86E37 /* UserAction.swift in Sources */,
 				70E80CDC20E6DB570067DF08 /* VSCGCModel_responses_item_hits_hits_item.swift in Sources */,
-				70B1704B20F28D8600459ACE /* Tab2CollectionViewController.swift in Sources */,
+				70B1704B20F28D8600459ACE /* Tab1TrendingViewController.swift in Sources */,
 				701C8CCD20F978B30072AECD /* SilverLeaderTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

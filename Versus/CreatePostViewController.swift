@@ -184,7 +184,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                         self.group.notify(queue: .main) {
                             if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
                                 if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
-                                    if let tab3New = mainVC.viewControllers.last as? Tab3CollectionViewController {
+                                    if let tab3New = mainVC.viewControllers.last as? Tab3NewViewController {
                                         
                                         let piv = UserDefaults.standard.integer(forKey: "KEY_PI")
                                         newPost.profileImageVersion = piv

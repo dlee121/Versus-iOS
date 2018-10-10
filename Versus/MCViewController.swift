@@ -69,7 +69,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         }
     }
     
-    var tab3 : Tab3CollectionViewController!
+    var tab3 : Tab3NewViewController!
     
     var adIndex = 0
     
@@ -158,7 +158,7 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         let child_1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Tab1")
         let child_2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Tab2")
         let child_3 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Tab3")
-        tab3 = child_3 as! Tab3CollectionViewController
+        tab3 = child_3 as! Tab3NewViewController
         return [child_2, child_1, child_3] //switched MyCircle <-> Trending
     }
     

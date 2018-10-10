@@ -13,20 +13,17 @@ import AWSS3
 import XLPagerTabStrip
 import PopupDialog
 
-class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileDelegator {
-    
-    
+class Tab1TrendingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ProfileDelegator {
     
     
     @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var categorySelectionLabel: UILabel!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
-    
     
     var fromIndex = 0
     let DEFAULT = 0
     let S3 = 1
-    
     var posts = [PostObject]()
     var vIsRed = true
     let preheater = Nuke.ImagePreheater()
@@ -44,26 +41,26 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     var adFrequency = 7
     
-    private let refreshControl = UIRefreshControl()
-    
-    var queryTime : String!
+    var queryTime : Int!
     
     var hiddenSections = NSMutableSet()
     var blockedUsernames = NSMutableSet()
     
+    private let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorStyle = .none
-        print("tab3 loaded")
-        let tap = UITapGestureRecognizer(target: self, action: #selector(Tab3CollectionViewController.resetCategorySelection))
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(Tab1TrendingViewController.resetCategorySelection))
         categorySelectionLabel.addGestureRecognizer(tap)
         
-        if posts.count <= 1 { // <= 1 because it can be 1 if newly created post is appended to posts before this
+        if posts.count == 0 {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH\\:mm\\:ssZ"
-            queryTime = formatter.string(from: Date())
+            queryTime = Int(Date().timeIntervalSince1970.rounded())
             
-            newQuery()
+            trendingQuery()
         }
         
         // Add Refresh Control to Table View
@@ -89,9 +86,9 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
             
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH\\:mm\\:ssZ"
-            queryTime = formatter.string(from: Date())
+            queryTime = Int(Date().timeIntervalSince1970.rounded())
             
-            newQuery()
+            trendingQuery()
         }
         else {
             refreshControl.endRefreshing()
@@ -120,9 +117,9 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         clickLock = false
     }
     
-    func newQuery(){
+    func trendingQuery(){
         
-        if fromIndex == 0  {
+        if fromIndex == 0 {
             if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
                 if blockedUsernames.count > 0 {
                     blockedUsernames.removeAllObjects()
@@ -137,8 +134,8 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
                 self.indicator.startAnimating()
             }
         }
-        //print("queryTime in tab3 is \(queryTime!)")
-        VSVersusAPIClient.default().postslistGet(c: categorySelection, d: queryTime, a: "nw2", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
+        //print("queryTime = \(queryTime!)")
+        VSVersusAPIClient.default().postslistGet(c: categorySelection, d: "\(queryTime!)", a: "tr2", b: "\(fromIndex)").continueWith(block:) {(task: AWSTask) -> AnyObject? in
             if task.error != nil {
                 DispatchQueue.main.async {
                     print(task.error!)
@@ -319,6 +316,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return posts.count
     }
@@ -329,7 +327,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let post = posts[section]
-        if hiddenSections.contains(posts[section].post_id) || blockedUsernames.contains(post.author) {
+        if hiddenSections.contains(post.post_id) || blockedUsernames.contains(post.author) {
             return 0
         }
         else {
@@ -364,6 +362,7 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currentPost = posts[indexPath.section]
         
+        
         if currentPost.post_id != "0" {
             //set profile image version for the post if one exists
             if let piv = profileImageVersions[currentPost.author.lowercased()] {
@@ -387,14 +386,12 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
                 return cell
             }
         }
-        else {
+        else { //nativeAd
             let mainVC = parent as! MCViewController
             var cell = UITableViewCell(style: .default, reuseIdentifier: "NativeImage")
             mainVC.presentNative(onView: cell.contentView, fromIndex: indexPath as NSIndexPath, showMedia: true)
             return cell
-            
         }
-        
         
     }
     
@@ -403,15 +400,14 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         if !nowLoading && indexPath.section == lastElement {
             nowLoading = true
             fromIndex = posts.count
-            newQuery()
+            trendingQuery()
         }
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currentPost = posts[indexPath.section]
-        currentPost.meORnewIndex = indexPath.section
-        currentPost.meORnew = 1
+        
         if currentPost.post_id != "0" {
             if !clickLock {
                 clickLock = true
@@ -550,16 +546,18 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
     
     
     @IBAction func categoryFilterButtonTapped(_ sender: UIButton) {
+        
         prepareCategoryFilter = true
-        performSegue(withIdentifier: "presentNewFilter", sender: self)
+        performSegue(withIdentifier: "presentTrendingFilter", sender: self)
         
     }
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if prepareCategoryFilter {
             guard let categoriesVC = segue.destination as? CategoryFilterViewController else {return}
-            categoriesVC.sourceType = 3
+            categoriesVC.sourceType = 2
             categoriesVC.originVC = self
         }
         else { //this is for segue to PostPage. Be sure to set prepareCategoryFilter = false to access this block
@@ -586,18 +584,11 @@ class Tab3CollectionViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
-    func handlePostDelete(postID : String, index : Int) {
-        if posts[index].post_id == postID {
-            posts.remove(at: index)
-            tableView.deleteSections([index], with: .none)
-        }
-    }
-    
     
 }
 
-extension Tab3CollectionViewController : IndicatorInfoProvider {
+extension Tab1TrendingViewController : IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "New")
+        return IndicatorInfo(title: "Trending")
     }
 }

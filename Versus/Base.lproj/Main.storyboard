@@ -2447,10 +2447,10 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="goldLeader" rowHeight="116" id="ILp-0h-Dau" customClass="GoldLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="125" height="116"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="116"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ILp-0h-Dau" id="orY-Ch-Ykj">
-                                            <rect key="frame" x="0.0" y="0.0" width="125" height="115.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="115.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ln1-ii-VAR" userLabel="MainStack">
@@ -2547,10 +2547,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="silverLeader" rowHeight="102" id="T6V-5F-xKQ" customClass="SilverLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="144" width="125" height="102"/>
+                                        <rect key="frame" x="0.0" y="144" width="375" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T6V-5F-xKQ" id="t1h-7m-422">
-                                            <rect key="frame" x="0.0" y="0.0" width="125" height="101.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="101.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="QV7-bm-U5h" userLabel="MainStack">
@@ -2666,10 +2666,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="bronzeLeader" rowHeight="102" id="Rdk-De-6IG" customClass="BronzeLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="246" width="125" height="102"/>
+                                        <rect key="frame" x="0.0" y="246" width="375" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rdk-De-6IG" id="fBn-0K-cw1">
-                                            <rect key="frame" x="0.0" y="0.0" width="125" height="101.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="101.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6Bh-ho-F7a" userLabel="MainStack">
@@ -2772,10 +2772,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="plainLeader" rowHeight="102" id="CVz-yi-kpR" customClass="PlainLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="348" width="125" height="102"/>
+                                        <rect key="frame" x="0.0" y="348" width="375" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CVz-yi-kpR" id="C79-Q4-FNo">
-                                            <rect key="frame" x="0.0" y="0.0" width="125" height="101.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="101.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="z12-QX-RgO" userLabel="MainStack">
@@ -4236,7 +4236,7 @@
         <!--Tab1-->
         <scene sceneID="cSR-oY-cmj">
             <objects>
-                <viewController storyboardIdentifier="Tab1" title="Tab1" id="Dao-pg-BkK" customClass="Tab1CollectionViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Tab1" title="Tab1" id="Dao-pg-BkK" customClass="Tab2MyCircleViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nkp-UQ-4Pe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -4512,16 +4512,16 @@
             </objects>
             <point key="canvasLocation" x="3472.8000000000002" y="698.5007496251875"/>
         </scene>
-        <!--Tab2 Collection View Controller-->
+        <!--Tab1 Trending View Controller-->
         <scene sceneID="nnx-EE-Kb2">
             <objects>
-                <viewController storyboardIdentifier="Tab2" id="gyP-gQ-I8X" customClass="Tab2CollectionViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Tab2" id="gyP-gQ-I8X" customClass="Tab1TrendingViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="X2Z-ja-RaQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2B-YW-yo8">
-                                <rect key="frame" x="16" y="34" width="56" height="0.0"/>
+                                <rect key="frame" x="16" y="64" width="56" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="hnS-FW-Vvm"/>
                                 </constraints>
@@ -4530,7 +4530,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fed-RG-GgR">
-                                <rect key="frame" x="8" y="0.0" width="144" height="34"/>
+                                <rect key="frame" x="8" y="0.0" width="144" height="64"/>
                                 <state key="normal" title="Filter by Category">
                                     <color key="titleColor" white="0.29530164930000002" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -4539,14 +4539,14 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cpP-q6-evz" userLabel="CategoryFilterButtonArrow">
-                                <rect key="frame" x="152" y="0.0" width="32" height="34"/>
+                                <rect key="frame" x="152" y="0.0" width="64" height="64"/>
                                 <state key="normal" image="arrow_dropdown_gray"/>
                                 <connections>
                                     <action selector="categoryFilterButtonTapped:" destination="gyP-gQ-I8X" eventType="touchUpInside" id="SPj-FZ-WLw"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iQO-ua-SID">
-                                <rect key="frame" x="0.0" y="34" width="375" height="633"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="vscard_images" rowHeight="339" id="YOF-ni-3hY" customClass="PostImageTableViewCell" customModule="Versus" customModuleProvider="target">
@@ -5279,10 +5279,10 @@
             </objects>
             <point key="canvasLocation" x="3472.8000000000002" y="1464.9175412293855"/>
         </scene>
-        <!--Tab3 Collection View Controller-->
+        <!--Tab3 New View Controller-->
         <scene sceneID="IBu-1C-8fg">
             <objects>
-                <viewController storyboardIdentifier="Tab3" id="izp-gV-8d0" customClass="Tab3CollectionViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Tab3" id="izp-gV-8d0" customClass="Tab3NewViewController" customModule="Versus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Evu-CV-nh0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

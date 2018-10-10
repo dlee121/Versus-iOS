@@ -173,14 +173,14 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
         
         switch sourceType {
         case Tab2Filter:
-            let tab2VC = originVC as? Tab2CollectionViewController
+            let tab2VC = originVC as? Tab1TrendingViewController
             tab2VC?.categorySelection = "\(indexPath.row)"
             tab2VC?.categorySelectionLabel.text = ""
             tab2VC?.categorySelectionLabel.setSelectedCategoryLabel(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 30, suffix: getCategoryName(categoryInt: indexPath.row))
             tab2VC?.refresh()
             
         case Tab3Filter:
-            let tab3VC = originVC as? Tab3CollectionViewController
+            let tab3VC = originVC as? Tab3NewViewController
             tab3VC?.categorySelection = "\(indexPath.row)"
             tab3VC?.categorySelectionLabel.text = ""
             tab3VC?.categorySelectionLabel.setSelectedCategoryLabel(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 30, suffix: getCategoryName(categoryInt: indexPath.row))
@@ -200,7 +200,7 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
             editPostVC?.virginPage = false
             
         default:
-            let tab2VC = originVC as? Tab2CollectionViewController
+            let tab2VC = originVC as? Tab1TrendingViewController
             tab2VC?.categorySelection = "\(indexPath.row)"
             tab2VC?.categorySelectionLabel.text = ""
             tab2VC?.categorySelectionLabel.setSelectedCategoryLabel(imageName: getCategoryIconName(categoryInt: indexPath.row), imageHeight: 30, suffix: getCategoryName(categoryInt: indexPath.row))
