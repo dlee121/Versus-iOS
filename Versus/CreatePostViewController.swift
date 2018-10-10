@@ -159,9 +159,16 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
             navigationItem.rightBarButtonItem = barIndicator
             activityIndicator.startAnimating()
             
+            var ptOffset = 0
             let textOnly = leftImageSet != S3 && rightImageSet != S3
+            if leftImageSet == S3 {
+                ptOffset += 100000
+            }
+            if rightImageSet == S3 {
+                ptOffset += 100000
+            }
             
-            let newPost = PostObject(q: question.text!, rn: redName.text!, bn: blueName.text!, a: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, c: selectedCategoryNum!, ri: leftImageSet, bi: rightImageSet, textOnly: textOnly)
+            let newPost = PostObject(q: question.text!, rn: redName.text!, bn: blueName.text!, a: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, c: selectedCategoryNum!, ri: leftImageSet, bi: rightImageSet, ptOffset: ptOffset)
             createdPost = newPost
             
             if !textOnly {
@@ -231,7 +238,10 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                                             tab3New.tableView.reloadData()
                                         }
                                         
-                                        tab3New.newlyCreatedPosts.append(newPost)
+                                        if !textOnly {
+                                            tab3New.newlyCreatedPosts.append(newPost)
+                                        }
+                                        
                                     }
                                 }
                             }
@@ -256,10 +266,6 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                         //}
                         if !textOnly {
                             self.group.notify(queue: .main) {
-                                print("flipped pt")
-                                //update pt to current time
-                                let newPT = NSNumber(value: Int(((NSDate().timeIntervalSince1970/60)/60)/24))
-                                VSVersusAPIClient.default().postslistcompactGet(c: "\(newPT)", a: "pt", b: newPost.post_id)
                                 if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
                                     if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
                                         if let tab3New = mainVC.viewControllers.last as? Tab3NewViewController {
@@ -482,7 +488,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
         
         let transferManager = AWSS3TransferManager.default()
         transferManager.upload(uploadRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
-            
+            self.group.leave()
             if let error = task.error as? NSError {
                 if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
                     switch code {
@@ -497,7 +503,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 return nil
             }
             else {
-                self.group.leave()
+                //self.group.leave()
             }
             
             return nil
@@ -521,7 +527,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 let currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")!
                 
                 let data : Data = UIImageJPEGRepresentation(rawImage, 0.8)!
-                let requestID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+                let requestID = postID+"-left"
                 let filePath = "profile/\(currentUsername)/\(requestID).jpg"
                 let uploadRef = storageRef.child(filePath)
                 let metadata = StorageMetadata()
@@ -534,33 +540,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                             self.showToast(message: "Please check your network connection.", length: 37)
                         }
                         
-                    }else{
-                        //attach a listener that listens for image check results and calls executeImageUpload if image is good, otherwise returns with a warning
-                        
-                        self.refHandleLeft = self.ref.child("gvresults/\(currentUsername)/\(requestID)").observe(DataEventType.value, with: { (snapshot) in
-                            let result = snapshot.value as? String
-                            if result != nil {
-                                self.ref.child("gvresults/\(currentUsername)/\(requestID)").removeObserver(withHandle: self.refHandleLeft)
-                                //fields[0] = Adult, fields[1] = Medical, fields[2] = Violence
-                                let fields = result!.split(separator: ",")
-                                let imageIsSafe = (fields[0] == "VERY_UNLIKELY" || fields[0] == "UNLIKELY")
-                                    && (fields[1] == "VERY_UNLIKELY" || fields[1] == "UNLIKELY")
-                                    && (fields[2] == "VERY_UNLIKELY" || fields[2] == "UNLIKELY")
-                                
-                                if imageIsSafe {
-                                    self.executeImageUpload(image: image, imageKey: imageKey)
-                                }
-                                else {
-                                    self.group.leave()
-                                    /*
-                                    DispatchQueue.main.async {
-                                        //self.showToast(message: "Inappropriate image detected.", length: 29)
-                                     
-                                    }
-                                    */
-                                }
-                            }
-                        })
+                    }else {
+                        self.executeImageUpload(image: image, imageKey: imageKey)
                     }
                 }
             }
@@ -583,7 +564,7 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 let currentUsername = UserDefaults.standard.string(forKey: "KEY_USERNAME")!
                 
                 let data : Data = UIImageJPEGRepresentation(rawImage, 0.8)!
-                let requestID = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+                let requestID = postID+"-right"
                 let filePath = "profile/\(currentUsername)/\(requestID).jpg"
                 let uploadRef = storageRef.child(filePath)
                 let metadata = StorageMetadata()
@@ -596,33 +577,8 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                             self.showToast(message: "Please check your network connection.", length: 37)
                         }
                         
-                    }else{
-                        //attach a listener that listens for image check results and calls executeImageUpload if image is good, otherwise returns with a warning
-                        
-                        self.refHandleRight = self.ref.child("gvresults/\(currentUsername)/\(requestID)").observe(DataEventType.value, with: { (snapshot) in
-                            let result = snapshot.value as? String
-                            if result != nil {
-                                self.ref.child("gvresults/\(currentUsername)/\(requestID)").removeObserver(withHandle: self.refHandleRight)
-                                //fields[0] = Adult, fields[1] = Medical, fields[2] = Violence
-                                let fields = result!.split(separator: ",")
-                                let imageIsSafe = (fields[0] == "VERY_UNLIKELY" || fields[0] == "UNLIKELY")
-                                    && (fields[1] == "VERY_UNLIKELY" || fields[1] == "UNLIKELY")
-                                    && (fields[2] == "VERY_UNLIKELY" || fields[2] == "UNLIKELY")
-                                
-                                if imageIsSafe {
-                                    self.executeImageUpload(image: image, imageKey: imageKey)
-                                }
-                                else {
-                                    self.group.leave()
-                                    /*
-                                    DispatchQueue.main.async {
-                                        //self.showToast(message: "Inappropriate image detected.", length: 29)
-                                     
-                                    }
-                                    */
-                                }
-                            }
-                        })
+                    }else {
+                        self.executeImageUpload(image: image, imageKey: imageKey)
                     }
                 }
             }
