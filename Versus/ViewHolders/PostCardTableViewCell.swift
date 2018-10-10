@@ -221,8 +221,22 @@ class PostCardTableViewCell: UITableViewCell {
         let bluecount = currentPost.blackcount.intValue
         let totalVotes =  redcount + bluecount
         
-        let redPercentage = (redcount * 100) / totalVotes
-        let bluePercentage = (bluecount * 100) / totalVotes
+        
+        
+        var redPercentage = (redcount * 100) / totalVotes
+        var bluePercentage = (bluecount * 100) / totalVotes
+        
+        if redPercentage + bluePercentage < 100 {
+            let red1000 = (redcount * 1000) / totalVotes
+            let blue1000 = (bluecount * 1000) / totalVotes
+            
+            if red1000 % 10 > blue1000 % 10 {
+                redPercentage = 100 - bluePercentage
+            }
+            else {
+                bluePercentage = 100 - redPercentage
+            }
+        }
         
         redPercent.text = "\(redPercentage)%"
         bluePercent.text = "\(bluePercentage)%"

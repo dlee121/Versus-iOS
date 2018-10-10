@@ -159,10 +159,12 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
             navigationItem.rightBarButtonItem = barIndicator
             activityIndicator.startAnimating()
             
-            let newPost = PostObject(q: question.text!, rn: redName.text!, bn: blueName.text!, a: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, c: selectedCategoryNum!, ri: leftImageSet, bi: rightImageSet)
+            let textOnly = leftImageSet != S3 && rightImageSet != S3
+            
+            let newPost = PostObject(q: question.text!, rn: redName.text!, bn: blueName.text!, a: UserDefaults.standard.string(forKey: "KEY_USERNAME")!, c: selectedCategoryNum!, ri: leftImageSet, bi: rightImageSet, textOnly: textOnly)
             createdPost = newPost
             
-            if leftImageSet == S3 || rightImageSet == S3{
+            if !textOnly {
                 uploadImages(postID: newPost.post_id)
                 
                 if leftImageSet == S3 {
@@ -188,7 +190,9 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 }
                 
             }
-            group.enter()
+            if !textOnly {
+                group.enter()
+            }
             VSVersusAPIClient.default().postputPost(body: newPost.getPostPutModel(), c: newPost.post_id, a: "postput", b: newPost.author.lowercased()).continueWith(block:) {(task: AWSTask) -> AnyObject? in
                 if task.error != nil {
                     DispatchQueue.main.async {
@@ -202,7 +206,10 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                         //self.prepareCategoryPage = false
                         //self.performSegue(withIdentifier: "createPostToPostPage", sender: self)
                         
-                        self.group.leave()
+                        if !textOnly {
+                            self.group.leave()
+                        }
+                        
                         
                         //self.group.notify(queue: .main) {
                             if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
@@ -247,12 +254,24 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                             
                             (self.tabBarController as! TabBarViewController).newCreatePostExit()
                         //}
-                        
-                        self.group.notify(queue: .main) {
-                            print("flipped pt")
-                            //update pt to current time
-                            let newPT = NSNumber(value: Int(((NSDate().timeIntervalSince1970/60)/60)/24))
-                            VSVersusAPIClient.default().postslistcompactGet(c: "\(newPT)", a: "pt", b: newPost.post_id)
+                        if !textOnly {
+                            self.group.notify(queue: .main) {
+                                print("flipped pt")
+                                //update pt to current time
+                                let newPT = NSNumber(value: Int(((NSDate().timeIntervalSince1970/60)/60)/24))
+                                VSVersusAPIClient.default().postslistcompactGet(c: "\(newPT)", a: "pt", b: newPost.post_id)
+                                if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
+                                    if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
+                                        if let tab3New = mainVC.viewControllers.last as? Tab3NewViewController {
+                                            if tab3New.newlyCreatedPosts != nil {
+                                                tab3New.newlyCreatedPosts.removeAll()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else {
                             if let mainNavigationController = self.tabBarController?.viewControllers?[0] as? UINavigationController {
                                 if let mainVC = mainNavigationController.viewControllers.first as? MCViewController {
                                     if let tab3New = mainVC.viewControllers.last as? Tab3NewViewController {

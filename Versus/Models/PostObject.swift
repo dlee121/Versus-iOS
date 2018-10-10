@@ -111,7 +111,7 @@ class PostObject {
         profileImageVersion = 0
     }
     
-    init (q : String, rn : String, bn : String, a : String, c : NSNumber, ri : NSNumber, bi : NSNumber) {
+    init (q : String, rn : String, bn : String, a : String, c : NSNumber, ri : NSNumber, bi : NSNumber, textOnly : Bool) {
         question = q
         author = a
         
@@ -130,7 +130,12 @@ class PostObject {
         blackimg = bi
         
         //pt = NSNumber(value: Int(((NSDate().timeIntervalSince1970/60)/60)/24))
-        pt = -1
+        if textOnly {
+            pt = NSNumber(value: Int(((NSDate().timeIntervalSince1970/60)/60)/24))
+        }
+        else {
+            pt = -1
+        }
         ps = 0
         
         profileImageVersion = 0
