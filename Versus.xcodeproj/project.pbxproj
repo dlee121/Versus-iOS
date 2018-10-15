@@ -555,6 +555,7 @@
 				701B9B9F20E3FB20003C9E7E /* Resources */,
 				8834EA2F764346ABC758939B /* [CP] Embed Pods Frameworks */,
 				AFEDD35B447B2FC8F7BDB3D4 /* [CP] Copy Pods Resources */,
+				709A198A21741BF30048CBB1 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -620,6 +621,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		709A198A21741BF30048CBB1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n";
+		};
 		8834EA2F764346ABC758939B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1049,6 +1068,7 @@
 				CODE_SIGN_ENTITLEMENTS = Versus/Versus.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = Q366THJ2T3;
 				INFOPLIST_FILE = Versus/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;

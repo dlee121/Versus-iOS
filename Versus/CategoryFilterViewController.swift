@@ -146,7 +146,7 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
             return cell!
         case 17:
             let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
-            cell!.setCell(name: "Social Issues", image: #imageLiteral(resourceName: "Social Issues"))
+            cell!.setCell(name: "Social Issues",image: #imageLiteral(resourceName: "Social_Issues"))
             return cell!
         case 18:
             let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath) as? CategoriesTableViewCell
@@ -261,7 +261,7 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
         case 16:
             return "Science"
         case 17:
-            return "Social Issues"
+            return "Social_Issues"
         case 18:
             return "Sports"
         case 19:

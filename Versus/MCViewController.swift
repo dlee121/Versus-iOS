@@ -10,6 +10,7 @@ import UIKit
 import XLPagerTabStrip
 import FirebaseMessaging
 import Appodeal
+import Crashlytics
 
 class MCViewController: ButtonBarPagerTabStripViewController, UISearchControllerDelegate {
     
@@ -115,8 +116,6 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         //nativeAdQueue.setMaxAdSize(2)
         
         nativeAdQueue.loadAd()
-        
-        
         
     }
     

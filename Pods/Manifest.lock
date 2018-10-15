@@ -103,7 +103,10 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
+  - Crashlytics (3.10.9):
+    - Fabric (~> 1.7.13)
   - DynamicBlurView (2.0.2)
+  - Fabric (1.7.13)
   - FacebookCore (0.4.0):
     - Bolts (~> 1.9)
     - FBSDKCoreKit (~> 4.36)
@@ -228,6 +231,8 @@ DEPENDENCIES:
   - Appodeal (= 2.4.7.1-Beta)
   - AWSAPIGateway
   - AWSS3
+  - Crashlytics (~> 3.10.7)
+  - Fabric (~> 1.7.11)
   - FacebookLogin
   - Firebase/Auth
   - Firebase/Core
@@ -248,7 +253,9 @@ SPEC REPOS:
     - AWSCore
     - AWSS3
     - Bolts
+    - Crashlytics
     - DynamicBlurView
+    - Fabric
     - FacebookCore
     - FacebookLogin
     - FBSDKCoreKit
@@ -283,7 +290,9 @@ SPEC CHECKSUMS:
   AWSCore: c7abfb87ef802d1c4b5dd56db64ac8b4a7823ef0
   AWSS3: 5647e89f9ac8e7033f3e5507dbb3eccc37f82b75
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
   DynamicBlurView: aa6db4defc6e537eb86fc5e58dd3991666178399
+  Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   FacebookCore: 770e57cfe250a4de4458b682191c0ff062dee247
   FacebookLogin: eb0f2251aca835a94d70a5f7e580edc46d1e1603
   FBSDKCoreKit: fe5f3474499a81963e11e3f3a5c753d0a95ca2b4
@@ -311,6 +320,6 @@ SPEC CHECKSUMS:
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: e203ce96ef9da103f743f1b9f4b555e08b2cdaee
+PODFILE CHECKSUM: 8531d239acabb5bf1661b1b9659fd13fd6043e77
 
 COCOAPODS: 1.5.3

@@ -91,11 +91,13 @@ class Tab3NewViewController: UIViewController, UITableViewDataSource, UITableVie
             posts.removeAll()
             tableView.reloadData()
             
+            
             if newlyCreatedPosts != nil && newlyCreatedPosts.count > 0 {
                 for newPost in newlyCreatedPosts {
                     posts.append(newPost)
                 }
             }
+            
             
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH\\:mm\\:ssZ"

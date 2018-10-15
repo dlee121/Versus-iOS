@@ -22,5 +22,7 @@ target 'Versus' do
   pod 'JWTDecode', '~> 2.1'
   pod 'Appodeal', '2.4.7.1-Beta'
   pod 'ActiveLabel'
-
+  pod 'Fabric', '~> 1.7.11'
+  pod 'Crashlytics', '~> 3.10.7'
+  
 end
