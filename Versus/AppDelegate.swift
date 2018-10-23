@@ -93,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 self.tokenExpirationTime = nil
             }
             
+            /*
             if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
                 Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
                 
@@ -100,7 +101,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 if userAction != nil && userAction!.changed {
                     VSVersusAPIClient.default().recordPost(body: userAction!.getRecordPutModel(), a: "rcp", b: userAction!.id)
                 }
-                
+            }
+            */
+            
+            //update ES userAction here
+            if userAction != nil && userAction!.changed {
+                VSVersusAPIClient.default().recordPost(body: userAction!.getRecordPutModel(), a: "rcp", b: userAction!.id)
             }
         }
         
@@ -125,16 +131,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
             
             // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+            /*
             if let username = UserDefaults.standard.string(forKey: "KEY_USERNAME") {
                 Database.database().reference().child(getUsernameHash(username: username) + "/\(username)/push/n").removeValue()
             }
+            */
             
             //clear any push notification displayed on the phone
             if #available(iOS 10.0, *) {
                 UNUserNotificationCenter.current().removeAllDeliveredNotifications()
             } else {
                 // Fallback on earlier versions
-                application.applicationIconBadgeNumber = 0
+                //application.applicationIconBadgeNumber = 0
                 application.cancelAllLocalNotifications()
             }
         }

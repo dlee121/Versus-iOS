@@ -208,8 +208,6 @@ class Tab2MyCircleViewController: UIViewController, UITableViewDataSource, UITab
 
         }
         
-        //print("queryTime = \(queryTime!)")
-        
         executeQuery(payload: payload)
         
     }

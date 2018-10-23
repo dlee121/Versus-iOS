@@ -441,6 +441,10 @@ class NotificationsViewController: UIViewController, UITableViewDataSource, UITa
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tabBarController?.tabBar.isHidden = false
+        
+        //reset push notifications count and app icon notifications badge
+        Database.database().reference().child(getUsernameHash(username: currentUsername!) + "/\(currentUsername!)/push/n").removeValue()
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

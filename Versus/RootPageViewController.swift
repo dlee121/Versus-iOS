@@ -1173,7 +1173,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             return 303
         }
         else {
-            return 90
+            return 86
         }
     }
     
