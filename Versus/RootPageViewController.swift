@@ -30,6 +30,9 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var cuteRightMargin: NSLayoutConstraint!
     @IBOutlet weak var cuteSwitchTopMargin: NSLayoutConstraint!
     
+    @IBOutlet weak var cuteLabelLeft: UILabel!
+    @IBOutlet weak var cuteLabelRight: UILabel!
+    @IBOutlet weak var cuteLabelSwitch: UILabel!
     
     
     var currentPost : PostObject!
@@ -128,6 +131,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             cuteRightTopMargin.constant = 169
             cuteRightMargin.constant = 36
             cuteSwitchTopMargin.constant = 42
+            
+            cuteLabelLeft.font = cuteLabelLeft.font.withSize(21)
+            cuteLabelRight.font = cuteLabelRight.font.withSize(21)
+            cuteLabelSwitch.font = cuteLabelSwitch.font.withSize(21)
         }
         
         
