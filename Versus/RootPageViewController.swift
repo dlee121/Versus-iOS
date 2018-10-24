@@ -37,6 +37,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var tutorialView: UIView!
     
+    @IBOutlet weak var tutorialLeftButtonBottom: NSLayoutConstraint!
+    @IBOutlet weak var tutorialRightButtonBottom: NSLayoutConstraint!
     var currentPost : PostObject!
     var comments = [VSComment]()
     
@@ -106,11 +108,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     var paddingBottom : CGFloat = 0.0
     
     var showTutorial = !UserDefaults.standard.bool(forKey: "KEY_TUTORIAL")
+    var tutorialTextOnlyOffset : CGFloat!
     
     override func viewDidLayoutSubviews() {
         if #available(iOS 11.0, *) {
             paddingBottom = view.safeAreaInsets.bottom
-            print("padding bottom is \(paddingBottom)")
+            //print("padding bottom is \(paddingBottom)")
         }
         
     }
@@ -140,6 +143,10 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             cuteLabelRight.font = cuteLabelRight.font.withSize(21)
             cuteLabelSwitch.font = cuteLabelSwitch.font.withSize(21)
             cuteLabelRightHeight.constant = 44
+            tutorialTextOnlyOffset = -69.0
+        }
+        else {
+            tutorialTextOnlyOffset = -42.0
         }
         
         
@@ -341,6 +348,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidAppear(animated)
         textInput.setNeedsLayout()
         commentSendButton.setNeedsLayout()
+        
     }
     
     /*
@@ -367,17 +375,6 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                name: NSNotification.Name.UIKeyboardWillHide,
                                                object: nil)
         
-        
-        if showTutorial {
-            //show tutorial, and set KEY_TUTORIAL = true
-            //UserDefaults.standard.set(true, forKey: "KEY_TUTORIAL")
-            tutorialView.isHidden = false
-            print("hi tutorial")
-        }
-        else {
-            print("bye tutorial")
-        }
-
         
     }
     
@@ -535,6 +532,23 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         medalistCQPayload = topicComment.comment_id
         medalistCQPayloadPostID = post.post_id
         setMedals() //this function will call commentsQuery() upon completion
+        
+        
+        DispatchQueue.main.async {
+            if self.showTutorial {
+                //show tutorial, and set KEY_TUTORIAL = true
+                //UserDefaults.standard.set(true, forKey: "KEY_TUTORIAL")
+                self.tutorialView.isHidden = false
+                self.tableView.isScrollEnabled = false
+                
+                if post.redimg.intValue % 10 == 0 && post.blackimg.intValue % 10 == 0 { //if post is text-only
+                    self.tutorialRightButtonBottom.constant = self.tutorialTextOnlyOffset
+                    self.tutorialLeftButtonBottom.constant = self.tutorialTextOnlyOffset
+                }
+            }
+        }
+        
+        
     }
     
     func setUpRootPage(post : PostObject, userAction : UserAction, fromCreatePost : Bool){
@@ -559,6 +573,20 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         currentUserAction = userAction
         setMedals() //this function will call commentsQuery() upon completion
+        
+        DispatchQueue.main.async {
+            if self.showTutorial {
+                //show tutorial, and set KEY_TUTORIAL = true
+                //UserDefaults.standard.set(true, forKey: "KEY_TUTORIAL")
+                self.tutorialView.isHidden = false
+                self.tableView.isScrollEnabled = false
+                
+                if post.redimg.intValue % 10 == 0 && post.blackimg.intValue % 10 == 0 { //if post is text-only
+                    self.tutorialRightButtonBottom.constant = self.tutorialTextOnlyOffset
+                    self.tutorialLeftButtonBottom.constant = self.tutorialTextOnlyOffset
+                }
+            }
+        }
         
     }
     
@@ -1338,29 +1366,31 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func goToProfile(profileUsername: String) {
-        if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count <= grandchildReplyTargetAuthor!.count + 2) {
-            //textInput.resignFirstResponder()
-            let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
-                self.textInput.text = ""
-                self.commentSendButton.isEnabled = false
-                self.commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
-                self.profileTap = true
-                self.vmrTap = false
-                self.tappedUsername = profileUsername
+        if !showTutorial {
+            if textInput.text != nil && textInput.textColor != UIColor.lightGray && !(grandchildReplyTargetAuthor != nil && textInput.text!.count <= grandchildReplyTargetAuthor!.count + 2) {
+                //textInput.resignFirstResponder()
+                let alert = UIAlertController(title: nil, message: "Are you sure? The text you entered will be discarded.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                    self.textInput.text = ""
+                    self.commentSendButton.isEnabled = false
+                    self.commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
+                    self.profileTap = true
+                    self.vmrTap = false
+                    self.tappedUsername = profileUsername
+                    //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
+                    self.performSegue(withIdentifier: "rootToProfile", sender: self)
+                }))
+                self.present(alert, animated: true, completion: nil)
+                
+            }
+            else {
+                profileTap = true
+                vmrTap = false
+                tappedUsername = profileUsername
                 //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
-                self.performSegue(withIdentifier: "rootToProfile", sender: self)
-            }))
-            self.present(alert, animated: true, completion: nil)
-            
-        }
-        else {
-            profileTap = true
-            vmrTap = false
-            tappedUsername = profileUsername
-            //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
-            performSegue(withIdentifier: "rootToProfile", sender: self)
+                performSegue(withIdentifier: "rootToProfile", sender: self)
+            }
         }
     }
     
@@ -1368,6 +1398,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if showTutorial {
             showTutorial = false
+            tableView.isScrollEnabled = true
             tutorialView.isHidden = true
             UserDefaults.standard.set(true, forKey: "KEY_TUTORIAL")
         }
