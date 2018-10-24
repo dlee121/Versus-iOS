@@ -40,21 +40,25 @@ class NotificationsTableViewCell: UITableViewCell {
             subpath = "u/\(item.key!)"
             
         case TYPE_C:
+            notificationIcon.image = #imageLiteral(resourceName: "logo_black_120")
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "c/\(item.key!)"
             
         case TYPE_V:
+            notificationIcon.image = #imageLiteral(resourceName: "logo_black_120")
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "v/\(item.key!)"
             
         case TYPE_R:
+            notificationIcon.image = #imageLiteral(resourceName: "logo_black_120")
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "r/\(item.key!)"
             
         case TYPE_F:
+            notificationIcon.image = #imageLiteral(resourceName: "logo_black_120")
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "f"
@@ -68,6 +72,7 @@ class NotificationsTableViewCell: UITableViewCell {
             case "b":
                 notificationIcon.image = #imageLiteral(resourceName: "medalBronze")
             default:
+                notificationIcon.image = #imageLiteral(resourceName: "logo_black_120")
                 break
             }
             body.text = item.body
@@ -75,6 +80,7 @@ class NotificationsTableViewCell: UITableViewCell {
             subpath = "m/\(item.key!)"
             
         case TYPE_EM:
+            notificationIcon.image = #imageLiteral(resourceName: "logo_black_120")
             body.text = item.body
             time.text = item.getTimeString()
             subpath = "em"
