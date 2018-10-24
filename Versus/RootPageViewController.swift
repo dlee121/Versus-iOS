@@ -2344,9 +2344,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     @IBAction func tutorialLeftTapped(_ sender: Any) {
+        //print("tutorial left tapped")
+        resizePostCardOnVote(red: true)
+        
     }
     
     @IBAction func tutorialRightTapped(_ sender: Any) {
+        //print("tutorial right tapped")
+        resizePostCardOnVote(red: false)
+        
     }
     
     

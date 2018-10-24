@@ -1232,7 +1232,6 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EYL-5y-6tO">
                                         <rect key="frame" x="0.0" y="91" width="184" height="229"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="tutorialLeftTapped:" destination="Jk1-If-Hre" eventType="touchUpInside" id="QC0-h2-EhB"/>
                                         </connections>
@@ -1240,7 +1239,6 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AFO-9r-A11">
                                         <rect key="frame" x="191" y="91" width="184" height="229"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="tutorialRightTapped:" destination="Jk1-If-Hre" eventType="touchUpInside" id="vIU-0O-QZl"/>
                                         </connections>
