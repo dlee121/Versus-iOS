@@ -1167,7 +1167,7 @@
                                     <action selector="replyTargetResetTapped:" destination="Jk1-If-Hre" eventType="touchUpInside" id="hYf-pd-W94"/>
                                 </connections>
                             </button>
-                            <view userInteractionEnabled="NO" alpha="0.68999999999999995" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8dB-kg-Tpd">
+                            <view hidden="YES" userInteractionEnabled="NO" alpha="0.68999999999999995" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8dB-kg-Tpd">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cuteArrowRight" translatesAutoresizingMaskIntoConstraints="NO" id="XBe-zV-LK9">
@@ -1187,9 +1187,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or Here !" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wx-PR-mLw">
-                                        <rect key="frame" x="191" y="320" width="128" height="69"/>
+                                        <rect key="frame" x="191" y="320" width="128" height="38"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="69" id="qxE-Nh-Vq8"/>
+                                            <constraint firstAttribute="height" constant="38" id="qxE-Nh-Vq8"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1255,6 +1255,7 @@
                         <outlet property="commentSendButton" destination="3jB-Kr-pCC" id="rew-gf-jyF"/>
                         <outlet property="cuteLabelLeft" destination="OzK-zZ-NfE" id="oH4-FX-SQh"/>
                         <outlet property="cuteLabelRight" destination="0wx-PR-mLw" id="Tmh-gl-qpZ"/>
+                        <outlet property="cuteLabelRightHeight" destination="qxE-Nh-Vq8" id="Rlg-On-yiy"/>
                         <outlet property="cuteLabelSwitch" destination="nD7-ax-PYq" id="KIF-2p-2vy"/>
                         <outlet property="cuteLeftMargin" destination="l7t-lD-539" id="0Zv-ng-sFX"/>
                         <outlet property="cuteLeftTopMargin" destination="us1-jL-tOr" id="tGa-Bq-Bjw"/>
@@ -1267,6 +1268,7 @@
                         <outlet property="textInput" destination="uJM-9H-cX8" id="bFg-CC-9T8"/>
                         <outlet property="textInputContainer" destination="i5l-wt-BD9" id="FuC-6q-yJC"/>
                         <outlet property="textInputContainerBottom" destination="n9C-8P-puB" id="7i0-x1-UTa"/>
+                        <outlet property="tutorialView" destination="8dB-kg-Tpd" id="AoG-YD-C9m"/>
                         <segue destination="X1q-ax-jCK" kind="show" identifier="rootToChild" id="tN5-20-0qe"/>
                         <segue destination="Bbt-9Q-VzI" kind="show" identifier="rootToMe" id="uAF-H9-Oin"/>
                         <segue destination="00O-u0-BLe" kind="show" identifier="rootToProfile" id="qbd-PO-7a5"/>

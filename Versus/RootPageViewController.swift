@@ -29,11 +29,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var cuteRightTopMargin: NSLayoutConstraint!
     @IBOutlet weak var cuteRightMargin: NSLayoutConstraint!
     @IBOutlet weak var cuteSwitchTopMargin: NSLayoutConstraint!
+    @IBOutlet weak var cuteLabelRightHeight: NSLayoutConstraint!
     
     @IBOutlet weak var cuteLabelLeft: UILabel!
     @IBOutlet weak var cuteLabelRight: UILabel!
     @IBOutlet weak var cuteLabelSwitch: UILabel!
     
+    @IBOutlet weak var tutorialView: UIView!
     
     var currentPost : PostObject!
     var comments = [VSComment]()
@@ -103,6 +105,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var paddingBottom : CGFloat = 0.0
     
+    var showTutorial = !UserDefaults.standard.bool(forKey: "KEY_TUTORIAL")
+    
     override func viewDidLayoutSubviews() {
         if #available(iOS 11.0, *) {
             paddingBottom = view.safeAreaInsets.bottom
@@ -135,6 +139,7 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
             cuteLabelLeft.font = cuteLabelLeft.font.withSize(21)
             cuteLabelRight.font = cuteLabelRight.font.withSize(21)
             cuteLabelSwitch.font = cuteLabelSwitch.font.withSize(21)
+            cuteLabelRightHeight.constant = 44
         }
         
         
@@ -363,14 +368,14 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                object: nil)
         
         
-        if UserDefaults.standard.bool(forKey: "KEY_TUTORIAL") {
-            
-            
-            
+        if showTutorial {
+            //show tutorial, and set KEY_TUTORIAL = true
+            //UserDefaults.standard.set(true, forKey: "KEY_TUTORIAL")
+            tutorialView.isHidden = false
+            print("hi tutorial")
         }
         else {
-            //show tutorial, and set KEY_TUTORIAL = true
-            UserDefaults.standard.set(true, forKey: "KEY_TUTORIAL")
+            print("bye tutorial")
         }
 
         
@@ -1360,6 +1365,12 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func resizePostCardOnVote(red : Bool){
+        
+        if showTutorial {
+            showTutorial = false
+            tutorialView.isHidden = true
+            UserDefaults.standard.set(true, forKey: "KEY_TUTORIAL")
+        }
         
         if red { //voted left side
             switch currentUserAction.votedSide {
