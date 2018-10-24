@@ -2343,7 +2343,11 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     
+    @IBAction func tutorialLeftTapped(_ sender: Any) {
+    }
     
+    @IBAction func tutorialRightTapped(_ sender: Any) {
+    }
     
     
     
