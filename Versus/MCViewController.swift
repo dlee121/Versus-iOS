@@ -99,7 +99,6 @@ class MCViewController: ButtonBarPagerTabStripViewController, UISearchController
         
         searchController.loadViewIfNeeded()
         
-        //Configura a barra do Controlador de busca
         searchController.searchBar.delegate = searchViewController!
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.placeholder = "Search by keyword(s) or question"

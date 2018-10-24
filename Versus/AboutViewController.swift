@@ -25,6 +25,7 @@ class AboutViewController: UIViewController {
     @IBOutlet weak var pavelKozlov: ActiveLabel!
     @IBOutlet weak var hanan: ActiveLabel!
     @IBOutlet weak var googleMaterialDesign: ActiveLabel!
+    @IBOutlet weak var hadrien: ActiveLabel!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -260,6 +261,22 @@ class AboutViewController: UIViewController {
             
             pavelKozlov.handleCustomTap(for: pavelKozlovType) { _ in
                 guard let url = URL(string: "https://www.flaticon.com/authors/pavel-kozlov") else { return }
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
+        
+        let hadrienType = ActiveType.custom(pattern: "Hadrien")
+        hadrien.enabledTypes.append(hadrienType)
+        hadrien.customize { label in
+            hadrien.customColor[hadrienType] = UIColor(red: 0.0, green: 122.0/255, blue: 1, alpha: 1)
+            
+            hadrien.handleCustomTap(for: hadrienType) { _ in
+                guard let url = URL(string: "http://hadrien.co") else { return }
                 if #available(iOS 10.0, *) {
                     UIApplication.shared.open(url)
                 } else {

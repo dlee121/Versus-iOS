@@ -24,6 +24,13 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var replyTargetResetButton: UIButton!
     
+    @IBOutlet weak var cuteLeftMargin: NSLayoutConstraint!
+    @IBOutlet weak var cuteLeftTopMargin: NSLayoutConstraint!
+    @IBOutlet weak var cuteRightTopMargin: NSLayoutConstraint!
+    @IBOutlet weak var cuteRightMargin: NSLayoutConstraint!
+    @IBOutlet weak var cuteSwitchTopMargin: NSLayoutConstraint!
+    
+    
     
     var currentPost : PostObject!
     var comments = [VSComment]()
@@ -115,6 +122,15 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         textInput.text = placeholder
         textInput.textColor = UIColor.lightGray
         
+        if UIScreen.main.bounds.height < 666 {
+            cuteLeftMargin.constant = 36
+            cuteLeftTopMargin.constant = 169
+            cuteRightTopMargin.constant = 169
+            cuteRightMargin.constant = 36
+            cuteSwitchTopMargin.constant = 42
+        }
+        
+        
         //tableView.allowsSelection = false
         ref = Database.database().reference()
         
@@ -128,6 +144,8 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Configure Refresh Control
         refreshControl.addTarget(self, action: #selector(refreshList(_:)), for: .valueChanged)
+        
+        
     }
     
     @objc
@@ -336,6 +354,17 @@ class RootPageViewController: UIViewController, UITableViewDataSource, UITableVi
                                                selector: #selector(keyboardWillHide(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillHide,
                                                object: nil)
+        
+        
+        if UserDefaults.standard.bool(forKey: "KEY_TUTORIAL") {
+            
+            
+            
+        }
+        else {
+            //show tutorial, and set KEY_TUTORIAL = true
+            UserDefaults.standard.set(true, forKey: "KEY_TUTORIAL")
+        }
 
         
     }
