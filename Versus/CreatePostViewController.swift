@@ -491,9 +491,6 @@ class CreatePostViewController: UIViewController, UITextFieldDelegate, UINavigat
                 }
                 return nil
             }
-            else {
-                //self.group.leave()
-            }
             
             return nil
         })
