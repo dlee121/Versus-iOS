@@ -44,8 +44,9 @@ class Tab2MyCircleViewController: UIViewController, UITableViewDataSource, UITab
     
     private let refreshControl = UIRefreshControl()
     
-    var adFrequency = 11
+    var nextAdIndex = 2
     var queryTime : String!
+    var currCommentIndex = 0
     
     var adjustForSmallerScreen = false
     
@@ -165,6 +166,8 @@ class Tab2MyCircleViewController: UIViewController, UITableViewDataSource, UITab
     func myCircleQuery(){
         
         if fromIndex == 0 {
+            currCommentIndex = 0
+            nextAdIndex = 2
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
             queryTime = formatter.string(from: Date())
@@ -260,7 +263,7 @@ class Tab2MyCircleViewController: UIViewController, UITableViewDataSource, UITab
                     var postInfoPayload = "{\"ids\":["
                     var index = 0
                     var duplicateUsernamePreventionMap = NSMutableSet()
-                    var countToAdView = 0 //once this == adFrequency, we insert an add to the comments array
+                    
                     for item in results! {
                         let comment = VSComment(itemSource: item.source!, id: item.id!)
                         self.comments.append(comment)
@@ -280,12 +283,13 @@ class Tab2MyCircleViewController: UIViewController, UITableViewDataSource, UITab
                             index += 1
                         }
                         
-                        countToAdView += 1
-                        if countToAdView == self.adFrequency {
+                        self.currCommentIndex += 1
+                        
+                        if self.currCommentIndex == self.nextAdIndex {
                             //inserting a placeholder VSComment object for a native ad. Check for placeholder by checking if the object's commentID == "0"
                             self.comments.append(VSComment())
+                            self.nextAdIndex += 5
                             loadedItemsCount = loadedItemsCount! + 1
-                            //should we randomize adFrequency? simply update its value here if we are.
                             
                         }
                         

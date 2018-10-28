@@ -42,7 +42,8 @@ class Tab3NewViewController: UIViewController, UITableViewDataSource, UITableVie
     var clickLock = false
     let cellSpacingHeight: CGFloat = 16
     
-    var adFrequency = 7
+    var nextAdIndex = 2
+    var currPostIndex = 0
     
     private let refreshControl = UIRefreshControl()
     
@@ -135,6 +136,9 @@ class Tab3NewViewController: UIViewController, UITableViewDataSource, UITableVie
     func newQuery(){
         
         if fromIndex == 0  {
+            nextAdIndex = 2
+            currPostIndex = 0
+            
             if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
                 if blockedUsernames.count > 0 {
                     blockedUsernames.removeAllObjects()
@@ -161,7 +165,7 @@ class Tab3NewViewController: UIViewController, UITableViewDataSource, UITableVie
                 var loadedItemsCount = queryResults!.count
                 var pivString = "{\"ids\":["
                 var index = 0
-                var indexToAd = 0
+                
                 for item in queryResults! {
                     let postObject = PostObject(itemSource: item.source!, id: item.id!)
                     if !self.newlyCreatedPostsSet.contains(postObject.post_id) {
@@ -183,12 +187,14 @@ class Tab3NewViewController: UIViewController, UITableViewDataSource, UITableVie
                         index += 1
                     }
                     
-                    if indexToAd == self.adFrequency {
+                    self.currPostIndex += 1
+                    
+                    if self.currPostIndex == self.nextAdIndex {
                         self.posts.append(PostObject())
+                        self.nextAdIndex += 5
                         loadedItemsCount += 1
                     }
                     
-                    indexToAd += 1
                 }
                 pivString += "]}"
                 

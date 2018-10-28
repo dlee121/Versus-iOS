@@ -39,7 +39,7 @@ class Tab1TrendingViewController: UIViewController, UITableViewDataSource, UITab
     var clickLock = false
     let cellSpacingHeight: CGFloat = 16
     
-    var adFrequency = 7
+    var nextAdIndex = 2
     
     var queryTime : Int!
     
@@ -47,6 +47,8 @@ class Tab1TrendingViewController: UIViewController, UITableViewDataSource, UITab
     var blockedUsernames = NSMutableSet()
     
     private let refreshControl = UIRefreshControl()
+    
+    var currPostIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,8 +120,9 @@ class Tab1TrendingViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func trendingQuery(){
-        
         if fromIndex == 0 {
+            currPostIndex = 0
+            nextAdIndex = 2
             if let blockList = UserDefaults.standard.object(forKey: "KEY_BLOCKS") as? [String] {
                 if blockedUsernames.count > 0 {
                     blockedUsernames.removeAllObjects()
@@ -146,7 +149,7 @@ class Tab1TrendingViewController: UIViewController, UITableViewDataSource, UITab
                 var loadedItemsCount = queryResults!.count
                 var pivString = "{\"ids\":["
                 var index = 0
-                var indexToAd = 0
+                
                 for item in queryResults! {
                     self.posts.append(PostObject(itemSource: item.source!, id: item.id!))
                     
@@ -160,12 +163,14 @@ class Tab1TrendingViewController: UIViewController, UITableViewDataSource, UITab
                         index += 1
                     }
                     
-                    if indexToAd == self.adFrequency {
+                    self.currPostIndex += 1
+                    
+                    if self.currPostIndex == self.nextAdIndex {
                         self.posts.append(PostObject())
                         loadedItemsCount += 1
+                        self.nextAdIndex += 5
                     }
                     
-                    indexToAd += 1
                 }
                 pivString += "]}"
                 
