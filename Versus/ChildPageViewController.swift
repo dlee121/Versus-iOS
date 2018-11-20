@@ -1064,8 +1064,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
         if grandchildReplyTargetAuthor != nil {
             if updatedText.count > grandchildReplyTargetAuthor!.count + 2 && !updatedText[grandchildReplyTargetAuthor!.count + 2 ... updatedText.count - 1].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 //turn autocapitalization to sentence mode
-                textView.autocapitalizationType = .sentences
-                textView.reloadInputViews()
+                //textView.autocapitalizationType = .sentences
+                //textView.reloadInputViews()
                 
                 textView.textColor = UIColor.black
                 commentSendButton.isEnabled = true
@@ -1073,8 +1073,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             }
             else {
                 //force capitalization for first character
-                textView.autocapitalizationType = .words
-                textView.reloadInputViews()
+                //textView.autocapitalizationType = .words
+                //textView.reloadInputViews()
                 
                 commentSendButton.isEnabled = false
                 commentSendButton.setBackgroundImage(#imageLiteral(resourceName: "ic_send_grey"), for: .normal)
@@ -1500,6 +1500,8 @@ class ChildPageViewController: UIViewController, UITableViewDataSource, UITableV
             textInput.text = "@"+grandchildReplyTargetAuthor! + " "
             textInput.textColor = .black
             textInput.selectedTextRange = textInput.textRange(from: textInput.endOfDocument, to: textInput.endOfDocument)
+            textInput.autocapitalizationType = .sentences
+            textInput.reloadInputViews()
         }
         
         textInput.becomeFirstResponder()
