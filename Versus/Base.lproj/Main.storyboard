@@ -637,7 +637,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Votecount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aO1-Md-gQK">
-                                                    <rect key="frame" x="281" y="11" width="79" height="42"/>
+                                                    <rect key="frame" x="152" y="11" width="208" height="42"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="42" id="euZ-Gf-rro"/>
                                                     </constraints>
@@ -850,6 +850,7 @@
                                                 <constraint firstItem="S1M-Nx-6fL" firstAttribute="bottom" secondItem="XEl-r6-TMN" secondAttribute="bottom" id="ew7-Vw-985"/>
                                                 <constraint firstItem="tHC-Al-KRQ" firstAttribute="leading" secondItem="bmY-aX-nG7" secondAttribute="leading" id="f5P-bw-ign"/>
                                                 <constraint firstItem="4as-Zz-tw8" firstAttribute="top" secondItem="F6b-q4-EKr" secondAttribute="bottom" constant="8" id="icY-1o-kaR"/>
+                                                <constraint firstItem="aO1-Md-gQK" firstAttribute="leading" secondItem="W4I-ZL-lRJ" secondAttribute="trailing" constant="8" id="j5P-3t-dFe"/>
                                                 <constraint firstItem="aO1-Md-gQK" firstAttribute="top" secondItem="wBb-hm-Yno" secondAttribute="topMargin" id="jnR-Uy-3Qh"/>
                                                 <constraint firstItem="QRu-Dr-R5J" firstAttribute="top" secondItem="dUd-u6-EgA" secondAttribute="top" id="kWE-Uq-1ky"/>
                                                 <constraint firstItem="zny-78-cTP" firstAttribute="bottom" secondItem="MYL-zh-NqH" secondAttribute="bottom" id="lJN-it-G5O"/>
@@ -1008,6 +1009,9 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D0a-rs-Kza">
                                                     <rect key="frame" x="327" y="8" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="dTJ-RH-grI"/>
+                                                    </constraints>
                                                     <state key="normal" image="overflowHorizontal"/>
                                                     <connections>
                                                         <action selector="overflowTapped:" destination="wRp-Wl-UwL" eventType="touchUpInside" id="1xu-hx-9s8"/>
@@ -1029,6 +1033,7 @@
                                                 <constraint firstItem="btM-bC-vqT" firstAttribute="bottom" secondItem="xZQ-ib-APf" secondAttribute="bottom" id="FTI-hC-GCd"/>
                                                 <constraint firstItem="8Mi-NA-HWN" firstAttribute="top" secondItem="6Vd-rf-611" secondAttribute="top" id="Flm-1X-eqM"/>
                                                 <constraint firstItem="xZQ-ib-APf" firstAttribute="bottom" secondItem="0sC-5A-CsB" secondAttribute="bottom" id="JFU-9y-h68"/>
+                                                <constraint firstItem="D0a-rs-Kza" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GMm-O3-fqC" secondAttribute="trailing" constant="8" id="JjF-iz-6eX"/>
                                                 <constraint firstItem="0sC-5A-CsB" firstAttribute="leading" secondItem="8Mi-NA-HWN" secondAttribute="trailing" constant="4" id="JrM-P9-GIC"/>
                                                 <constraint firstItem="nun-Ao-p1T" firstAttribute="bottom" secondItem="Mqo-9K-9vg" secondAttribute="bottom" id="KUz-aY-1pB"/>
                                                 <constraint firstItem="9GV-at-02i" firstAttribute="trailing" secondItem="UQd-Mi-JZv" secondAttribute="trailing" id="KrS-Qm-8iQ"/>
@@ -1487,6 +1492,9 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mEd-Vl-lls">
                                                     <rect key="frame" x="327" y="8" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="oZX-K1-3ho"/>
+                                                    </constraints>
                                                     <state key="normal" image="overflowHorizontal"/>
                                                     <connections>
                                                         <action selector="overflowTapped:" destination="Gwa-5V-6Gg" eventType="touchUpInside" id="BYG-0V-CoO"/>
@@ -1502,6 +1510,7 @@
                                                 <constraint firstItem="zFz-A6-sXB" firstAttribute="leading" secondItem="hEn-L1-av3" secondAttribute="trailing" id="6G7-ax-AXn"/>
                                                 <constraint firstItem="rXl-ne-l5d" firstAttribute="leading" secondItem="zFz-A6-sXB" secondAttribute="trailing" constant="4" id="81s-lW-udG"/>
                                                 <constraint firstItem="MgD-Gi-Aro" firstAttribute="top" secondItem="Tuk-Zm-QT1" secondAttribute="top" id="83a-XL-gKA"/>
+                                                <constraint firstItem="mEd-Vl-lls" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sb7-t4-azb" secondAttribute="trailing" constant="8" id="9Vp-MG-qeh"/>
                                                 <constraint firstItem="MgD-Gi-Aro" firstAttribute="bottom" secondItem="Tuk-Zm-QT1" secondAttribute="bottom" id="DQM-XO-r97"/>
                                                 <constraint firstItem="e4W-jZ-CTz" firstAttribute="leading" secondItem="oLN-gr-pbu" secondAttribute="trailing" id="FZa-jr-vVn"/>
                                                 <constraint firstItem="Tuk-Zm-QT1" firstAttribute="bottom" secondItem="UOS-4r-4pE" secondAttribute="bottom" id="GKD-zu-tn3"/>
@@ -1666,6 +1675,9 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7c5-X8-dMT">
                                                     <rect key="frame" x="327" y="8" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="uAl-57-dp3"/>
+                                                    </constraints>
                                                     <state key="normal" image="overflowHorizontal"/>
                                                     <connections>
                                                         <action selector="overflowTapped:" destination="aM5-RM-nhf" eventType="touchUpInside" id="Xvv-4v-6ek"/>
@@ -1703,6 +1715,7 @@
                                                 <constraint firstItem="l8P-iM-48F" firstAttribute="leading" secondItem="2jo-2D-Nnf" secondAttribute="trailing" constant="8" id="eNB-J6-gch"/>
                                                 <constraint firstItem="2jo-2D-Nnf" firstAttribute="bottom" secondItem="XAd-dT-zEz" secondAttribute="bottom" id="ge9-gv-Ylv"/>
                                                 <constraint firstItem="l8P-iM-48F" firstAttribute="top" secondItem="2jo-2D-Nnf" secondAttribute="top" id="i54-j8-i98"/>
+                                                <constraint firstItem="7c5-X8-dMT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Xg0-J1-qrF" secondAttribute="trailing" constant="8" id="ix1-Hc-2hm"/>
                                                 <constraint firstItem="2jo-2D-Nnf" firstAttribute="leading" secondItem="XAd-dT-zEz" secondAttribute="trailing" constant="4" id="lOf-T2-cc9"/>
                                                 <constraint firstItem="jL0-aB-bhO" firstAttribute="top" secondItem="Xg0-J1-qrF" secondAttribute="bottom" id="m3t-Ih-TJw"/>
                                                 <constraint firstItem="9Gh-Kq-rOV" firstAttribute="centerX" secondItem="OjE-YQ-6Hi" secondAttribute="centerX" id="mAI-Qx-tes"/>
@@ -2015,6 +2028,9 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Atn-gu-JGf">
                                                     <rect key="frame" x="327" y="8" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="R0U-k9-EnT"/>
+                                                    </constraints>
                                                     <state key="normal" image="overflowHorizontal"/>
                                                     <connections>
                                                         <action selector="overflowTapped:" destination="yGK-5f-cdE" eventType="touchUpInside" id="kXX-eC-Wah"/>
@@ -2055,6 +2071,7 @@
                                                 <constraint firstItem="Atn-gu-JGf" firstAttribute="top" secondItem="Sux-JT-nJN" secondAttribute="top" constant="8" id="lc8-SY-FYT"/>
                                                 <constraint firstItem="NlB-HL-Wp4" firstAttribute="bottom" secondItem="V9w-Db-cNW" secondAttribute="bottom" id="oZE-PH-uTY"/>
                                                 <constraint firstItem="WWV-Wh-7df" firstAttribute="bottom" secondItem="4Pw-Pd-w5F" secondAttribute="bottom" id="oxc-LU-hO0"/>
+                                                <constraint firstItem="Atn-gu-JGf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="sJ8-II-zdi" secondAttribute="trailing" constant="8" id="p2w-1L-zWg"/>
                                                 <constraint firstItem="WWV-Wh-7df" firstAttribute="leading" secondItem="4Pw-Pd-w5F" secondAttribute="trailing" id="qdk-zN-klf"/>
                                                 <constraint firstAttribute="trailing" secondItem="cin-eG-Eky" secondAttribute="trailing" id="qoB-2S-sgE"/>
                                                 <constraint firstItem="UuQ-iv-Bow" firstAttribute="leading" secondItem="lzR-xJ-3O4" secondAttribute="trailing" id="vNP-Q6-NtK"/>
@@ -2194,6 +2211,9 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hi7-Oe-vR8">
                                                     <rect key="frame" x="327" y="8" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="32" id="HIS-xw-sll"/>
+                                                    </constraints>
                                                     <state key="normal" image="overflowHorizontal"/>
                                                     <connections>
                                                         <action selector="overflowTapped:" destination="7jz-oh-23d" eventType="touchUpInside" id="ycE-0r-Lpk"/>
@@ -2231,6 +2251,7 @@
                                                 <constraint firstItem="Ds9-Gi-dYe" firstAttribute="bottom" secondItem="97a-Lj-GMd" secondAttribute="bottom" id="c6H-Pn-a1Q"/>
                                                 <constraint firstItem="90P-aH-fl7" firstAttribute="top" secondItem="Iks-vB-bI3" secondAttribute="bottom" id="cze-SC-ct4"/>
                                                 <constraint firstItem="Ds9-Gi-dYe" firstAttribute="top" secondItem="97a-Lj-GMd" secondAttribute="top" id="dHi-qP-EEG"/>
+                                                <constraint firstItem="hi7-Oe-vR8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="sAF-n9-nTa" secondAttribute="trailing" id="eoK-LX-Z13"/>
                                                 <constraint firstItem="Iks-vB-bI3" firstAttribute="leading" secondItem="97a-Lj-GMd" secondAttribute="leading" id="ng2-Ie-FeJ"/>
                                                 <constraint firstItem="h0h-F8-l7o" firstAttribute="bottom" secondItem="zEd-FW-BRz" secondAttribute="bottom" id="qJ0-Fo-DMn"/>
                                                 <constraint firstItem="sAF-n9-nTa" firstAttribute="top" secondItem="7XE-6u-ncV" secondAttribute="topMargin" id="qPc-uT-WNH"/>
@@ -2590,11 +2611,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="goldLeader" rowHeight="116" id="ILp-0h-Dau" customClass="GoldLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="116"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="goldLeader" rowHeight="116" id="ILp-0h-Dau" customClass="GoldLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="125" height="116"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ILp-0h-Dau" id="orY-Ch-Ykj">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="115.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="125" height="115.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ln1-ii-VAR" userLabel="MainStack">
@@ -2690,11 +2711,11 @@
                                             <outlet property="username" destination="9J5-SX-NJc" id="lHt-Ng-kEI"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="silverLeader" rowHeight="102" id="T6V-5F-xKQ" customClass="SilverLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="144" width="375" height="102"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="silverLeader" rowHeight="102" id="T6V-5F-xKQ" customClass="SilverLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="144" width="125" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T6V-5F-xKQ" id="t1h-7m-422">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="101.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="125" height="101.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="QV7-bm-U5h" userLabel="MainStack">
@@ -2809,11 +2830,11 @@
                                             <outlet property="username" destination="Fsw-bm-bLp" id="Kr4-42-a9M"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="bronzeLeader" rowHeight="102" id="Rdk-De-6IG" customClass="BronzeLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="246" width="375" height="102"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="bronzeLeader" rowHeight="102" id="Rdk-De-6IG" customClass="BronzeLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="246" width="125" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rdk-De-6IG" id="fBn-0K-cw1">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="101.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="125" height="101.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6Bh-ho-F7a" userLabel="MainStack">
@@ -2915,11 +2936,11 @@
                                             <outlet property="username" destination="OhN-4a-pzn" id="4l1-BT-L5e"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="plainLeader" rowHeight="102" id="CVz-yi-kpR" customClass="PlainLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="348" width="375" height="102"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="plainLeader" rowHeight="102" id="CVz-yi-kpR" customClass="PlainLeaderTableViewCell" customModule="Versus" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="348" width="125" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CVz-yi-kpR" id="C79-Q4-FNo">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="101.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="125" height="101.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="z12-QX-RgO" userLabel="MainStack">
